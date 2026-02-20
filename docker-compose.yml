@@ -1,0 +1,9 @@
+version: "3.9"
+
+services:
+  mes-frontend:
+    container_name: mes-frontend
+    build: .
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3000:80"
