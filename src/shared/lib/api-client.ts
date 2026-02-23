@@ -110,9 +110,14 @@ class ApiClient {
         });
 
         let data = await response.json();
+        console.log('🔍 API Raw Response:', { url, status: response.status, data });
 
-        // Handle backend wrapping (data property)
-        let responseData = data && typeof data === 'object' && 'data' in data ? data.data : data;
+        // Handle multiple levels of backend wrapping (data property)
+        let responseData = data;
+        while (responseData && typeof responseData === 'object' && 'data' in responseData && responseData !== responseData.data) {
+            responseData = responseData.data;
+        }
+        console.log('🔍 API Unwrapped Data:', responseData);
 
         // If 401, try to refresh token and retry
         if (response.status === 401) {
@@ -136,7 +141,11 @@ class ApiClient {
                 });
 
                 data = await response.json();
-                responseData = data && typeof data === 'object' && 'data' in data ? data.data : data;
+                responseData = data;
+                while (responseData && typeof responseData === 'object' && 'data' in responseData && responseData !== responseData.data) {
+                    responseData = responseData.data;
+                }
+                console.log('🔍 API Retry Response:', responseData);
             }
         }
 
@@ -149,6 +158,7 @@ class ApiClient {
             throw error;
         }
 
+        console.log('🔍 API Final Return:', responseData);
         return responseData;
     }
 

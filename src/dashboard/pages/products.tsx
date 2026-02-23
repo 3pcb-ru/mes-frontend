@@ -17,7 +17,12 @@ export function ProductsPage() {
     try {
       const data = await productsService.listProducts();
       console.log('API Response:', data);
-      setItems(Array.isArray(data) ? data : []);
+      console.log('Is Array?', Array.isArray(data));
+      console.log('Data Type:', typeof data);
+      const itemsToSet = Array.isArray(data) ? data : [];
+      console.log('Items to set:', itemsToSet);
+      console.log('First item:', itemsToSet[0]);
+      setItems(itemsToSet);
     } catch (err) {
       console.error('API Error:', err);
       setItems([]);
@@ -33,7 +38,13 @@ export function ProductsPage() {
     await fetch();
   };
 
-  const filtered = Array.isArray(items) ? items.filter((p) => p.name.toLowerCase().includes(search.toLowerCase()) || p.sku.toLowerCase().includes(search.toLowerCase())) : [];
+  const filtered = Array.isArray(items) ? items.filter((p) => p.name.toLowerCase().includes(search.toLowerCase()) || p.sku?.toLowerCase().includes(search.toLowerCase())) : [];
+
+  useEffect(() => {
+    console.log('Items:', items);
+    console.log('Search:', search);
+    console.log('Filtered:', filtered);
+  }, [items, search, filtered]);
 
   return (
     <div className="space-y-6">
@@ -60,6 +71,12 @@ export function ProductsPage() {
               <Loader2 className="h-8 w-8 animate-spin text-cyan-500" />
               <p className="text-slate-400">Loading products...</p>
             </div>
+          ) : filtered.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-20 gap-4">
+              <Package className="h-8 w-8 text-slate-500" />
+              <p className="text-slate-400">No products found</p>
+              {items.length > 0 && <p className="text-slate-500 text-sm">(Total: {items.length}, Filtered: {filtered.length})</p>}
+            </div>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
@@ -74,9 +91,9 @@ export function ProductsPage() {
                 <tbody className="divide-y divide-slate-700/30">
                   {filtered.map((p)=> (
                     <tr key={p.id} className="hover:bg-slate-800/30">
-                      <td className="px-6 py-4">{p.sku}</td>
-                      <td className="px-6 py-4">{p.name}</td>
-                      <td className="px-6 py-4">{p.tenantId || '-'}</td>
+                      <td className="px-6 py-4 text-white">{p.sku || '—'}</td>
+                      <td className="px-6 py-4 text-white">{p.name || '—'}</td>
+                      <td className="px-6 py-4 text-slate-400">{p.tenantId || '—'}</td>
                       <td className="px-6 py-4 text-right"></td>
                     </tr>
                   ))}
