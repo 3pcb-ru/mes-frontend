@@ -37,7 +37,13 @@ jobs:
           pnpm --version
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: |
+          if [ -f pnpm-lock.yaml ]; then
+            pnpm install --frozen-lockfile
+          else
+            echo "pnpm-lock.yaml not found, installing without lockfile"
+            pnpm install
+          fi
 
       - name: Verify build locally
         run: pnpm build
