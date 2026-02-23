@@ -97,11 +97,11 @@ jobs:
             docker stop mes-frontend || true
             docker rm mes-frontend || true
             
-            # Run the new container (Mapping container port 80 to VM port 80)
+            # Run the new container (Mapping container port 3000 to VM port 80)
             docker run -d \
               --name mes-frontend \
               --restart always \
-              -p 80:80 \
+              -p 3000:80 \
               ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
             
             # Optional: Clean up dangling images to save disk space on the VM
