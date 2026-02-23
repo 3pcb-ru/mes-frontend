@@ -25,7 +25,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20'
-          cache: 'pnpm'
+          # we can't enable pnpm caching here because setup-node tries to
+          # invoke pnpm before it's installed, which leads to the error seen
+          # in the log. dependencies will still be cached via the pnpm store
+          # when we install globally below.
+          cache: 'npm'
 
       - name: Install pnpm globally
         run: |
