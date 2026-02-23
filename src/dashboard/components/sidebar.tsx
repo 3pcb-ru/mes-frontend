@@ -12,6 +12,10 @@ interface DashboardSidebarProps {
 const navItems = [
     { name: 'Dashboard', icon: LayoutDashboard, href: '/dashboard' },
     { name: 'Products', icon: Package, href: '/dashboard/products' },
+    { name: 'Facilities', icon: Blocks, href: '/dashboard/facilities' },
+    { name: 'Inventory', icon: Package, href: '/dashboard/inventory' },
+    { name: 'Work Orders', icon: FileText, href: '/dashboard/work-orders' },
+    { name: 'Trace', icon: BarChart3, href: '/dashboard/trace' },
     { name: 'Users', icon: Users, href: '/dashboard/users' },
     { name: 'Analytics', icon: BarChart3, href: '/dashboard/analytics' },
     { name: 'Reports', icon: FileText, href: '/dashboard/reports' },
