@@ -19,13 +19,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # install Node and pnpm so we can validate that the lockfile is installable
-      # (dependences comes from package.json and pnpm-lock.yaml used in Dockerfile).
-      - name: Setup Node.js & pnpm
+      # install Node and set up pnpm so we can validate that the lockfile is installable
+      # (dependencies come from package.json and pnpm-lock.yaml used in Dockerfile).
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20'
           cache: 'pnpm'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 'latest'
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
