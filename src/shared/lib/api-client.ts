@@ -13,6 +13,8 @@ export interface ApiResponse<T> {
 
 class ApiClient {
     private baseUrl: string;
+    private isRefreshing: boolean = false;
+    private refreshPromise: Promise<boolean> | null = null;
 
     constructor() {
         this.baseUrl = config.apiBaseUrl;
@@ -20,6 +22,73 @@ class ApiClient {
 
     private getAuthToken(): string | null {
         return localStorage.getItem('auth_token');
+    }
+
+    private getRefreshToken(): string | null {
+        return localStorage.getItem('refresh_token');
+    }
+
+    private async refreshAccessToken(): Promise<boolean> {
+        // Prevent multiple simultaneous refresh attempts
+        if (this.isRefreshing) {
+            return this.refreshPromise || Promise.resolve(false);
+        }
+
+        this.isRefreshing = true;
+        this.refreshPromise = this.performRefresh();
+        
+        try {
+            const success = await this.refreshPromise;
+            return success;
+        } finally {
+            this.isRefreshing = false;
+            this.refreshPromise = null;
+        }
+    }
+
+    private async performRefresh(): Promise<boolean> {
+        const refreshToken = this.getRefreshToken();
+        if (!refreshToken) {
+            return false;
+        }
+
+        try {
+            const url = `${this.baseUrl}/auth/refresh`;
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ refreshToken }),
+            });
+
+            const data = await response.json();
+            const responseData = data && typeof data === 'object' && 'data' in data ? data.data : data;
+
+            if (!response.ok) {
+                // Refresh failed - clear tokens and redirect to login
+                localStorage.removeItem('auth_token');
+                localStorage.removeItem('refresh_token');
+                window.location.href = '/login';
+                return false;
+            }
+
+            // Store new tokens
+            if (responseData.accessToken) {
+                localStorage.setItem('auth_token', responseData.accessToken);
+            }
+            if (responseData.refreshToken) {
+                localStorage.setItem('refresh_token', responseData.refreshToken);
+            }
+
+            return true;
+        } catch {
+            // Network or other error - redirect to login
+            localStorage.removeItem('auth_token');
+            localStorage.removeItem('refresh_token');
+            window.location.href = '/login';
+            return false;
+        }
     }
 
     private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
@@ -35,15 +104,41 @@ class ApiClient {
             (headers as Record<string, string>)['Authorization'] = `Bearer ${token}`;
         }
 
-        const response = await fetch(url, {
+        let response = await fetch(url, {
             ...options,
             headers,
         });
 
-        const data = await response.json();
+        let data = await response.json();
 
         // Handle backend wrapping (data property)
-        const responseData = data && typeof data === 'object' && 'data' in data ? data.data : data;
+        let responseData = data && typeof data === 'object' && 'data' in data ? data.data : data;
+
+        // If 401, try to refresh token and retry
+        if (response.status === 401) {
+            const refreshed = await this.refreshAccessToken();
+            
+            if (refreshed) {
+                // Retry the original request with new token
+                const newToken = this.getAuthToken();
+                const retryHeaders: HeadersInit = {
+                    'Content-Type': 'application/json',
+                    ...options.headers,
+                };
+
+                if (newToken) {
+                    (retryHeaders as Record<string, string>)['Authorization'] = `Bearer ${newToken}`;
+                }
+
+                response = await fetch(url, {
+                    ...options,
+                    headers: retryHeaders,
+                });
+
+                data = await response.json();
+                responseData = data && typeof data === 'object' && 'data' in data ? data.data : data;
+            }
+        }
 
         if (!response.ok) {
             const error: ApiError = {

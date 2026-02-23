@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Eye, EyeOff, Mail, Lock, Loader2, ArrowRight } from 'lucide-react';
 import { useAuth } from '../store/auth.store';
 import { isValidEmail } from '../types/auth.types';
@@ -10,6 +10,7 @@ import { Logo } from '@/shared/components/logo';
 
 export function LoginPage() {
     const navigate = useNavigate();
+    const location = useLocation();
     const { login, isLoading, error, clearError } = useAuth();
 
     const [email, setEmail] = useState('');
@@ -45,7 +46,11 @@ export function LoginPage() {
 
         try {
             await login({ email: email.toLowerCase().trim(), password });
-            navigate('/dashboard');
+            
+            // Redirect to previous page (if user was redirected from a protected route)
+            // or to dashboard if this is first login
+            const from = (location.state as any)?.from?.pathname || '/dashboard';
+            navigate(from);
         } catch {
             // Error is handled by the store
         }

@@ -96,4 +96,12 @@ export const authService = {
     async getVerificationStatus(email: string): Promise<VerificationStatusResponse> {
         return apiClient.get<VerificationStatusResponse>(`${AUTH_BASE}/resend-verification/status/${encodeURIComponent(email)}`);
     },
+
+    /**
+     * Refresh access token using refresh token
+     * POST /auth/refresh
+     */
+    async refreshToken(refreshToken: string): Promise<import('../types/auth.types').RefreshTokenResponse> {
+        return apiClient.post<import('../types/auth.types').RefreshTokenResponse>(`${AUTH_BASE}/refresh`, { refreshToken });
+    },
 };

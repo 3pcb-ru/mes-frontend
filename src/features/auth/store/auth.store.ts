@@ -29,6 +29,7 @@ interface AuthState {
 }
 
 const AUTH_TOKEN_KEY = 'auth_token';
+const REFRESH_TOKEN_KEY = 'refresh_token';
 
 export const useAuthStore = create<AuthState>()(
     persist(
@@ -47,6 +48,7 @@ export const useAuthStore = create<AuthState>()(
                 try {
                     const response = await authService.login(credentials);
                     localStorage.setItem(AUTH_TOKEN_KEY, response.accessToken);
+                    localStorage.setItem(REFRESH_TOKEN_KEY, response.refreshToken);
                     set({
                         user: response.user,
                         token: response.accessToken,
@@ -72,6 +74,7 @@ export const useAuthStore = create<AuthState>()(
                 try {
                     const response = await authService.signup(data);
                     localStorage.setItem(AUTH_TOKEN_KEY, response.accessToken);
+                    localStorage.setItem(REFRESH_TOKEN_KEY, response.refreshToken);
                     // On signup, the backend returns email but not full user.
                     // We set a partial user so the UI can show the email.
                     set({
@@ -109,6 +112,7 @@ export const useAuthStore = create<AuthState>()(
                     // Ignore logout errors, proceed with local cleanup
                 } finally {
                     localStorage.removeItem(AUTH_TOKEN_KEY);
+                    localStorage.removeItem(REFRESH_TOKEN_KEY);
                     set({
                         user: null,
                         detailedProfile: null,

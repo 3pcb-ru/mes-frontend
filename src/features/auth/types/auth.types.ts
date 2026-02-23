@@ -80,12 +80,19 @@ export interface ResendVerificationDto {
 
 export interface LoginResponse {
     accessToken: string;
+    refreshToken: string;
     user: User;
     settings?: Record<string, any>;
 }
 
+export interface RefreshTokenResponse {
+    accessToken: string;
+    refreshToken: string;
+}
+
 export interface SignupResponse {
     accessToken: string;
+    refreshToken: string;
     email: string;
     message: string;
 }
