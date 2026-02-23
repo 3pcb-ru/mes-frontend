@@ -14,14 +14,14 @@ export function TracePage() {
   const [search, setSearch] = useState('');
 
   const fetch = async () => {
-    try { const data = await traceService.listActivities(); setItems(data || []); } catch (err) { console.error(err); } finally { setIsLoading(false); }
+    try { const data = await traceService.listActivities(); setItems(Array.isArray(data) ? data : []); } catch (err) { console.error(err); setItems([]); } finally { setIsLoading(false); }
   };
 
   useEffect(()=>{ fetch(); }, []);
 
   const handleCreate = async (values: any) => { await traceService.createActivity(values); await fetch(); };
 
-  const filtered = items.filter(i => i.actionType.toLowerCase().includes(search.toLowerCase()));
+  const filtered = Array.isArray(items) ? items.filter(i => i.actionType.toLowerCase().includes(search.toLowerCase())) : [];
 
   return (
     <div className="space-y-6">
@@ -37,7 +37,7 @@ export function TracePage() {
       </div>
 
       <Card className="bg-slate-800/50 border-slate-700/50">
-        <CardHeader className="border-b border-slate-700/50 pb-6"><CardTitle>Activities</CardTitle></CardHeader>
+        <CardHeader className="border-b border-slate-700/50 pb-6"><CardTitle className="text-white">Activities</CardTitle></CardHeader>
         <CardContent className="p-0">
           {isLoading ? (<div className="flex flex-col items-center justify-center py-20 gap-4"><Loader2 className="h-8 w-8 animate-spin text-cyan-500"/><p className="text-slate-400">Loading activities...</p></div>) : (
             <div className="overflow-x-auto">
@@ -59,7 +59,11 @@ export function TracePage() {
         </CardContent>
       </Card>
 
-      <CrudWizard isOpen={isOpen} onClose={()=>setIsOpen(false)} title="Log Activity" fields={[{name:'actionType', label:'Action Type', required:true}, {name:'userId', label:'User ID'}, {name:'jobId', label:'Job ID'}, {name:'nodeId', label:'Node ID'}]} onSubmit={handleCreate} />
+      <CrudWizard isOpen={isOpen} onClose={()=>setIsOpen(false)} title="Log Activity" fields={[
+        {name:'actionType', label:'Action Type', required:true, hint:'Type of action (e.g., assemble, test, inspect)'},
+        {name:'jobId', label:'Job ID', hint:'Optional: Associated job or work order ID'},
+        {name:'nodeId', label:'Node ID', hint:'Optional: Associated facility or machine node'}
+      ]} onSubmit={handleCreate} />
     </div>
   );
 }

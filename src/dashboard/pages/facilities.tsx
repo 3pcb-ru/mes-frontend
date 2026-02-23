@@ -16,9 +16,10 @@ export function FacilitiesPage() {
   const fetch = async () => {
     try {
       const data = await facilitiesService.listFacilities();
-      setItems(data || []);
+      setItems(Array.isArray(data) ? data : []);
     } catch (err) {
       console.error(err);
+      setItems([]);
     } finally { setIsLoading(false); }
   };
 
@@ -29,7 +30,7 @@ export function FacilitiesPage() {
     await fetch();
   };
 
-  const filtered = items.filter((f)=> f.name.toLowerCase().includes(search.toLowerCase()) || f.path.toLowerCase().includes(search.toLowerCase()));
+  const filtered = Array.isArray(items) ? items.filter((f)=> f.name.toLowerCase().includes(search.toLowerCase()) || f.path.toLowerCase().includes(search.toLowerCase())) : [];
 
   return (
     <div className="space-y-6">
@@ -45,7 +46,7 @@ export function FacilitiesPage() {
       </div>
 
       <Card className="bg-slate-800/50 border-slate-700/50">
-        <CardHeader className="border-b border-slate-700/50 pb-6"><CardTitle>Facility List</CardTitle></CardHeader>
+        <CardHeader className="border-b border-slate-700/50 pb-6"><CardTitle className="text-white">Facility List</CardTitle></CardHeader>
         <CardContent className="p-0">
           {isLoading ? (
             <div className="flex flex-col items-center justify-center py-20 gap-4"><Loader2 className="h-8 w-8 animate-spin text-cyan-500"/><p className="text-slate-400">Loading facilities...</p></div>
@@ -71,7 +72,11 @@ export function FacilitiesPage() {
         </CardContent>
       </Card>
 
-      <CrudWizard isOpen={isOpen} onClose={()=>setIsOpen(false)} title="Create Facility" fields={[{name:'path', label:'Path', required:true}, {name:'name', label:'Name', required:true}, {name:'parentId', label:'Parent ID'},{name:'tenantId', label:'Tenant ID'}]} onSubmit={handleCreate} />
+      <CrudWizard isOpen={isOpen} onClose={()=>setIsOpen(false)} title="Create Facility" fields={[
+        {name:'path', label:'Path', required:true, hint:'Facility hierarchy path in ltree format (e.g., Factory.Line1.Oven)'},
+        {name:'name', label:'Name', required:true, hint:'Human-readable facility name'},
+        {name:'parentId', label:'Parent ID', hint:'Optional: ID of parent facility node for hierarchy'}
+      ]} onSubmit={handleCreate} />
     </div>
   );
 }

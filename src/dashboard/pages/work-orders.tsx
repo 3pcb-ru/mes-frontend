@@ -13,10 +13,10 @@ export function WorkOrdersPage() {
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState('');
 
-  const fetch = async () => { try { const data = await workOrdersService.listWorkOrders(); setItems(data || []); } catch (err) { console.error(err); } finally { setIsLoading(false); } };
+  const fetch = async () => { try { const data = await workOrdersService.listWorkOrders(); setItems(Array.isArray(data) ? data : []); } catch (err) { console.error(err); setItems([]); } finally { setIsLoading(false); } };
   useEffect(()=>{ fetch(); }, []);
   const handleCreate = async (values:any) => { await workOrdersService.createWorkOrder(values); await fetch(); };
-  const filtered = items.filter(w=> (w.bomRevisionId || '').toLowerCase().includes(search.toLowerCase()));
+  const filtered = Array.isArray(items) ? items.filter(w=> (w.bomRevisionId || '').toLowerCase().includes(search.toLowerCase())) : [];
 
   return (
     <div className="space-y-6">
@@ -32,7 +32,7 @@ export function WorkOrdersPage() {
       </div>
 
       <Card className="bg-slate-800/50 border-slate-700/50">
-        <CardHeader className="border-b border-slate-700/50 pb-6"><CardTitle>Work Orders</CardTitle></CardHeader>
+        <CardHeader className="border-b border-slate-700/50 pb-6"><CardTitle className="text-white">Work Orders</CardTitle></CardHeader>
         <CardContent className="p-0">
           {isLoading ? (<div className="flex flex-col items-center justify-center py-20 gap-4"><Loader2 className="h-8 w-8 animate-spin text-cyan-500"/><p className="text-slate-400">Loading work orders...</p></div>) : (
             <div className="overflow-x-auto">
@@ -54,7 +54,11 @@ export function WorkOrdersPage() {
         </CardContent>
       </Card>
 
-      <CrudWizard isOpen={isOpen} onClose={()=>setIsOpen(false)} title="Create Work Order" fields={[{name:'bomRevisionId', label:'BOM Revision ID', required:true}, {name:'targetQuantity', label:'Target Quantity', type:'number', required:true}, {name:'plannedStartDate', label:'Planned Start Date'}]} onSubmit={handleCreate} />
+      <CrudWizard isOpen={isOpen} onClose={()=>setIsOpen(false)} title="Create Work Order" fields={[
+        {name:'bomRevisionId', label:'BOM Revision ID', required:true, hint:'Bill of Materials revision ID to use for this order'},
+        {name:'targetQuantity', label:'Target Quantity', type:'number', required:true, hint:'Number of units to produce'},
+        {name:'plannedStartDate', label:'Planned Start Date', hint:'Optional: ISO date (YYYY-MM-DD)'}
+      ]} onSubmit={handleCreate} />
     </div>
   );
 }

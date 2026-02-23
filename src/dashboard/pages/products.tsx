@@ -16,9 +16,11 @@ export function ProductsPage() {
   const fetch = async () => {
     try {
       const data = await productsService.listProducts();
-      setItems(data || []);
+      console.log('API Response:', data);
+      setItems(Array.isArray(data) ? data : []);
     } catch (err) {
-      console.error(err);
+      console.error('API Error:', err);
+      setItems([]);
     } finally {
       setIsLoading(false);
     }
@@ -31,7 +33,7 @@ export function ProductsPage() {
     await fetch();
   };
 
-  const filtered = items.filter((p) => p.name.toLowerCase().includes(search.toLowerCase()) || p.sku.toLowerCase().includes(search.toLowerCase()));
+  const filtered = Array.isArray(items) ? items.filter((p) => p.name.toLowerCase().includes(search.toLowerCase()) || p.sku.toLowerCase().includes(search.toLowerCase())) : [];
 
   return (
     <div className="space-y-6">
@@ -50,7 +52,7 @@ export function ProductsPage() {
 
       <Card className="bg-slate-800/50 border-slate-700/50">
         <CardHeader className="border-b border-slate-700/50 pb-6">
-          <CardTitle>Product List</CardTitle>
+          <CardTitle className="text-white">Product List</CardTitle>
         </CardHeader>
         <CardContent className="p-0">
           {isLoading ? (
@@ -89,7 +91,10 @@ export function ProductsPage() {
         isOpen={isOpen}
         onClose={()=>setIsOpen(false)}
         title="Create Product"
-        fields={[{name:'sku', label:'SKU', required:true}, {name:'name', label:'Name', required:true}, {name:'tenantId', label:'Tenant ID'}]}
+        fields={[
+          {name:'sku', label:'SKU', required:true, hint:'Stock Keeping Unit - unique identifier for the product (e.g., PROD-001)'},
+          {name:'name', label:'Name', required:true, hint:'Product name or description (e.g., GPS Module)'}
+        ]}
         onSubmit={handleCreate}
       />
     </div>

@@ -4,12 +4,15 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogD
 import { Button } from '@/shared/components/ui/button';
 import { Form, FormField, FormItem, FormLabel, FormControl } from '@/shared/components/ui/form';
 import { Input } from '@/shared/components/ui/input';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/components/ui/tooltip';
+import { Info } from 'lucide-react';
 
 type Field = {
   name: string;
   label: string;
   type?: 'text' | 'number' | 'select';
   required?: boolean;
+  hint?: string;
   options?: { label: string; value: string }[];
 };
 
@@ -49,10 +52,20 @@ export function CrudWizard({ isOpen, title, description, mode = 'create', fields
                 rules={{ required: f.required }}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>
-                      {f.label}
-                      {f.required ? ' *' : ''}
-                    </FormLabel>
+                    <div className="flex items-center gap-2">
+                      <FormLabel>
+                        {f.label}
+                        {f.required ? ' *' : ''}
+                      </FormLabel>
+                      {f.hint && (
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Info className="h-4 w-4 text-slate-400 cursor-help" />
+                          </TooltipTrigger>
+                          <TooltipContent>{f.hint}</TooltipContent>
+                        </Tooltip>
+                      )}
+                    </div>
                     <FormControl>
                       {f.type === 'number' ? (
                         <Input type="number" {...field} />

@@ -13,10 +13,10 @@ export function InventoryPage() {
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState('');
 
-  const fetch = async () => { try { const data = await inventoryService.listContainers(); setItems(data || []); } catch (err) { console.error(err); } finally { setIsLoading(false); } };
+  const fetch = async () => { try { const data = await inventoryService.listContainers(); setItems(Array.isArray(data) ? data : []); } catch (err) { console.error(err); setItems([]); } finally { setIsLoading(false); } };
   useEffect(()=>{ fetch(); }, []);
   const handleCreate = async (values:any) => { await inventoryService.createContainer(values); await fetch(); };
-  const filtered = items.filter(c=> c.lpn.toLowerCase().includes(search.toLowerCase()));
+  const filtered = Array.isArray(items) ? items.filter(c=> c.lpn.toLowerCase().includes(search.toLowerCase())) : [];
 
   return (
     <div className="space-y-6">
@@ -32,7 +32,7 @@ export function InventoryPage() {
       </div>
 
       <Card className="bg-slate-800/50 border-slate-700/50">
-        <CardHeader className="border-b border-slate-700/50 pb-6"><CardTitle>Containers</CardTitle></CardHeader>
+        <CardHeader className="border-b border-slate-700/50 pb-6"><CardTitle className="text-white">Containers</CardTitle></CardHeader>
         <CardContent className="p-0">
           {isLoading ? (<div className="flex flex-col items-center justify-center py-20 gap-4"><Loader2 className="h-8 w-8 animate-spin text-cyan-500"/><p className="text-slate-400">Loading containers...</p></div>) : (
             <div className="overflow-x-auto">
@@ -54,7 +54,11 @@ export function InventoryPage() {
         </CardContent>
       </Card>
 
-      <CrudWizard isOpen={isOpen} onClose={()=>setIsOpen(false)} title="Create Container" fields={[{name:'lpn', label:'LPN', required:true}, {name:'type', label:'Type'}, {name:'locationNodeId', label:'Location Node ID'}]} onSubmit={handleCreate} />
+      <CrudWizard isOpen={isOpen} onClose={()=>setIsOpen(false)} title="Create Container" fields={[
+        {name:'lpn', label:'LPN', required:true, hint:'License Plate Number - unique identifier for this container (e.g., LPN-2024-001)'},
+        {name:'type', label:'Type', hint:'Container type (e.g., REEL, TRAY, BOX)'},
+        {name:'locationNodeId', label:'Location Node ID', hint:'Optional: Facility node where container is stored'}
+      ]} onSubmit={handleCreate} />
     </div>
   );
 }
