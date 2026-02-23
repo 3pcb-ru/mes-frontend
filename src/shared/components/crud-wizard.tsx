@@ -43,18 +43,26 @@ export function CrudWizard({ isOpen, title, description, mode = 'create', fields
         <Form {...form}>
           <form onSubmit={form.handleSubmit(submit)} className="space-y-4 pt-4">
             {fields.map((f) => (
-              <FormField key={f.name} name={f.name}>
-                <FormItem>
-                  <FormLabel>{f.label}{f.required ? ' *' : ''}</FormLabel>
-                  <FormControl>
-                    {f.type === 'number' ? (
-                      <Input type="number" {...form.register(f.name, { required: f.required })} />
-                    ) : (
-                      <Input type="text" {...form.register(f.name, { required: f.required })} />
-                    )}
-                  </FormControl>
-                </FormItem>
-              </FormField>
+              <FormField
+                key={f.name}
+                name={f.name}
+                rules={{ required: f.required }}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      {f.label}
+                      {f.required ? ' *' : ''}
+                    </FormLabel>
+                    <FormControl>
+                      {f.type === 'number' ? (
+                        <Input type="number" {...field} />
+                      ) : (
+                        <Input type="text" {...field} />
+                      )}
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
             ))}
 
             <DialogFooter>
