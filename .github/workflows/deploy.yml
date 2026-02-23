@@ -25,12 +25,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20'
-          # we can't enable pnpm caching here because setup-node tries to
-          # invoke pnpm before it's installed, which leads to the error seen
-          # in the log. dependencies will still be cached via the pnpm store
-          # when we install globally below.
-          cache: 'npm'
-
+          # caching disabled to avoid setup-node looking for a lockfile
+          # (it only understands npm/yarn lock files, not pnpm-lock.yaml).
       - name: Install pnpm globally
         run: |
           npm install -g pnpm
