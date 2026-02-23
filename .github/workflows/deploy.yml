@@ -106,3 +106,4 @@ jobs:
             
             # Optional: Clean up dangling images to save disk space on the VM
             docker image prune -f
+            #Update
