@@ -1,0 +1,108 @@
+name: Deploy mes-frontend
+
+on:
+  push:
+    branches: [ "main", "master" ] # Adjust if your default branch is different
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }} # This will resolve to 3pcb-ru/mes-frontend
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # install Node and set up pnpm so we can validate that the lockfile is installable
+      # (dependencies come from package.json and pnpm-lock.yaml used in Dockerfile).
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          # caching disabled to avoid setup-node looking for a lockfile
+          # (it only understands npm/yarn lock files, not pnpm-lock.yaml).
+      - name: Install pnpm globally
+        run: |
+          npm install -g pnpm
+          pnpm --version
+
+      - name: Install dependencies
+        run: |
+          if [ -f pnpm-lock.yaml ]; then
+            pnpm install --frozen-lockfile
+          else
+            echo "pnpm-lock.yaml not found, installing without lockfile"
+            pnpm install
+          fi
+
+      - name: Verify build locally
+        run: pnpm build
+
+      # log in to the GitHub Container Registry before building/pushing the image
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # optional: cache Docker build layers between runs for faster rebuilds
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Cache Docker layers
+        uses: actions/cache@v3
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to VM via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VM_IP }}
+          username: ${{ secrets.VM_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            # Log into GHCR on the VM to pull the private/public package
+            echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            
+            # Pull the newly built image
+            docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+            
+            # Stop and remove the old container to free up the port
+            docker stop mes-frontend || true
+            docker rm mes-frontend || true
+            
+            # Run the new container (Mapping container port 3000 to VM port 80)
+            docker run -d \
+              --name mes-frontend \
+              --restart always \
+              -p 3000:80 \
+              ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+            
+            # Optional: Clean up dangling images to save disk space on the VM
+            docker image prune -f
