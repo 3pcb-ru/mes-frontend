@@ -14,7 +14,7 @@ export default defineConfig({
         allowedHosts: ['grvt.cc', 'mes.grvt.cc'],
         proxy: {
             '/api': {
-                target: 'http://localhost:4000',
+                target: 'http://188.245.83.107:4000',
                 changeOrigin: true,
             },
         },
