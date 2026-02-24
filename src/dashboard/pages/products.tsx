@@ -6,23 +6,21 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/shared/components/ui
 import { Input } from '@/shared/components/ui/input';
 import { Button } from '@/shared/components/ui/button';
 import CrudWizard from '@/shared/components/crud-wizard';
+import { TableActions } from '@/shared/components/table-actions';
+import { getModuleActions } from '@/shared/lib/module-actions-config';
 
 export function ProductsPage() {
   const [items, setItems] = useState<ProductListItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState('');
+  const [editingItem, setEditingItem] = useState<ProductListItem | null>(null);
+  const moduleActions = getModuleActions('products');
 
   const fetch = async () => {
     try {
       const data = await productsService.listProducts();
-      console.log('API Response:', data);
-      console.log('Is Array?', Array.isArray(data));
-      console.log('Data Type:', typeof data);
-      const itemsToSet = Array.isArray(data) ? data : [];
-      console.log('Items to set:', itemsToSet);
-      console.log('First item:', itemsToSet[0]);
-      setItems(itemsToSet);
+      setItems(Array.isArray(data) ? data : []);
     } catch (err) {
       console.error('API Error:', err);
       setItems([]);
@@ -34,17 +32,43 @@ export function ProductsPage() {
   useEffect(() => { fetch(); }, []);
 
   const handleCreate = async (values: any) => {
-    await productsService.createProduct(values);
-    await fetch();
+    try {
+      if (editingItem) {
+        await productsService.updateProduct(editingItem.id, values);
+      } else {
+        await productsService.createProduct(values);
+      }
+      setEditingItem(null);
+      await fetch();
+    } catch (err) {
+      console.error('Error:', err);
+    }
+  };
+
+  const handleEdit = (id: string) => {
+    const item = items.find(p => p.id === id);
+    if (item) {
+      setEditingItem(item);
+      setIsOpen(true);
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    try {
+      await productsService.deleteProduct(id);
+      await fetch();
+    } catch (err) {
+      console.error('Delete error:', err);
+      throw err;
+    }
+  };
+
+  const handleCloseWizard = () => {
+    setIsOpen(false);
+    setEditingItem(null);
   };
 
   const filtered = Array.isArray(items) ? items.filter((p) => p.name.toLowerCase().includes(search.toLowerCase()) || p.sku?.toLowerCase().includes(search.toLowerCase())) : [];
-
-  useEffect(() => {
-    console.log('Items:', items);
-    console.log('Search:', search);
-    console.log('Filtered:', filtered);
-  }, [items, search, filtered]);
 
   return (
     <div className="space-y-6">
@@ -85,7 +109,9 @@ export function ProductsPage() {
                     <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase">SKU</th>
                     <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase">Name</th>
                     <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase">Tenant</th>
-                    <th className="px-6 py-4 text-right"></th>
+                    {(moduleActions.canEdit || moduleActions.canDelete) && (
+                      <th className="px-6 py-4 text-right text-xs font-semibold text-slate-400 uppercase">Actions</th>
+                    )}
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-700/30">
@@ -94,7 +120,16 @@ export function ProductsPage() {
                       <td className="px-6 py-4 text-white">{p.sku || '—'}</td>
                       <td className="px-6 py-4 text-white">{p.name || '—'}</td>
                       <td className="px-6 py-4 text-slate-400">{p.tenantId || '—'}</td>
-                      <td className="px-6 py-4 text-right"></td>
+                      {(moduleActions.canEdit || moduleActions.canDelete) && (
+                        <td className="px-6 py-4 text-right">
+                          <TableActions 
+                            id={p.id} 
+                            onEdit={moduleActions.canEdit ? handleEdit : undefined}
+                            onDelete={moduleActions.canDelete ? handleDelete : undefined}
+                            itemName="product"
+                          />
+                        </td>
+                      )}
                     </tr>
                   ))}
                 </tbody>
@@ -106,12 +141,14 @@ export function ProductsPage() {
 
       <CrudWizard
         isOpen={isOpen}
-        onClose={()=>setIsOpen(false)}
-        title="Create Product"
+        onClose={handleCloseWizard}
+        title={editingItem ? "Edit Product" : "Create Product"}
+        mode={editingItem ? "edit" : "create"}
         fields={[
           {name:'sku', label:'SKU', required:true, hint:'Stock Keeping Unit - unique identifier for the product (e.g., PROD-001)'},
           {name:'name', label:'Name', required:true, hint:'Product name or description (e.g., GPS Module)'}
         ]}
+        initialData={editingItem || {}}
         onSubmit={handleCreate}
       />
     </div>

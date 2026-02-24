@@ -10,4 +10,10 @@ export const productsService = {
   createProduct: async (payload: { sku: string; name: string; tenantId?: string }) => {
     return apiClient.post<any>('/products', payload);
   },
+  updateProduct: async (id: string, payload: any) => {
+    return apiClient.put<any>(`/products/${id}`, payload);
+  },
+  deleteProduct: async (id: string) => {
+    return apiClient.delete<any>(`/products/${id}`);
+  },
 };

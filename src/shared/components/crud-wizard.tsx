@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from '@/shared/components/ui/dialog';
 import { Button } from '@/shared/components/ui/button';
@@ -29,6 +29,13 @@ type Props = {
 
 export function CrudWizard({ isOpen, title, description, mode = 'create', fields, initialData = {}, onClose, onSubmit }: Props) {
   const form = useForm({ defaultValues: initialData });
+
+  // Reset form when initialData or mode changes
+  useEffect(() => {
+    if (isOpen) {
+      form.reset(initialData);
+    }
+  }, [isOpen, initialData, form]);
 
   const submit = async (values: any) => {
     await onSubmit(values);

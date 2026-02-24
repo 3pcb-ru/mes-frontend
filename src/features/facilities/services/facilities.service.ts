@@ -5,5 +5,6 @@ export const facilitiesService = {
   getFacility: async (id: string) => apiClient.get<any>(`/facilities/${id}`),
   createFacility: async (payload: any) => apiClient.post<any>('/facilities', payload),
   updateFacility: async (id: string, payload: any) => apiClient.put<any>(`/facilities/${id}`, payload),
+  deleteFacility: async (id: string) => apiClient.delete<any>(`/facilities/${id}`),
   changeStatus: async (id: string, body: { status: string; reason?: string }) => apiClient.post<any>(`/facilities/${id}/change-status`, body),
 };
