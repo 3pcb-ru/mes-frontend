@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { SessionExpiredAlert } from '@/shared/components/session-expired-alert';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Eye, EyeOff, Mail, Lock, Loader2, ArrowRight } from 'lucide-react';
 import { useAuth } from '../store/auth.store';
@@ -56,8 +57,17 @@ export function LoginPage() {
         }
     };
 
+    // Show session expired alert if redirected due to token expiration
+    const [showSessionExpired, setShowSessionExpired] = useState(() => {
+        if (typeof window !== 'undefined' && localStorage.getItem('session_expired')) {
+            return true;
+        }
+        return false;
+    });
+
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 relative overflow-hidden flex items-center justify-center p-4">
+            {showSessionExpired && <SessionExpiredAlert />}
             {/* Animated gradient orbs */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute top-0 -left-4 w-96 h-96 bg-blue-500/30 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob" />

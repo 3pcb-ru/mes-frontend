@@ -23,9 +23,8 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
         return null;
     }
 
-    // Check if user has valid authentication
-    // Either from Zustand state or from localStorage tokens
-    const hasValidAuth = isAuthenticated || (!!accessToken && !!refreshToken);
+    // Require both tokens to be present for valid auth
+    const hasValidAuth = isAuthenticated && !!accessToken && !!refreshToken;
 
     if (!hasValidAuth) {
         // Redirect to login page with the return url so user can come back

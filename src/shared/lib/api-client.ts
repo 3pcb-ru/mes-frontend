@@ -46,6 +46,11 @@ class ApiClient {
         }
     }
 
+    /**
+     * Perform refresh token flow: POST /auth/refresh with refreshToken in body.
+     * Always overwrite both tokens with new values from response.
+     * If refresh fails, clear tokens and redirect to login.
+     */
     private async performRefresh(): Promise<boolean> {
         const refreshToken = this.getRefreshToken();
         if (!refreshToken) {
@@ -63,17 +68,19 @@ class ApiClient {
             });
 
             const data = await response.json();
+            // Unwrap { data: { ... } } if present
             const responseData = data && typeof data === 'object' && 'data' in data ? data.data : data;
 
             if (!response.ok) {
                 // Refresh failed - clear tokens and redirect to login
                 localStorage.removeItem('auth_token');
                 localStorage.removeItem('refresh_token');
+                localStorage.setItem('session_expired', '1');
                 window.location.href = '/login';
                 return false;
             }
 
-            // Store new tokens
+            // Always overwrite both tokens with new values
             if (responseData.accessToken) {
                 localStorage.setItem('auth_token', responseData.accessToken);
             }
@@ -86,6 +93,7 @@ class ApiClient {
             // Network or other error - redirect to login
             localStorage.removeItem('auth_token');
             localStorage.removeItem('refresh_token');
+            localStorage.setItem('session_expired', '1');
             window.location.href = '/login';
             return false;
         }

@@ -42,7 +42,8 @@ export const useAuthStore = create<AuthState>()(
             error: null,
             isAuthenticated: false,
 
-            // Login action
+
+            // Login action: stores both tokens on success
             login: async (credentials: LoginDto) => {
                 set({ isLoading: true, error: null });
                 try {
@@ -68,7 +69,8 @@ export const useAuthStore = create<AuthState>()(
                 }
             },
 
-            // Signup action
+
+            // Signup action: stores both tokens on success
             signup: async (data: SignupDto) => {
                 set({ isLoading: true, error: null });
                 try {
@@ -103,7 +105,8 @@ export const useAuthStore = create<AuthState>()(
                 }
             },
 
-            // Logout action
+
+            // Logout action: always clears both tokens after calling backend
             logout: async () => {
                 set({ isLoading: true });
                 try {

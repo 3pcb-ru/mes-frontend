@@ -1,5 +1,15 @@
 import { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+function SessionExpiredRedirector() {
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (typeof window !== 'undefined' && localStorage.getItem('session_expired')) {
+            localStorage.removeItem('session_expired');
+            navigate('/login', { replace: true });
+        }
+    }, [navigate]);
+    return null;
+}
 
 // Layouts
 import { LandingLayout } from './landing/layouts/landing-layout';
@@ -52,6 +62,7 @@ function ScrollToHash() {
 export default function App() {
     return (
         <Router>
+            <SessionExpiredRedirector />
             <ScrollToHash />
             <Routes>
                 {/* Landing Routes */}

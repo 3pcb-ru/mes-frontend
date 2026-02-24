@@ -78,18 +78,27 @@ export interface ResendVerificationDto {
 // API Response Types
 // ============================================
 
+
+// Login returns tokens, user, settings, isVerified, and message
 export interface LoginResponse {
     accessToken: string;
     refreshToken: string;
     user: User;
     settings?: Record<string, any>;
+    isVerified?: boolean;
+    message?: string;
 }
 
+
+// Refresh returns new tokens and message
 export interface RefreshTokenResponse {
     accessToken: string;
     refreshToken: string;
+    message?: string;
 }
 
+
+// Signup returns tokens, email, and message
 export interface SignupResponse {
     accessToken: string;
     refreshToken: string;
@@ -97,7 +106,11 @@ export interface SignupResponse {
     message: string;
 }
 
-export interface AuthResponse extends LoginResponse {}
+
+// Logout returns a message
+export interface LogoutResponse {
+    message: string;
+}
 
 export interface MessageResponse {
     message: string;

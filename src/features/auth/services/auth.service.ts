@@ -7,7 +7,6 @@ import type {
     ValidateResetCodeDto,
     ResetPasswordDto,
     ResendVerificationDto,
-    AuthResponse,
     LoginResponse,
     SignupResponse,
     MessageResponse,
@@ -45,8 +44,12 @@ export const authService = {
      * Logout current user
      * DELETE /auth/logout
      */
-    async logout(): Promise<MessageResponse> {
-        return apiClient.delete<MessageResponse>(`${AUTH_BASE}/logout`);
+    /**
+     * Logout current user (invalidates both tokens)
+     * DELETE /auth/logout
+     */
+    async logout(): Promise<import('../types/auth.types').LogoutResponse> {
+        return apiClient.delete<import('../types/auth.types').LogoutResponse>(`${AUTH_BASE}/logout`);
     },
 
     /**
