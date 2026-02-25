@@ -14,7 +14,7 @@ export function DashboardLayout() {
             {/* Main content */}
             <div className={`transition-all duration-300 ${sidebarOpen ? 'lg:ml-64' : 'lg:ml-20'}`}>
                 <DashboardHeader onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
-                <main className="p-6">
+                <main className="p-4 md:p-6">
                     <Outlet />
                 </main>
             </div>

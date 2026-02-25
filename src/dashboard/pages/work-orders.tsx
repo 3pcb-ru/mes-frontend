@@ -45,7 +45,7 @@ export function WorkOrdersPage() {
         }
     };
     const handleEdit = (id: string) => {
-        const item = items.find(w => w.id === id);
+        const item = items.find((w) => w.id === id);
         if (item) {
             setEditingItem(item);
             setIsOpen(true);
@@ -68,14 +68,14 @@ export function WorkOrdersPage() {
 
     return (
         <div className="space-y-6">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                     <h1 className="text-3xl font-bold text-white mb-2">Work Orders</h1>
                     <p className="text-slate-400">Create and track work orders.</p>
                 </div>
                 <div className="flex items-center gap-3">
-                    <Input placeholder="Search BOM revision..." value={search} onChange={(e: any) => setSearch(e.target.value)} />
-                    <Button onClick={() => setIsOpen(true)} className="flex items-center gap-2">
+                    <Input placeholder="Search BOM revision..." value={search} onChange={(e: any) => setSearch(e.target.value)} className="flex-1 sm:flex-none" />
+                    <Button onClick={() => setIsOpen(true)} className="flex items-center gap-2 whitespace-nowrap">
                         <Plus className="h-4 w-4" />
                         Add
                     </Button>
@@ -118,8 +118,8 @@ export function WorkOrdersPage() {
                                             <td className="px-6 py-4 text-slate-400">{w.plannedStartDate || '-'}</td>
                                             {(moduleActions.canEdit || moduleActions.canDelete) && (
                                                 <td className="px-6 py-4 text-right">
-                                                    <TableActions 
-                                                        id={w.id} 
+                                                    <TableActions
+                                                        id={w.id}
                                                         onEdit={moduleActions.canEdit ? handleEdit : undefined}
                                                         onDelete={moduleActions.canDelete ? handleDelete : undefined}
                                                         itemName="work order"

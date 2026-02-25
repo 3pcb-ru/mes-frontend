@@ -158,7 +158,7 @@ export function SignupPage() {
                         {error && <div className="bg-red-500/10 border border-red-500/50 rounded-lg p-4 text-red-400 text-sm">{error}</div>}
 
                         {/* Name Row */}
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             {/* First Name */}
                             <div className="space-y-2">
                                 <Label htmlFor="firstName" className="text-slate-300">

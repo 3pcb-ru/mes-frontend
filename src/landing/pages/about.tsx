@@ -135,7 +135,7 @@ export function AboutPage() {
                         {whySection.map((item, i) => (
                             <div key={i} className={`flex flex-col md:flex-row items-center gap-6 w-full ${i % 2 === 1 ? 'md:flex-row-reverse' : ''}`}>
                                 <div className="flex-shrink-0">
-                                    <div className="w-full md:w-[500px] h-[312px] rounded-lg overflow-hidden border border-slate-700 shadow-sm bg-black/5">
+                                    <div className="w-full md:w-[500px] aspect-video md:h-[312px] rounded-lg overflow-hidden border border-slate-700 shadow-sm bg-black/5">
                                         <img src={item.img} alt={item.title} className="w-full h-full object-cover" />
                                     </div>
                                 </div>
