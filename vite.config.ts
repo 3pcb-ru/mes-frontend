@@ -11,10 +11,10 @@ export default defineConfig({
     plugins: [react(), tailwindcss()],
     server: {
         port: 3000,
-        allowedHosts: ['grvt.cc', 'mes.grvt.cc'],
+        allowedHosts: ['grvt.cc', 'mes.grvt.cc','localhost'],
         proxy: {
             '/api': {
-                target: 'http://188.245.83.107:4000',
+                target: 'http://localhost:4000',
                 changeOrigin: true,
             },
         },
