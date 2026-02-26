@@ -25,7 +25,7 @@ export interface User {
     email: string;
     firstName: string;
     lastName: string;
-    factoryName?: string;
+    organizationName?: string;
     phone?: string;
     isVerified: boolean;
     createdAt: string;
@@ -39,7 +39,7 @@ export interface User {
 export interface SignupDto {
     firstName: string; // NAME_PATTERN regex
     lastName: string; // NAME_PATTERN regex
-    factoryName: string; // Min: 2, Max: 100 chars
+    organizationName: string; // Min: 2, Max: 100 chars
     password: string; // Min: 8, Max: 50, must contain: 1 uppercase, 1 lowercase, 1 number
     email: string; // Valid email, trimmed & lowercased
     sendMail?: boolean; // Optional
@@ -78,7 +78,6 @@ export interface ResendVerificationDto {
 // API Response Types
 // ============================================
 
-
 // Login returns tokens, user, settings, isVerified, and message
 export interface LoginResponse {
     accessToken: string;
@@ -89,14 +88,12 @@ export interface LoginResponse {
     message?: string;
 }
 
-
 // Refresh returns new tokens and message
 export interface RefreshTokenResponse {
     accessToken: string;
     refreshToken: string;
     message?: string;
 }
-
 
 // Signup returns tokens, email, and message
 export interface SignupResponse {
@@ -105,7 +102,6 @@ export interface SignupResponse {
     email: string;
     message: string;
 }
-
 
 // Logout returns a message
 export interface LogoutResponse {

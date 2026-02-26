@@ -11,7 +11,7 @@ import { Logo } from '@/shared/components/logo';
 interface FormData {
     firstName: string;
     lastName: string;
-    factoryName: string;
+    organizationName: string;
     email: string;
     password: string;
     confirmPassword: string;
@@ -20,7 +20,7 @@ interface FormData {
 interface ValidationErrors {
     firstName?: string;
     lastName?: string;
-    factoryName?: string;
+    organizationName?: string;
     email?: string;
     password?: string;
     confirmPassword?: string;
@@ -33,7 +33,7 @@ export function SignupPage() {
     const [formData, setFormData] = useState<FormData>({
         firstName: '',
         lastName: '',
-        factoryName: '',
+        organizationName: '',
         email: '',
         password: '',
         confirmPassword: '',
@@ -75,12 +75,12 @@ export function SignupPage() {
             errors.lastName = 'Please enter a valid name';
         }
 
-        if (!formData.factoryName.trim()) {
-            errors.factoryName = 'Factory/Company name is required';
-        } else if (formData.factoryName.length < 2) {
-            errors.factoryName = 'Factory name must be at least 2 characters';
-        } else if (formData.factoryName.length > 100) {
-            errors.factoryName = 'Factory name must be less than 100 characters';
+        if (!formData.organizationName.trim()) {
+            errors.organizationName = 'Organization/Company name is required';
+        } else if (formData.organizationName.length < 2) {
+            errors.organizationName = 'Organization name must be at least 2 characters';
+        } else if (formData.organizationName.length > 100) {
+            errors.organizationName = 'Organization name must be less than 100 characters';
         }
 
         if (!formData.email.trim()) {
@@ -115,7 +115,7 @@ export function SignupPage() {
             await signup({
                 firstName: formData.firstName.trim(),
                 lastName: formData.lastName.trim(),
-                factoryName: formData.factoryName.trim(),
+                organizationName: formData.organizationName.trim(),
                 email: formData.email.toLowerCase().trim(),
                 password: formData.password,
                 sendMail: true,
@@ -195,23 +195,23 @@ export function SignupPage() {
                             </div>
                         </div>
 
-                        {/* Factory Name */}
+                        {/* Organization Name */}
                         <div className="space-y-2">
-                            <Label htmlFor="factoryName" className="text-slate-300">
-                                Factory / Company Name
+                            <Label htmlFor="organizationName" className="text-slate-300">
+                                Organization / Company Name
                             </Label>
                             <div className="relative">
                                 <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
                                 <Input
-                                    id="factoryName"
+                                    id="organizationName"
                                     type="text"
                                     placeholder="Acme Manufacturing Inc."
-                                    value={formData.factoryName}
-                                    onChange={(e) => updateField('factoryName', e.target.value)}
+                                    value={formData.organizationName}
+                                    onChange={(e) => updateField('organizationName', e.target.value)}
                                     className="pl-10 bg-slate-900/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-cyan-500 focus:ring-cyan-500/20"
                                 />
                             </div>
-                            {validationErrors.factoryName && <p className="text-red-400 text-sm">{validationErrors.factoryName}</p>}
+                            {validationErrors.organizationName && <p className="text-red-400 text-sm">{validationErrors.organizationName}</p>}
                         </div>
 
                         {/* Email */}

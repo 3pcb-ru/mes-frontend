@@ -147,14 +147,14 @@ export function ProfilePage() {
                 </Card>
 
                 {/* Account Details */}
-                {(detailedProfile?.role || detailedProfile?.factory) && (
+                {(detailedProfile?.role || detailedProfile?.organization) && (
                     <Card className="bg-slate-800/50 border-slate-700/50">
                         <CardHeader>
                             <CardTitle className="text-white flex items-center gap-2">
                                 <Shield className="h-5 w-5 text-purple-400" />
                                 Account Role & Organization
                             </CardTitle>
-                            <CardDescription className="text-slate-400">View your assigned role and facility information.</CardDescription>
+                            <CardDescription className="text-slate-400">View your assigned role and organization information.</CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-4">
                             {detailedProfile.role && (
@@ -172,15 +172,15 @@ export function ProfilePage() {
                                 </div>
                             )}
 
-                            {detailedProfile.factory && (
+                            {detailedProfile.organization && (
                                 <div className="flex items-center justify-between p-4 rounded-lg bg-slate-900/50 border border-slate-700/50">
                                     <div className="flex items-center gap-4">
                                         <div className="w-10 h-10 rounded-full bg-cyan-500/10 flex items-center justify-center text-cyan-400">
                                             <Building2 className="h-5 w-5" />
                                         </div>
                                         <div>
-                                            <p className="text-white font-medium">{detailedProfile.factory.name}</p>
-                                            <p className="text-xs text-slate-500 mt-0.5">{detailedProfile.factory.location || 'Assigned Factory'}</p>
+                                            <p className="text-white font-medium">{detailedProfile.organization.name}</p>
+                                            <p className="text-xs text-slate-500 mt-0.5">{detailedProfile.organization.location || 'Assigned Organization'}</p>
                                         </div>
                                     </div>
                                 </div>

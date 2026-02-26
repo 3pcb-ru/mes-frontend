@@ -4,7 +4,7 @@ export interface Role {
     permissions?: string[];
 }
 
-export interface Factory {
+export interface Organization {
     id: string;
     name: string;
     location?: string;
@@ -17,7 +17,7 @@ export interface DetailedProfile {
     lastName: string;
     isVerified: boolean;
     role?: Role;
-    factory?: Factory;
+    organization?: Organization;
     createdAt: string;
     updatedAt: string;
 }

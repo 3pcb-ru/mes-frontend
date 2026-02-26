@@ -114,7 +114,7 @@ export function ProductsPage() {
                                     <tr className="border-b border-slate-700/50 bg-slate-900/40">
                                         <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase">SKU</th>
                                         <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase">Name</th>
-                                        <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase">Tenant</th>
+                                        <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase">Org</th>
                                         {(moduleActions.canEdit || moduleActions.canDelete) && (
                                             <th className="px-6 py-4 text-right text-xs font-semibold text-slate-400 uppercase">Actions</th>
                                         )}
@@ -125,7 +125,7 @@ export function ProductsPage() {
                                         <tr key={p.id} className="hover:bg-slate-800/30">
                                             <td className="px-6 py-4 text-white">{p.sku || '—'}</td>
                                             <td className="px-6 py-4 text-white">{p.name || '—'}</td>
-                                            <td className="px-6 py-4 text-slate-400">{p.tenantId || '—'}</td>
+                                            <td className="px-6 py-4 text-slate-400">{p.organizationId || '—'}</td>
                                             {(moduleActions.canEdit || moduleActions.canDelete) && (
                                                 <td className="px-6 py-4 text-right">
                                                     <TableActions
