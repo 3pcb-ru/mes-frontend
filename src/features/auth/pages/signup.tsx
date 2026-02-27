@@ -121,8 +121,21 @@ export function SignupPage() {
                 sendMail: true,
             });
             navigate('/dashboard');
-        } catch {
-            // Error is handled by the store
+        } catch (err) {
+            // Map backend validation errors (422) into form fields when present
+            const apiErr = err as any;
+            if (apiErr?.statusCode === 422 && apiErr.body?.errors) {
+                const fieldErrors: Array<any> = apiErr.body.errors;
+                const mapped: ValidationErrors = {};
+                for (const e of fieldErrors) {
+                    const field = e.path?.[0] as keyof ValidationErrors | undefined;
+                    if (field) mapped[field] = e.message || 'Invalid value';
+                }
+                setValidationErrors((prev) => ({ ...prev, ...mapped }));
+                return;
+            }
+
+            // Fallback: let store/UI show generic error
         }
     };
 

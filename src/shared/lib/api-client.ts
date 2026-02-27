@@ -155,10 +155,11 @@ class ApiClient {
         }
 
         if (!response.ok) {
-            const error: ApiError = {
+            const error: ApiError & { body?: any } = {
                 message: (data && data.message) || 'An error occurred',
                 statusCode: response.status,
                 error: data && data.error,
+                body: responseData ?? data,
             };
             throw error;
         }
