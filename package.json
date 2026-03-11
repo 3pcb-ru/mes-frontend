@@ -2,7 +2,7 @@
     "name": "mes-frontend",
     "description": "MES Platform Landing Site - Built with Vite, React, Tailwind CSS, and Radix UI",
     "private": true,
-    "version": "3.5.0",
+    "version": "4.0.0",
     "type": "module",
     "scripts": {
         "build": "vite build",

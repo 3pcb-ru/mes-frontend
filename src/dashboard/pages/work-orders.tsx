@@ -1,23 +1,29 @@
 import { useEffect, useState } from 'react';
-import { Loader2, Plus, Wrench } from 'lucide-react';
+import { Plus, GripVertical, FileText } from 'lucide-react';
 import { workOrdersService } from '@/features/work-orders/services/work-orders.service';
 import type { WorkOrderListItem } from '@/features/work-orders/types/work-orders.types';
-import { Card, CardContent, CardHeader, CardTitle } from '@/shared/components/ui/card';
-import { Input } from '@/shared/components/ui/input';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/shared/components/ui/card';
 import { Button } from '@/shared/components/ui/button';
-import CrudWizard from '@/shared/components/crud-wizard';
-import { TableActions } from '@/shared/components/table-actions';
-import { getModuleActions } from '@/shared/lib/module-actions-config';
+import { StatusBadge } from '@/shared/components/ui/status-badge';
+import { SlideOutDrawer } from '@/shared/components/ui/slide-out-drawer';
+import { Label } from '@/shared/components/ui/label';
+import { Input } from '@/shared/components/ui/input';
+
+const COLUMNS = [
+    { id: 'PLANNED', label: 'Planned' },
+    { id: 'RELEASED', label: 'Ready for Execution' },
+    { id: 'IN_PROGRESS', label: 'In Progress' },
+    { id: 'CLOSED', label: 'Completed' },
+] as const;
 
 export function WorkOrdersPage() {
     const [items, setItems] = useState<WorkOrderListItem[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [isOpen, setIsOpen] = useState(false);
-    const [search, setSearch] = useState('');
-    const [editingItem, setEditingItem] = useState<WorkOrderListItem | null>(null);
-    const moduleActions = getModuleActions('workOrders');
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+    const [formData, setFormData] = useState<Partial<WorkOrderListItem>>({});
 
-    const fetch = async () => {
+    const fetchOrders = async () => {
+        setIsLoading(true);
         try {
             const data = await workOrdersService.listWorkOrders();
             setItems(Array.isArray(data) ? data : []);
@@ -28,126 +34,128 @@ export function WorkOrdersPage() {
             setIsLoading(false);
         }
     };
+
     useEffect(() => {
-        fetch();
+        fetchOrders();
     }, []);
-    const handleCreate = async (values: any) => {
+
+    const handleCreate = async (e: React.FormEvent) => {
+        e.preventDefault();
         try {
-            if (editingItem) {
-                await workOrdersService.updateWorkOrder(editingItem.id, values);
-            } else {
-                await workOrdersService.createWorkOrder(values);
-            }
-            setEditingItem(null);
-            await fetch();
+            await workOrdersService.createWorkOrder({
+                ...formData,
+                targetQuantity: Number(formData.targetQuantity),
+            });
+            setIsDrawerOpen(false);
+            setFormData({});
+            await fetchOrders();
         } catch (err) {
-            console.error('Error:', err);
+            console.error('Error creating work order:', err);
         }
     };
-    const handleEdit = (id: string) => {
-        const item = items.find((w) => w.id === id);
-        if (item) {
-            setEditingItem(item);
-            setIsOpen(true);
-        }
-    };
-    const handleDelete = async (id: string) => {
-        try {
-            await workOrdersService.deleteWorkOrder(id);
-            await fetch();
-        } catch (err) {
-            console.error('Delete error:', err);
-            throw err;
-        }
-    };
-    const handleCloseWizard = () => {
-        setIsOpen(false);
-        setEditingItem(null);
-    };
-    const filtered = Array.isArray(items) ? items.filter((w) => (w.bomRevisionId || '').toLowerCase().includes(search.toLowerCase())) : [];
 
     return (
-        <div className="space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex flex-col h-[calc(100vh-8rem)] gap-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 shrink-0">
                 <div>
-                    <h1 className="text-3xl font-bold text-white mb-2">Work Orders</h1>
-                    <p className="text-slate-400">Create and track work orders.</p>
+                    <h1 className="text-3xl font-bold text-white mb-2">Production Execution</h1>
+                    <p className="text-slate-400">Manage manufacturing workflows via Work Orders.</p>
                 </div>
-                <div className="flex items-center gap-3 shrink min-w-0">
-                    <Input placeholder="Search BOM revision..." value={search} onChange={(e: any) => setSearch(e.target.value)} className="min-w-0 flex-1 sm:w-64" />
-                    <Button onClick={() => setIsOpen(true)} className="flex items-center gap-2 whitespace-nowrap shrink-0">
-                        <Plus className="h-4 w-4" />
-                        Add
+                <div className="flex items-center shrink min-w-0">
+                    <Button onClick={() => setIsDrawerOpen(true)} className="flex items-center gap-2">
+                        <Plus className="h-4 w-4" /> Create Work Order
                     </Button>
                 </div>
             </div>
 
-            <Card className="bg-slate-800/50 border-slate-700/50">
-                <CardHeader className="border-b border-slate-700/50 pb-6">
-                    <CardTitle className="text-white">Work Orders</CardTitle>
-                </CardHeader>
-                <CardContent className="p-0">
-                    {isLoading ? (
-                        <div className="flex flex-col items-center justify-center py-20 gap-4">
-                            <Loader2 className="h-8 w-8 animate-spin text-cyan-500" />
-                            <p className="text-slate-400">Loading work orders...</p>
-                        </div>
-                    ) : filtered.length === 0 ? (
-                        <div className="flex flex-col items-center justify-center py-20 gap-4">
-                            <Wrench className="h-8 w-8 text-slate-500" />
-                            <p className="text-slate-400">No work orders found</p>
-                        </div>
-                    ) : (
-                        <div className="overflow-x-auto">
-                            <table className="w-full text-left border-collapse">
-                                <thead>
-                                    <tr className="border-b border-slate-700/50 bg-slate-900/40">
-                                        <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase">BOM Rev</th>
-                                        <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase">Target Qty</th>
-                                        <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase">Planned Start</th>
-                                        {(moduleActions.canEdit || moduleActions.canDelete) && (
-                                            <th className="px-6 py-4 text-right text-xs font-semibold text-slate-400 uppercase">Actions</th>
-                                        )}
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-slate-700/30">
-                                    {filtered.map((w) => (
-                                        <tr key={w.id} className="hover:bg-slate-800/30">
-                                            <td className="px-6 py-4 text-white">{w.bomRevisionId}</td>
-                                            <td className="px-6 py-4 text-white">{w.targetQuantity}</td>
-                                            <td className="px-6 py-4 text-slate-400">{w.plannedStartDate || '-'}</td>
-                                            {(moduleActions.canEdit || moduleActions.canDelete) && (
-                                                <td className="px-6 py-4 text-right">
-                                                    <TableActions
-                                                        id={w.id}
-                                                        onEdit={moduleActions.canEdit ? handleEdit : undefined}
-                                                        onDelete={moduleActions.canDelete ? handleDelete : undefined}
-                                                        itemName="work order"
-                                                    />
-                                                </td>
-                                            )}
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    )}
-                </CardContent>
-            </Card>
+            <div className="flex-1 flex gap-4 min-h-0 overflow-x-auto pb-4 custom-scrollbar">
+                {COLUMNS.map((col) => {
+                    const columnItems = items.filter((w) => (w.status || 'PLANNED') === col.id);
 
-            <CrudWizard
-                isOpen={isOpen}
-                onClose={handleCloseWizard}
-                title={editingItem ? 'Edit Work Order' : 'Create Work Order'}
-                mode={editingItem ? 'edit' : 'create'}
-                fields={[
-                    { name: 'bomRevisionId', label: 'BOM Revision ID', required: true, hint: 'Bill of Materials revision ID to use for this order' },
-                    { name: 'targetQuantity', label: 'Target Quantity', type: 'number', required: true, hint: 'Number of units to produce' },
-                    { name: 'plannedStartDate', label: 'Planned Start Date', hint: 'Optional: ISO date (YYYY-MM-DD)' },
-                ]}
-                initialData={editingItem || {}}
-                onSubmit={handleCreate}
-            />
+                    return (
+                        <Card key={col.id} className="min-w-[320px] max-w-[320px] flex flex-col bg-slate-900/50 border-slate-700/50">
+                            <CardHeader className="border-b border-slate-800 pb-3 shrink-0 py-3 px-4 flex flex-row items-center justify-between">
+                                <CardTitle className="text-sm font-medium text-slate-300 uppercase tracking-wide">{col.label}</CardTitle>
+                                <span className="bg-slate-800 text-slate-400 text-xs font-semibold px-2 py-0.5 rounded-full">{columnItems.length}</span>
+                            </CardHeader>
+                            <CardContent className="p-3 flex-1 overflow-y-auto space-y-3 custom-scrollbar">
+                                {isLoading ? (
+                                    Array.from({ length: 2 }).map((_, i) => <div key={i} className="h-28 rounded-lg bg-slate-800/20 animate-pulse border border-slate-800/50" />)
+                                ) : columnItems.length === 0 ? (
+                                    <div className="text-center p-8 text-slate-500 text-xs border border-dashed border-slate-700 rounded-lg">No work orders here</div>
+                                ) : (
+                                    columnItems.map((order) => (
+                                        <div
+                                            key={order.id}
+                                            className="group bg-slate-800/40 hover:bg-slate-800/80 border border-slate-700/50 p-3 rounded-lg shadow-sm cursor-grab active:cursor-grabbing transition-colors relative">
+                                            <div className="flex justify-between items-start mb-2">
+                                                <div className="flex items-center gap-2">
+                                                    <FileText className="size-4 text-cyan-500" />
+                                                    <span className="text-white font-medium text-sm truncate max-w-[150px]" title={order.bomRevisionId}>
+                                                        {order.bomRevisionId}
+                                                    </span>
+                                                </div>
+                                                <GripVertical className="size-4 text-slate-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                            </div>
+
+                                            <div className="mb-3">
+                                                <p className="text-xs text-slate-400">
+                                                    Target Qty: <span className="text-slate-200">{order.targetQuantity} units</span>
+                                                </p>
+                                                <p className="text-xs text-slate-400">Start: {order.plannedStartDate || 'Not scheduled'}</p>
+                                            </div>
+
+                                            <div className="flex justify-between items-end">
+                                                <StatusBadge status={order.status || 'PLANNED'} className="text-[10px] px-1.5 py-0" />
+                                                <span className="text-[10px] text-slate-500 font-mono">{order.id.split('-')[0]}</span>
+                                            </div>
+                                        </div>
+                                    ))
+                                )}
+                            </CardContent>
+                        </Card>
+                    );
+                })}
+            </div>
+
+            <SlideOutDrawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen} title="Create Work Order" description="Initialize a new production execution run.">
+                <form onSubmit={handleCreate} className="space-y-5 pt-4">
+                    <div className="space-y-2">
+                        <Label>
+                            BOM Revision ID <span className="text-destructive">*</span>
+                        </Label>
+                        <Input
+                            required
+                            value={formData.bomRevisionId || ''}
+                            onChange={(e) => setFormData({ ...formData, bomRevisionId: e.target.value })}
+                            placeholder="e.g. BOM-REV-A1"
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <Label>
+                            Target Quantity <span className="text-destructive">*</span>
+                        </Label>
+                        <Input
+                            type="number"
+                            required
+                            min="1"
+                            value={formData.targetQuantity || ''}
+                            onChange={(e) => setFormData({ ...formData, targetQuantity: Number(e.target.value) })}
+                            placeholder="e.g. 50"
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <Label>Planned Start Date</Label>
+                        <Input type="date" value={formData.plannedStartDate || ''} onChange={(e) => setFormData({ ...formData, plannedStartDate: e.target.value })} />
+                    </div>
+                    <div className="pt-6 flex justify-end gap-3 border-t border-slate-800">
+                        <Button type="button" variant="outline" onClick={() => setIsDrawerOpen(false)}>
+                            Cancel
+                        </Button>
+                        <Button type="submit">Release Order</Button>
+                    </div>
+                </form>
+            </SlideOutDrawer>
         </div>
     );
 }

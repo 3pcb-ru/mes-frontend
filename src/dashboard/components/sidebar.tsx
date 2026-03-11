@@ -11,18 +11,13 @@ interface DashboardSidebarProps {
 
 const navItems = [
     { name: 'Dashboard', icon: LayoutDashboard, href: '/dashboard' },
-    { name: 'Products', icon: Package, href: '/dashboard/products' },
-    { name: 'Facilities', icon: Blocks, href: '/dashboard/facilities' },
-    { name: 'Inventory', icon: Package, href: '/dashboard/inventory' },
-    { name: 'Work Orders', icon: FileText, href: '/dashboard/work-orders' },
-    { name: 'Trace', icon: BarChart3, href: '/dashboard/trace' },
-    { name: 'Users', icon: Users, href: '/dashboard/users' },
+    { name: 'Digital Twin', icon: Blocks, href: '/dashboard/facilities' },
+    { name: 'Production', icon: FileText, href: '/dashboard/work-orders' },
+    { name: 'Engineering', icon: Package, href: '/dashboard/products' },
+    { name: 'Traceability', icon: BarChart3, href: '/dashboard/trace' },
     { name: 'Analytics', icon: BarChart3, href: '/dashboard/analytics' },
-    { name: 'Reports', icon: FileText, href: '/dashboard/reports' },
-    { name: 'Messages', icon: MessageSquare, href: '/dashboard/messages' },
-    { name: 'Integration', icon: Blocks, href: '/dashboard/integration' },
+    { name: 'Users & Roles', icon: Users, href: '/dashboard/users' },
     { name: 'Settings', icon: Settings, href: '/dashboard/settings' },
-    { name: 'Help & Support', icon: HelpCircle, href: '/dashboard/help' },
 ];
 
 export function DashboardSidebar({ isOpen, onToggle }: DashboardSidebarProps) {
