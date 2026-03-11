@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Package, Plus } from 'lucide-react';
+import { toast } from 'sonner';
 import { productsService } from '@/features/products/services/products.service';
 import type { ProductListItem } from '@/features/products/types/products.types';
 import { Button } from '@/shared/components/ui/button';
@@ -25,8 +26,9 @@ export function ProductsPage() {
         try {
             const data = await productsService.listProducts();
             setItems(Array.isArray(data) ? data : []);
-        } catch (err) {
+        } catch (err: any) {
             console.error('API Error:', err);
+            toast.error(err?.message || 'Failed to load products');
             setItems([]);
         } finally {
             setIsLoading(false);
@@ -43,13 +45,16 @@ export function ProductsPage() {
             const payload = { ...formData, sku: formData.sku!, name: formData.name! };
             if (editingItem) {
                 await productsService.updateProduct(editingItem.id, payload);
+                toast.success('Product updated successfully');
             } else {
                 await productsService.createProduct(payload);
+                toast.success('Product created successfully');
             }
             handleCloseDrawer();
             await fetchProducts();
-        } catch (err) {
+        } catch (err: any) {
             console.error('Error saving product:', err);
+            toast.error(err?.message || 'Failed to save product');
         }
     };
 
@@ -65,9 +70,11 @@ export function ProductsPage() {
     const handleDelete = async (id: string) => {
         try {
             await productsService.deleteProduct(id);
+            toast.success('Product deleted successfully');
             await fetchProducts();
-        } catch (err) {
+        } catch (err: any) {
             console.error('Delete error:', err);
+            toast.error(err?.message || 'Failed to delete product');
         }
     };
 

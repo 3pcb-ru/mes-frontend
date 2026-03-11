@@ -59,9 +59,12 @@ function ScrollToHash() {
     return null;
 }
 
+import { Toaster } from '@/shared/components/ui/sonner';
+
 export default function App() {
     return (
         <Router>
+            <Toaster />
             <SessionExpiredRedirector />
             <ScrollToHash />
             <Routes>

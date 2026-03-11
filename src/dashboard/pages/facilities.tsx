@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo } from 'react';
 import { Loader2, Plus, Blocks } from 'lucide-react';
+import { toast } from 'sonner';
 import { facilitiesService } from '@/features/facilities/services/facilities.service';
 import type { FacilityListItem } from '@/features/facilities/types/facilities.types';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/shared/components/ui/card';
@@ -23,8 +24,9 @@ export function FacilitiesPage() {
         try {
             const data = await facilitiesService.listFacilities();
             setNodes(Array.isArray(data) ? data : []);
-        } catch (err) {
+        } catch (err: any) {
             console.error(err);
+            toast.error(err?.message || 'Failed to load nodes');
             setNodes([]);
         } finally {
             setIsLoading(false);
@@ -88,11 +90,13 @@ export function FacilitiesPage() {
         e.preventDefault();
         try {
             await facilitiesService.createFacility({ ...formData, parentId: selectedNodeId });
+            toast.success('Node created successfully');
             setIsCreateOpen(false);
             setFormData({});
             await fetchNodes();
-        } catch (err) {
+        } catch (err: any) {
             console.error('Error creating node', err);
+            toast.error(err?.message || 'Failed to create node');
         }
     };
 

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 import { traceService } from '@/features/trace/services/trace.service';
 import type { ActivityListItem } from '@/features/trace/types/trace.types';
 import { Card, CardContent } from '@/shared/components/ui/card';
@@ -21,8 +22,9 @@ export function TracePage() {
         try {
             const data = await traceService.listActivities();
             setItems(Array.isArray(data) ? data : []);
-        } catch (err) {
+        } catch (err: any) {
             console.error('API Error:', err);
+            toast.error(err?.message || 'Failed to load trace activities');
             setItems([]);
         } finally {
             setIsLoading(false);

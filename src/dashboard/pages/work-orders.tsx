@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Plus, GripVertical, FileText } from 'lucide-react';
+import { toast } from 'sonner';
 import { workOrdersService } from '@/features/work-orders/services/work-orders.service';
 import type { WorkOrderListItem } from '@/features/work-orders/types/work-orders.types';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/shared/components/ui/card';
@@ -27,8 +28,9 @@ export function WorkOrdersPage() {
         try {
             const data = await workOrdersService.listWorkOrders();
             setItems(Array.isArray(data) ? data : []);
-        } catch (err) {
+        } catch (err: any) {
             console.error(err);
+            toast.error(err?.message || 'Failed to load work orders');
             setItems([]);
         } finally {
             setIsLoading(false);
@@ -46,11 +48,13 @@ export function WorkOrdersPage() {
                 ...formData,
                 targetQuantity: Number(formData.targetQuantity),
             });
+            toast.success('Work order created successfully');
             setIsDrawerOpen(false);
             setFormData({});
             await fetchOrders();
-        } catch (err) {
+        } catch (err: any) {
             console.error('Error creating work order:', err);
+            toast.error(err?.message || 'Failed to create work order');
         }
     };
 

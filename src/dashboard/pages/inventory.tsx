@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Loader2, Plus, Box } from 'lucide-react';
+import { toast } from 'sonner';
 import { inventoryService } from '@/features/inventory/services/inventory.service';
 import type { ContainerListItem } from '@/features/inventory/types/inventory.types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/components/ui/card';
@@ -21,8 +22,9 @@ export function InventoryPage() {
         try {
             const data = await inventoryService.listContainers();
             setItems(Array.isArray(data) ? data : []);
-        } catch (err) {
+        } catch (err: any) {
             console.error(err);
+            toast.error(err?.message || 'Failed to load inventory');
             setItems([]);
         } finally {
             setIsLoading(false);
@@ -35,13 +37,16 @@ export function InventoryPage() {
         try {
             if (editingItem) {
                 await inventoryService.updateContainer(editingItem.id, values);
+                toast.success('Container updated successfully');
             } else {
                 await inventoryService.createContainer(values);
+                toast.success('Container created successfully');
             }
             setEditingItem(null);
             await fetch();
-        } catch (err) {
+        } catch (err: any) {
             console.error('Error:', err);
+            toast.error(err?.message || 'Failed to save container');
         }
     };
     const handleEdit = (id: string) => {
@@ -54,9 +59,11 @@ export function InventoryPage() {
     const handleDelete = async (id: string) => {
         try {
             await inventoryService.deleteContainer(id);
+            toast.success('Container deleted successfully');
             await fetch();
-        } catch (err) {
+        } catch (err: any) {
             console.error('Delete error:', err);
+            toast.error(err?.message || 'Failed to delete container');
             throw err;
         }
     };
