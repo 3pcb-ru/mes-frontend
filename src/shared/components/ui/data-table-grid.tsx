@@ -51,7 +51,7 @@ export function DataTableGrid<T>({
                 </div>
             )}
 
-            <div className="rounded-md border bg-background">
+            <div className="rounded-md border border-slate-700/50 bg-slate-900/50 overflow-hidden">
                 <Table>
                     <TableHeader>
                         <TableRow>
