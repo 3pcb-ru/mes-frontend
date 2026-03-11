@@ -79,9 +79,9 @@ export function ProductsPage() {
                     <h1 className="text-3xl font-bold text-white mb-2">Products</h1>
                     <p className="text-slate-400">Manage product catalog and SKUs.</p>
                 </div>
-                <div className="flex items-center gap-3">
-                    <Input placeholder="Search products..." value={search} onChange={(e: any) => setSearch(e.target.value)} className="flex-1 sm:flex-none" />
-                    <Button onClick={() => setIsOpen(true)} className="flex items-center gap-2 whitespace-nowrap">
+                <div className="flex items-center gap-3 shrink min-w-0">
+                    <Input placeholder="Search products..." value={search} onChange={(e: any) => setSearch(e.target.value)} className="min-w-0 flex-1 sm:w-64" />
+                    <Button onClick={() => setIsOpen(true)} className="flex items-center gap-2 whitespace-nowrap shrink-0">
                         <Plus className="h-4 w-4" /> Add Product
                     </Button>
                 </div>
