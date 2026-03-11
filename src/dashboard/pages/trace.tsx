@@ -74,19 +74,19 @@ export function TracePage() {
                 <CardContent className="p-4 grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div className="space-y-1.5">
                         <Label className="text-xs text-slate-400 uppercase tracking-wider">Action Type</Label>
-                        <Input placeholder="e.g. status_change" value={searchAction} onChange={(e) => setSearchAction(e.target.value)} className="h-9 bg-slate-800/50" />
+                        <Input placeholder="e.g. status_change" value={searchAction} onChange={(e) => setSearchAction(e.target.value)} />
                     </div>
                     <div className="space-y-1.5">
                         <Label className="text-xs text-slate-400 uppercase tracking-wider">Node ID</Label>
-                        <Input placeholder="Filter by Node UUID..." value={filterNode} onChange={(e) => setFilterNode(e.target.value)} className="h-9 bg-slate-800/50" />
+                        <Input placeholder="Filter by Node UUID..." value={filterNode} onChange={(e) => setFilterNode(e.target.value)} />
                     </div>
                     <div className="space-y-1.5">
                         <Label className="text-xs text-slate-400 uppercase tracking-wider">User ID</Label>
-                        <Input placeholder="Filter by User UUID..." value={filterUser} onChange={(e) => setFilterUser(e.target.value)} className="h-9 bg-slate-800/50" />
+                        <Input placeholder="Filter by User UUID..." value={filterUser} onChange={(e) => setFilterUser(e.target.value)} />
                     </div>
                     <div className="space-y-1.5">
                         <Label className="text-xs text-slate-400 uppercase tracking-wider">Job / Work Order ID</Label>
-                        <Input placeholder="Filter by Job UUID..." value={filterJob} onChange={(e) => setFilterJob(e.target.value)} className="h-9 bg-slate-800/50" />
+                        <Input placeholder="Filter by Job UUID..." value={filterJob} onChange={(e) => setFilterJob(e.target.value)} />
                     </div>
                 </CardContent>
             </Card>
