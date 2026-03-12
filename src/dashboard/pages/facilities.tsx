@@ -13,6 +13,7 @@ import { SlideOutDrawer } from '@/shared/components/ui/slide-out-drawer';
 import { Label } from '@/shared/components/ui/label';
 import { useFormValidation } from '@/shared/hooks/use-form-validation';
 import { FormError } from '@/shared/components/ui/form-error';
+import { TableView } from '@/shared/components/ui/table-view';
 
 export function FacilitiesPage() {
     const [nodes, setNodes] = useState<FacilityListItem[]>([]);
@@ -93,7 +94,14 @@ export function FacilitiesPage() {
         e.preventDefault();
         resetErrors();
         try {
-            await facilitiesService.createFacility({ ...formData, parentId: selectedNodeId });
+            // Convert empty strings to undefined for strict UUID validation
+            const payload = { 
+                ...formData, 
+                parentId: selectedNodeId || undefined,
+                definitionId: formData.definitionId || undefined
+            };
+
+            await facilitiesService.createFacility(payload);
             toast.success('Node created successfully');
             setIsCreateOpen(false);
             setFormData({});
@@ -260,14 +268,15 @@ export function FacilitiesPage() {
                     </div>
                     <div className="space-y-2">
                         <Label>Definition ID (Optional)</Label>
-                        <Input
+                        <TableView
                             value={formData.definitionId || ''}
-                            aria-invalid={!!validationErrors.definitionId}
-                            onChange={(e) => {
-                                setFormData({ ...formData, definitionId: e.target.value });
+                            onChange={(val) => {
+                                setFormData({ ...formData, definitionId: val });
                                 clearError('definitionId');
                             }}
-                            placeholder="UUID of node definition"
+                            fetchData={() => Promise.resolve([]) /* TODO: Wire up to Definitions API when available */}
+                            placeholder="Select definition..."
+                            hasError={!!validationErrors.definitionId}
                         />
                         <FormError message={validationErrors.definitionId} />
                     </div>
