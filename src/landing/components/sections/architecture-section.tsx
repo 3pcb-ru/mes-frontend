@@ -75,17 +75,14 @@ export function SolutionsSection() {
                     {solutions.map((item, index) => (
                         <div key={index} className={`flex flex-col ${index % 2 === 1 ? 'lg:flex-row-reverse' : 'lg:flex-row'} gap-12 lg:gap-20 items-center`}>
                             {/* Solution Module (The Feature) */}
-                            <motion.div
-                                initial={{ opacity: 0, x: index % 2 === 1 ? 40 : -40 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.7 }}
-                                className="w-full lg:w-1/2 space-y-8">
+                            <div className="w-full lg:w-1/2 space-y-8">
                                 <div className="space-y-4">
-                                    <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-purple-500/20 border border-cyan-500/30 flex items-center justify-center shadow-[0_0_30px_rgba(6,182,212,0.15)] mb-6">
-                                        <item.icon className="h-7 w-7 text-cyan-400" />
+                                    <div className="flex items-center gap-4 mb-2">
+                                        <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-purple-500/20 border border-cyan-500/30 flex items-center justify-center shadow-[0_0_30px_rgba(6,182,212,0.15)] shrink-0">
+                                            <item.icon className="h-7 w-7 text-cyan-400" />
+                                        </div>
+                                        <h3 className="text-3xl md:text-4xl font-bold text-white">{item.title}</h3>
                                     </div>
-                                    <h3 className="text-3xl md:text-4xl font-bold text-white">{item.title}</h3>
                                     <p className="text-lg text-slate-300 leading-relaxed">{item.solutionDesc}</p>
                                 </div>
 
@@ -97,7 +94,7 @@ export function SolutionsSection() {
                                         </li>
                                     ))}
                                 </ul>
-                            </motion.div>
+                            </div>
 
                             {/* Problem Module (What it solves) */}
                             <motion.div

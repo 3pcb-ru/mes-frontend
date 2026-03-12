@@ -11,7 +11,7 @@ export function Header() {
         { to: '/#why', label: 'Why GRVT' },
         { to: '/#solution', label: 'Solution' },
         { to: '/#reliability', label: 'Reliability' },
-        { to: '/about', label: 'About' },
+        { to: '/about', label: 'About Us' },
     ];
 
     return (
