@@ -33,7 +33,7 @@ function SurvivabilityCard({ icon: Icon, title, standard, benefit, delay }: Surv
                 </div>
 
                 <div>
-                    <h4 className="text-sm text-cyan-400 mb-2">Why It's Awesome for You</h4>
+                    <h4 className="text-sm text-cyan-400 mb-2">It's Awesome Because</h4>
                     <p className="text-slate-300 text-sm">{benefit}</p>
                 </div>
             </div>
