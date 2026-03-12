@@ -8,22 +8,21 @@ import { Button } from '@/shared/components/ui/button';
 import { Input } from '@/shared/components/ui/input';
 import { Label } from '@/shared/components/ui/label';
 import { Logo } from '@/shared/components/logo';
+import { useFormValidation } from '@/shared/hooks/use-form-validation';
+import { FormError } from '@/shared/components/ui/form-error';
 
 export function LoginPage() {
     const navigate = useNavigate();
     const location = useLocation();
-    const { login, isLoading, error, clearError } = useAuth();
+    const { login, isLoading, error, clearError: authClearError } = useAuth();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    const [validationErrors, setValidationErrors] = useState<{
-        email?: string;
-        password?: string;
-    }>({});
+    const { validationErrors, handleApiError, clearError, resetErrors } = useFormValidation();
 
     const validateForm = (): boolean => {
-        const errors: typeof validationErrors = {};
+        const errors: Record<string, string> = {};
 
         if (!email.trim()) {
             errors.email = 'Email is required';
@@ -35,13 +34,18 @@ export function LoginPage() {
             errors.password = 'Password is required';
         }
 
-        setValidationErrors(errors);
-        return Object.keys(errors).length === 0;
+        if (Object.keys(errors).length > 0) {
+            handleApiError({ statusCode: 422, validationErrors: errors });
+            return false;
+        }
+
+        return true;
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        clearError();
+        authClearError();
+        resetErrors();
 
         if (!validateForm()) return;
 
@@ -52,8 +56,9 @@ export function LoginPage() {
             // or to dashboard if this is first login
             const from = (location.state as any)?.from?.pathname || '/dashboard';
             navigate(from);
-        } catch {
-            // Error is handled by the store
+        } catch (err: any) {
+            // Try to map server validation errors to fields, else let the store handle the display
+            handleApiError(err);
         }
     };
 
@@ -107,16 +112,15 @@ export function LoginPage() {
                                     type="email"
                                     placeholder="Enter your email"
                                     value={email}
+                                    aria-invalid={!!validationErrors.email}
                                     onChange={(e) => {
                                         setEmail(e.target.value);
-                                        if (validationErrors.email) {
-                                            setValidationErrors((prev) => ({ ...prev, email: undefined }));
-                                        }
+                                        clearError('email');
                                     }}
                                     className="pl-10 bg-slate-900/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-cyan-500 focus:ring-cyan-500/20"
                                 />
                             </div>
-                            {validationErrors.email && <p className="text-red-400 text-sm">{validationErrors.email}</p>}
+                            <FormError message={validationErrors.email} />
                         </div>
 
                         {/* Password Field */}
@@ -136,11 +140,10 @@ export function LoginPage() {
                                     type={showPassword ? 'text' : 'password'}
                                     placeholder="Enter your password"
                                     value={password}
+                                    aria-invalid={!!validationErrors.password}
                                     onChange={(e) => {
                                         setPassword(e.target.value);
-                                        if (validationErrors.password) {
-                                            setValidationErrors((prev) => ({ ...prev, password: undefined }));
-                                        }
+                                        clearError('password');
                                     }}
                                     className="pl-10 pr-10 bg-slate-900/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-cyan-500 focus:ring-cyan-500/20"
                                 />
@@ -151,7 +154,7 @@ export function LoginPage() {
                                     {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                                 </button>
                             </div>
-                            {validationErrors.password && <p className="text-red-400 text-sm">{validationErrors.password}</p>}
+                            <FormError message={validationErrors.password} />
                         </div>
 
                         {/* Submit Button */}

@@ -11,6 +11,8 @@ import { NodeTreeView, type TreeNode } from '@/shared/components/ui/node-tree-vi
 import { StatusBadge } from '@/shared/components/ui/status-badge';
 import { SlideOutDrawer } from '@/shared/components/ui/slide-out-drawer';
 import { Label } from '@/shared/components/ui/label';
+import { useFormValidation } from '@/shared/hooks/use-form-validation';
+import { FormError } from '@/shared/components/ui/form-error';
 
 export function FacilitiesPage() {
     const [nodes, setNodes] = useState<FacilityListItem[]>([]);
@@ -19,7 +21,7 @@ export function FacilitiesPage() {
     const [search, setSearch] = useState('');
     const [isCreateOpen, setIsCreateOpen] = useState(false);
     const [formData, setFormData] = useState<Partial<FacilityListItem>>({});
-    const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
+    const { validationErrors, handleApiError, clearError, resetErrors } = useFormValidation();
 
     const fetchNodes = async () => {
         try {
@@ -89,7 +91,7 @@ export function FacilitiesPage() {
 
     const handleCreate = async (e: React.FormEvent) => {
         e.preventDefault();
-        setValidationErrors({});
+        resetErrors();
         try {
             await facilitiesService.createFacility({ ...formData, parentId: selectedNodeId });
             toast.success('Node created successfully');
@@ -98,9 +100,7 @@ export function FacilitiesPage() {
             await fetchNodes();
         } catch (err: any) {
             console.error('Error creating node', err);
-            if (err.statusCode === 422 && err.validationErrors) {
-                setValidationErrors(err.validationErrors);
-            } else {
+            if (!handleApiError(err)) {
                 toast.error(err?.message || 'Failed to create node');
             }
         }
@@ -127,7 +127,7 @@ export function FacilitiesPage() {
                                 className="h-9 w-9 shrink-0 border-slate-700 hover:bg-slate-800 text-slate-300"
                                 onClick={() => {
                                     setFormData({});
-                                    setValidationErrors({});
+                                    resetErrors();
                                     setIsCreateOpen(true);
                                 }}>
                                 <Plus className="h-4 w-4" />
@@ -246,34 +246,30 @@ export function FacilitiesPage() {
                 <form onSubmit={handleCreate} className="space-y-4 pt-4">
                     <div className="space-y-2">
                         <Label>Node Name</Label>
-                        <Input 
-                            required 
-                            value={formData.name || ''} 
+                        <Input
+                            required
+                            value={formData.name || ''}
+                            aria-invalid={!!validationErrors.name}
                             onChange={(e) => {
                                 setFormData({ ...formData, name: e.target.value });
-                                if (validationErrors.name) setValidationErrors(prev => ({ ...prev, name: '' }));
-                            }} 
-                            placeholder="e.g. Assembly Station 1" 
-                            className={validationErrors.name ? 'border-red-500 focus-visible:ring-red-500' : ''}
+                                clearError('name');
+                            }}
+                            placeholder="e.g. Assembly Station 1"
                         />
-                        {validationErrors.name && (
-                            <p className="text-sm text-red-500">{validationErrors.name}</p>
-                        )}
+                        <FormError message={validationErrors.name} />
                     </div>
                     <div className="space-y-2">
                         <Label>Definition ID (Optional)</Label>
                         <Input
                             value={formData.definitionId || ''}
+                            aria-invalid={!!validationErrors.definitionId}
                             onChange={(e) => {
-                                setFormData({ ...formData, definitionId: e.target.value })
-                                if (validationErrors.definitionId) setValidationErrors(prev => ({ ...prev, definitionId: '' }));
+                                setFormData({ ...formData, definitionId: e.target.value });
+                                clearError('definitionId');
                             }}
                             placeholder="UUID of node definition"
-                            className={validationErrors.definitionId ? 'border-red-500 focus-visible:ring-red-500' : ''}
                         />
-                        {validationErrors.definitionId && (
-                            <p className="text-sm text-red-500">{validationErrors.definitionId}</p>
-                        )}
+                        <FormError message={validationErrors.definitionId} />
                     </div>
                     <div className="pt-4 flex justify-end gap-2">
                         <Button type="button" variant="outline" onClick={() => setIsCreateOpen(false)}>
