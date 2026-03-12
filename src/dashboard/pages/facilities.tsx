@@ -19,6 +19,7 @@ export function FacilitiesPage() {
     const [search, setSearch] = useState('');
     const [isCreateOpen, setIsCreateOpen] = useState(false);
     const [formData, setFormData] = useState<Partial<FacilityListItem>>({});
+    const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
 
     const fetchNodes = async () => {
         try {
@@ -88,6 +89,7 @@ export function FacilitiesPage() {
 
     const handleCreate = async (e: React.FormEvent) => {
         e.preventDefault();
+        setValidationErrors({});
         try {
             await facilitiesService.createFacility({ ...formData, parentId: selectedNodeId });
             toast.success('Node created successfully');
@@ -96,7 +98,11 @@ export function FacilitiesPage() {
             await fetchNodes();
         } catch (err: any) {
             console.error('Error creating node', err);
-            toast.error(err?.message || 'Failed to create node');
+            if (err.statusCode === 422 && err.validationErrors) {
+                setValidationErrors(err.validationErrors);
+            } else {
+                toast.error(err?.message || 'Failed to create node');
+            }
         }
     };
 
@@ -121,6 +127,7 @@ export function FacilitiesPage() {
                                 className="h-9 w-9 shrink-0 border-slate-700 hover:bg-slate-800 text-slate-300"
                                 onClick={() => {
                                     setFormData({});
+                                    setValidationErrors({});
                                     setIsCreateOpen(true);
                                 }}>
                                 <Plus className="h-4 w-4" />
@@ -239,15 +246,34 @@ export function FacilitiesPage() {
                 <form onSubmit={handleCreate} className="space-y-4 pt-4">
                     <div className="space-y-2">
                         <Label>Node Name</Label>
-                        <Input required value={formData.name || ''} onChange={(e) => setFormData({ ...formData, name: e.target.value })} placeholder="e.g. Assembly Station 1" />
+                        <Input 
+                            required 
+                            value={formData.name || ''} 
+                            onChange={(e) => {
+                                setFormData({ ...formData, name: e.target.value });
+                                if (validationErrors.name) setValidationErrors(prev => ({ ...prev, name: '' }));
+                            }} 
+                            placeholder="e.g. Assembly Station 1" 
+                            className={validationErrors.name ? 'border-red-500 focus-visible:ring-red-500' : ''}
+                        />
+                        {validationErrors.name && (
+                            <p className="text-sm text-red-500">{validationErrors.name}</p>
+                        )}
                     </div>
                     <div className="space-y-2">
                         <Label>Definition ID (Optional)</Label>
                         <Input
                             value={formData.definitionId || ''}
-                            onChange={(e) => setFormData({ ...formData, definitionId: e.target.value })}
+                            onChange={(e) => {
+                                setFormData({ ...formData, definitionId: e.target.value })
+                                if (validationErrors.definitionId) setValidationErrors(prev => ({ ...prev, definitionId: '' }));
+                            }}
                             placeholder="UUID of node definition"
+                            className={validationErrors.definitionId ? 'border-red-500 focus-visible:ring-red-500' : ''}
                         />
+                        {validationErrors.definitionId && (
+                            <p className="text-sm text-red-500">{validationErrors.definitionId}</p>
+                        )}
                     </div>
                     <div className="pt-4 flex justify-end gap-2">
                         <Button type="button" variant="outline" onClick={() => setIsCreateOpen(false)}>

@@ -4,6 +4,7 @@ export interface ApiError {
     message: string;
     statusCode: number;
     error?: string;
+    validationErrors?: Record<string, string>;
 }
 
 export interface ApiResponse<T> {
@@ -36,7 +37,7 @@ class ApiClient {
 
         this.isRefreshing = true;
         this.refreshPromise = this.performRefresh();
-        
+
         try {
             const success = await this.refreshPromise;
             return success;
@@ -112,11 +113,7 @@ class ApiClient {
             (headers as Record<string, string>)['Authorization'] = `Bearer ${token}`;
         }
 
-        let response = await fetch(url, {
-            ...options,
-            headers,
-        });
-
+        let response = await fetch(url, { ...options, headers });
         let data = await response.json();
 
         // Handle multiple levels of backend wrapping (data property)
@@ -128,7 +125,7 @@ class ApiClient {
         // If 401, try to refresh token and retry
         if (response.status === 401) {
             const refreshed = await this.refreshAccessToken();
-            
+
             if (refreshed) {
                 // Retry the original request with new token
                 const newToken = this.getAuthToken();
@@ -141,11 +138,7 @@ class ApiClient {
                     (retryHeaders as Record<string, string>)['Authorization'] = `Bearer ${newToken}`;
                 }
 
-                response = await fetch(url, {
-                    ...options,
-                    headers: retryHeaders,
-                });
-
+                response = await fetch(url, { ...options, headers: retryHeaders });
                 data = await response.json();
                 responseData = data;
                 while (responseData && typeof responseData === 'object' && 'data' in responseData && responseData !== responseData.data) {
@@ -156,18 +149,23 @@ class ApiClient {
 
         if (!response.ok) {
             let extractedMessage = (data && data.message) || 'An error occurred';
+            let validationErrors: Record<string, string> | undefined;
 
             // Clean architecture: Centralize validation error parsing for all API requests
-            // Check if it's a validation error with a nested errors array (typical Zod format)
-            if (data?.errors && Array.isArray(data.errors) && data.errors.length > 0) {
-                const firstError = data.errors[0];
+            const errorsArray = data?.errors || responseData?.errors;
+            if (errorsArray && Array.isArray(errorsArray) && errorsArray.length > 0) {
+                validationErrors = {};
+                // Extract first error for the main message
+                const firstError = errorsArray[0];
                 const fieldName = firstError.path?.join('.') || 'Field';
                 extractedMessage = `${fieldName}: ${firstError.message}`;
-            } else if (responseData?.errors && Array.isArray(responseData.errors) && responseData.errors.length > 0) {
-                // Check unwrapped body just in case
-                const firstError = responseData.errors[0];
-                const fieldName = firstError.path?.join('.') || 'Field';
-                extractedMessage = `${fieldName}: ${firstError.message}`;
+
+                // Build a map of all errors for inline form display
+                errorsArray.forEach((err: any) => {
+                    if (err.path && err.path.length > 0) {
+                        validationErrors![err.path.join('.')] = err.message;
+                    }
+                });
             }
 
             const error: ApiError & { body?: any } = {
@@ -175,6 +173,7 @@ class ApiClient {
                 statusCode: response.status,
                 error: data && data.error,
                 body: responseData ?? data,
+                validationErrors,
             };
             throw error;
         }
