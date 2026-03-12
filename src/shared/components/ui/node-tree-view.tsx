@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ChevronRight, ChevronDown, Folder, File, Component } from 'lucide-react';
+import { ChevronRight, ChevronDown, File, Component, LayoutGrid, Target } from 'lucide-react';
 import { cn } from './utils';
 
 export interface TreeNode {
@@ -29,13 +29,13 @@ function getNodeIcon(type?: string) {
         case 'factory':
             return <Component className="size-4 text-blue-500" />;
         case 'area':
-            return <Folder className="size-4 text-yellow-500" />;
+            return <LayoutGrid className="size-4 text-yellow-500" />;
         case 'line':
             return <Component className="size-4 text-green-500" />;
         case 'station':
             return <File className="size-4 text-slate-500" />;
         default:
-            return <Folder className="size-4 text-muted-foreground" />;
+            return <Target className="size-4 text-muted-foreground" />;
     }
 }
 

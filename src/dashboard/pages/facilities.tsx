@@ -111,14 +111,14 @@ export function FacilitiesPage() {
 
             <div className="flex flex-1 gap-6 min-h-0 overflow-hidden">
                 {/* Left Pane: Tree View */}
-                <Card className="w-1/3 min-w-[300px] flex flex-col bg-slate-900/50 border-slate-700/50">
+                <Card className="w-1/3 min-w-[300px] flex flex-col bg-slate-900/50 border-slate-700/50 dark text-slate-300">
                     <CardHeader className="border-b border-slate-800 pb-4 shrink-0">
                         <div className="flex gap-2 mb-2">
-                            <Input placeholder="Search nodes..." value={search} onChange={(e) => setSearch(e.target.value)} className="h-9 bg-slate-800/50" />
+                            <Input placeholder="Search nodes..." value={search} onChange={(e) => setSearch(e.target.value)} className="h-9 bg-slate-800/50 text-slate-200" />
                             <Button
                                 size="icon"
                                 variant="outline"
-                                className="h-9 w-9 shrink-0"
+                                className="h-9 w-9 shrink-0 border-slate-700 hover:bg-slate-800 text-slate-300"
                                 onClick={() => {
                                     setFormData({});
                                     setIsCreateOpen(true);
@@ -141,7 +141,7 @@ export function FacilitiesPage() {
                 </Card>
 
                 {/* Right Pane: Detail View */}
-                <Card className="flex-1 flex flex-col bg-slate-900/50 border-slate-700/50 overflow-hidden relative">
+                <Card className="flex-1 flex flex-col bg-slate-900/50 border-slate-700/50 overflow-hidden relative dark text-slate-300">
                     {selectedNode ? (
                         <>
                             <CardHeader className="border-b border-slate-800 pb-4 shrink-0 bg-slate-900/80 z-10">
@@ -157,16 +157,16 @@ export function FacilitiesPage() {
                                 <Tabs defaultValue="overview" className="flex-1 flex flex-col w-full h-full">
                                     <div className="px-6 border-b border-slate-800 bg-slate-900/50 shrink-0">
                                         <TabsList className="bg-transparent border-0 mt-2">
-                                            <TabsTrigger value="overview" className="data-[state=active]:bg-slate-800">
+                                            <TabsTrigger value="overview" className="data-[state=active]:bg-slate-800 text-slate-400 data-[state=active]:text-white">
                                                 Overview
                                             </TabsTrigger>
-                                            <TabsTrigger value="contents" className="data-[state=active]:bg-slate-800">
+                                            <TabsTrigger value="contents" className="data-[state=active]:bg-slate-800 text-slate-400 data-[state=active]:text-white">
                                                 Contents
                                             </TabsTrigger>
-                                            <TabsTrigger value="capabilities" className="data-[state=active]:bg-slate-800">
+                                            <TabsTrigger value="capabilities" className="data-[state=active]:bg-slate-800 text-slate-400 data-[state=active]:text-white">
                                                 Capabilities
                                             </TabsTrigger>
-                                            <TabsTrigger value="activity" className="data-[state=active]:bg-slate-800">
+                                            <TabsTrigger value="activity" className="data-[state=active]:bg-slate-800 text-slate-400 data-[state=active]:text-white">
                                                 Activity Log
                                             </TabsTrigger>
                                         </TabsList>

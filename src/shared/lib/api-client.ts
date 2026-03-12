@@ -155,8 +155,23 @@ class ApiClient {
         }
 
         if (!response.ok) {
+            let extractedMessage = (data && data.message) || 'An error occurred';
+
+            // Clean architecture: Centralize validation error parsing for all API requests
+            // Check if it's a validation error with a nested errors array (typical Zod format)
+            if (data?.errors && Array.isArray(data.errors) && data.errors.length > 0) {
+                const firstError = data.errors[0];
+                const fieldName = firstError.path?.join('.') || 'Field';
+                extractedMessage = `${fieldName}: ${firstError.message}`;
+            } else if (responseData?.errors && Array.isArray(responseData.errors) && responseData.errors.length > 0) {
+                // Check unwrapped body just in case
+                const firstError = responseData.errors[0];
+                const fieldName = firstError.path?.join('.') || 'Field';
+                extractedMessage = `${fieldName}: ${firstError.message}`;
+            }
+
             const error: ApiError & { body?: any } = {
-                message: (data && data.message) || 'An error occurred',
+                message: extractedMessage,
                 statusCode: response.status,
                 error: data && data.error,
                 body: responseData ?? data,
