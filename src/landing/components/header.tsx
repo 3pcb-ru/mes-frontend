@@ -1,17 +1,21 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/shared/components/ui/button';
 import { Logo } from '@/shared/components/logo';
+import { LanguageSelector } from '@/shared/components/language-selector';
 
 export function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+    const { t } = useTranslation();
+
     const navLinks = [
-        { to: '/#why', label: 'Why GRVT' },
-        { to: '/#solution', label: 'Solution' },
-        { to: '/#reliability', label: 'Reliability' },
-        { to: '/about', label: 'About Us' },
+        { to: '/#why', label: t('nav.why_grvt', 'Why GRVT') },
+        { to: '/#solution', label: t('nav.solution', 'Solution') },
+        { to: '/#reliability', label: t('nav.reliability', 'Reliability') },
+        { to: '/about', label: t('nav.about', 'About Us') },
     ];
 
     return (
@@ -32,14 +36,17 @@ export function Header() {
                         ))}
                         <Link to="/login">
                             <Button variant="outline" size="sm" className="border-slate-600 hover:bg-slate-800 hover:text-white font-medium">
-                                Sign In
+                                {t('common.sign_in', 'Sign In')}
                             </Button>
                         </Link>
                         <Link to="/signup">
                             <Button size="sm" className="bg-cyan-500 hover:bg-cyan-600 text-white">
-                                Get Started
+                                {t('hero.cta', 'Get Started')}
                             </Button>
                         </Link>
+                        <div className="ml-2 pl-4 border-l border-slate-700/50">
+                            <LanguageSelector />
+                        </div>
                     </nav>
 
                     {/* Mobile menu toggle */}
@@ -65,12 +72,15 @@ export function Header() {
                         <div className="flex flex-col gap-3 pt-3">
                             <Link to="/login" onClick={() => setMobileMenuOpen(false)}>
                                 <Button variant="outline" className="w-full border-slate-600 hover:bg-slate-800 hover:text-white font-medium">
-                                    Sign In
+                                    {t('common.sign_in', 'Sign In')}
                                 </Button>
                             </Link>
                             <Link to="/signup" onClick={() => setMobileMenuOpen(false)}>
-                                <Button className="w-full bg-cyan-500 hover:bg-cyan-600 text-white">Get Started</Button>
+                                <Button className="w-full bg-cyan-500 hover:bg-cyan-600 text-white">{t('hero.cta', 'Get Started')}</Button>
                             </Link>
+                            <div className="flex justify-center pt-2">
+                                <LanguageSelector />
+                            </div>
                         </div>
                     </nav>
                 </div>

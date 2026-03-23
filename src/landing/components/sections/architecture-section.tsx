@@ -1,4 +1,5 @@
 import { motion } from 'motion/react';
+import { useTranslation } from 'react-i18next';
 import { Package, Zap, Database, Layers, CheckCircle2 } from 'lucide-react';
 
 // Asset imports from old about page
@@ -7,46 +8,47 @@ import material_intelligence from '@/assets/why/material_intelligence.png';
 import trace_and_as_built from '@/assets/why/trace_and_as_built.png';
 import process_safety_and_interlocks from '@/assets/why/process_safety_and_interlocks.png';
 
-const solutions = [
-    {
-        icon: Package,
-        title: 'Material Intelligence',
-        solutionDesc: 'UID-based reels, MSL, and paste lifecycle tracking with label printing and smart storage integration.',
-        solves: 'Nobody trusts the numbers',
-        problemDesc: 'Phantom inventory and manual counts erode planning. We restore confidence with real-time stock updates.',
-        problemImg: material_intelligence,
-        highlights: ['UID/label printing', 'MSL timers & bake guidance', 'Reel genealogy'],
-    },
-    {
-        icon: Zap,
-        title: 'Process Safety & Interlocks',
-        solutionDesc: 'Feeder setup verification, splice capture, and process interlocks to stop errors at the tool.',
-        solves: 'Human typing failures',
-        problemDesc: 'Manual data entry causes avoidable errors. We reduce mistakes at the source.',
-        problemImg: process_safety_and_interlocks,
-        highlights: ['Feeder verification', 'Splice continuity', 'Thaw/bake interlocks'],
-    },
-    {
-        icon: Layers,
-        title: 'Open Connectivity',
-        solutionDesc: 'IPC-CFX & Hermes-ready architecture to connect machines, counters, and analytics without costly drivers.',
-        solves: 'Too many disconnected systems',
-        problemDesc: 'Multiple spreadsheets and point tools create friction. We consolidate data and automate material flows.',
-        problemImg: open_connectivity,
-        highlights: ['CFX / Hermes', 'Edge-first design', 'Plug-and-play integration'],
-    },
-    {
-        icon: Database,
-        title: 'Trace & As-Built',
-        solutionDesc: 'As-built genealogy, digital work instructions, and audit-ready traceability for regulated sectors.',
-        solves: 'One click away from disaster',
-        problemDesc: 'Without traceability, recalls and audits are expensive. As-built genealogy puts you in control.',
-        problemImg: trace_and_as_built,
-        highlights: ['As-built trees', 'DWI step capture', 'ISO-ready exports'],
-    },
-];
-
 export function SolutionsSection() {
+    const { t } = useTranslation();
+
+    const solutions = [
+        {
+            icon: Package,
+            title: t('solutions.mats.title'),
+            solutionDesc: t('solutions.mats.desc'),
+            solves: t('solutions.mats.solves'),
+            problemDesc: t('solutions.mats.prob_desc'),
+            problemImg: material_intelligence,
+            highlights: [t('solutions.mats.h1'), t('solutions.mats.h2'), t('solutions.mats.h3')],
+        },
+        {
+            icon: Zap,
+            title: t('solutions.safety.title'),
+            solutionDesc: t('solutions.safety.desc'),
+            solves: t('solutions.safety.solves'),
+            problemDesc: t('solutions.safety.prob_desc'),
+            problemImg: process_safety_and_interlocks,
+            highlights: [t('solutions.safety.h1'), t('solutions.safety.h2'), t('solutions.safety.h3')],
+        },
+        {
+            icon: Layers,
+            title: t('solutions.connectivity.title'),
+            solutionDesc: t('solutions.connectivity.desc'),
+            solves: t('solutions.connectivity.solves'),
+            problemDesc: t('solutions.connectivity.prob_desc'),
+            problemImg: open_connectivity,
+            highlights: [t('solutions.connectivity.h1'), t('solutions.connectivity.h2'), t('solutions.connectivity.h3')],
+        },
+        {
+            icon: Database,
+            title: t('solutions.trace.title'),
+            solutionDesc: t('solutions.trace.desc'),
+            solves: t('solutions.trace.solves'),
+            problemDesc: t('solutions.trace.prob_desc'),
+            problemImg: trace_and_as_built,
+            highlights: [t('solutions.trace.h1'), t('solutions.trace.h2'), t('solutions.trace.h3')],
+        },
+    ];
     return (
         <section className="py-24 relative overflow-hidden bg-[#030213]">
             {/* Ambient Background */}
@@ -59,15 +61,17 @@ export function SolutionsSection() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm font-medium mb-4">
-                        <span>The "Light MES" Approach</span>
+                        <span>{t('solutions.badge')}</span>
                     </motion.div>
 
                     <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight">
-                        Built to <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">Solve</span>
+                        {t('solutions.title_prefix', 'Built to')}{' '}
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">
+                            {t('solutions.title_highlight', 'Solve')}
+                        </span>
                     </h2>
                     <p className="text-xl text-slate-400 max-w-3xl mx-auto font-light leading-relaxed">
-                        SME electronics manufacturers are not served well by monolithic MES or by spreadsheets. We target the "Excel Gap" by delivering rapid, role-specific
-                        solutions that directly eliminate your biggest chaotic problems.
+                        {t('solutions.subtitle')}
                     </p>
                 </div>
 
@@ -111,7 +115,7 @@ export function SolutionsSection() {
                                         <div className="relative aspect-video">
                                             <div className="absolute top-4 left-4 z-10 bg-green-500/10 border border-green-500/20 backdrop-blur-md px-3 py-1.5 rounded-full flex items-center gap-2">
                                                 <CheckCircle2 className="h-4 w-4 text-green-400" />
-                                                <span className="text-xs font-semibold text-green-300 uppercase tracking-wider">Problem Solved</span>
+                                                <span className="text-xs font-semibold text-green-300 uppercase tracking-wider">{t('solutions.problem_solved')}</span>
                                             </div>
                                             <img
                                                 src={item.problemImg}

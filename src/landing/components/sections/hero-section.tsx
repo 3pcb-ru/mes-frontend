@@ -1,10 +1,12 @@
 import { ArrowRight, Activity, ShieldCheck } from 'lucide-react';
 import { motion } from 'motion/react';
+import { useTranslation } from 'react-i18next';
 
 import { Button } from '@/shared/components/ui/button';
 import heroMockupImage from '@/assets/hero-mockup.png';
 
 export function HeroSection() {
+    const { t } = useTranslation();
     return (
         <section className="relative overflow-hidden min-h-screen flex items-center justify-center bg-[#030213]">
             {/* Background: blurred hero image fills the full section */}
@@ -32,40 +34,39 @@ export function HeroSection() {
                     {/* Badge */}
                     <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-cyan-400 text-sm font-medium tracking-wide">
                         <Activity className="h-4 w-4" />
-                        <span>The Next Generation of Manufacturing</span>
+                        <span>{t('hero.badge')}</span>
                     </div>
 
                     {/* Main headline */}
                     <div className="space-y-4">
                         <h1 className="text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-white leading-none">
-                            Ditch the Bloat.
+                            {t('hero.title_1')}
                         </h1>
                         <h2 className="text-6xl md:text-7xl lg:text-8xl font-black tracking-tight leading-none text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500">
-                            Take Control.
+                            {t('hero.title_2')}
                         </h2>
                     </div>
 
                     {/* Sub-headline */}
                     <p className="text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto font-light leading-relaxed">
-                        GRVT MES is a lightweight, cloud-based Manufacturing Execution System built for SMEs
-                        that want real production control — without ERP complexity.
+                        {t('hero.subtitle')}
                     </p>
 
                     {/* Trust badges */}
                     <div className="flex flex-wrap justify-center gap-6">
                         <div className="flex items-center gap-2 text-slate-400">
                             <ShieldCheck className="h-5 w-5 text-cyan-500" />
-                            <span className="text-sm font-medium">Fully ISA-95 Compliant</span>
+                            <span className="text-sm font-medium">{t('hero.trust_1')}</span>
                         </div>
                         <div className="w-px h-5 bg-slate-700 self-center hidden sm:block" />
                         <div className="flex items-center gap-2 text-slate-400">
                             <ShieldCheck className="h-5 w-5 text-purple-500" />
-                            <span className="text-sm font-medium">100% ERP-Agnostic</span>
+                            <span className="text-sm font-medium">{t('hero.trust_2')}</span>
                         </div>
                         <div className="w-px h-5 bg-slate-700 self-center hidden sm:block" />
                         <div className="flex items-center gap-2 text-slate-400">
                             <ShieldCheck className="h-5 w-5 text-emerald-500" />
-                            <span className="text-sm font-medium">Deploy in Days, Not Months</span>
+                            <span className="text-sm font-medium">{t('hero.trust_3')}</span>
                         </div>
                     </div>
 
@@ -75,7 +76,7 @@ export function HeroSection() {
                             size="lg"
                             className="h-16 px-10 text-xl font-bold bg-cyan-500 hover:bg-cyan-400 text-slate-950 border-0 rounded-2xl shadow-[0_0_40px_rgba(6,182,212,0.4)] hover:shadow-[0_0_60px_rgba(6,182,212,0.6)] transition-all duration-300"
                         >
-                            Launch Your Free MES
+                            {t('hero.cta_primary')}
                             <ArrowRight className="ml-2 h-6 w-6" />
                         </Button>
                         <Button
@@ -83,7 +84,7 @@ export function HeroSection() {
                             variant="outline"
                             className="h-16 px-10 text-xl font-medium border-slate-600 hover:bg-white/5 hover:border-slate-400 text-white rounded-2xl backdrop-blur-sm bg-white/5 transition-all duration-300"
                         >
-                            See the Architecture
+                            {t('hero.cta_secondary')}
                         </Button>
                     </div>
                 </motion.div>

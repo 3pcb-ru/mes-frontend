@@ -1,4 +1,5 @@
 import { motion } from 'motion/react';
+import { useTranslation } from 'react-i18next';
 import { Check, Shield, Server, Key, RefreshCw } from 'lucide-react';
 
 interface SurvivabilityCardProps {
@@ -10,6 +11,7 @@ interface SurvivabilityCardProps {
 }
 
 function SurvivabilityCard({ icon: Icon, title, standard, benefit, delay }: SurvivabilityCardProps) {
+    const { t } = useTranslation();
     return (
         <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -28,12 +30,12 @@ function SurvivabilityCard({ icon: Icon, title, standard, benefit, delay }: Surv
 
             <div className="space-y-4">
                 <div>
-                    <h4 className="text-sm text-cyan-400 mb-2">What We Do</h4>
+                    <h4 className="text-sm text-cyan-400 mb-2">{t('phases.what_we_do', "What We Do")}</h4>
                     <p className="text-slate-300 text-sm">{standard}</p>
                 </div>
 
                 <div>
-                    <h4 className="text-sm text-cyan-400 mb-2">It's Awesome Because</h4>
+                    <h4 className="text-sm text-cyan-400 mb-2">{t('phases.awesome_because', "It's Awesome Because")}</h4>
                     <p className="text-slate-300 text-sm">{benefit}</p>
                 </div>
             </div>
@@ -42,30 +44,31 @@ function SurvivabilityCard({ icon: Icon, title, standard, benefit, delay }: Surv
 }
 
 export function PhasesSection() {
+    const { t } = useTranslation();
     const controlPoints = [
         {
             icon: Shield,
-            title: 'Keep Office and Factory Apart',
-            standard: 'Office computers and factory machines should not live on the same network. We keep them safely separated.',
-            benefit: 'If someone clicks a bad email, production keeps running. Machines stay safe.',
+            title: t('phases.c1.title'),
+            standard: t('phases.c1.std'),
+            benefit: t('phases.c1.ben'),
         },
         {
             icon: Server,
-            title: 'A Safe Middle Stop',
-            standard: 'Information doesn’t go straight from the office to the factory. It passes through a safe checkpoint first.',
-            benefit: 'Only clean, approved data reaches your machines. Bad stuff gets blocked.',
+            title: t('phases.c2.title'),
+            standard: t('phases.c2.std'),
+            benefit: t('phases.c2.ben'),
         },
         {
             icon: Key,
-            title: 'Vendor Access Only When Needed',
-            standard: 'Vendors get temporary access, only during scheduled work. It turns off automatically.',
-            benefit: 'No forgotten logins. No hidden back doors. Just controlled access.',
+            title: t('phases.c3.title'),
+            standard: t('phases.c3.std'),
+            benefit: t('phases.c3.ben'),
         },
         {
             icon: RefreshCw,
-            title: 'Daily System Checkups',
-            standard: 'Every day we compare office numbers with factory results and save backups.',
-            benefit: 'Problems show up early. Fix them before they become expensive.',
+            title: t('phases.c4.title'),
+            standard: t('phases.c4.std'),
+            benefit: t('phases.c4.ben'),
         },
     ];
 
@@ -73,11 +76,10 @@ export function PhasesSection() {
         <section className="py-20 bg-slate-900/50 backdrop-blur-sm">
             <div className="container mx-auto px-4 md:px-6">
                 <div className="text-center mb-12 space-y-4">
-                    <h2 className="text-3xl md:text-4xl lg:text-5xl text-white">Your Factory Keeps Running</h2>
-                    <p className="text-xl text-cyan-400 max-w-3xl mx-auto">Even When Office Systems Go Down</p>
+                    <h2 className="text-3xl md:text-4xl lg:text-5xl text-white">{t('phases.title')}</h2>
+                    <p className="text-xl text-cyan-400 max-w-3xl mx-auto">{t('phases.subtitle')}</p>
                     <p className="text-lg text-slate-300 max-w-3xl mx-auto">
-                        <strong className="text-white">The Big Idea:</strong> If your ERP system goes offline (server crash, network outage, ransomware attack), your factory floor
-                        should keep producing for at least 24 hours. Here\'s how we make that happen:
+                        <strong className="text-white">{t('phases.big_idea')}</strong> {t('phases.big_idea_desc')}
                     </p>
                 </div>
 

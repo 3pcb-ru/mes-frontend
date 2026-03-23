@@ -1,0 +1,241 @@
+{
+  "nav": {
+    "home": "Ana Sayfa",
+    "about": "Hakkımızda",
+    "features": "Özellikler",
+    "pricing": "Fiyatlandırma",
+    "contact": "İletişim",
+    "why_grvt": "Neden GRVT",
+    "solution": "Çözüm",
+    "reliability": "Güvenilirlik"
+  },
+  "hero": {
+    "badge": "Yeni Nesil Üretim",
+    "title_1": "Yükten Kurtulun.",
+    "title_2": "Kontrolü Ele Alın.",
+    "subtitle": "GRVT MES, ERP karmaşıklığı olmadan gerçek üretim kontrolü isteyen KOBİ'ler için tasarlanmış, hafif ve bulut tabanlı bir Üretim Yürütme Sistemidir.",
+    "trust_1": "Tam ISA-95 Uyumlu",
+    "trust_2": "%100 ERP-Bağımsız",
+    "trust_3": "Aylar Değil, Günler İçinde Canlıya Geçin",
+    "cta_primary": "Ücretsiz MES'inizi Başlatın",
+    "cta_secondary": "Mimariyi İnceleyin",
+    "cta": "Şimdi Başlayın"
+  },
+  "about": {
+    "hero_badge": "Biz Kimiz",
+    "hero_title_prefix": "Biz",
+    "hero_title": "Biz Dannie'yiz",
+    "hero_subtitle": "Avrupa kökenli ve üç kıtada varlığı olan küresel bir Elektronik Üretim Hizmetleri (EMS) şirketiyiz.",
+    "what_we_do_badge": "Ne Yapıyoruz",
+    "what_we_do_title": "Tasarım Dosyasından Bitmiş Ürüne.",
+    "what_we_do_desc_1": "Dannie, PCB montajı ve bileşen tedariğinden tam sistem entegrasyonuna ve kutu yapımına kadar uçtan uca elektronik üretim hizmetleri sunar.",
+    "what_we_do_desc_2": "İster ilk prototipinizi başlatın, ister on binlerce birime ölçeklendirin, aynı standartla teslimat yapıyoruz: tam izlenebilirlik, sıfır sürpriz.",
+    "goal_vision_badge": "Hedefimiz ve Vizyonumuz",
+    "goal_title": "Hedefimiz",
+    "goal_desc": "Donanım şirketleri için dünyanın en güvenilir ve şeffaf üretim ortağı olmak — tedarik zincirindeki belirsizliği her seferinde bir üretim yaparak ortadan kaldırmak.",
+    "vision_title": "Vizyonumuz",
+    "vision_desc": "İki kişilik bir girişimden küresel bir OEM'e kadar her donanım şirketinin Kesinlikle inşa edebileceği bir gelecek.",
+    "team_badge": "Ekibimiz",
+    "team_title": "Her Üretimin Arkasındaki İnsanlar",
+    "cta_title": "Kesinlikle İnşa Etmeye Hazır mısınız?",
+    "cta_start": "Projenizi Başlatın",
+    "cta_talk": "Ekibimizle Konuşun",
+    "loc_lithuania": "Litvanya",
+    "loc_turkey": "Türkiye",
+    "loc_china": "Çin",
+    "services": {
+      "pcb": {
+        "title": "PCB Montajı",
+        "desc": "SMT ve delikten montaj, yüksek karışımlı üretim"
+      },
+      "integration": {
+        "title": "Sistem Entegrasyonu",
+        "desc": "Kutu yapımı, kablolama, bellenim yükleme"
+      },
+      "sourcing": {
+        "title": "Bileşen Tedariği",
+        "desc": "Küresel tedarik zinciri, yaşam döngüsü yönetimi"
+      },
+      "quality": {
+        "title": "Kalite Kontrol",
+        "desc": "AOI, X-ray, ICT ve fonksiyonel testler"
+      }
+    },
+    "drives_title": "Bizi İleriye Taşıyan Değerler",
+    "values": {
+      "transparency": {
+        "title": "Şeffaflık",
+        "desc": "Her paydaşın üretim alanımızda olup bitenlere dair tam görüş hakkı olduğuna inanıyoruz."
+      },
+      "precision": {
+        "title": "Hassasiyet",
+        "desc": "Kendimizi sıfır hata standartlarına göre tutuyoruz — bu bir hedef değil, temel bir beklentidir."
+      },
+      "partnership": {
+        "title": "Ortaklık",
+        "desc": "Müşterilerimize iş ortağı olarak yaklaşıyoruz. Sizin ürün yol haritanız bizim yol haritamızdır."
+      },
+      "globalness": {
+        "title": "Küresellik",
+        "desc": "Avrupa kökenli, küresel ölçekli. Her bölgenin en iyisini her üretime taşıyoruz."
+      }
+    },
+    "team_desc": "Mühendisler, operatörler ve yenilikçilerden oluşan kıtalararası bir ekip — tek bir tutkuyla birleşmiş: kalite.",
+    "team": {
+      "ceo": {
+        "name": "Dannie CEO'su",
+        "role": "İcra Kurulu Başkanı",
+        "desc": "Küresel elektronik üretimine şeffaflık ve hassasiyet getirme misyonunu yürüten vizyoner lider."
+      },
+      "ops": {
+        "name": "Operasyon Sorumlusu",
+        "role": "Operasyon Başkanı",
+        "desc": "Prototipten kitlesel teslimata kadar sorunsuz üretim sağlayan üç merkezli küresel üretim ağımızı yönetir."
+      },
+      "eng": {
+        "name": "Mühendislik Direktörü",
+        "role": "Mühendislik Direktörü",
+        "desc": "Litvanya, Türkiye ve Çin'deki çapraz fonksiyonlu mühendislik ekiplerimize kaliteye odaklanarak liderlik eder."
+      },
+      "innovation": {
+        "name": "İnovasyon Lideri",
+        "role": "Dijital İnovasyon Başkanı",
+        "desc": "Dannie'yi akıllı üretimin ön saflarında tutan dijital dönüşüm ve teknoloji ortaklıklarını yönetir."
+      }
+    },
+    "cta_desc": "Projeniz hakkında konuşalım. Ekibimiz şemadan sevkiyata kadar devralmaya hazır."
+  },
+  "solutions": {
+    "badge": "\"Hafif MES\" Yaklaşımı",
+    "title_prefix": "Çözüm İçin",
+    "title_highlight": "İnşa Edildi",
+    "title": "Çözüm İçin İnşa Edildi",
+    "subtitle": "KOBİ elektronik üreticilerine monolitik MES veya Excel tabloları iyi hizmet vermez. En büyük kaotik sorunlarınızı doğrudan ortadan kaldıran hızlı, role özgü çözümler sunarak \"Excel Boşluğu\"nu hedefliyoruz.",
+    "problem_solved": "Sorun Çözüldü",
+    "mats": {
+      "title": "Malzeme Zekası",
+      "desc": "Etiket yazdırma ve akıllı depolama entegrasyonu ile UID tabanlı makaralar, MSL ve pasta yaşam döngüsü takibi.",
+      "solves": "Kimse sayılara güvenmiyor",
+      "prob_desc": "Hayalet envanter ve manuel sayımlar planlamayı bozar. Gerçek zamanlı stok güncellemeleriyle güveni yeniden tesis ediyoruz.",
+      "h1": "UID/etiket yazdırma",
+      "h2": "MSL zamanlayıcıları ve fırınlama rehberliği",
+      "h3": "Makara jeneolojisi"
+    },
+    "safety": {
+      "title": "Süreç Güvenliği ve Kilitler",
+      "desc": "Besleyici kurulum doğrulaması, ekleme yakalama ve hatayı araçta durdurmak için süreç kilitleri.",
+      "solves": "İnsan yazım hataları",
+      "prob_desc": "Manuel veri girişi önlenebilir hatalara neden olur. Hataları kaynağında azaltıyoruz.",
+      "h1": "Besleyici doğrulaması",
+      "h2": "Ekleme sürekliliği",
+      "h3": "Çözülme/fırınlama kilitleri"
+    },
+    "connectivity": {
+      "title": "Açık Bağlantı",
+      "desc": "Makineleri, sayaçları ve analizleri maliyetli sürücüler olmadan bağlamak için IPC-CFX ve Hermes uyumlu mimari.",
+      "solves": "Çok fazla kopuk sistem",
+      "prob_desc": "Çok sayıda tablo ve nokta araç sürtünme yaratır. Verileri birleştiriyor ve malzeme akışlarını otomatikleştiriyoruz.",
+      "h1": "CFX / Hermes",
+      "h2": "Kenar (Edge) öncelikli tasarım",
+      "h3": "Tak-çalıştır entegrasyonu"
+    },
+    "trace": {
+      "title": "İzlenebilirlik ve As-Built",
+      "desc": "Regüle sektörler için as-built jeneolojisi, dijital çalışma talimatları ve denetime hazır izlenebilirlik.",
+      "solves": "Felaketten bir tık uzakta",
+      "prob_desc": "İzlenebilirlik olmadan geri çağırmalar ve denetimler pahalıdır. As-built jeneolojisi sizi kontrol altına alır.",
+      "h1": "As-built ağaçları",
+      "h2": "DWI adım yakalama",
+      "h3": "ISO uyumlu dışa aktarmalar"
+    }
+  },
+  "phases": {
+    "title": "Fabrikanız Çalışmaya Devam Eder",
+    "subtitle": "Ofis Sistemleri Çökse Bile",
+    "big_idea": "Ana Fikir:",
+    "big_idea_desc": "ERP sisteminiz çevrimdışı olsa bile (sunucu çökmesi, ağ kesintisi, fidye yazılımı saldırısı), fabrika zeminindeki üretiminiz en az 24 saat devam etmelidir. Bunu nasıl başardığımız aşağıdadır:",
+    "what_we_do": "Ne Yapıyoruz",
+    "awesome_because": "Harika Çünkü",
+    "c1": {
+      "title": "Ofis ve Fabrikayı Ayrı Tutun",
+      "std": "Ofis bilgisayarları ve fabrika makineleri aynı ağda bulunmamalıdır. Onları güvenli bir şekilde ayrı tutuyoruz.",
+      "ben": "Eğer biri kötü bir e-postayı tıklarsa, üretim devam eder. Makineler güvende kalır."
+    },
+    "c2": {
+      "title": "Güvenli Bir Orta Durak",
+      "std": "Bilgi doğrudan ofisten fabrikaya gitmez. Önce güvenli bir kontrol noktasından geçer.",
+      "ben": "Makinelerinize yalnızca temiz ve onaylanmış veriler ulaşır. Kötü içerikler engellenir."
+    },
+    "c3": {
+      "title": "Yalnızca Gerektiğinde Tedarikçi Erişimi",
+      "std": "Tedarikçilere yalnızca planlanmış çalışma sırasında geçici erişim verilir. Otomatik olarak kapanır.",
+      "ben": "Unutulmuş girişler yok. Gizli arka kapılar yok. Sadece kontrollü erişim."
+    },
+    "c4": {
+      "title": "Günlük Sistem Kontrolleri",
+      "std": "Her gün ofis rakamlarını fabrika sonuçlarıyla karşılaştırıyor ve yedekler alıyoruz.",
+      "ben": "Sorunlar erkenden ortaya çıkar. Onları pahalı hale gelmeden çözün."
+    }
+  },
+  "cta_banner": {
+    "title": "Fabrika Zemininizi Kontrol Etmeye Hazır mısınız?",
+    "subtitle": "GRVT MES Core'u dakikalar içinde başlatın.",
+    "no_erp": "Sözleşme yok. ERP gerekmez.",
+    "button": "Şimdi Başlayın"
+  },
+  "footer": {
+    "tagline": "KOBİ'ler için tasarlanmış hafif üretim yürütme sistemi.",
+    "product": "Ürün",
+    "company": "Şirket",
+    "legal": "Yasal",
+    "features": "Özellikler",
+    "solution": "Çözüm",
+    "reliability": "Güvenilirlik",
+    "docs": "Dokümantasyon",
+    "about": "Hakkımızda",
+    "blog": "Blog",
+    "careers": "Kariyer",
+    "contact": "İletişim",
+    "privacy": "Gizlilik Politikası",
+    "terms": "Kullanım Koşulları",
+    "security": "Güvenlik",
+    "rights": "Tüm hakları saklıdır."
+  },
+  "why": {
+    "title": "MES Sistemleri Neden Karmaşıklaşır?",
+    "subtitle": "Bu size tanıdık geliyorsa, yalnız değilsiniz.",
+    "card_1": {
+      "title": "Çok Fazla Sistem, Hiçbiri Konuşmuyor",
+      "desc": "Her yeni araç daha fazla kaos yaratır. Bir değişiklik üç diğerini bozar.",
+      "h1": "Entegrasyonlar kontrolden çıkar",
+      "h2": "Basit değişiklikler beklenmedik arızalara neden olur",
+      "h3": "Net bir sistem sahipliği yok"
+    },
+    "card_2": {
+      "title": "Kimse Sayılara Güvenmiyor",
+      "desc": "Her sistem farklı veriler gösterir. Toplantılar tartışmaya dönüşür.",
+      "h1": "Envanter asla gerçekle eşleşmez",
+      "h2": "Raporlar birbiriyle çelişir",
+      "h3": "Kararlar tahminlere dayanır"
+    },
+    "card_3": {
+      "title": "Fabrikanız Felaketten Bir Tık Uzakta",
+      "desc": "Ofis BT'si ve üretim makineleri aynı ağı paylaşıyor.",
+      "h1": "Bir virüs üretimi durdurabilir",
+      "h2": "Sistemler arasında izolasyon yok",
+      "h3": "Güvenlik sonradan akla gelen bir düşünce"
+    },
+    "card_4": {
+      "title": "İnsan Yazımı Veri Girişi Daima Hatalıdır",
+      "desc": "Manuel giriş; hata, gecikme ve para kaybı demektir.",
+      "h1": "Yanlış birimler, yanlış değerler",
+      "h2": "Yazım hataları üretime ulaşır",
+      "h3": "Denetimler veri açıklarını ortaya çıkarır"
+    }
+  },
+  "common": {
+    "language": "Dil",
+    "select_language": "Dil Seçin",
+    "sign_in": "Giriş Yap"
+  }
+}

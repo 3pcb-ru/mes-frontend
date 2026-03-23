@@ -1,0 +1,241 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About Us",
+    "features": "Features",
+    "pricing": "Pricing",
+    "contact": "Contact",
+    "why_grvt": "Why GRVT",
+    "solution": "Solution",
+    "reliability": "Reliability"
+  },
+  "hero": {
+    "badge": "The Next Generation of Manufacturing",
+    "title_1": "Ditch the Bloat.",
+    "title_2": "Take Control.",
+    "subtitle": "GRVT MES is a lightweight, cloud-based Manufacturing Execution System built for SMEs that want real production control — without ERP complexity.",
+    "trust_1": "Fully ISA-95 Compliant",
+    "trust_2": "100% ERP-Agnostic",
+    "trust_3": "Deploy in Days, Not Months",
+    "cta_primary": "Launch Your Free MES",
+    "cta_secondary": "See the Architecture",
+    "cta": "Get Started"
+  },
+  "about": {
+    "hero_badge": "Who We Are",
+    "hero_title_prefix": "We Are",
+    "hero_title": "We Are Dannie",
+    "hero_subtitle": "A global Electronic Manufacturing Services (EMS) company with roots in Europe and a presence across three continents.",
+    "what_we_do_badge": "What We Do",
+    "what_we_do_title": "From Design File to Finished Product.",
+    "what_we_do_desc_1": "Dannie provides end-to-end electronics manufacturing services — from PCB assembly and component sourcing to full system integration and box builds.",
+    "what_we_do_desc_2": "Whether you're launching a first prototype or scaling to tens of thousands of units, we deliver with the same standard: full traceability, zero surprises.",
+    "goal_vision_badge": "Our Goal & Vision",
+    "goal_title": "Our Goal",
+    "goal_desc": "To become the world's most reliable and transparent manufacturing partner for hardware companies — removing uncertainty from the supply chain, one build at a time.",
+    "vision_title": "Our Vision",
+    "vision_desc": "A future where every hardware company — from a two-person startup to a global OEM — can build with Certainty.",
+    "team_badge": "Our Team",
+    "team_title": "The People Behind Every Build",
+    "cta_title": "Ready to Build with Certainty?",
+    "cta_start": "Start Your Project",
+    "cta_talk": "Talk to Our Team",
+    "loc_lithuania": "Lithuania",
+    "loc_turkey": "Turkey",
+    "loc_china": "China",
+    "services": {
+      "pcb": {
+        "title": "PCB Assembly",
+        "desc": "SMT & through-hole, high-mix production"
+      },
+      "integration": {
+        "title": "System Integration",
+        "desc": "Box builds, cabling, firmware flashing"
+      },
+      "sourcing": {
+        "title": "Component Sourcing",
+        "desc": "Global supply chain, lifecycle managed"
+      },
+      "quality": {
+        "title": "Quality Control",
+        "desc": "AOI, X-ray, ICT, and functional testing"
+      }
+    },
+    "drives_title": "What Drives Us Forward",
+    "values": {
+      "transparency": {
+        "title": "Transparency",
+        "desc": "We believe every stakeholder deserves full visibility into what happens on our floor."
+      },
+      "precision": {
+        "title": "Precision",
+        "desc": "We hold ourselves to zero-defect standards—not as a goal, but as a baseline expectation."
+      },
+      "partnership": {
+        "title": "Partnership",
+        "desc": "We treat our customers as co-builders. Your product roadmap is our roadmap."
+      },
+      "globalness": {
+        "title": "Globalness",
+        "desc": "Rooted in Europe, scaled globally. We bring the best of every region to every build."
+      }
+    },
+    "team_desc": "A cross-continental team of engineers, operators, and innovators — united by a single obsession: quality.",
+    "team": {
+      "ceo": {
+        "name": "Dannie CEO",
+        "role": "Chief Executive Officer",
+        "desc": "Visionary leader driving Dannie's mission to bring transparency and precision to global electronics manufacturing."
+      },
+      "ops": {
+        "name": "Operations Lead",
+        "role": "Head of Operations",
+        "desc": "Orchestrates our three-hub global manufacturing network, ensuring seamless production from prototype to mass delivery."
+      },
+      "eng": {
+        "name": "Engineering Director",
+        "role": "Director of Engineering",
+        "desc": "Leads our cross-functional engineering squads across Lithuania, Turkey, and China with a relentless focus on quality."
+      },
+      "innovation": {
+        "name": "Innovation Lead",
+        "role": "Head of Digital Innovation",
+        "desc": "Drives the digital transformation and technology partnerships that keep Dannie at the forefront of smart manufacturing."
+      }
+    },
+    "cta_desc": "Let's talk about your project. Our team is ready to take it from schematic to shipment."
+  },
+  "solutions": {
+    "badge": "The \"Light MES\" Approach",
+    "title_prefix": "Built to",
+    "title_highlight": "Solve",
+    "title": "Built to Solve",
+    "subtitle": "SME electronics manufacturers are not served well by monolithic MES or by spreadsheets. We target the \"Excel Gap\" by delivering rapid, role-specific solutions that directly eliminate your biggest chaotic problems.",
+    "problem_solved": "Problem Solved",
+    "mats": {
+      "title": "Material Intelligence",
+      "desc": "UID-based reels, MSL, and paste lifecycle tracking with label printing and smart storage integration.",
+      "solves": "Nobody trusts the numbers",
+      "prob_desc": "Phantom inventory and manual counts erode planning. We restore confidence with real-time stock updates.",
+      "h1": "UID/label printing",
+      "h2": "MSL timers & bake guidance",
+      "h3": "Reel genealogy"
+    },
+    "safety": {
+      "title": "Process Safety & Interlocks",
+      "desc": "Feeder setup verification, splice capture, and process interlocks to stop errors at the tool.",
+      "solves": "Human typing failures",
+      "prob_desc": "Manual data entry causes avoidable errors. We reduce mistakes at the source.",
+      "h1": "Feeder verification",
+      "h2": "Splice continuity",
+      "h3": "Thaw/bake interlocks"
+    },
+    "connectivity": {
+      "title": "Open Connectivity",
+      "desc": "IPC-CFX & Hermes-ready architecture to connect machines, counters, and analytics without costly drivers.",
+      "solves": "Too many disconnected systems",
+      "prob_desc": "Multiple spreadsheets and point tools create friction. We consolidate data and automate material flows.",
+      "h1": "CFX / Hermes",
+      "h2": "Edge-first design",
+      "h3": "Plug-and-play integration"
+    },
+    "trace": {
+      "title": "Trace & As-Built",
+      "desc": "As-built genealogy, digital work instructions, and audit-ready traceability for regulated sectors.",
+      "solves": "One click away from disaster",
+      "prob_desc": "Without traceability, recalls and audits are expensive. As-built genealogy puts you in control.",
+      "h1": "As-built trees",
+      "h2": "DWI step capture",
+      "h3": "ISO-ready exports"
+    }
+  },
+  "phases": {
+    "title": "Your Factory Keeps Running",
+    "subtitle": "Even When Office Systems Go Down",
+    "big_idea": "The Big Idea:",
+    "big_idea_desc": "If your ERP system goes offline (server crash, network outage, ransomware attack), your factory floor should keep producing for at least 24 hours. Here's how we make that happen:",
+    "what_we_do": "What We Do",
+    "awesome_because": "It's Awesome Because",
+    "c1": {
+      "title": "Keep Office and Factory Apart",
+      "std": "Office computers and factory machines should not live on the same network. We keep them safely separated.",
+      "ben": "If someone clicks a bad email, production keeps running. Machines stay safe."
+    },
+    "c2": {
+      "title": "A Safe Middle Stop",
+      "std": "Information doesn’t go straight from the office to the factory. It passes through a safe checkpoint first.",
+      "ben": "Only clean, approved data reaches your machines. Bad stuff gets blocked."
+    },
+    "c3": {
+      "title": "Vendor Access Only When Needed",
+      "std": "Vendors get temporary access, only during scheduled work. It turns off automatically.",
+      "ben": "No forgotten logins. No hidden back doors. Just controlled access."
+    },
+    "c4": {
+      "title": "Daily System Checkups",
+      "std": "Every day we compare office numbers with factory results and save backups.",
+      "ben": "Problems show up early. Fix them before they become expensive."
+    }
+  },
+  "cta_banner": {
+    "title": "Ready to Control Your Factory Floor?",
+    "subtitle": "Launch GRVT MES Core in minutes.",
+    "no_erp": "No contracts. No ERP required.",
+    "button": "Get Started Now"
+  },
+  "footer": {
+    "tagline": "Lightweight manufacturing execution system built for SMEs.",
+    "product": "Product",
+    "company": "Company",
+    "legal": "Legal",
+    "features": "Features",
+    "solution": "Solution",
+    "reliability": "Reliability",
+    "docs": "Documentation",
+    "about": "About",
+    "blog": "Blog",
+    "careers": "Careers",
+    "contact": "Contact",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "security": "Security",
+    "rights": "All rights reserved."
+  },
+  "why": {
+    "title": "Why MES Systems Get Messy",
+    "subtitle": "If this sounds familiar, you are not alone.",
+    "card_1": {
+      "title": "Too Many Systems, Nothing Talks",
+      "desc": "Every new tool creates more chaos. One change breaks three others.",
+      "h1": "Integrations grow out of control",
+      "h2": "Simple changes cause unexpected failures",
+      "h3": "No clear system ownership"
+    },
+    "card_2": {
+      "title": "Nobody Trusts the Numbers",
+      "desc": "Every system shows different data. Meetings turn into arguments.",
+      "h1": "Inventory never matches reality",
+      "h2": "Reports contradict each other",
+      "h3": "Decisions are based on guesses"
+    },
+    "card_3": {
+      "title": "Your Factory Is One Click Away From Disaster",
+      "desc": "Office IT and production machines share the same network.",
+      "h1": "One virus can stop production",
+      "h2": "No isolation between systems",
+      "h3": "Security is an afterthought"
+    },
+    "card_4": {
+      "title": "Humans Typing Data Always Fails",
+      "desc": "Manual input means errors, delays, and lost money.",
+      "h1": "Wrong units, wrong values",
+      "h2": "Typos reach production",
+      "h3": "Audits expose data gaps"
+    }
+  },
+  "common": {
+    "language": "Language",
+    "select_language": "Select Language",
+    "sign_in": "Sign In"
+  }
+}

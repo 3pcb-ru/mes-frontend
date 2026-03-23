@@ -1,46 +1,62 @@
 import { motion } from 'motion/react';
+import { useTranslation } from 'react-i18next';
 import { Globe, Target, Eye, Users, ArrowRight, MapPin, Lightbulb, Heart, Zap } from 'lucide-react';
 import { Button } from '@/shared/components/ui/button';
 
-const teamMembers = [
-    {
-        name: 'Dannie CEO',
-        role: 'Chief Executive Officer',
-        description: 'Visionary leader driving Dannie\'s mission to bring transparency and precision to global electronics manufacturing.',
-        initials: 'DC',
-        color: 'from-cyan-500/30 to-blue-600/20',
-    },
-    {
-        name: 'Operations Lead',
-        role: 'Head of Operations',
-        description: 'Orchestrates our three-hub global manufacturing network, ensuring seamless production from prototype to mass delivery.',
-        initials: 'OL',
-        color: 'from-purple-500/30 to-indigo-600/20',
-    },
-    {
-        name: 'Engineering Director',
-        role: 'Director of Engineering',
-        description: 'Leads our cross-functional engineering squads across Lithuania, Turkey, and China with a relentless focus on quality.',
-        initials: 'ED',
-        color: 'from-emerald-500/30 to-teal-600/20',
-    },
-    {
-        name: 'Innovation Lead',
-        role: 'Head of Digital Innovation',
-        description: 'Drives the digital transformation and technology partnerships that keep Dannie at the forefront of smart manufacturing.',
-        initials: 'IL',
-        color: 'from-amber-500/30 to-orange-600/20',
-    },
-];
-
-const values = [
-    { icon: Lightbulb, title: 'Transparency', desc: 'We believe every stakeholder deserves full visibility into what happens on our floor.' },
-    { icon: Zap, title: 'Precision', desc: 'We hold ourselves to zero-defect standards—not as a goal, but as a baseline expectation.' },
-    { icon: Heart, title: 'Partnership', desc: 'We treat our customers as co-builders. Your product roadmap is our roadmap.' },
-    { icon: Globe, title: 'Globalness', desc: 'Rooted in Europe, scaled globally. We bring the best of every region to every build.' },
-];
-
 export function AboutPage() {
+    const { t } = useTranslation();
+
+    const teamMembers = [
+        {
+            name: t('about.team.ceo.name'),
+            role: t('about.team.ceo.role'),
+            description: t('about.team.ceo.desc'),
+            initials: 'DC',
+            color: 'from-cyan-500/30 to-blue-600/20',
+        },
+        {
+            name: t('about.team.ops.name'),
+            role: t('about.team.ops.role'),
+            description: t('about.team.ops.desc'),
+            initials: 'OL',
+            color: 'from-purple-500/30 to-indigo-600/20',
+        },
+        {
+            name: t('about.team.eng.name'),
+            role: t('about.team.eng.role'),
+            description: t('about.team.eng.desc'),
+            initials: 'ED',
+            color: 'from-emerald-500/30 to-teal-600/20',
+        },
+        {
+            name: t('about.team.innovation.name'),
+            role: t('about.team.innovation.role'),
+            description: t('about.team.innovation.desc'),
+            initials: 'IL',
+            color: 'from-amber-500/30 to-orange-600/20',
+        },
+    ];
+
+    const values = [
+        { icon: Lightbulb, title: t('about.values.transparency.title'), desc: t('about.values.transparency.desc') },
+        { icon: Zap, title: t('about.values.precision.title'), desc: t('about.values.precision.desc') },
+        { icon: Heart, title: t('about.values.partnership.title'), desc: t('about.values.partnership.desc') },
+        { icon: Globe, title: t('about.values.globalness.title'), desc: t('about.values.globalness.desc') },
+    ];
+
+    const locations = [
+        { icon: MapPin, label: t('about.loc_lithuania', 'Lithuania') },
+        { icon: MapPin, label: t('about.loc_turkey', 'Turkey') },
+        { icon: MapPin, label: t('about.loc_china', 'China') },
+    ];
+
+    const services = [
+        { label: t('about.services.pcb.title'), detail: t('about.services.pcb.desc') },
+        { label: t('about.services.integration.title'), detail: t('about.services.integration.desc') },
+        { label: t('about.services.sourcing.title'), detail: t('about.services.sourcing.desc') },
+        { label: t('about.services.quality.title'), detail: t('about.services.quality.desc') },
+    ];
+
     return (
         <main className="min-h-screen bg-[#030213] text-slate-300 selection:bg-cyan-500/30">
 
@@ -60,27 +76,22 @@ export function AboutPage() {
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
                                 <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
                             </span>
-                            Who We Are
+                            {t('about.hero_badge')}
                         </div>
 
                         <h1 className="text-5xl md:text-7xl font-black text-white tracking-tight leading-none">
-                            We Are{' '}
+                            {t('about.hero_title_prefix', 'We Are')}{' '}
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500">
                                 Dannie
                             </span>
                         </h1>
 
                         <p className="text-xl md:text-2xl text-slate-300 font-light max-w-3xl mx-auto leading-relaxed">
-                            A global <strong className="text-white font-medium">Electronic Manufacturing Services (EMS)</strong> company with roots in Europe and a presence across three continents.
-                            We don't just build electronics — we build the confidence behind every unit we ship.
+                            {t('about.hero_subtitle')}
                         </p>
 
                         <div className="flex flex-wrap justify-center gap-6 pt-4">
-                            {[
-                                { icon: MapPin, label: 'Lithuania' },
-                                { icon: MapPin, label: 'Turkey' },
-                                { icon: MapPin, label: 'China' },
-                            ].map((loc, i) => (
+                            {locations.map((loc, i) => (
                                 <div key={i} className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-slate-300 text-sm">
                                     <loc.icon className="h-4 w-4 text-cyan-400" />
                                     {loc.label}
@@ -102,17 +113,16 @@ export function AboutPage() {
                             className="space-y-6"
                         >
                             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-sm font-medium">
-                                What We Do
+                                {t('about.what_we_do_badge')}
                             </div>
                             <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
-                                From Design File to <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">Finished Product.</span>
+                                {t('about.what_we_do_title')}
                             </h2>
                             <p className="text-lg text-slate-400 font-light leading-relaxed">
-                                Dannie provides end-to-end electronics manufacturing services — from PCB assembly and component sourcing to full system integration and box builds.
-                                We operate high-precision production lines in Vilnius, Antalya, and China, each specialised for different phases of your product journey.
+                                {t('about.what_we_do_desc_1')}
                             </p>
                             <p className="text-lg text-slate-400 font-light leading-relaxed">
-                                Whether you're launching a first prototype or scaling to tens of thousands of units, we deliver with the same standard: <strong className="text-white">full traceability, zero surprises.</strong>
+                                {t('about.what_we_do_desc_2')}
                             </p>
                         </motion.div>
 
@@ -122,12 +132,7 @@ export function AboutPage() {
                             viewport={{ once: true }}
                             className="grid grid-cols-2 gap-4"
                         >
-                            {[
-                                { label: 'PCB Assembly', detail: 'SMT & through-hole, high-mix production' },
-                                { label: 'System Integration', detail: 'Box builds, cabling, firmware flashing' },
-                                { label: 'Component Sourcing', detail: 'Global supply chain, lifecycle managed' },
-                                { label: 'Quality Control', detail: 'AOI, X-ray, ICT, and functional testing' },
-                            ].map((item, i) => (
+                            {services.map((item, i) => (
                                 <motion.div
                                     key={i}
                                     initial={{ opacity: 0, y: 20 }}
@@ -158,10 +163,10 @@ export function AboutPage() {
                         className="text-center mb-16 space-y-4"
                     >
                         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm font-medium">
-                            Our Goal &amp; Vision
+                            {t('about.goal_vision_badge')}
                         </div>
                         <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
-                            What Drives Us Forward
+                            {t('about.drives_title')}
                         </h2>
                     </motion.div>
 
@@ -175,9 +180,9 @@ export function AboutPage() {
                             <div className="h-12 w-12 rounded-2xl bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center mb-6">
                                 <Target className="h-6 w-6 text-cyan-400" />
                             </div>
-                            <h3 className="text-2xl font-bold text-white">Our Goal</h3>
+                            <h3 className="text-2xl font-bold text-white">{t('about.goal_title')}</h3>
                             <p className="text-slate-400 font-light leading-relaxed text-lg">
-                                To become the world's most <strong className="text-white font-medium">reliable and transparent</strong> manufacturing partner for hardware companies — removing uncertainty from the supply chain, one build at a time.
+                                {t('about.goal_desc')}
                             </p>
                         </motion.div>
 
@@ -191,9 +196,9 @@ export function AboutPage() {
                             <div className="h-12 w-12 rounded-2xl bg-purple-500/20 border border-purple-500/30 flex items-center justify-center mb-6">
                                 <Eye className="h-6 w-6 text-purple-400" />
                             </div>
-                            <h3 className="text-2xl font-bold text-white">Our Vision</h3>
+                            <h3 className="text-2xl font-bold text-white">{t('about.vision_title')}</h3>
                             <p className="text-slate-400 font-light leading-relaxed text-lg">
-                                A future where every hardware company — from a two-person startup to a global OEM — can build with <strong className="text-white font-medium">Certainty.</strong> We're building the operating system for your hardware's life.
+                                {t('about.vision_desc')}
                             </p>
                         </motion.div>
                     </div>
@@ -229,13 +234,13 @@ export function AboutPage() {
                     >
                         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-sm font-medium">
                             <Users className="h-4 w-4" />
-                            Our Team
+                            {t('about.team_badge')}
                         </div>
                         <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
-                            The People Behind Every Build
+                            {t('about.team_title')}
                         </h2>
                         <p className="text-xl text-slate-400 max-w-2xl mx-auto font-light">
-                            A cross-continental team of engineers, operators, and innovators — united by a single obsession: quality.
+                            {t('about.team_desc')}
                         </p>
                     </motion.div>
 
@@ -272,19 +277,18 @@ export function AboutPage() {
                         className="space-y-8"
                     >
                         <h2 className="text-4xl md:text-6xl font-black text-white tracking-tight">
-                            Ready to Build <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">with Certainty?</span>
+                            {t('about.cta_title')}
                         </h2>
                         <p className="text-xl text-slate-400 font-light">
-                            Let's talk about your project. Our team is ready to take it from schematic to shipment.
+                            {t('about.cta_desc')}
                         </p>
                         <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
                             <Button size="lg" className="bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold px-10 h-14 text-lg rounded-2xl shadow-[0_0_30px_rgba(6,182,212,0.3)] hover:shadow-[0_0_50px_rgba(6,182,212,0.5)] transition-all">
-                                Start Your Project
+                                {t('about.cta_start')}
                                 <ArrowRight className="ml-2 h-5 w-5" />
                             </Button>
                             <Button size="lg" variant="outline" className="border-slate-600 bg-transparent hover:bg-slate-800 text-white hover:text-white px-10 h-14 text-lg rounded-2xl">
-                                Talk to Our Team
+                                {t('about.cta_talk')}
                             </Button>
                         </div>
                     </motion.div>

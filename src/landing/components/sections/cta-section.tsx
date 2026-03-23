@@ -1,8 +1,10 @@
 import { ArrowRight } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/shared/components/ui/button';
 import { motion } from 'motion/react';
 
 export function CTASection() {
+    const { t } = useTranslation();
     return (
         <section className="py-20 bg-gradient-to-br from-cyan-600 via-blue-700 to-purple-800 relative overflow-hidden">
             {/* Additional gradient overlay for depth */}
@@ -15,15 +17,15 @@ export function CTASection() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.6 }}
                     className="text-center space-y-8 max-w-3xl mx-auto">
-                    <h2 className="text-3xl md:text-4xl lg:text-5xl text-white">Ready to Control Your Factory Floor?</h2>
+                    <h2 className="text-3xl md:text-4xl lg:text-5xl text-white">{t('cta_banner.title')}</h2>
                     <p className="text-xl text-cyan-100">
-                        Launch GRVT MES Core in minutes.
+                        {t('cta_banner.subtitle')}
                         <br />
-                        No contracts. No ERP required.
+                        {t('cta_banner.no_erp')}
                     </p>
                     <div>
                         <Button size="lg" variant="secondary" className="text-lg bg-white text-blue-700 hover:bg-slate-50 shadow-xl shadow-blue-900/50">
-                            Get Started Now
+                            {t('cta_banner.button')}
                             <ArrowRight className="ml-2 h-5 w-5" />
                         </Button>
                     </div>
