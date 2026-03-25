@@ -14,6 +14,9 @@ import { Label } from '@/shared/components/ui/label';
 import { useFormValidation } from '@/shared/hooks/use-form-validation';
 import { FormError } from '@/shared/components/ui/form-error';
 import { TableView } from '@/shared/components/ui/table-view';
+import { NodeDiagramView } from '@/shared/components/ui/node-diagram-view';
+import { cn } from '@/shared/lib/utils';
+import { LayoutGrid } from 'lucide-react';
 
 export function FacilitiesPage() {
     const [nodes, setNodes] = useState<FacilityListItem[]>([]);
@@ -23,7 +26,7 @@ export function FacilitiesPage() {
     const [isCreateOpen, setIsCreateOpen] = useState(false);
     const [formData, setFormData] = useState<Partial<FacilityListItem>>({});
     const { validationErrors, handleApiError, clearError, resetErrors } = useFormValidation();
-
+    const [viewMode, setViewMode] = useState<'tree' | 'diagram'>('tree');
     const fetchNodes = async () => {
         try {
             const data = await facilitiesService.listFacilities();
@@ -94,7 +97,6 @@ export function FacilitiesPage() {
         e.preventDefault();
         resetErrors();
         try {
-            // Convert empty strings to undefined for strict UUID validation
             const payload = { 
                 ...formData, 
                 parentId: selectedNodeId || undefined,
@@ -121,42 +123,74 @@ export function FacilitiesPage() {
                     <h1 className="text-3xl font-bold text-white mb-1">Digital Twin</h1>
                     <p className="text-slate-400">Navigate the generic node hierarchy.</p>
                 </div>
+                <div className="flex items-center gap-2 bg-slate-900/50 p-1 rounded-lg border border-slate-800">
+                    <Button
+                        variant={viewMode === 'tree' ? 'secondary' : 'ghost'}
+                        size="sm"
+                        className={cn("h-8 gap-2", viewMode === 'tree' ? "bg-slate-800 text-white" : "text-slate-400")}
+                        onClick={() => setViewMode('tree')}
+                    >
+                        <Blocks className="h-4 w-4" />
+                        Hierarchy
+                    </Button>
+                    <Button
+                        variant={viewMode === 'diagram' ? 'secondary' : 'ghost'}
+                        size="sm"
+                        className={cn("h-8 gap-2", viewMode === 'diagram' ? "bg-slate-800 text-white" : "text-slate-400")}
+                        onClick={() => setViewMode('diagram')}
+                    >
+                        <LayoutGrid className="h-4 w-4" />
+                        Layout Mode
+                    </Button>
+                </div>
             </div>
 
             <div className="flex flex-1 gap-6 min-h-0 overflow-hidden">
-                {/* Left Pane: Tree View */}
-                <Card className="w-1/3 min-w-[300px] flex flex-col bg-slate-900/50 border-slate-700/50 dark text-slate-300">
-                    <CardHeader className="border-b border-slate-800 pb-4 shrink-0">
-                        <div className="flex gap-2 mb-2">
-                            <Input placeholder="Search nodes..." value={search} onChange={(e) => setSearch(e.target.value)} className="h-9 bg-slate-800/50 text-slate-200" />
-                            <Button
-                                size="icon"
-                                variant="outline"
-                                className="h-9 w-9 shrink-0 border-slate-700 hover:bg-slate-800 text-slate-300"
-                                onClick={() => {
-                                    setFormData({});
-                                    resetErrors();
-                                    setIsCreateOpen(true);
-                                }}>
-                                <Plus className="h-4 w-4" />
-                            </Button>
-                        </div>
-                    </CardHeader>
-                    <CardContent className="p-2 overflow-y-auto flex-1">
-                        {isLoading ? (
-                            <div className="flex justify-center p-8">
-                                <Loader2 className="animate-spin text-slate-500" />
+                {viewMode === 'tree' ? (
+                    <Card className="w-1/3 min-w-[300px] flex flex-col bg-slate-900/50 border-slate-700/50 dark text-slate-300">
+                        <CardHeader className="border-b border-slate-800 pb-4 shrink-0">
+                            <div className="flex gap-2 mb-2">
+                                <Input placeholder="Search nodes..." value={search} onChange={(e) => setSearch(e.target.value)} className="h-9 bg-slate-800/50 text-slate-200" />
+                                <Button
+                                    size="icon"
+                                    variant="outline"
+                                    className="h-9 w-9 shrink-0 border-slate-700 hover:bg-slate-800 text-slate-300"
+                                    onClick={() => {
+                                        setFormData({});
+                                        resetErrors();
+                                        setIsCreateOpen(true);
+                                    }}>
+                                    <Plus className="h-4 w-4" />
+                                </Button>
                             </div>
-                        ) : treeData.length === 0 ? (
-                            <div className="text-center p-8 text-slate-500 text-sm">No nodes found.</div>
-                        ) : (
-                            <NodeTreeView data={treeData} selectedNodeId={selectedNodeId} onNodeSelect={(n) => setSelectedNodeId(n.id)} />
-                        )}
-                    </CardContent>
-                </Card>
+                        </CardHeader>
+                        <CardContent className="p-2 overflow-y-auto flex-1">
+                            {isLoading ? (
+                                <div className="flex justify-center p-8">
+                                    <Loader2 className="animate-spin text-slate-500" />
+                                </div>
+                            ) : treeData.length === 0 ? (
+                                <div className="text-center p-8 text-slate-500 text-sm">No nodes found.</div>
+                            ) : (
+                                <NodeTreeView data={treeData} selectedNodeId={selectedNodeId} onNodeSelect={(n) => setSelectedNodeId(n.id)} />
+                            )}
+                        </CardContent>
+                    </Card>
+                ) : (
+                    <div className="flex-1 min-h-0">
+                        <NodeDiagramView 
+                            nodes={nodes} 
+                            selectedNodeId={selectedNodeId} 
+                            onNodeSelect={(id: string) => setSelectedNodeId(id)} 
+                        />
+                    </div>
+                )}
 
                 {/* Right Pane: Detail View */}
-                <Card className="flex-1 flex flex-col bg-slate-900/50 border-slate-700/50 overflow-hidden relative dark text-slate-300">
+                <Card className={cn(
+                    "flex flex-col bg-slate-900/50 border-slate-700/50 overflow-hidden relative dark text-slate-300",
+                    viewMode === 'tree' ? "flex-1" : "w-[400px]"
+                )}>
                     {selectedNode ? (
                         <>
                             <CardHeader className="border-b border-slate-800 pb-4 shrink-0 bg-slate-900/80 z-10">
