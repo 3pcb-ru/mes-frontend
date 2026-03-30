@@ -268,58 +268,56 @@ export function SettingsPage() {
                                 {/* Logo Section */}
                                 <div className="space-y-4 shrink-0 mx-auto lg:mx-0">
                                     <Label className="text-slate-300 block text-center lg:text-left">Corporate Logo</Label>
-                                    <div className="relative group">
-                                        <div className={cn(
-                                            "w-40 h-40 rounded-2xl border-2 border-dashed border-slate-700 flex items-center justify-center overflow-hidden transition-all duration-300 bg-slate-900/80 shadow-inner",
-                                            !logoPreview && "hover:border-cyan-500/50 hover:bg-slate-900",
-                                            logoPreview && "border-solid border-slate-600 shadow-xl shadow-cyan-500/5"
-                                        )}>
-                                            {isUploading ? (
-                                                <div className="flex flex-col items-center gap-2">
-                                                    <Loader2 className="h-10 w-10 animate-spin text-cyan-400" />
-                                                    <span className="text-[10px] text-slate-500 uppercase tracking-widest">Uploading</span>
-                                                </div>
-                                            ) : logoPreview ? (
-                                                <img src={logoPreview} alt="Company Logo" className="w-full h-full object-contain p-2" />
-                                            ) : (
-                                                <div className="flex flex-col items-center gap-2 text-slate-600">
-                                                    <Factory className="h-14 w-14 transition-colors group-hover:text-slate-400" />
-                                                    <span className="text-[10px] uppercase font-bold tracking-tighter">No Logo</span>
-                                                </div>
-                                            )}
-                                            
-                                            <div 
-                                                className="absolute inset-0 bg-cyan-500/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-all duration-300 cursor-pointer backdrop-blur-sm" 
-                                                onClick={() => fileInputRef.current?.click()}
-                                            >
-                                                <div className="flex flex-col items-center gap-2">
-                                                    <Camera className="h-10 w-10 text-white" />
-                                                    <span className="text-xs font-bold text-white uppercase">Replace</span>
-                                                </div>
+                                    <div className={cn(
+                                        "relative group w-40 h-40 border-2 border-dashed border-slate-700 flex items-center justify-center overflow-hidden transition-all duration-300 bg-slate-900/80 shadow-inner",
+                                        !logoPreview && "hover:border-cyan-500/50 hover:bg-slate-900",
+                                        logoPreview && "border-solid border-slate-600 shadow-xl shadow-cyan-500/5"
+                                    )}>
+                                        {isUploading ? (
+                                            <div className="flex flex-col items-center gap-2">
+                                                <Loader2 className="h-10 w-10 animate-spin text-cyan-400" />
+                                                <span className="text-[10px] text-slate-500 uppercase tracking-widest">Uploading</span>
+                                            </div>
+                                        ) : logoPreview ? (
+                                            <img src={logoPreview} alt="Company Logo" className="w-full h-full object-contain p-2" />
+                                        ) : (
+                                            <div className="flex flex-col items-center gap-2 text-slate-600">
+                                                <Factory className="h-14 w-14 transition-colors group-hover:text-slate-400" />
+                                                <span className="text-[10px] uppercase font-bold tracking-tighter">No Logo</span>
+                                            </div>
+                                        )}
+                                        
+                                        <div 
+                                            className="absolute inset-0 bg-cyan-500/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-all duration-300 cursor-pointer backdrop-blur-sm" 
+                                            onClick={() => fileInputRef.current?.click()}
+                                        >
+                                            <div className="flex flex-col items-center gap-2">
+                                                <Camera className="h-10 w-10 text-white" />
+                                                <span className="text-xs font-bold text-white uppercase tracking-wider">Replace</span>
                                             </div>
                                         </div>
-                                        
-                                        <input 
-                                            type="file" 
-                                            ref={fileInputRef} 
-                                            className="hidden" 
-                                            accept="image/*" 
-                                            onChange={handleLogoUpload}
-                                        />
-
-                                        {logoPreview && !isUploading && (
-                                            <Button
-                                                type="button"
-                                                variant="destructive"
-                                                size="icon"
-                                                onClick={handleRemoveLogo}
-                                                className="absolute -top-3 -right-3 h-8 w-8 rounded-full shadow-lg border border-red-400/50"
-                                                title="Remove logo"
-                                            >
-                                                <Trash2 className="h-4 w-4" />
-                                            </Button>
-                                        )}
                                     </div>
+                                    
+                                    <input 
+                                        type="file" 
+                                        ref={fileInputRef} 
+                                        className="hidden" 
+                                        accept="image/*" 
+                                        onChange={handleLogoUpload}
+                                    />
+
+                                    {logoPreview && !isUploading && (
+                                        <Button
+                                            type="button"
+                                            variant="destructive"
+                                            size="icon"
+                                            onClick={handleRemoveLogo}
+                                            className="absolute -top-3 -right-3 h-8 w-8 rounded-full shadow-lg border border-red-400/50"
+                                            title="Remove logo"
+                                        >
+                                            <Trash2 className="h-4 w-4" />
+                                        </Button>
+                                    )}
                                     <div className="text-center lg:text-left space-y-1">
                                         <p className="text-[10px] text-slate-500 leading-tight">
                                             Recommended: 512x512px. SVG or PNG.
