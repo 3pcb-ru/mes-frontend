@@ -20,7 +20,7 @@ import '@xyflow/react/dist/style.css';
 import { CustomNode, type CustomNodeData } from './custom-node';
 import type { FacilityListItem } from '@/features/facilities/types/facilities.types';
 import { Button } from './button';
-import { Maximize2, LayoutGrid } from 'lucide-react';
+import { Maximize2, LayoutGrid, Plus } from 'lucide-react';
 
 const nodeTypes = {
     custom: CustomNode,
@@ -30,6 +30,7 @@ type NodeDiagramViewProps = {
     nodes: FacilityListItem[];
     selectedNodeId?: string;
     onNodeSelect: (nodeId: string) => void;
+    onAdd?: () => void;
 };
 
 const dagreGraph = new dagre.graphlib.Graph();
@@ -80,7 +81,7 @@ const getNodeType = (path?: string) => {
     return 'other';
 };
 
-export function NodeDiagramView({ nodes: rawNodes, selectedNodeId, onNodeSelect }: NodeDiagramViewProps) {
+export function NodeDiagramView({ nodes: rawNodes, selectedNodeId, onNodeSelect, onAdd }: NodeDiagramViewProps) {
     const [nodes, setNodes, onNodesChange] = useNodesState<Node<CustomNodeData>>([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
 
@@ -174,6 +175,17 @@ export function NodeDiagramView({ nodes: rawNodes, selectedNodeId, onNodeSelect 
                     maskColor="rgba(0, 0, 0, 0.7)"
                     maskStrokeColor="#06b6d4"
                 />
+                <Panel position="top-left">
+                    <Button 
+                        size="sm" 
+                        variant="outline" 
+                        className="bg-slate-900/80 backdrop-blur-sm border-slate-800 hover:bg-slate-800 text-cyan-400 font-bold shadow-lg"
+                        onClick={onAdd}
+                    >
+                        <Plus className="w-4 h-4 mr-1.5" />
+                        Create Node
+                    </Button>
+                </Panel>
                 <Panel position="top-right" className="flex gap-2">
                     <Button 
                         size="sm" 

@@ -52,7 +52,8 @@ export function FacilitiesPage() {
     // Status Change states
     const [isStatusDialogOpen, setIsStatusDialogOpen] = useState(false);
     const [newStatus, setNewStatus] = useState<string>('');
-    const [statusReason, setStatusReason] = useState<NodeStatusChangeReason>('NORMAL_OPERATION');
+    const [editName, setEditName] = useState<string>('');
+    const [statusReason, setStatusReason] = useState<NodeStatusChangeReason>('MAINTENANCE');
 
     // Move states
     const [isMoveDialogOpen, setIsMoveDialogOpen] = useState(false);
@@ -140,19 +141,30 @@ export function FacilitiesPage() {
         }
     };
 
-    const handleStatusChange = async () => {
-        if (!selectedNodeId || !newStatus) return;
+    const handleUpdateNode = async () => {
+        if (!selectedNodeId) return;
         try {
-            await facilitiesService.changeStatus(selectedNodeId, {
-                status: newStatus,
-                reason: statusReason,
-            });
-            toast.success('Status updated successfully');
+            // Update name if changed
+            if (editName !== (selectedNode?.name || '')) {
+                await facilitiesService.updateFacility(selectedNodeId, {
+                    name: editName,
+                });
+            }
+            
+            // Update status if changed or if reason provided
+            if (newStatus !== (selectedNode?.status || 'IDLE')) {
+                await facilitiesService.changeStatus(selectedNodeId, {
+                    status: newStatus,
+                    reason: statusReason,
+                });
+            }
+            
+            toast.success('Node updated successfully');
             setIsStatusDialogOpen(false);
             await fetchNodes();
         } catch (err: any) {
-            console.error('Error changing status', err);
-            toast.error(err?.message || 'Failed to update status');
+            console.error('Error updating node', err);
+            toast.error(err?.message || 'Failed to update node');
         }
     };
 
@@ -257,7 +269,12 @@ export function FacilitiesPage() {
                         <NodeDiagramView 
                             nodes={nodes} 
                             selectedNodeId={selectedNodeId} 
-                            onNodeSelect={(id: string) => setSelectedNodeId(id)} 
+                            onNodeSelect={(id: string) => setSelectedNodeId(id)}
+                            onAdd={() => {
+                                setFormData({});
+                                resetErrors();
+                                setIsCreateOpen(true);
+                            }}
                         />
                     </div>
                 )}
@@ -272,9 +289,14 @@ export function FacilitiesPage() {
                             <CardHeader className="border-b border-slate-800 pb-4 shrink-0 bg-slate-900/80 z-10">
                                 <div className="flex justify-between items-start gap-4">
                                     <div className="min-w-0 flex-1">
-                                        <CardTitle className="text-xl text-white mb-2 truncate max-w-full" title={selectedNode.name}>
-                                            {selectedNode.name}
-                                        </CardTitle>
+                                        <div className="flex items-center gap-2 mb-1">
+                                            <CardTitle className="text-xl text-white truncate max-w-full" title={selectedNode.name}>
+                                                {selectedNode.name}
+                                            </CardTitle>
+                                        </div>
+                                        <div className="mt-1">
+                                            <StatusBadge status={selectedNode.status || 'IDLE'} className="text-[10px] px-1.5 h-5" />
+                                        </div>
                                     </div>
                                     <div className="flex items-center gap-3 shrink-0">
                                         <div className="flex items-center gap-1">
@@ -282,6 +304,18 @@ export function FacilitiesPage() {
                                                 variant="ghost" 
                                                 size="icon" 
                                                 className="h-8 w-8 text-slate-400 hover:text-cyan-400"
+                                                title="Update Node"
+                                                onClick={() => {
+                                                    setEditName(selectedNode.name);
+                                                    setNewStatus(selectedNode.status || 'IDLE');
+                                                    setIsStatusDialogOpen(true);
+                                                }}>
+                                                <Settings2 className="size-4" />
+                                            </Button>
+                                            <Button 
+                                                variant="ghost" 
+                                                size="icon" 
+                                                className="h-8 w-8 text-slate-400 hover:text-amber-400"
                                                 title="Move Node"
                                                 onClick={() => {
                                                     setNewParentId(selectedNode.parentId || null);
@@ -292,24 +326,12 @@ export function FacilitiesPage() {
                                             <Button 
                                                 variant="ghost" 
                                                 size="icon" 
-                                                className="h-8 w-8 text-slate-400 hover:text-amber-400"
-                                                title="Change Status"
-                                                onClick={() => {
-                                                    setNewStatus(selectedNode.status || 'IDLE');
-                                                    setIsStatusDialogOpen(true);
-                                                }}>
-                                                <Settings2 className="size-4" />
-                                            </Button>
-                                            <Button 
-                                                variant="ghost" 
-                                                size="icon" 
                                                 className="h-8 w-8 text-slate-400 hover:text-red-400"
                                                 title="Delete Node"
                                                 onClick={() => setIsDeleteDialogOpen(true)}>
                                                 <Trash2 className="size-4" />
                                             </Button>
                                         </div>
-                                        <StatusBadge status={selectedNode.status || 'IDLE'} />
                                     </div>
                                 </div>
                             </CardHeader>
@@ -348,18 +370,26 @@ export function FacilitiesPage() {
                                 </DialogContent>
                             </Dialog>
 
-                            {/* Status Change Dialog */}
+                            {/* Edit Node Dialog */}
                             <Dialog open={isStatusDialogOpen} onOpenChange={setIsStatusDialogOpen}>
                                 <DialogContent className="bg-slate-900 border-slate-800 text-slate-200">
                                     <DialogHeader>
-                                        <DialogTitle>Change Node Status</DialogTitle>
+                                        <DialogTitle>Update Node</DialogTitle>
                                         <DialogDescription className="text-slate-400">
-                                            Updating status for "{selectedNode.name}"
+                                            Modify identification and status for "{selectedNode.name}"
                                         </DialogDescription>
                                     </DialogHeader>
                                     <div className="space-y-4 py-4">
                                         <div className="space-y-2">
-                                            <Label className="text-slate-400 text-xs">New Status</Label>
+                                            <Label className="text-slate-400 text-xs">Node Name</Label>
+                                            <Input 
+                                                value={editName} 
+                                                onChange={(e) => setEditName(e.target.value)}
+                                                className="bg-slate-800/50 border-slate-700"
+                                            />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <Label className="text-slate-400 text-xs">Status</Label>
                                             <Input 
                                                 value={newStatus} 
                                                 onChange={(e) => setNewStatus(e.target.value.toUpperCase())}
@@ -367,7 +397,7 @@ export function FacilitiesPage() {
                                             />
                                         </div>
                                         <div className="space-y-2">
-                                            <Label className="text-slate-400 text-xs">Reason for Change</Label>
+                                            <Label className="text-slate-400 text-xs">Reason for Update</Label>
                                             <Select value={statusReason} onValueChange={(val: any) => setStatusReason(val)}>
                                                 <SelectTrigger className="bg-slate-800/50 border-slate-700">
                                                     <SelectValue placeholder="Select reason..." />
@@ -388,7 +418,7 @@ export function FacilitiesPage() {
                                                 Cancel
                                             </Button>
                                         </DialogClose>
-                                        <Button onClick={handleStatusChange} className="bg-cyan-600 hover:bg-cyan-700 text-white">Update Status</Button>
+                                        <Button onClick={handleUpdateNode} className="bg-cyan-600 hover:bg-cyan-700 text-white">Save Changes</Button>
                                     </DialogFooter>
                                 </DialogContent>
                             </Dialog>
