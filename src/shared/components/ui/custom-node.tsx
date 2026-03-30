@@ -1,25 +1,35 @@
 import { Handle, Position, NodeProps, Node } from '@xyflow/react';
-import { Factory, BoxSelect, SeparatorHorizontal, Box, Cpu, Package, Info } from 'lucide-react';
+import { Factory, BoxSelect, SeparatorHorizontal, Box, Cpu, Package, Info, Truck, ShieldCheck, HelpCircle } from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
+import type { NodeType } from '@/features/facilities/types/facilities.types';
 
 export type CustomNodeData = {
     label: string;
     id: string;
-    type?: string;
+    path?: string;
+    type?: string | NodeType;
     status?: string;
     selected?: boolean;
 };
 
 const typeIcons: Record<string, any> = {
+    // legacy support
     factory: Factory,
     area: BoxSelect,
     line: SeparatorHorizontal,
     station: Box,
+    // new NodeTypes
+    FACILITY: Factory,
+    PRODUCTION: Cpu,
+    WAREHOUSE: Box,
+    LOGISTICS: Truck,
+    QUALITY: ShieldCheck,
+    OTHER: HelpCircle,
     other: Package,
 };
 
 export function CustomNode({ data, selected }: NodeProps<Node<CustomNodeData>>) {
-    const Icon = typeIcons[data.type || 'other'] || Package;
+    const Icon = typeIcons[data.type || 'OTHER'] || typeIcons['OTHER'];
     const statusColor = data.status === 'RUNNING' ? 'bg-green-500' : data.status === 'WARNING' ? 'bg-amber-500' : data.status === 'ERROR' ? 'bg-red-500' : 'bg-slate-500';
 
     return (
@@ -42,15 +52,12 @@ export function CustomNode({ data, selected }: NodeProps<Node<CustomNodeData>>) 
                     <Icon className="w-5 h-5" />
                 </div>
                 
-                <div className="flex-1 min-w-[120px]">
-                    <h4 className="text-sm font-bold text-white truncate mb-1">
+                <div className="flex-1 min-w-0">
+                    <h4 className="text-sm font-bold text-white truncate mb-1" title={data.label}>
                         {data.label}
                     </h4>
-                    <div className="flex items-center gap-2">
-                        <span className="text-[10px] font-mono text-slate-500 truncate max-w-[80px]">
-                            {data.id}
-                        </span>
-                        <div className="flex items-center gap-1.5 ml-auto">
+                    <div className="flex items-center gap-2 overflow-hidden">
+                        <div className="flex items-center gap-1.5 shrink-0 ml-auto">
                             <div className={cn("w-1.5 h-1.5 rounded-full animate-pulse", statusColor)} />
                             <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">
                                 {data.status || 'IDLE'}

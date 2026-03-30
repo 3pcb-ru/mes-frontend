@@ -27,6 +27,8 @@ interface TableViewProps {
     className?: string;
     /** If true, the border will be styled red for validation errors */
     hasError?: boolean;
+    /** Optional initial label to show when only the UUID is available and data hasn't been fetched yet. */
+    initialLabel?: string;
 }
 
 export function TableView({
@@ -37,6 +39,7 @@ export function TableView({
     placeholder = 'Select an option...',
     className,
     hasError,
+    initialLabel,
 }: TableViewProps) {
     const [open, setOpen] = React.useState(false);
     const [options, setOptions] = React.useState<TableViewOptions[]>([]);
@@ -76,7 +79,7 @@ export function TableView({
     // The parent might have set an initial value. We want to show it nicely if possible,
     // but without fetching the whole list immediately. If it's a UUID, it's not pretty,
     // but the moment they open the dropdown it will fetch and find the label.
-    const displayValue = selectedOption?.label || value;
+    const displayValue = selectedOption?.label || initialLabel || value;
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
@@ -117,7 +120,7 @@ export function TableView({
                                 {options.map((option) => (
                                     <CommandItem
                                         key={option.value}
-                                        value={option.label} // CommandItem filters by the `value` prop which acts as search text
+                                        value={option.label || option.value}
                                         onSelect={() => {
                                             onChange(option.value === value ? "" : option.value);
                                             setOpen(false);

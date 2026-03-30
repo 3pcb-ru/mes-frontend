@@ -16,7 +16,25 @@ import { FormError } from '@/shared/components/ui/form-error';
 import { TableView } from '@/shared/components/ui/table-view';
 import { NodeDiagramView } from '@/shared/components/ui/node-diagram-view';
 import { cn } from '@/shared/lib/utils';
-import { LayoutGrid } from 'lucide-react';
+import { LayoutGrid, AlertTriangle, Trash2, ArrowRightLeft, Settings2 } from 'lucide-react';
+import { NODE_STATUS_CHANGE_REASONS, NODE_TYPES, type NodeType, type NodeStatusChangeReason } from '@/features/facilities/types/facilities.types';
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from '@/shared/components/ui/alert-dialog';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/shared/components/ui/select';
 
 export function FacilitiesPage() {
     const [nodes, setNodes] = useState<FacilityListItem[]>([]);
@@ -27,6 +45,19 @@ export function FacilitiesPage() {
     const [formData, setFormData] = useState<Partial<FacilityListItem>>({});
     const { validationErrors, handleApiError, clearError, resetErrors } = useFormValidation();
     const [viewMode, setViewMode] = useState<'tree' | 'diagram'>('tree');
+
+    // Deletion states
+    const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
+
+    // Status Change states
+    const [isStatusDialogOpen, setIsStatusDialogOpen] = useState(false);
+    const [newStatus, setNewStatus] = useState<string>('');
+    const [statusReason, setStatusReason] = useState<NodeStatusChangeReason>('NORMAL_OPERATION');
+
+    // Move states
+    const [isMoveDialogOpen, setIsMoveDialogOpen] = useState(false);
+    const [newParentId, setNewParentId] = useState<string | null>(null);
     const fetchNodes = async () => {
         try {
             const data = await facilitiesService.listFacilities();
@@ -92,6 +123,52 @@ export function FacilitiesPage() {
     }, [nodes, search]);
 
     const selectedNode = useMemo(() => nodes.find((n) => n.id === selectedNodeId), [nodes, selectedNodeId]);
+
+    const handleDelete = async () => {
+        if (!selectedNodeId) return;
+        setIsDeleting(true);
+        try {
+            const result = await facilitiesService.deleteFacility(selectedNodeId);
+            toast.success(result?.message || 'Node deleted successfully');
+            setSelectedNodeId(undefined);
+            setIsDeleteDialogOpen(false);
+            await fetchNodes();
+        } catch (err: any) {
+            console.error('Error deleting node', err);
+            toast.error(err?.message || 'Failed to delete node. Check for active children or Work Orders.');
+        } finally {
+            setIsDeleting(false);
+        }
+    };
+
+    const handleStatusChange = async () => {
+        if (!selectedNodeId || !newStatus) return;
+        try {
+            await facilitiesService.changeStatus(selectedNodeId, {
+                status: newStatus,
+                reason: statusReason,
+            });
+            toast.success('Status updated successfully');
+            setIsStatusDialogOpen(false);
+            await fetchNodes();
+        } catch (err: any) {
+            console.error('Error changing status', err);
+            toast.error(err?.message || 'Failed to update status');
+        }
+    };
+
+    const handleMove = async () => {
+        if (!selectedNodeId) return;
+        try {
+            await facilitiesService.moveFacility(selectedNodeId, newParentId);
+            toast.success('Node moved successfully');
+            setIsMoveDialogOpen(false);
+            await fetchNodes();
+        } catch (err: any) {
+            console.error('Error moving node', err);
+            toast.error(err?.message || 'Failed to move node');
+        }
+    };
 
     const handleCreate = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -194,14 +271,148 @@ export function FacilitiesPage() {
                     {selectedNode ? (
                         <>
                             <CardHeader className="border-b border-slate-800 pb-4 shrink-0 bg-slate-900/80 z-10">
-                                <div className="flex justify-between items-start">
-                                    <div>
-                                        <CardTitle className="text-xl text-white mb-2">{selectedNode.name}</CardTitle>
-                                        <CardDescription className="text-slate-400 font-mono text-xs">{selectedNode.path || selectedNode.id}</CardDescription>
+                                <div className="flex justify-between items-start gap-4">
+                                    <div className="min-w-0 flex-1">
+                                        <CardTitle className="text-xl text-white mb-2 truncate max-w-full" title={selectedNode.name}>
+                                            {selectedNode.name}
+                                        </CardTitle>
                                     </div>
-                                    <StatusBadge status={selectedNode.status || 'IDLE'} />
+                                    <div className="flex items-center gap-3 shrink-0">
+                                        <div className="flex items-center gap-1">
+                                            <Button 
+                                                variant="ghost" 
+                                                size="icon" 
+                                                className="h-8 w-8 text-slate-400 hover:text-cyan-400"
+                                                title="Move Node"
+                                                onClick={() => {
+                                                    setNewParentId(selectedNode.parentId || null);
+                                                    setIsMoveDialogOpen(true);
+                                                }}>
+                                                <ArrowRightLeft className="size-4" />
+                                            </Button>
+                                            <Button 
+                                                variant="ghost" 
+                                                size="icon" 
+                                                className="h-8 w-8 text-slate-400 hover:text-amber-400"
+                                                title="Change Status"
+                                                onClick={() => {
+                                                    setNewStatus(selectedNode.status || 'IDLE');
+                                                    setIsStatusDialogOpen(true);
+                                                }}>
+                                                <Settings2 className="size-4" />
+                                            </Button>
+                                            <Button 
+                                                variant="ghost" 
+                                                size="icon" 
+                                                className="h-8 w-8 text-slate-400 hover:text-red-400"
+                                                title="Delete Node"
+                                                onClick={() => setIsDeleteDialogOpen(true)}>
+                                                <Trash2 className="size-4" />
+                                            </Button>
+                                        </div>
+                                        <StatusBadge status={selectedNode.status || 'IDLE'} />
+                                    </div>
                                 </div>
                             </CardHeader>
+
+                            {/* Move Node Dialog */}
+                            <AlertDialog open={isMoveDialogOpen} onOpenChange={setIsMoveDialogOpen}>
+                                <AlertDialogContent className="bg-slate-900 border-slate-800 text-slate-200">
+                                    <AlertDialogHeader>
+                                        <AlertDialogTitle>Move Node</AlertDialogTitle>
+                                        <AlertDialogDescription className="text-slate-400">
+                                            Select a new parent for "{selectedNode.name}". This will recalculate the hierarchical path.
+                                        </AlertDialogDescription>
+                                    </AlertDialogHeader>
+                                    <div className="py-4">
+                                        <Label className="text-slate-400 text-xs mb-2 block">New Parent Node</Label>
+                                        <TableView
+                                            value={newParentId || ''}
+                                            initialLabel={nodes.find(n => n.id === newParentId)?.name}
+                                            onChange={(val) => setNewParentId(val || null)}
+                                            fetchData={async () => {
+                                                if (!selectedNodeId || !selectedNode) return nodes;
+                                                // Filter out the node itself and its descendants to prevent circularity
+                                                return nodes.filter(n => n.id !== selectedNodeId && (n.path === selectedNode.path || !n.path.startsWith(selectedNode.path + '.')));
+                                            }}
+                                            placeholder="Select new parent (or leave empty for Root)..."
+                                        />
+                                    </div>
+                                    <AlertDialogFooter>
+                                        <AlertDialogCancel className="bg-transparent border-slate-700 hover:bg-slate-800 text-slate-300">Cancel</AlertDialogCancel>
+                                        <AlertDialogAction onClick={handleMove} className="bg-cyan-600 hover:bg-cyan-700 text-white">Move Node</AlertDialogAction>
+                                    </AlertDialogFooter>
+                                </AlertDialogContent>
+                            </AlertDialog>
+
+                            {/* Status Change Dialog */}
+                            <AlertDialog open={isStatusDialogOpen} onOpenChange={setIsStatusDialogOpen}>
+                                <AlertDialogContent className="bg-slate-900 border-slate-800 text-slate-200">
+                                    <AlertDialogHeader>
+                                        <AlertDialogTitle>Change Node Status</AlertDialogTitle>
+                                        <AlertDialogDescription className="text-slate-400">
+                                            Updating status for "{selectedNode.name}"
+                                        </AlertDialogDescription>
+                                    </AlertDialogHeader>
+                                    <div className="space-y-4 py-4">
+                                        <div className="space-y-2">
+                                            <Label className="text-slate-400 text-xs">New Status</Label>
+                                            <Input 
+                                                value={newStatus} 
+                                                onChange={(e) => setNewStatus(e.target.value.toUpperCase())}
+                                                className="bg-slate-800/50 border-slate-700"
+                                            />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <Label className="text-slate-400 text-xs">Reason for Change</Label>
+                                            <Select value={statusReason} onValueChange={(val: any) => setStatusReason(val)}>
+                                                <SelectTrigger className="bg-slate-800/50 border-slate-700">
+                                                    <SelectValue placeholder="Select reason..." />
+                                                </SelectTrigger>
+                                                <SelectContent className="bg-slate-900 border-slate-800">
+                                                    {NODE_STATUS_CHANGE_REASONS.map((r) => (
+                                                        <SelectItem key={r.value} value={r.value} className="text-slate-200 focus:bg-slate-800">
+                                                            {r.label}
+                                                        </SelectItem>
+                                                    ))}
+                                                </SelectContent>
+                                            </Select>
+                                        </div>
+                                    </div>
+                                    <AlertDialogFooter>
+                                        <AlertDialogCancel className="bg-transparent border-slate-700 hover:bg-slate-800 text-slate-300">Cancel</AlertDialogCancel>
+                                        <AlertDialogAction onClick={handleStatusChange} className="bg-cyan-600 hover:bg-cyan-700 text-white">Update Status</AlertDialogAction>
+                                    </AlertDialogFooter>
+                                </AlertDialogContent>
+                            </AlertDialog>
+
+                            {/* Delete Confirmation Dialog */}
+                            <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+                                <AlertDialogContent className="bg-slate-900 border-slate-800 text-slate-200">
+                                    <AlertDialogHeader>
+                                        <AlertDialogTitle className="flex items-center gap-2">
+                                            <AlertTriangle className="text-red-500 size-5" />
+                                            Delete Node
+                                        </AlertDialogTitle>
+                                        <AlertDialogDescription className="text-slate-400">
+                                            Are you sure you want to delete "{selectedNode.name}"?
+                                            <br/><br/>
+                                            If the node has history, it will be archived. If it has no history, it will be permanently removed.
+                                            <strong> Deletion will fail if the node has active child nodes or is referenced in Work Orders.</strong>
+                                        </AlertDialogDescription>
+                                    </AlertDialogHeader>
+                                    <AlertDialogFooter>
+                                        <AlertDialogCancel className="bg-transparent border-slate-700 hover:bg-slate-800 text-slate-300">Cancel</AlertDialogCancel>
+                                        <AlertDialogAction 
+                                            onClick={handleDelete} 
+                                            disabled={isDeleting}
+                                            className="bg-red-600 hover:bg-red-700 text-white"
+                                        >
+                                            {isDeleting ? "Deleting..." : "Delete Node"}
+                                        </AlertDialogAction>
+                                    </AlertDialogFooter>
+                                </AlertDialogContent>
+                            </AlertDialog>
                             <CardContent className="p-0 flex-1 overflow-hidden flex flex-col">
                                 <Tabs defaultValue="overview" className="flex-1 flex flex-col w-full h-full">
                                     <div className="px-6 border-b border-slate-800 bg-slate-900/50 shrink-0">
@@ -223,14 +434,18 @@ export function FacilitiesPage() {
 
                                     <div className="flex-1 overflow-y-auto p-6">
                                         <TabsContent value="overview" className="m-0 space-y-4">
-                                            <div className="grid grid-cols-2 gap-4">
-                                                <div className="bg-slate-800/30 p-4 rounded-lg border border-slate-700/30">
-                                                    <h3 className="text-sm font-medium text-slate-400 mb-1">Status</h3>
-                                                    <p className="text-white">{selectedNode.status || 'Unknown'}</p>
+                                            <div className="bg-slate-800/20 rounded-lg border border-slate-800/50 overflow-hidden divide-y divide-slate-800/50">
+                                                <div className="px-4 py-3 flex justify-between items-center">
+                                                    <span className="text-sm font-medium text-slate-400">Status</span>
+                                                    <div className="flex items-center gap-2">
+                                                        <span className="text-sm text-white">{selectedNode.status || 'Unknown'}</span>
+                                                    </div>
                                                 </div>
-                                                <div className="bg-slate-800/30 p-4 rounded-lg border border-slate-700/30">
-                                                    <h3 className="text-sm font-medium text-slate-400 mb-1">Path</h3>
-                                                    <p className="text-white font-mono text-sm">{selectedNode.path || 'N/A'}</p>
+                                                <div className="px-4 py-3 flex justify-between items-center min-w-0">
+                                                    <span className="text-sm font-medium text-slate-400 shrink-0 mr-4">Path</span>
+                                                    <span className="text-sm text-white font-mono truncate ml-auto" title={selectedNode.path || 'N/A'}>
+                                                        {selectedNode.path || 'N/A'}
+                                                    </span>
                                                 </div>
                                             </div>
                                             {selectedNode.attributes && Object.keys(selectedNode.attributes).length > 0 && (
@@ -299,6 +514,27 @@ export function FacilitiesPage() {
                             placeholder="e.g. Assembly Station 1"
                         />
                         <FormError message={validationErrors.name} />
+                    </div>
+                    <div className="space-y-2">
+                        <Label>Node Type</Label>
+                        <Select 
+                            value={formData.type as string || 'OTHER'} 
+                            onValueChange={(val) => {
+                                setFormData({ ...formData, type: val as NodeType });
+                                clearError('type');
+                            }}>
+                            <SelectTrigger className="bg-slate-800/50 border-slate-700">
+                                <SelectValue placeholder="Select type..." />
+                            </SelectTrigger>
+                            <SelectContent className="bg-slate-900 border-slate-800">
+                                {NODE_TYPES.map((t) => (
+                                    <SelectItem key={t.value} value={t.value} className="text-slate-200 focus:bg-slate-800">
+                                        {t.label}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                        <FormError message={validationErrors.type} />
                     </div>
                     <div className="space-y-2">
                         <Label>Definition ID (Optional)</Label>

@@ -9,6 +9,8 @@ export const facilitiesService = {
     getFacility: async (id: string) => apiClient.get<any>(`/nodes/${id}`),
     createFacility: async (payload: any) => apiClient.post<any>('/nodes', payload),
     updateFacility: async (id: string, payload: any) => apiClient.put<any>(`/nodes/${id}`, payload),
+    moveFacility: async (id: string, parentId: string | null) =>
+        apiClient.patch<any>(`/nodes/${id}/move`, { parentId }),
     deleteFacility: async (id: string) => apiClient.delete<any>(`/nodes/${id}`),
     changeStatus: async (id: string, body: { status: string; reason: NodeStatusChangeReason }) =>
         apiClient.patch<any>(`/nodes/${id}/status`, body),

@@ -91,12 +91,13 @@ export function NodeDiagramView({ nodes: rawNodes, selectedNodeId, onNodeSelect 
             data: {
                 id: n.id,
                 label: n.name,
-                type: getNodeType(n.path),
+                type: n.type || getNodeType(n.path),
                 status: n.status || 'IDLE',
-                selected: n.id === selectedNodeId,
+                path: n.path,
+                selected: false,
             },
             position: { x: 0, y: 0 },
-            selected: n.id === selectedNodeId,
+            selected: false,
         }));
 
         const flowEdges: Edge[] = rawNodes
@@ -117,12 +118,26 @@ export function NodeDiagramView({ nodes: rawNodes, selectedNodeId, onNodeSelect 
             }));
 
         return getLayoutedElements(flowNodes, flowEdges);
-    }, [rawNodes, selectedNodeId]);
+    }, [rawNodes]);
 
     useEffect(() => {
         setNodes(initialNodes);
         setEdges(initialEdges);
     }, [initialNodes, initialEdges, setNodes, setEdges]);
+    
+    // Synchronize selection state without resetting positions if the nodes already exist in state
+    useEffect(() => {
+        setNodes((nds) =>
+            nds.map((node) => ({
+                ...node,
+                selected: node.id === selectedNodeId,
+                data: {
+                    ...node.data,
+                    selected: node.id === selectedNodeId,
+                },
+            }))
+        );
+    }, [selectedNodeId, setNodes]);
 
     const onNodeClick = useCallback((_: any, node: Node) => {
         onNodeSelect(node.id);
