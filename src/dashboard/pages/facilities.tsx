@@ -208,8 +208,8 @@ export function FacilitiesPage() {
         <div className="flex flex-col h-[calc(100vh-8rem)] gap-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 shrink-0">
                 <div>
-                    <h1 className="text-3xl font-bold text-white mb-1">Digital Twin</h1>
-                    <p className="text-slate-400">Navigate the generic node hierarchy.</p>
+                    <h1 className="text-3xl font-bold text-white mb-1">Layout</h1>
+                    <p className="text-slate-400">Map out your facility structure and manage production lines, from factory floors to individual workstations.</p>
                 </div>
                 <div className="flex items-center gap-2 bg-slate-900/50 p-1 rounded-lg border border-slate-800">
                     <Button

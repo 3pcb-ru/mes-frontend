@@ -1,10 +1,19 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { DashboardHeader } from '../components/header';
 import { DashboardSidebar } from '../components/sidebar';
 
+import { useAuth } from '@/features/auth/store/auth.store';
+
 export function DashboardLayout() {
     const [sidebarOpen, setSidebarOpen] = useState(true);
+    const { detailedProfile, fetchProfile } = useAuth();
+
+    useEffect(() => {
+        if (!detailedProfile) {
+            fetchProfile();
+        }
+    }, [detailedProfile, fetchProfile]);
 
     return (
         <div className="min-h-screen bg-slate-900">

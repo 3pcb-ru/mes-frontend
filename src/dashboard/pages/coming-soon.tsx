@@ -12,12 +12,6 @@ const PAGE_CONFIG: Record<string, { title: string; description: string; icon: Lu
         icon: Package,
         color: 'text-cyan-400',
     },
-    '/dashboard/analytics': {
-        title: 'Advanced Analytics',
-        description: 'Deep dive insights, predictive analysis, and custom reporting tools are coming soon.',
-        icon: BarChart3,
-        color: 'text-purple-400',
-    },
     '/dashboard/settings': {
         title: 'System Settings',
         description: 'Comprehensive system configuration and preference management controls are in the works.',

@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Package, Users, Settings, BarChart3, ChevronLeft, ChevronRight, FileText, HelpCircle, MessageSquare, Blocks } from 'lucide-react';
+import { LayoutDashboard, Package, Users, Settings, BarChart3, ChevronLeft, ChevronRight, FileText, HelpCircle, MessageSquare, Blocks, Factory } from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
+import { useAuth } from '@/features/auth/store/auth.store';
 import { Logo } from '@/shared/components/logo';
 import { Button } from '@/shared/components/ui/button';
 
@@ -11,17 +12,20 @@ interface DashboardSidebarProps {
 
 const navItems = [
     { name: 'Dashboard', icon: LayoutDashboard, href: '/dashboard' },
-    { name: 'Digital Twin', icon: Blocks, href: '/dashboard/facilities' },
+    { name: 'Layout', icon: Blocks, href: '/dashboard/facilities' },
     { name: 'Production', icon: FileText, href: '/dashboard/work-orders' },
-    { name: 'Engineering', icon: Package, href: '/dashboard/products' },
+    { name: 'Bills of Materials', icon: Package, href: '/dashboard/products' },
     { name: 'Traceability', icon: BarChart3, href: '/dashboard/trace' },
-    { name: 'Analytics', icon: BarChart3, href: '/dashboard/analytics' },
     { name: 'Users & Roles', icon: Users, href: '/dashboard/users' },
     { name: 'Settings', icon: Settings, href: '/dashboard/settings' },
 ];
 
 export function DashboardSidebar({ isOpen, onToggle }: DashboardSidebarProps) {
     const location = useLocation();
+    const { user, detailedProfile } = useAuth();
+    const organization = detailedProfile?.organization;
+    const orgName = organization?.name || user?.organizationName || 'GRVT MES';
+    const orgLogo = organization?.logoUrl;
 
     return (
         <>
@@ -32,11 +36,17 @@ export function DashboardSidebar({ isOpen, onToggle }: DashboardSidebarProps) {
             <aside className={cn('fixed top-0 left-0 z-50 h-full bg-slate-950 border-r border-slate-800 transition-all duration-300', isOpen ? 'w-64' : 'w-20', 'hidden lg:block')}>
                 {/* Logo */}
                 <div className="h-16 flex items-center justify-between px-4 border-b border-slate-800">
-                    <Link to="/dashboard" className="flex items-center gap-2">
-                        <Logo className="h-8 w-8 flex-shrink-0" />
-                        {isOpen && <span className="text-lg font-bold text-white">GRVT MES</span>}
+                    <Link to="/dashboard" className="flex items-center gap-2 overflow-hidden">
+                        {orgLogo ? (
+                            <img src={orgLogo} alt={orgName} className="h-8 w-8 rounded-lg object-cover flex-shrink-0" />
+                        ) : (
+                            <div className="h-8 w-8 rounded-lg bg-cyan-500/10 flex items-center justify-center flex-shrink-0 border border-cyan-500/20">
+                                <Factory className="h-5 w-5 text-cyan-400" />
+                            </div>
+                        )}
+                        {isOpen && <span className="text-lg font-bold text-white truncate antialiased">{orgName}</span>}
                     </Link>
-                    <Button variant="ghost" size="icon" onClick={onToggle} className="text-slate-400 hover:text-white">
+                    <Button variant="ghost" size="icon" onClick={onToggle} className="text-slate-400 hover:text-white shrink-0 ml-1">
                         {isOpen ? <ChevronLeft className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
                     </Button>
                 </div>
@@ -72,9 +82,15 @@ export function DashboardSidebar({ isOpen, onToggle }: DashboardSidebarProps) {
                 )}>
                 {/* Logo */}
                 <div className="h-16 flex items-center justify-between px-4 border-b border-slate-800">
-                    <Link to="/dashboard" className="flex items-center gap-2">
-                        <Logo className="h-8 w-8" />
-                        <span className="text-lg font-bold text-white">GRVT MES</span>
+                    <Link to="/dashboard" className="flex items-center gap-2 overflow-hidden">
+                        {orgLogo ? (
+                            <img src={orgLogo} alt={orgName} className="h-8 w-8 rounded-lg object-cover flex-shrink-0" />
+                        ) : (
+                            <div className="h-8 w-8 rounded-lg bg-cyan-500/10 flex items-center justify-center flex-shrink-0 border border-cyan-500/20">
+                                <Factory className="h-5 w-5 text-cyan-400" />
+                            </div>
+                        )}
+                        <span className="text-lg font-bold text-white truncate antialiased">{orgName}</span>
                     </Link>
                 </div>
 

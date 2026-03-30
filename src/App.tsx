@@ -39,6 +39,7 @@ import { FacilitiesPage } from './dashboard/pages/facilities';
 import { TracePage } from './dashboard/pages/trace';
 import { InventoryPage } from './dashboard/pages/inventory';
 import { WorkOrdersPage } from './dashboard/pages/work-orders';
+import { SettingsPage } from './dashboard/pages/settings';
 
 function ScrollToHash() {
     const { hash, pathname } = useLocation();
@@ -100,8 +101,7 @@ export default function App() {
                     <Route path="/dashboard/trace" element={<TracePage />} />
                     <Route path="/dashboard/inventory" element={<InventoryPage />} />
                     <Route path="/dashboard/work-orders" element={<WorkOrdersPage />} />
-                    <Route path="/dashboard/analytics" element={<ComingSoonPage />} />
-                    <Route path="/dashboard/settings" element={<ComingSoonPage />} />
+                    <Route path="/dashboard/settings" element={<SettingsPage />} />
                     <Route path="/dashboard/reports" element={<ComingSoonPage />} />
                     <Route path="/dashboard/help" element={<ComingSoonPage />} />
                     <Route path="/dashboard/messages" element={<ComingSoonPage />} />

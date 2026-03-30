@@ -110,7 +110,7 @@ export function ProductsPage() {
         <div className="space-y-6 h-full flex flex-col">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 shrink-0">
                 <div>
-                    <h1 className="text-3xl font-bold text-white mb-2">Master Data: Products</h1>
+                    <h1 className="text-3xl font-bold text-white mb-2">Bills of Materials</h1>
                     <p className="text-slate-400">Manage your central engineering product catalog and SKUs.</p>
                 </div>
                 <div className="flex items-center gap-3 shrink min-w-0">

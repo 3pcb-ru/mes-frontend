@@ -103,8 +103,9 @@ class ApiClient {
     private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
         const url = `${this.baseUrl}${endpoint}`;
 
+        const isFormData = options.body instanceof FormData;
         const headers: HeadersInit = {
-            'Content-Type': 'application/json',
+            ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
             ...options.headers,
         };
 
@@ -114,7 +115,20 @@ class ApiClient {
         }
 
         let response = await fetch(url, { ...options, headers });
-        let data = await response.json();
+        let data: any;
+        
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+            data = await response.json();
+        } else {
+            // Handle non-JSON responses (e.g. 204 No Content or error pages)
+            data = await response.text();
+            try {
+                data = JSON.parse(data);
+            } catch {
+                // Keep as text if not JSON
+            }
+        }
 
         // Handle multiple levels of backend wrapping (data property)
         let responseData = data;
@@ -130,7 +144,7 @@ class ApiClient {
                 // Retry the original request with new token
                 const newToken = this.getAuthToken();
                 const retryHeaders: HeadersInit = {
-                    'Content-Type': 'application/json',
+                    ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
                     ...options.headers,
                 };
 
@@ -148,7 +162,7 @@ class ApiClient {
         }
 
         if (!response.ok) {
-            let extractedMessage = (data && data.message) || 'An error occurred';
+            let extractedMessage = (data && typeof data === 'object' && data.message) || 'An error occurred';
             let validationErrors: Record<string, string> | undefined;
 
             // Clean architecture: Centralize validation error parsing for all API requests
@@ -171,7 +185,7 @@ class ApiClient {
             const error: ApiError & { body?: any } = {
                 message: extractedMessage,
                 statusCode: response.status,
-                error: data && data.error,
+                error: data && typeof data === 'object' && data.error,
                 body: responseData ?? data,
                 validationErrors,
             };
@@ -189,7 +203,7 @@ class ApiClient {
         return this.request<T>(endpoint, {
             ...options,
             method: 'POST',
-            body: body ? JSON.stringify(body) : undefined,
+            body: body instanceof FormData ? body : (body ? JSON.stringify(body) : undefined),
         });
     }
 
@@ -197,7 +211,7 @@ class ApiClient {
         return this.request<T>(endpoint, {
             ...options,
             method: 'PUT',
-            body: body ? JSON.stringify(body) : undefined,
+            body: body instanceof FormData ? body : (body ? JSON.stringify(body) : undefined),
         });
     }
 
@@ -205,7 +219,7 @@ class ApiClient {
         return this.request<T>(endpoint, {
             ...options,
             method: 'PATCH',
-            body: body ? JSON.stringify(body) : undefined,
+            body: body instanceof FormData ? body : (body ? JSON.stringify(body) : undefined),
         });
     }
 

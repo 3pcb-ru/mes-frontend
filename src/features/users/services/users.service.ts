@@ -1,5 +1,5 @@
 import { apiClient } from '@/shared/lib/api-client';
-import type { DetailedProfile, UpdateUserProfileDto, UserListItem } from '../types/users.types';
+import { type DetailedProfile, type UserListItem, type Organization, type UpdateUserProfileDto } from '../types/users.types';
 
 const USERS_BASE = '/users';
 
@@ -34,5 +34,26 @@ export const usersService = {
      */
     async listUsers(): Promise<UserListItem[]> {
         return apiClient.get<UserListItem[]>(USERS_BASE);
+    },
+    /**
+     * Create a new organization and link it to the user
+     * POST /organization
+     */
+    async createOrganization(data: { name: string }): Promise<any> {
+        return apiClient.post<any>('/organization', data);
+    },
+    /**
+     * Get organization branding/info
+     * GET /organization
+     */
+    async getOrganization(): Promise<Organization> {
+        return apiClient.get<Organization>('/organization');
+    },
+    /**
+     * Update current organization branding/info
+     * PATCH /organization
+     */
+    async updateOrganization(data: { name?: string; logoId?: string | null }): Promise<any> {
+        return apiClient.patch<any>('/organization', data);
     },
 };

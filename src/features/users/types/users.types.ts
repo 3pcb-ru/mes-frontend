@@ -7,6 +7,8 @@ export interface Role {
 export interface Organization {
     id: string;
     name: string;
+    logoId?: string;
+    logoUrl?: string;
     location?: string;
 }
 
@@ -18,6 +20,7 @@ export interface DetailedProfile {
     isVerified: boolean;
     role?: Role;
     organization?: Organization;
+    organizationId?: string;
     createdAt: string;
     updatedAt: string;
 }
