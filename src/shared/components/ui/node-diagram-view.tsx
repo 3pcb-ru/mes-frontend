@@ -170,7 +170,6 @@ export function NodeDiagramView({ nodes: rawNodes, selectedNodeId, onNodeSelect 
                 <Background color="#1e293b" variant={BackgroundVariant.Dots} gap={20} size={1} />
                 <Controls className="bg-slate-900 border-slate-800 text-white fill-white" />
                 <MiniMap 
-                    className="bg-slate-900 border-slate-800" 
                     nodeColor="#334155"
                     maskColor="rgba(0, 0, 0, 0.7)"
                     maskStrokeColor="#06b6d4"

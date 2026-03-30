@@ -1,4 +1,4 @@
-import { Handle, Position, NodeProps, Node } from '@xyflow/react';
+import { Handle, Position, NodeProps, Node, useStore } from '@xyflow/react';
 import { Factory, BoxSelect, SeparatorHorizontal, Box, Cpu, Package, Info, Truck, ShieldCheck, HelpCircle } from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
 import type { NodeType } from '@/features/facilities/types/facilities.types';
@@ -31,15 +31,33 @@ const typeIcons: Record<string, any> = {
 export function CustomNode({ data, selected }: NodeProps<Node<CustomNodeData>>) {
     const Icon = typeIcons[data.type || 'OTHER'] || typeIcons['OTHER'];
     const statusColor = data.status === 'RUNNING' ? 'bg-green-500' : data.status === 'WARNING' ? 'bg-amber-500' : data.status === 'ERROR' ? 'bg-red-500' : 'bg-slate-500';
+    
+    // Get the current zoom level from the React Flow store to calculate non-scaling borders
+    const zoom = useStore((s) => s.transform[2]);
+    const strokeWidth = zoom ? 2 / zoom : 2;
 
     return (
         <div className={cn(
-            "group relative px-4 py-3 rounded-xl border-2 transition-all duration-200",
+            "group relative px-4 py-3 rounded-xl transition-all duration-200",
             "bg-slate-900/90 backdrop-blur-md",
-            selected 
-                ? "border-cyan-500 shadow-[0_0_20px_rgba(6,182,212,0.3)] scale-105" 
-                : "border-slate-700/50 hover:border-slate-600 hover:shadow-lg"
+            selected ? "shadow-[0_0_20px_rgba(6,182,212,0.3)] scale-105" : "hover:shadow-lg"
         )}>
+            {/* Vector Standard Border (Non-scaling) */}
+            <svg className="absolute inset-0 w-full h-full pointer-events-none overflow-visible">
+                <rect 
+                    x="0" y="0" width="100%" height="100%" 
+                    rx="12" ry="12" 
+                    fill="none" 
+                    stroke={selected ? "#06b6d4" : "rgba(51, 65, 85, 0.5)"} 
+                    strokeWidth={strokeWidth} 
+                    vectorEffect="none"
+                    className={cn(
+                        "transition-colors duration-200",
+                        !selected && "group-hover:stroke-slate-500"
+                    )}
+                />
+            </svg>
+
             {/* Connection Points */}
             <Handle type="target" position={Position.Top} className="w-3 h-3 bg-cyan-500 border-2 border-slate-900" />
             <Handle type="source" position={Position.Bottom} className="w-3 h-3 bg-cyan-500 border-2 border-slate-900" />
