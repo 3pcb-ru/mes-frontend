@@ -19,15 +19,14 @@ import { cn } from '@/shared/lib/utils';
 import { LayoutGrid, AlertTriangle, Trash2, ArrowRightLeft, Settings2 } from 'lucide-react';
 import { NODE_STATUS_CHANGE_REASONS, NODE_TYPES, type NodeType, type NodeStatusChangeReason } from '@/features/facilities/types/facilities.types';
 import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-} from '@/shared/components/ui/alert-dialog';
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogClose,
+} from '@/shared/components/ui/dialog';
 import {
     Select,
     SelectContent,
@@ -316,14 +315,14 @@ export function FacilitiesPage() {
                             </CardHeader>
 
                             {/* Move Node Dialog */}
-                            <AlertDialog open={isMoveDialogOpen} onOpenChange={setIsMoveDialogOpen}>
-                                <AlertDialogContent className="bg-slate-900 border-slate-800 text-slate-200">
-                                    <AlertDialogHeader>
-                                        <AlertDialogTitle>Move Node</AlertDialogTitle>
-                                        <AlertDialogDescription className="text-slate-400">
+                            <Dialog open={isMoveDialogOpen} onOpenChange={setIsMoveDialogOpen}>
+                                <DialogContent className="bg-slate-900 border-slate-800 text-slate-200">
+                                    <DialogHeader>
+                                        <DialogTitle>Move Node</DialogTitle>
+                                        <DialogDescription className="text-slate-400">
                                             Select a new parent for "{selectedNode.name}". This will recalculate the hierarchical path.
-                                        </AlertDialogDescription>
-                                    </AlertDialogHeader>
+                                        </DialogDescription>
+                                    </DialogHeader>
                                     <div className="py-4">
                                         <Label className="text-slate-400 text-xs mb-2 block">New Parent Node</Label>
                                         <TableView
@@ -338,22 +337,26 @@ export function FacilitiesPage() {
                                             placeholder="Select new parent (or leave empty for Root)..."
                                         />
                                     </div>
-                                    <AlertDialogFooter>
-                                        <AlertDialogCancel className="bg-transparent border-slate-700 hover:bg-slate-800 text-slate-300">Cancel</AlertDialogCancel>
-                                        <AlertDialogAction onClick={handleMove} className="bg-cyan-600 hover:bg-cyan-700 text-white">Move Node</AlertDialogAction>
-                                    </AlertDialogFooter>
-                                </AlertDialogContent>
-                            </AlertDialog>
+                                    <DialogFooter>
+                                        <DialogClose asChild>
+                                            <Button variant="outline" className="bg-transparent border-slate-700 hover:bg-slate-800 text-slate-300">
+                                                Cancel
+                                            </Button>
+                                        </DialogClose>
+                                        <Button onClick={handleMove} className="bg-cyan-600 hover:bg-cyan-700 text-white">Move Node</Button>
+                                    </DialogFooter>
+                                </DialogContent>
+                            </Dialog>
 
                             {/* Status Change Dialog */}
-                            <AlertDialog open={isStatusDialogOpen} onOpenChange={setIsStatusDialogOpen}>
-                                <AlertDialogContent className="bg-slate-900 border-slate-800 text-slate-200">
-                                    <AlertDialogHeader>
-                                        <AlertDialogTitle>Change Node Status</AlertDialogTitle>
-                                        <AlertDialogDescription className="text-slate-400">
+                            <Dialog open={isStatusDialogOpen} onOpenChange={setIsStatusDialogOpen}>
+                                <DialogContent className="bg-slate-900 border-slate-800 text-slate-200">
+                                    <DialogHeader>
+                                        <DialogTitle>Change Node Status</DialogTitle>
+                                        <DialogDescription className="text-slate-400">
                                             Updating status for "{selectedNode.name}"
-                                        </AlertDialogDescription>
-                                    </AlertDialogHeader>
+                                        </DialogDescription>
+                                    </DialogHeader>
                                     <div className="space-y-4 py-4">
                                         <div className="space-y-2">
                                             <Label className="text-slate-400 text-xs">New Status</Label>
@@ -379,40 +382,48 @@ export function FacilitiesPage() {
                                             </Select>
                                         </div>
                                     </div>
-                                    <AlertDialogFooter>
-                                        <AlertDialogCancel className="bg-transparent border-slate-700 hover:bg-slate-800 text-slate-300">Cancel</AlertDialogCancel>
-                                        <AlertDialogAction onClick={handleStatusChange} className="bg-cyan-600 hover:bg-cyan-700 text-white">Update Status</AlertDialogAction>
-                                    </AlertDialogFooter>
-                                </AlertDialogContent>
-                            </AlertDialog>
+                                    <DialogFooter>
+                                        <DialogClose asChild>
+                                            <Button variant="outline" className="bg-transparent border-slate-700 hover:bg-slate-800 text-slate-300">
+                                                Cancel
+                                            </Button>
+                                        </DialogClose>
+                                        <Button onClick={handleStatusChange} className="bg-cyan-600 hover:bg-cyan-700 text-white">Update Status</Button>
+                                    </DialogFooter>
+                                </DialogContent>
+                            </Dialog>
 
                             {/* Delete Confirmation Dialog */}
-                            <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
-                                <AlertDialogContent className="bg-slate-900 border-slate-800 text-slate-200">
-                                    <AlertDialogHeader>
-                                        <AlertDialogTitle className="flex items-center gap-2">
+                            <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+                                <DialogContent className="bg-slate-900 border-slate-800 text-slate-200">
+                                    <DialogHeader>
+                                        <DialogTitle className="flex items-center gap-2">
                                             <AlertTriangle className="text-red-500 size-5" />
                                             Delete Node
-                                        </AlertDialogTitle>
-                                        <AlertDialogDescription className="text-slate-400">
+                                        </DialogTitle>
+                                        <DialogDescription className="text-slate-400">
                                             Are you sure you want to delete "{selectedNode.name}"?
                                             <br/><br/>
                                             If the node has history, it will be archived. If it has no history, it will be permanently removed.
                                             <strong> Deletion will fail if the node has active child nodes or is referenced in Work Orders.</strong>
-                                        </AlertDialogDescription>
-                                    </AlertDialogHeader>
-                                    <AlertDialogFooter>
-                                        <AlertDialogCancel className="bg-transparent border-slate-700 hover:bg-slate-800 text-slate-300">Cancel</AlertDialogCancel>
-                                        <AlertDialogAction 
+                                        </DialogDescription>
+                                    </DialogHeader>
+                                    <DialogFooter>
+                                        <DialogClose asChild>
+                                            <Button variant="outline" className="bg-transparent border-slate-700 hover:bg-slate-800 text-slate-300">
+                                                Cancel
+                                            </Button>
+                                        </DialogClose>
+                                        <Button 
                                             onClick={handleDelete} 
                                             disabled={isDeleting}
                                             className="bg-red-600 hover:bg-red-700 text-white"
                                         >
                                             {isDeleting ? "Deleting..." : "Delete Node"}
-                                        </AlertDialogAction>
-                                    </AlertDialogFooter>
-                                </AlertDialogContent>
-                            </AlertDialog>
+                                        </Button>
+                                    </DialogFooter>
+                                </DialogContent>
+                            </Dialog>
                             <CardContent className="p-0 flex-1 overflow-hidden flex flex-col">
                                 <Tabs defaultValue="overview" className="flex-1 flex flex-col w-full h-full">
                                     <div className="px-6 border-b border-slate-800 bg-slate-900/50 shrink-0">
