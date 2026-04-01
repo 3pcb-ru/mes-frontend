@@ -13,6 +13,7 @@ interface AuthState {
     detailedProfile: DetailedProfile | null;
     token: string | null;
     isLoading: boolean;
+    isLoadingProfile: boolean;
     error: string | null;
 
     // Computed
@@ -39,9 +40,9 @@ export const useAuthStore = create<AuthState>()(
             detailedProfile: null,
             token: null,
             isLoading: false,
+            isLoadingProfile: false,
             error: null,
             isAuthenticated: false,
-
 
             // Login action: stores both tokens on success
             login: async (credentials: LoginDto) => {
@@ -68,7 +69,6 @@ export const useAuthStore = create<AuthState>()(
                     throw err;
                 }
             },
-
 
             // Signup action: stores both tokens on success
             signup: async (data: SignupDto) => {
@@ -105,7 +105,6 @@ export const useAuthStore = create<AuthState>()(
                 }
             },
 
-
             // Logout action: always clears both tokens after calling backend
             logout: async () => {
                 set({ isLoading: true });
@@ -129,8 +128,23 @@ export const useAuthStore = create<AuthState>()(
 
             // Fetch profile action
             fetchProfile: async () => {
+                if (get().isLoadingProfile) return;
+                set({ isLoadingProfile: true });
+
                 try {
                     const profile = await usersService.getCurrentProfile();
+
+                    // If profile has an organizationId but the organization object is missing (no JOIN in backend)
+                    // we fetch the organization separately and merge it.
+                    if (profile.organizationId && !profile.organization) {
+                        try {
+                            const organization = await usersService.getOrganization();
+                            profile.organization = organization;
+                        } catch (orgErr) {
+                            console.error('Failed to fetch organization during profile sync:', orgErr);
+                        }
+                    }
+
                     set({ detailedProfile: profile });
                 } catch (err) {
                     const apiError = err as ApiError;
@@ -141,6 +155,8 @@ export const useAuthStore = create<AuthState>()(
                     if (apiError.statusCode === 401) {
                         get().logout();
                     }
+                } finally {
+                    set({ isLoadingProfile: false });
                 }
             },
 
@@ -182,6 +198,7 @@ export const useAuth = () => {
         detailedProfile: store.detailedProfile,
         isAuthenticated: store.isAuthenticated,
         isLoading: store.isLoading,
+        isLoadingProfile: store.isLoadingProfile,
         error: store.error,
         login: store.login,
         signup: store.signup,

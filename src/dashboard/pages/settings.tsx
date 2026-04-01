@@ -10,14 +10,15 @@ import { Button } from '@/shared/components/ui/button';
 import { toast } from 'sonner';
 import { FileCardUpload } from '@/shared/components/ui/file-card-upload';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/shared/components/ui/dialog';
+import { Logo } from '@/shared/components/logo';
 
 export function SettingsPage() {
-    const { detailedProfile, fetchProfile } = useAuth();
+    const { user, detailedProfile, fetchProfile } = useAuth();
     const [isUpdating, setIsUpdating] = useState(false);
     const [isCreating, setIsCreating] = useState(false);
-    const [orgName, setOrgName] = useState('');
+    const [orgName, setOrgName] = useState(detailedProfile?.organization?.name || user?.organizationName || '');
     const [newOrgName, setNewOrgName] = useState('');
-    const [logoId, setLogoId] = useState<string | null>(null);
+    const [logoId, setLogoId] = useState<string | null>(detailedProfile?.organization?.logoId || null);
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
     useEffect(() => {
@@ -26,15 +27,16 @@ export function SettingsPage() {
         }
     }, [detailedProfile, fetchProfile]);
 
+    // Initialize state from profile
     useEffect(() => {
-        if (detailedProfile?.organization) {
-            setOrgName(detailedProfile.organization.name || '');
-            setLogoId(detailedProfile.organization.logoId || null);
-        } else {
-            setOrgName('');
-            setLogoId(null);
+        const profileName = detailedProfile?.organization?.name || user?.organizationName || '';
+        if (profileName) {
+            setOrgName(profileName);
         }
-    }, [detailedProfile]);
+        if (detailedProfile?.organization?.logoId) {
+            setLogoId(detailedProfile.organization.logoId);
+        }
+    }, [detailedProfile?.organization?.name, user?.organizationName]);
 
     const handleCreateOrganization = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -217,7 +219,7 @@ export function SettingsPage() {
                                     onUploadSuccess={setLogoId}
                                     onRemove={() => setLogoId(null)}
                                     size="w-40 h-40"
-                                    placeholderIcon={<Factory className="h-14 w-14" />}
+                                    placeholderIcon={<Logo className="h-14 w-14" />}
                                     description="Recommended: 512x512px. SVG or PNG."
                                 />
 

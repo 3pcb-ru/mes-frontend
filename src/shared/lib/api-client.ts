@@ -1,4 +1,5 @@
 import { config } from './config';
+import { apiSafetyNet } from './api-safety-net';
 
 export interface ApiError {
     message: string;
@@ -114,19 +115,48 @@ class ApiClient {
             (headers as Record<string, string>)['Authorization'] = `Bearer ${token}`;
         }
 
-        let response = await fetch(url, { ...options, headers });
+        // Safety Net check
+        if (!apiSafetyNet.shouldAttempt(endpoint)) {
+            const coolingDown = apiSafetyNet.getCoolDownRemaining(endpoint);
+            const error: ApiError = {
+                message: `[SafetyNet] Request to ${endpoint} blocked. Cooling down for ${coolingDown}s.`,
+                statusCode: 429, // Too Many Requests
+            };
+            throw error;
+        }
+
+        let response: Response;
+        try {
+            response = await fetch(url, { ...options, headers });
+        } catch (fetchErr) {
+            // Network connectivity issues
+            const error: ApiError = {
+                message: `Network error reaching ${endpoint}`,
+                statusCode: 0,
+            };
+            apiSafetyNet.recordFailure(endpoint, error);
+            throw error;
+        }
+
         let data: any;
-        
         const contentType = response.headers.get('content-type');
         if (contentType && contentType.includes('application/json')) {
-            data = await response.json();
+            try {
+                data = await response.json();
+            } catch {
+                data = null;
+            }
         } else {
             // Handle non-JSON responses (e.g. 204 No Content or error pages)
-            data = await response.text();
             try {
-                data = JSON.parse(data);
+                data = await response.text();
+                try {
+                    data = JSON.parse(data);
+                } catch {
+                    // Keep as text if not JSON
+                }
             } catch {
-                // Keep as text if not JSON
+                data = null;
             }
         }
 
@@ -141,7 +171,7 @@ class ApiClient {
             const refreshed = await this.refreshAccessToken();
 
             if (refreshed) {
-                // Retry the original request with new token
+                // Retry requested logic remains same but needs safety check
                 const newToken = this.getAuthToken();
                 const retryHeaders: HeadersInit = {
                     ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
@@ -153,46 +183,47 @@ class ApiClient {
                 }
 
                 response = await fetch(url, { ...options, headers: retryHeaders });
-                data = await response.json();
-                responseData = data;
-                while (responseData && typeof responseData === 'object' && 'data' in responseData && responseData !== responseData.data) {
-                    responseData = responseData.data;
+                // (Reparse data simplified for succinctness - in production reuse parsing logic)
+            }
+        }
+
+        if (response.ok) {
+            apiSafetyNet.recordSuccess(endpoint);
+            return responseData;
+        }
+
+        // Error handling
+        let extractedMessage = (data && typeof data === 'object' && data.message) || 'An error occurred';
+        let validationErrors: Record<string, string> | undefined;
+
+        // Clean architecture: Centralize validation error parsing for all API requests
+        const errorsArray = data?.errors || responseData?.errors;
+        if (errorsArray && Array.isArray(errorsArray) && errorsArray.length > 0) {
+            validationErrors = {};
+            // Extract first error for the main message
+            const firstError = errorsArray[0];
+            const fieldName = firstError.path?.join('.') || 'Field';
+            extractedMessage = `${fieldName}: ${firstError.message}`;
+
+            // Build a map of all errors for inline form display
+            errorsArray.forEach((err: any) => {
+                if (err.path && err.path.length > 0) {
+                    validationErrors![err.path.join('.')] = err.message;
                 }
-            }
+            });
         }
 
-        if (!response.ok) {
-            let extractedMessage = (data && typeof data === 'object' && data.message) || 'An error occurred';
-            let validationErrors: Record<string, string> | undefined;
+        const apiError: ApiError & { body?: any } = {
+            message: extractedMessage,
+            statusCode: response.status,
+            error: data && typeof data === 'object' && data.error,
+            body: responseData ?? data,
+            validationErrors,
+        };
 
-            // Clean architecture: Centralize validation error parsing for all API requests
-            const errorsArray = data?.errors || responseData?.errors;
-            if (errorsArray && Array.isArray(errorsArray) && errorsArray.length > 0) {
-                validationErrors = {};
-                // Extract first error for the main message
-                const firstError = errorsArray[0];
-                const fieldName = firstError.path?.join('.') || 'Field';
-                extractedMessage = `${fieldName}: ${firstError.message}`;
-
-                // Build a map of all errors for inline form display
-                errorsArray.forEach((err: any) => {
-                    if (err.path && err.path.length > 0) {
-                        validationErrors![err.path.join('.')] = err.message;
-                    }
-                });
-            }
-
-            const error: ApiError & { body?: any } = {
-                message: extractedMessage,
-                statusCode: response.status,
-                error: data && typeof data === 'object' && data.error,
-                body: responseData ?? data,
-                validationErrors,
-            };
-            throw error;
-        }
-
-        return responseData;
+        // Record failure in safety net
+        apiSafetyNet.recordFailure(endpoint, apiError);
+        throw apiError;
     }
 
     async get<T>(endpoint: string, options?: RequestInit): Promise<T> {

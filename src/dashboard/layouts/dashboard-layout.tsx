@@ -7,13 +7,14 @@ import { useAuth } from '@/features/auth/store/auth.store';
 
 export function DashboardLayout() {
     const [sidebarOpen, setSidebarOpen] = useState(true);
-    const { detailedProfile, fetchProfile } = useAuth();
+    const { detailedProfile, fetchProfile, isLoadingProfile } = useAuth();
 
     useEffect(() => {
-        if (!detailedProfile) {
+        const isIncomplete = detailedProfile && detailedProfile.organizationId && !detailedProfile.organization;
+        if ((!detailedProfile || isIncomplete) && !isLoadingProfile) {
             fetchProfile();
         }
-    }, [detailedProfile, fetchProfile]);
+    }, [detailedProfile, fetchProfile, isLoadingProfile]);
 
     return (
         <div className="min-h-screen bg-slate-900">
