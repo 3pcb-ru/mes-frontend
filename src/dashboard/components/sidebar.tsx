@@ -41,7 +41,7 @@ export function DashboardSidebar({ isOpen, onToggle }: DashboardSidebarProps) {
                             <img src={orgLogo} alt={orgName} className="h-8 w-8 rounded-lg object-contain bg-slate-900/50 flex-shrink-0" />
                         ) : (
                             <div className="h-8 w-8 rounded-lg bg-cyan-500/10 flex items-center justify-center flex-shrink-0 border border-cyan-500/20">
-                                <Logo className="h-5 w-5" />
+                                <Factory className="h-5 w-5 text-cyan-400" />
                             </div>
                         )}
                         {isOpen && <span className="text-lg font-bold text-white truncate antialiased">{orgName}</span>}
@@ -87,7 +87,7 @@ export function DashboardSidebar({ isOpen, onToggle }: DashboardSidebarProps) {
                             <img src={orgLogo} alt={orgName} className="h-8 w-8 rounded-lg object-contain bg-slate-900/50 flex-shrink-0" />
                         ) : (
                             <div className="h-8 w-8 rounded-lg bg-cyan-500/10 flex items-center justify-center flex-shrink-0 border border-cyan-500/20">
-                                <Logo className="h-5 w-5" />
+                                <Factory className="h-5 w-5 text-cyan-400" />
                             </div>
                         )}
                         <span className="text-lg font-bold text-white truncate antialiased">{orgName}</span>

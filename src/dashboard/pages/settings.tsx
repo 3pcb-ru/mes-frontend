@@ -219,7 +219,7 @@ export function SettingsPage() {
                                     onUploadSuccess={setLogoId}
                                     onRemove={() => setLogoId(null)}
                                     size="w-40 h-40"
-                                    placeholderIcon={<Logo className="h-14 w-14" />}
+                                    placeholderIcon={<Factory className="h-14 w-14 text-slate-500" />}
                                     description="Recommended: 512x512px. SVG or PNG."
                                 />
 
