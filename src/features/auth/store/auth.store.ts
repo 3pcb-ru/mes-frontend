@@ -134,17 +134,6 @@ export const useAuthStore = create<AuthState>()(
                 try {
                     const profile = await usersService.getCurrentProfile();
 
-                    // If profile has an organizationId but the organization object is missing (no JOIN in backend)
-                    // we fetch the organization separately and merge it.
-                    if (profile.organizationId && !profile.organization) {
-                        try {
-                            const organization = await usersService.getOrganization();
-                            profile.organization = organization;
-                        } catch (orgErr) {
-                            console.error('Failed to fetch organization during profile sync:', orgErr);
-                        }
-                    }
-
                     set({ detailedProfile: profile });
                 } catch (err) {
                     const apiError = err as ApiError;

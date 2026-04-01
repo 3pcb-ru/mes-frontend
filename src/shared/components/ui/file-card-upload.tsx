@@ -120,7 +120,7 @@ export function FileCardUpload({
                         <img 
                             src={effectivePreview} 
                             alt={label} 
-                            className="w-full h-full object-cover rounded-none" 
+                            className="w-full h-full object-contain rounded-none bg-slate-900/40" 
                         />
                     ) : (
                         <div className="flex flex-col items-center gap-2 text-slate-600">
