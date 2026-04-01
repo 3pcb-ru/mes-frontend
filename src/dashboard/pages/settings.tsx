@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
-import { Building2, Loader2, Camera, Trash2, Factory, Globe, ShieldCheck, Plus, CheckCircle2, AlertTriangle } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Building2, Loader2, ShieldCheck, Factory, Globe, Plus, CheckCircle2, Save, AlertTriangle } from 'lucide-react';
 import { useAuth } from '@/features/auth/store/auth.store';
 import { usersService } from '@/features/users/services/users.service';
 import { attachmentsService } from '@/shared/services/attachments.service';
@@ -8,28 +8,17 @@ import { Input } from '@/shared/components/ui/input';
 import { Label } from '@/shared/components/ui/label';
 import { Button } from '@/shared/components/ui/button';
 import { toast } from 'sonner';
-import { cn } from '@/shared/lib/utils';
-import { 
-    Dialog, 
-    DialogContent, 
-    DialogDescription, 
-    DialogFooter, 
-    DialogHeader, 
-    DialogTitle,
-    DialogTrigger
-} from '@/shared/components/ui/dialog';
+import { FileCardUpload } from '@/shared/components/ui/file-card-upload';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/shared/components/ui/dialog';
 
 export function SettingsPage() {
     const { detailedProfile, fetchProfile } = useAuth();
     const [isUpdating, setIsUpdating] = useState(false);
-    const [isUploading, setIsUploading] = useState(false);
     const [isCreating, setIsCreating] = useState(false);
     const [orgName, setOrgName] = useState('');
     const [newOrgName, setNewOrgName] = useState('');
-    const [logoPreview, setLogoPreview] = useState<string | null>(null);
     const [logoId, setLogoId] = useState<string | null>(null);
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-    const fileInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         if (!detailedProfile) {
@@ -40,8 +29,10 @@ export function SettingsPage() {
     useEffect(() => {
         if (detailedProfile?.organization) {
             setOrgName(detailedProfile.organization.name || '');
-            setLogoPreview(detailedProfile.organization.logoUrl || null);
             setLogoId(detailedProfile.organization.logoId || null);
+        } else {
+            setOrgName('');
+            setLogoId(null);
         }
     }, [detailedProfile]);
 
@@ -57,56 +48,12 @@ export function SettingsPage() {
             await usersService.createOrganization({ name: newOrgName.trim() });
             toast.success('Organization created successfully');
             setIsCreateModalOpen(false);
-            
-            // Force a full profile refresh and state update
             await fetchProfile();
-            
-            // Optional: small delay and reload to ensure all stores are synced
-            setTimeout(() => {
-                window.location.reload();
-            }, 1000);
-            
         } catch (err: any) {
             console.error('Create error:', err);
             toast.error(err?.message || 'Failed to create organization');
         } finally {
             setIsCreating(false);
-        }
-    };
-
-    const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
-
-        if (!file.type.startsWith('image/')) {
-            toast.error('Please upload an image file');
-            return;
-        }
-
-        if (file.size > 2 * 1024 * 1024) {
-            toast.error('Image size must be less than 2MB');
-            return;
-        }
-
-        setIsUploading(true);
-        try {
-            const { id, url } = await attachmentsService.uploadAttachment(file);
-            setLogoId(id);
-            setLogoPreview(url);
-            toast.success('Logo uploaded and ready to save');
-        } catch (err: any) {
-            console.error('Upload error:', err);
-            toast.error(err?.message || 'Failed to upload logo');
-        } finally {
-            setIsUploading(false);
-        }
-    };
-
-    const handleRemoveLogo = () => {
-        setLogoId(null);
-        setLogoPreview(null);
-        if (fileInputRef.current) {
-            fileInputRef.current.value = '';
         }
     };
 
@@ -151,9 +98,7 @@ export function SettingsPage() {
                     </div>
                     <div className="space-y-2">
                         <h1 className="text-3xl font-bold text-white">Setup Your Organization</h1>
-                        <p className="text-slate-400 max-w-md mx-auto">
-                            To start managing your facility and production lines, you first need to create an organization profile.
-                        </p>
+                        <p className="text-slate-400 max-w-md mx-auto">To start managing your facility and production lines, you first need to create an organization profile.</p>
                     </div>
                 </div>
 
@@ -161,7 +106,7 @@ export function SettingsPage() {
                     {[
                         { title: 'Identity', desc: 'Define your company name and branding.', icon: ShieldCheck },
                         { title: 'Global Layout', desc: 'Map out floors and workstations.', icon: Globe },
-                        { title: 'Smart Tracking', desc: 'Monitor production in real-time.', icon: Factory }
+                        { title: 'Smart Tracking', desc: 'Monitor production in real-time.', icon: Factory },
                     ].map((feature, i) => (
                         <div key={i} className="p-6 rounded-xl bg-slate-800/30 border border-slate-700/50 space-y-3">
                             <feature.icon className="h-6 w-6 text-cyan-400" />
@@ -174,7 +119,9 @@ export function SettingsPage() {
                 <div className="flex flex-col items-center gap-6 pt-8">
                     <Dialog open={isCreateModalOpen} onOpenChange={setIsCreateModalOpen}>
                         <DialogTrigger asChild>
-                            <Button size="lg" className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-12 h-12 text-lg shadow-xl shadow-cyan-500/20">
+                            <Button
+                                size="lg"
+                                className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-12 h-12 text-lg shadow-xl shadow-cyan-500/20">
                                 <Plus className="mr-2 h-5 w-5" />
                                 Create My Organization
                             </Button>
@@ -189,7 +136,9 @@ export function SettingsPage() {
                                 </DialogHeader>
                                 <div className="grid gap-4 py-6">
                                     <div className="space-y-2">
-                                        <Label htmlFor="createOrgName" className="text-slate-300">Organization Name</Label>
+                                        <Label htmlFor="createOrgName" className="text-slate-300">
+                                            Organization Name
+                                        </Label>
                                         <Input
                                             id="createOrgName"
                                             value={newOrgName}
@@ -202,11 +151,10 @@ export function SettingsPage() {
                                     </div>
                                 </div>
                                 <DialogFooter>
-                                    <Button 
-                                        type="submit" 
+                                    <Button
+                                        type="submit"
                                         disabled={isCreating}
-                                        className="w-full bg-cyan-600 hover:bg-cyan-700 h-12 text-lg font-bold shadow-lg shadow-cyan-600/20"
-                                    >
+                                        className="w-full bg-cyan-600 hover:bg-cyan-700 h-12 text-lg font-bold shadow-lg shadow-cyan-600/20">
                                         {isCreating ? (
                                             <div className="flex items-center gap-2">
                                                 <Loader2 className="h-5 w-5 animate-spin" />
@@ -221,12 +169,7 @@ export function SettingsPage() {
                         </DialogContent>
                     </Dialog>
 
-                    <Button 
-                        variant="ghost" 
-                        size="sm" 
-                        onClick={() => fetchProfile()} 
-                        className="text-slate-500 hover:text-white"
-                    >
+                    <Button variant="ghost" size="sm" onClick={() => fetchProfile()} className="text-slate-500 hover:text-white">
                         Already have an organization? Refresh Profile
                     </Button>
                 </div>
@@ -263,79 +206,31 @@ export function SettingsPage() {
                         </div>
                     </CardHeader>
                     <CardContent className="pt-8">
-                        <form onSubmit={handleSaveOrganization} className="space-y-10">
-                            <div className="flex flex-col lg:flex-row gap-12 items-start">
-                                {/* Logo Section */}
-                                <div className="space-y-4 shrink-0 mx-auto lg:mx-0">
-                                    <Label className="text-slate-300 block text-center lg:text-left">Corporate Logo</Label>
-                                    <div className={cn(
-                                        "relative group w-40 h-40 border-2 border-dashed border-slate-700 flex items-center justify-center overflow-hidden transition-all duration-300 bg-slate-900/80 shadow-inner",
-                                        !logoPreview && "hover:border-cyan-500/50 hover:bg-slate-900",
-                                        logoPreview && "border-solid border-slate-600 shadow-xl shadow-cyan-500/5"
-                                    )}>
-                                        {isUploading ? (
-                                            <div className="flex flex-col items-center gap-2">
-                                                <Loader2 className="h-10 w-10 animate-spin text-cyan-400" />
-                                                <span className="text-[10px] text-slate-500 uppercase tracking-widest">Uploading</span>
-                                            </div>
-                                        ) : logoPreview ? (
-                                            <img src={logoPreview} alt="Company Logo" className="w-full h-full object-contain p-2" />
-                                        ) : (
-                                            <div className="flex flex-col items-center gap-2 text-slate-600">
-                                                <Factory className="h-14 w-14 transition-colors group-hover:text-slate-400" />
-                                                <span className="text-[10px] uppercase font-bold tracking-tighter">No Logo</span>
-                                            </div>
-                                        )}
-                                        
-                                        <div 
-                                            className="absolute inset-0 bg-cyan-500/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-all duration-300 cursor-pointer backdrop-blur-sm" 
-                                            onClick={() => fileInputRef.current?.click()}
-                                        >
-                                            <div className="flex flex-col items-center gap-2">
-                                                <Camera className="h-10 w-10 text-white" />
-                                                <span className="text-xs font-bold text-white uppercase tracking-wider">Replace</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <input 
-                                        type="file" 
-                                        ref={fileInputRef} 
-                                        className="hidden" 
-                                        accept="image/*" 
-                                        onChange={handleLogoUpload}
-                                    />
+                        <form onSubmit={handleSaveOrganization} className="space-y-12">
+                            <div className="flex flex-col lg:flex-row gap-x-16 gap-y-10 items-start">
+                                {/* Left Side: Logo (Shrink-0) */}
+                                <FileCardUpload
+                                    label="Corporate Logo"
+                                    type="ORGANIZATION_LOGO"
+                                    value={logoId}
+                                    previewUrl={detailedProfile.organization?.logoUrl}
+                                    onUploadSuccess={setLogoId}
+                                    onRemove={() => setLogoId(null)}
+                                    size="w-40 h-40"
+                                    placeholderIcon={<Factory className="h-14 w-14" />}
+                                    description="Recommended: 512x512px. SVG or PNG."
+                                />
 
-                                    {logoPreview && !isUploading && (
-                                        <Button
-                                            type="button"
-                                            variant="destructive"
-                                            size="icon"
-                                            onClick={handleRemoveLogo}
-                                            className="absolute -top-3 -right-3 h-8 w-8 rounded-full shadow-lg border border-red-400/50"
-                                            title="Remove logo"
-                                        >
-                                            <Trash2 className="h-4 w-4" />
-                                        </Button>
-                                    )}
-                                    <div className="text-center lg:text-left space-y-1">
-                                        <p className="text-[10px] text-slate-500 leading-tight">
-                                            Recommended: 512x512px. SVG or PNG.
-                                        </p>
-                                        <p className="text-[10px] text-slate-600">Transparent backgrounds look best.</p>
-                                    </div>
-                                </div>
-
-                                {/* Form Section */}
-                                <div className="flex-1">
-                                    <div className="space-y-3">
+                                {/* Right Side: Identity Controls (Flex-1) */}
+                                <div className="flex-1 w-full flex flex-col justify-between self-stretch py-2">
+                                    <div className="space-y-4">
                                         <Label htmlFor="orgName" className="text-slate-300 font-semibold flex items-center justify-between">
                                             <span>Organization Name</span>
                                             <span className="text-[10px] font-normal text-slate-500 uppercase tracking-widest">
                                                 {detailedProfile.organization?.name ? 'Verified' : 'Required'}
                                             </span>
                                         </Label>
-                                        <div className="relative group/input">
+                                        <div className="relative group/input max-w-xl">
                                             <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-500 transition-colors group-hover/input:text-cyan-400" />
                                             <Input
                                                 id="orgName"
@@ -354,43 +249,27 @@ export function SettingsPage() {
                                         )}
                                     </div>
 
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
-                                        <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-700/50 flex items-center gap-4 group transition-colors hover:border-blue-500/30">
-                                            <div className="p-2 rounded-lg bg-blue-500/10 text-blue-400 group-hover:bg-blue-500/20">
-                                                <Globe className="h-5 w-5" />
-                                            </div>
-                                            <div className="min-w-0">
-                                                <p className="text-xs font-bold text-slate-300">Public Profile</p>
-                                                <p className="text-[10px] text-slate-500 truncate">Visible to all internal staff</p>
-                                            </div>
-                                        </div>
-                                        <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-700/50 flex items-center gap-4 group transition-colors hover:border-emerald-500/30">
-                                            <div className="p-2 rounded-lg bg-emerald-500/10 text-emerald-400 group-hover:bg-emerald-500/20">
-                                                <ShieldCheck className="h-5 w-5" />
-                                            </div>
-                                            <div className="min-w-0">
-                                                <p className="text-xs font-bold text-slate-300">Legal Entity</p>
-                                                <p className="text-[10px] text-slate-500 truncate">Official facility group name</p>
-                                            </div>
+                                    {/* Action Header: Save Button moved here */}
+                                    <div className="pt-8 lg:pt-0 flex items-center gap-6">
+                                        <Button
+                                            type="submit"
+                                            disabled={isUpdating || !orgName.trim()}
+                                            className="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white px-10 h-12 shadow-lg shadow-cyan-500/20 font-bold tracking-tight transition-all active:scale-95 disabled:opacity-50">
+                                            {isUpdating ? (
+                                                <div className="flex items-center gap-2">
+                                                    <Loader2 className="h-4 w-4 animate-spin" />
+                                                    <span>Syncing Identity...</span>
+                                                </div>
+                                            ) : (
+                                                'Save Platform Branding'
+                                            )}
+                                        </Button>
+                                        <div className="hidden lg:flex items-center gap-2 text-[10px] text-slate-500 uppercase font-bold tracking-widest">
+                                            <Globe className="h-3.5 w-3.5 text-blue-400/50" />
+                                            Live on Web
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div className="flex justify-end pt-8 border-t border-slate-700/50">
-                                <Button
-                                    type="submit"
-                                    disabled={isUpdating || isUploading || !orgName.trim()}
-                                    className="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white px-10 h-12 shadow-lg shadow-cyan-500/20 font-bold tracking-tight transition-all active:scale-95 disabled:opacity-50">
-                                    {isUpdating ? (
-                                        <div className="flex items-center gap-2">
-                                            <Loader2 className="h-4 w-4 animate-spin" />
-                                            <span>Syncing Identity...</span>
-                                        </div>
-                                    ) : (
-                                        'Save Platform Branding'
-                                    )}
-                                </Button>
                             </div>
                         </form>
                     </CardContent>

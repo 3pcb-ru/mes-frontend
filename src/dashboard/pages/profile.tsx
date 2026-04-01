@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { User, Mail, Shield, Building2, Loader2, CheckCircle2 } from 'lucide-react';
+import { User, Mail, Shield, Building2, Loader2, CheckCircle2, UserCircle } from 'lucide-react';
 import { useAuth } from '@/features/auth/store/auth.store';
 import { usersService } from '@/features/users/services/users.service';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/shared/components/ui/card';
@@ -7,10 +7,13 @@ import { Input } from '@/shared/components/ui/input';
 import { Label } from '@/shared/components/ui/label';
 import { Button } from '@/shared/components/ui/button';
 import { toast } from 'sonner';
+import { FileCardUpload } from '@/shared/components/ui/file-card-upload';
 
 export function ProfilePage() {
     const { user, detailedProfile, fetchProfile } = useAuth();
     const [isUpdating, setIsUpdating] = useState(false);
+    const [avatarId, setAvatarId] = useState<string | null>(null);
+
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -30,6 +33,7 @@ export function ProfilePage() {
                 lastName: detailedProfile.lastName || '',
                 email: detailedProfile.email || '',
             });
+            setAvatarId(detailedProfile.avatarId || null);
         } else if (user) {
             setFormData({
                 firstName: user.firstName || '',
@@ -41,20 +45,20 @@ export function ProfilePage() {
 
     const handleUpdate = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!user?.id && !detailedProfile?.id) return;
+        const userId = detailedProfile?.id || user?.id;
+        if (!userId) return;
 
         setIsUpdating(true);
         try {
-            const userId = detailedProfile?.id || user?.id || '';
             await usersService.updateProfile(userId, {
                 firstName: formData.firstName,
                 lastName: formData.lastName,
-                email: formData.email,
+                avatarId: avatarId || undefined,
             });
             await fetchProfile();
             toast.success('Profile updated successfully');
-        } catch (err) {
-            toast.error('Failed to update profile');
+        } catch (err: any) {
+            toast.error(err?.message || 'Failed to update profile');
         } finally {
             setIsUpdating(false);
         }
@@ -86,45 +90,62 @@ export function ProfilePage() {
                         <CardDescription className="text-slate-400">Update your basic profile information.</CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <form onSubmit={handleUpdate} className="space-y-6">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div className="space-y-2">
-                                    <Label htmlFor="firstName" className="text-slate-300">
-                                        First Name
-                                    </Label>
-                                    <Input
-                                        id="firstName"
-                                        value={formData.firstName}
-                                        onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-                                        className="bg-slate-900 border-slate-700 text-white focus:border-cyan-500"
-                                        placeholder="Enter your first name"
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor="lastName" className="text-slate-300">
-                                        Last Name
-                                    </Label>
-                                    <Input
-                                        id="lastName"
-                                        value={formData.lastName}
-                                        onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-                                        className="bg-slate-900 border-slate-700 text-white focus:border-cyan-500"
-                                        placeholder="Enter your last name"
-                                    />
-                                </div>
-                            </div>
+                        <form onSubmit={handleUpdate} className="space-y-8">
+                            <div className="flex flex-col lg:flex-row gap-12 items-start">
+                                {/* Avatar Section */}
+                                <FileCardUpload
+                                    label="Profile Picture"
+                                    type="USER_AVATAR"
+                                    value={avatarId}
+                                    previewUrl={detailedProfile?.avatarUrl}
+                                    onUploadSuccess={setAvatarId}
+                                    onRemove={() => setAvatarId(null)}
+                                    size="w-32 h-32"
+                                    placeholderIcon={<UserCircle className="h-12 w-12" />}
+                                    description="Recommended: 256x256px. PNG or JPG."
+                                />
 
-                            <div className="space-y-2">
-                                <Label htmlFor="email" className="text-slate-300">
-                                    Email Address
-                                </Label>
-                                <div className="relative group">
-                                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500" />
-                                    <div className="pl-9 py-2 bg-slate-900/40 border border-slate-700/50 rounded-md text-slate-400 text-sm flex items-center h-10 select-none">
-                                        {formData.email || 'No email provided'}
+                                <div className="flex-1 space-y-6 w-full lg:max-w-xl">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                        <div className="space-y-2">
+                                            <Label htmlFor="firstName" className="text-slate-300">
+                                                First Name
+                                            </Label>
+                                            <Input
+                                                id="firstName"
+                                                value={formData.firstName}
+                                                onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                                                className="bg-slate-900 border-slate-700 text-white focus:border-cyan-500"
+                                                placeholder="Enter your first name"
+                                            />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <Label htmlFor="lastName" className="text-slate-300">
+                                                Last Name
+                                            </Label>
+                                            <Input
+                                                id="lastName"
+                                                value={formData.lastName}
+                                                onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                                                className="bg-slate-900 border-slate-700 text-white focus:border-cyan-500"
+                                                placeholder="Enter your last name"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-2">
+                                        <Label htmlFor="email" className="text-slate-300">
+                                            Email Address
+                                        </Label>
+                                        <div className="relative group">
+                                            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500" />
+                                            <div className="pl-9 py-2 bg-slate-900/40 border border-slate-700/50 rounded-md text-slate-400 text-sm flex items-center h-10 select-none">
+                                                {formData.email || 'No email provided'}
+                                            </div>
+                                        </div>
+                                        <p className="text-[10px] text-slate-500 italic">Email is used for account identification and cannot be changed.</p>
                                     </div>
                                 </div>
-                                <p className="text-[10px] text-slate-500 italic">Email is used for account identification and cannot be changed.</p>
                             </div>
 
                             <div className="flex justify-end pt-4 border-t border-slate-700/50">

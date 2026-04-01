@@ -21,6 +21,8 @@ export interface DetailedProfile {
     role?: Role;
     organization?: Organization;
     organizationId?: string;
+    avatarId?: string;
+    avatarUrl?: string;
     createdAt: string;
     updatedAt: string;
 }
@@ -29,6 +31,7 @@ export interface UpdateUserProfileDto {
     firstName?: string;
     lastName?: string;
     email?: string;
+    avatarId?: string;
 }
 
 export interface UserListItem {
