@@ -38,9 +38,9 @@ export const useNotificationStore = create<NotificationsState>((set, get) => ({
             });
 
             set({
-                notifications: response.data,
-                unreadCount: response.data.filter((n) => n.status === 'unread').length,
-                pagination: response.pagination,
+                notifications: response.data || [],
+                unreadCount: (response.data || []).filter((n) => n.status === 'unread').length,
+                pagination: response.pagination || null,
                 isLoading: false,
             });
         } catch (error) {
