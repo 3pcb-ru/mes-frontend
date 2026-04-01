@@ -4,13 +4,23 @@ import { apiClient } from '../lib/api-client';
 // Types
 // ─────────────────────────────────────────────────────────────
 
-export type AttachmentType =
-    | 'PRODUCT'
-    | 'USER_AVATAR'
-    | 'ORGANIZATION_LOGO'
-    | 'WORK_ORDER'
-    | 'MESSAGE'
-    | 'OTHER';
+export enum FILE_TYPE {
+    ORGANIZATION_LOGO = 'organization_logo',
+    USER_AVATAR = 'user_avatar',
+    PRODUCT = 'product',
+    WORK_ORDER = 'work_order',
+    MESSAGE = 'message',
+    GERBER = 'gerber',
+    BOM = 'bom',
+    CENTROID = 'centroid',
+    SCHEMATIC = 'schematic',
+    ASSEMBLY_DRAWING = 'assembly_drawing',
+    PICK_AND_PLACE = 'pick_and_place',
+    SPECIFICATION = 'specification',
+    OTHER = 'other',
+}
+
+export type AttachmentType = FILE_TYPE | string;
 
 export interface InitUploadResponse {
     attachmentId: string;

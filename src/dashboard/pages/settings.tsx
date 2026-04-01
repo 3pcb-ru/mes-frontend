@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Building2, Loader2, ShieldCheck, Factory, Globe, Plus, CheckCircle2, Save, AlertTriangle } from 'lucide-react';
 import { useAuth } from '@/features/auth/store/auth.store';
 import { usersService } from '@/features/users/services/users.service';
-import { attachmentsService } from '@/shared/services/attachments.service';
+import { attachmentsService, FILE_TYPE } from '@/shared/services/attachments.service';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/shared/components/ui/card';
 import { Input } from '@/shared/components/ui/input';
 import { Label } from '@/shared/components/ui/label';
@@ -211,7 +211,7 @@ export function SettingsPage() {
                                 {/* Left Side: Logo (Shrink-0) */}
                                 <FileCardUpload
                                     label="Corporate Logo"
-                                    type="ORGANIZATION_LOGO"
+                                    type={FILE_TYPE.ORGANIZATION_LOGO}
                                     value={logoId}
                                     previewUrl={detailedProfile.organization?.logoUrl}
                                     onUploadSuccess={setLogoId}

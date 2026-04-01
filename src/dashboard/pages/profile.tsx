@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { User, Mail, Shield, Building2, Loader2, CheckCircle2, UserCircle } from 'lucide-react';
 import { useAuth } from '@/features/auth/store/auth.store';
 import { usersService } from '@/features/users/services/users.service';
+import { FILE_TYPE } from '@/shared/services/attachments.service';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/shared/components/ui/card';
 import { Input } from '@/shared/components/ui/input';
 import { Label } from '@/shared/components/ui/label';
@@ -95,7 +96,7 @@ export function ProfilePage() {
                                 {/* Avatar Section */}
                                 <FileCardUpload
                                     label="Profile Picture"
-                                    type="USER_AVATAR"
+                                    type={FILE_TYPE.USER_AVATAR}
                                     value={avatarId}
                                     previewUrl={detailedProfile?.avatarUrl}
                                     onUploadSuccess={setAvatarId}
