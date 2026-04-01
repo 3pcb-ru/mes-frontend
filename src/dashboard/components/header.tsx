@@ -11,7 +11,7 @@ interface DashboardHeaderProps {
 }
 
 export function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
-    const { user, logout } = useAuth();
+    const { user, detailedProfile, logout } = useAuth();
 
     const handleLogout = async () => {
         await logout();
@@ -43,8 +43,12 @@ export function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant="ghost" className="flex items-center gap-2 px-2 text-slate-300 hover:text-white hover:bg-slate-800/50">
-                                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center ring-2 ring-slate-800 ring-offset-2 ring-offset-slate-900">
-                                    <User className="size-5 text-white" />
+                                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center ring-2 ring-slate-800 ring-offset-2 ring-offset-slate-900 overflow-hidden">
+                                    {detailedProfile?.avatarUrl ? (
+                                        <img src={detailedProfile.avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
+                                    ) : (
+                                        <User className="size-5 text-white" />
+                                    )}
                                 </div>
                                 <span className="hidden md:block font-medium">{user?.firstName || 'User'}</span>
                             </Button>
@@ -52,8 +56,12 @@ export function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
                         <DropdownMenuContent align="end" className="w-64 bg-slate-900/95 backdrop-blur-xl border-slate-700 p-2">
                             <DropdownMenuLabel className="p-2 mb-2">
                                 <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
-                                        <User className="h-5 w-5 text-white" />
+                                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center overflow-hidden">
+                                        {detailedProfile?.avatarUrl ? (
+                                            <img src={detailedProfile.avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
+                                        ) : (
+                                            <User className="h-5 w-5 text-white" />
+                                        )}
                                     </div>
                                     <div className="flex flex-col">
                                         <span className="text-sm font-semibold text-white">
