@@ -18,6 +18,7 @@ interface FileCardUploadProps {
     description?: string;
     className?: string;
     maxSizeMB?: number;
+    onPreviewChange?: (url: string | null) => void;
 }
 
 export function FileCardUpload({
@@ -32,6 +33,7 @@ export function FileCardUpload({
     description,
     className,
     maxSizeMB = 2,
+    onPreviewChange,
 }: FileCardUploadProps) {
     const [isUploading, setIsUploading] = useState(false);
     const [localPreview, setLocalPreview] = useState<string | null>(null);
@@ -69,6 +71,7 @@ export function FileCardUpload({
         // Optimistic preview
         const objectUrl = URL.createObjectURL(file);
         setLocalPreview(objectUrl);
+        if (onPreviewChange) onPreviewChange(objectUrl);
 
         try {
             // 3-step secure upload flow: Initialize -> Binary PUT -> Confirm
@@ -95,6 +98,7 @@ export function FileCardUpload({
             URL.revokeObjectURL(localPreview);
         }
         setLocalPreview(null);
+        if (onPreviewChange) onPreviewChange(null);
         onRemove();
         if (fileInputRef.current) {
             fileInputRef.current.value = '';

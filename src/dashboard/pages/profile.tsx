@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { User, Mail, Shield, Building2, Loader2, CheckCircle2, UserCircle } from 'lucide-react';
+import { User, Mail, Shield, Building2, Loader2, CheckCircle2 } from 'lucide-react';
 import { useAuth } from '@/features/auth/store/auth.store';
+import { Logo } from '@/shared/components/logo';
 import { usersService } from '@/features/users/services/users.service';
 import { FILE_TYPE } from '@/shared/services/attachments.service';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/shared/components/ui/card';
@@ -11,7 +12,7 @@ import { toast } from 'sonner';
 import { FileCardUpload } from '@/shared/components/ui/file-card-upload';
 
 export function ProfilePage() {
-    const { user, detailedProfile, fetchProfile } = useAuth();
+    const { user, detailedProfile, fetchProfile, setDetailedProfile } = useAuth();
     const [isUpdating, setIsUpdating] = useState(false);
     const [avatarId, setAvatarId] = useState<string | null>(null);
 
@@ -101,8 +102,13 @@ export function ProfilePage() {
                                     previewUrl={detailedProfile?.avatarUrl}
                                     onUploadSuccess={setAvatarId}
                                     onRemove={() => setAvatarId(null)}
+                                    onPreviewChange={(url) => {
+                                        if (detailedProfile) {
+                                            setDetailedProfile({ ...detailedProfile, avatarUrl: url || undefined });
+                                        }
+                                    }}
                                     size="w-32 h-32"
-                                    placeholderIcon={<UserCircle className="h-12 w-12" />}
+                                    placeholderIcon={<Logo className="h-12 w-12 text-slate-500" />}
                                     description="Recommended: 256x256px. PNG or JPG."
                                 />
 

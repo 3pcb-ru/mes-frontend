@@ -5,6 +5,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { useAuth } from '@/features/auth/store/auth.store';
 import { Link } from 'react-router-dom';
 import { NotificationDropdown } from './notification-dropdown';
+import { Logo } from '@/shared/components/logo';
 
 interface DashboardHeaderProps {
     onMenuClick: () => void;
@@ -47,7 +48,7 @@ export function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
                                     {detailedProfile?.avatarUrl ? (
                                         <img src={detailedProfile.avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
                                     ) : (
-                                        <User className="size-5 text-white" />
+                                        <Logo className="size-5 text-white" />
                                     )}
                                 </div>
                                 <span className="hidden md:block font-medium">{user?.firstName || 'User'}</span>
@@ -60,7 +61,7 @@ export function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
                                         {detailedProfile?.avatarUrl ? (
                                             <img src={detailedProfile.avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
                                         ) : (
-                                            <User className="h-5 w-5 text-white" />
+                                            <Logo className="h-5 w-5 text-white" />
                                         )}
                                     </div>
                                     <div className="flex flex-col">

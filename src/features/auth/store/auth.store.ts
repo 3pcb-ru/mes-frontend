@@ -25,6 +25,7 @@ interface AuthState {
     logout: () => Promise<void>;
     fetchProfile: () => Promise<void>;
     clearError: () => void;
+    setDetailedProfile: (profile: DetailedProfile) => void;
     setUser: (user: User) => void;
     setToken: (token: string) => void;
 }
@@ -152,6 +153,9 @@ export const useAuthStore = create<AuthState>()(
             // Clear error
             clearError: () => set({ error: null }),
 
+            // Set detailed profile (for optimistic updates)
+            setDetailedProfile: (detailedProfile: DetailedProfile) => set({ detailedProfile }),
+
             // Set user (for profile updates)
             setUser: (user: User) => set({ user }),
 
@@ -193,6 +197,7 @@ export const useAuth = () => {
         signup: store.signup,
         logout: store.logout,
         fetchProfile: store.fetchProfile,
+        setDetailedProfile: store.setDetailedProfile,
         clearError: store.clearError,
     };
 };
