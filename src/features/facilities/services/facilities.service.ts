@@ -2,8 +2,9 @@ import { apiClient } from '@/shared/lib/api-client';
 import type { NodeStatusChangeReason } from '../types/facilities.types';
 
 export const facilitiesService = {
-    listFacilities: async (params?: Record<string, any>) => {
-        const qs = params ? '?' + new URLSearchParams(params).toString() : '';
+    listFacilities: async (params: Record<string, any> = { limit: '100' }) => {
+        const queryParams = { limit: '100', ...params };
+        const qs = new URLSearchParams(queryParams).toString() ? '?' + new URLSearchParams(queryParams).toString() : '';
         return apiClient.get<any[]>(`/nodes${qs}`);
     },
     getFacility: async (id: string) => apiClient.get<any>(`/nodes/${id}`),

@@ -60,7 +60,9 @@ export function FacilitiesPage() {
     const [newParentId, setNewParentId] = useState<string | null>(null);
     const fetchNodes = async () => {
         try {
-            const data = await facilitiesService.listFacilities();
+            const result = await facilitiesService.listFacilities();
+            // Fallback for paginated or wrapped responses
+            const data = Array.isArray(result) ? result : (result as any)?.data || [];
             setNodes(Array.isArray(data) ? data : []);
         } catch (err: any) {
             console.error(err);

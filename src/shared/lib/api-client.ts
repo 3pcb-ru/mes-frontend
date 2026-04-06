@@ -163,7 +163,7 @@ class ApiClient {
         // Handle multiple levels of backend wrapping (data property)
         // Only unwrap if 'data' exists and there are no other significant properties (like pagination)
         let responseData = data;
-        const METADATA_KEYS = ['success', 'message', 'data', 'error'];
+        const METADATA_KEYS = ['success', 'message', 'data', 'error', 'limit', 'page', 'total', 'totalPages', 'count'];
         while (
             responseData &&
             typeof responseData === 'object' &&

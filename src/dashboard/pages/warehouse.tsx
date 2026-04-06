@@ -26,10 +26,12 @@ export function WarehousePage() {
     const fetchData = async () => {
         setIsLoading(true);
         try {
-            const [nodes, containers] = await Promise.all([
-                facilitiesService.listFacilities(),
-                warehouseService.listContainers()
-            ]);
+            const nodesResult = await facilitiesService.listFacilities();
+            const containersResult = await warehouseService.listContainers();
+            
+            const nodes = Array.isArray(nodesResult) ? nodesResult : (nodesResult as any)?.data || [];
+            const containers = Array.isArray(containersResult) ? containersResult : (containersResult as any)?.data || [];
+
             setAllNodes(Array.isArray(nodes) ? nodes : []);
             setAllContainers(Array.isArray(containers) ? containers : []);
         } catch (err: any) {

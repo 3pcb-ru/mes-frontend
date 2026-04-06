@@ -1,8 +1,9 @@
 import { apiClient } from '@/shared/lib/api-client';
 
 export const warehouseService = {
-  listContainers: async (params?: Record<string, any>) => {
-    const qs = params ? '?' + new URLSearchParams(params).toString() : '';
+  listContainers: async (params: Record<string, any> = { limit: '100' }) => {
+    const queryParams = { limit: '100', ...params };
+    const qs = new URLSearchParams(queryParams).toString() ? '?' + new URLSearchParams(queryParams).toString() : '';
     return apiClient.get<any[]>(`/inventory/containers${qs}`);
   },
   getContainer: async (id: string) => apiClient.get<any>(`/inventory/containers/${id}`),
