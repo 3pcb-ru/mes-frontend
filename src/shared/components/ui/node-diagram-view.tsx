@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useEffect } from 'react';
+import { useCallback, useMemo, useEffect, useState } from 'react';
 import {
     ReactFlow,
     Background,
@@ -30,7 +30,7 @@ type NodeDiagramViewProps = {
     nodes: FacilityListItem[];
     selectedNodeId?: string;
     onNodeSelect: (nodeId: string) => void;
-    onAdd?: () => void;
+    onAdd?: (parentId?: string) => void;
 };
 
 const dagreGraph = new dagre.graphlib.Graph();
@@ -140,9 +140,25 @@ export function NodeDiagramView({ nodes: rawNodes, selectedNodeId, onNodeSelect,
         );
     }, [selectedNodeId, setNodes]);
 
+    const [connectionStartNodeId, setConnectionStartNodeId] = useState<string | null>(null);
+
     const onNodeClick = useCallback((_: any, node: Node) => {
         onNodeSelect(node.id);
     }, [onNodeSelect]);
+
+    const onConnectStart = useCallback((_: any, { nodeId }: { nodeId: string | null }) => {
+        setConnectionStartNodeId(nodeId);
+    }, []);
+
+    const onConnectEnd = useCallback((event: any) => {
+        if (!connectionStartNodeId || !onAdd) return;
+
+        const targetIsPane = event.target.classList.contains('react-flow__pane');
+        if (targetIsPane) {
+            onAdd(connectionStartNodeId);
+        }
+        setConnectionStartNodeId(null);
+    }, [connectionStartNodeId, onAdd]);
 
     const onLayout = useCallback(
         (direction: string) => {
@@ -161,6 +177,8 @@ export function NodeDiagramView({ nodes: rawNodes, selectedNodeId, onNodeSelect,
                 onNodesChange={onNodesChange}
                 onEdgesChange={onEdgesChange}
                 onNodeClick={onNodeClick}
+                onConnectStart={onConnectStart}
+                onConnectEnd={onConnectEnd}
                 nodeTypes={nodeTypes}
                 connectionLineType={ConnectionLineType.SmoothStep}
                 fitView
@@ -180,7 +198,7 @@ export function NodeDiagramView({ nodes: rawNodes, selectedNodeId, onNodeSelect,
                         size="sm" 
                         variant="outline" 
                         className="bg-slate-900/80 backdrop-blur-sm border-slate-800 hover:bg-slate-800 text-cyan-400 font-bold shadow-lg"
-                        onClick={onAdd}
+                        onClick={() => onAdd?.()}
                     >
                         <Plus className="w-4 h-4 mr-1.5" />
                         Create Node

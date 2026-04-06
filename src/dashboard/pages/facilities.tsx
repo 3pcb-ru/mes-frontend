@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from 'react';
-import { Loader2, Plus, Blocks } from 'lucide-react';
+import { Loader2, Plus, Blocks, BoxSelect } from 'lucide-react';
 import { toast } from 'sonner';
 import { facilitiesService } from '@/features/facilities/services/facilities.service';
 import type { FacilityListItem } from '@/features/facilities/types/facilities.types';
@@ -189,7 +189,7 @@ export function FacilitiesPage() {
         try {
             const payload = { 
                 ...formData, 
-                parentId: selectedNodeId || undefined,
+                parentId: formData.parentId || selectedNodeId || undefined,
                 definitionId: formData.definitionId || undefined
             };
 
@@ -272,8 +272,8 @@ export function FacilitiesPage() {
                             nodes={nodes} 
                             selectedNodeId={selectedNodeId} 
                             onNodeSelect={(id: string) => setSelectedNodeId(id)}
-                            onAdd={() => {
-                                setFormData({});
+                            onAdd={(parentId) => {
+                                setFormData({ parentId });
                                 resetErrors();
                                 setIsCreateOpen(true);
                             }}
@@ -542,8 +542,17 @@ export function FacilitiesPage() {
                 open={isCreateOpen}
                 onOpenChange={setIsCreateOpen}
                 title="Create Node"
-                description={selectedNodeId ? `Creating a child node under ${selectedNode?.name}` : 'Creating a root node.'}>
+                description={formData.parentId ? `Creating a child node under ${nodes.find(n => n.id === formData.parentId)?.name}` : 'Creating a root node.'}>
                 <form onSubmit={handleCreate} className="space-y-4 pt-4">
+                    {formData.parentId && (
+                        <div className="p-3 rounded-lg bg-cyan-500/10 border border-cyan-500/20 mb-4">
+                            <Label className="text-cyan-400 text-xs mb-1 block">Parent Node (Locked)</Label>
+                            <div className="flex items-center gap-2 text-white font-medium">
+                                <BoxSelect className="size-4 text-cyan-500" />
+                                {nodes.find(n => n.id === formData.parentId)?.name}
+                            </div>
+                        </div>
+                    )}
                     <div className="space-y-2">
                         <Label>Node Name</Label>
                         <Input
