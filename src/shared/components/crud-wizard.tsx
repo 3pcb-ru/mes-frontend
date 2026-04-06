@@ -10,7 +10,7 @@ import { Info } from 'lucide-react';
 type Field = {
   name: string;
   label: string;
-  type?: 'text' | 'number' | 'select';
+  type?: 'text' | 'number' | 'select' | 'date';
   required?: boolean;
   hint?: string;
   options?: { label: string; value: string }[];
@@ -76,6 +76,8 @@ export function CrudWizard({ isOpen, title, description, mode = 'create', fields
                     <FormControl>
                       {f.type === 'number' ? (
                         <Input type="number" {...field} />
+                      ) : f.type === 'date' ? (
+                        <Input type="date" {...field} />
                       ) : (
                         <Input type="text" {...field} />
                       )}

@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Package, Users, Settings, BarChart3, ChevronLeft, ChevronRight, FileText, HelpCircle, MessageSquare, Blocks, Factory } from 'lucide-react';
+import { LayoutDashboard, Package, Users, Settings, FileBarChart, ChevronLeft, ChevronRight, FileText, HelpCircle, MessageSquare, Blocks, Factory, Activity, Warehouse, Network } from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
 import { useAuth } from '@/features/auth/store/auth.store';
 import { Logo } from '@/shared/components/logo';
@@ -10,14 +10,35 @@ interface DashboardSidebarProps {
     onToggle: () => void;
 }
 
-const navItems = [
-    { name: 'Dashboard', icon: LayoutDashboard, href: '/dashboard' },
-    { name: 'Layout', icon: Blocks, href: '/dashboard/facilities' },
-    { name: 'Production', icon: FileText, href: '/dashboard/work-orders' },
-    { name: 'Bills of Materials', icon: Package, href: '/dashboard/products' },
-    { name: 'Traceability', icon: BarChart3, href: '/dashboard/trace' },
-    { name: 'Users & Roles', icon: Users, href: '/dashboard/users' },
-    { name: 'Settings', icon: Settings, href: '/dashboard/settings' },
+const navSections = [
+    {
+        title: 'Main',
+        items: [
+            { name: 'Dashboard', icon: LayoutDashboard, href: '/dashboard' },
+        ]
+    },
+    {
+        title: 'Operations',
+        items: [
+            { name: 'Production', icon: Activity, href: '/dashboard/work-orders' },
+            { name: 'Warehouse', icon: Warehouse, href: '/dashboard/warehouse' },
+        ]
+    },
+    {
+        title: 'Analytics',
+        items: [
+            { name: 'Reports', icon: FileBarChart, href: '/dashboard/reports' },
+        ]
+    },
+    {
+        title: 'Configuration',
+        items: [
+            { name: 'Bill of Materials', icon: Package, href: '/dashboard/products' },
+            { name: 'Users & Roles', icon: Users, href: '/dashboard/users' },
+            { name: 'Layout', icon: Network, href: '/dashboard/facilities' },
+            { name: 'Settings', icon: Settings, href: '/dashboard/settings' },
+        ]
+    }
 ];
 
 export function DashboardSidebar({ isOpen, onToggle }: DashboardSidebarProps) {
@@ -52,25 +73,37 @@ export function DashboardSidebar({ isOpen, onToggle }: DashboardSidebarProps) {
                 </div>
 
                 {/* Navigation */}
-                <nav className="p-4 space-y-2">
-                    {navItems.map((item) => {
-                        const isActive = location.pathname === item.href;
-                        return (
-                            <Link
-                                key={item.name}
-                                to={item.href}
-                                className={cn(
-                                    'flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200',
-                                    isActive
-                                        ? 'bg-gradient-to-r from-cyan-500/20 to-blue-600/20 text-cyan-400 border border-cyan-500/30'
-                                        : 'text-slate-400 hover:text-white hover:bg-slate-800/50',
-                                    !isOpen && 'justify-center',
-                                )}>
-                                <item.icon className={cn('h-5 w-5 flex-shrink-0', isActive && 'text-cyan-400')} />
-                                {isOpen && <span className="font-medium">{item.name}</span>}
-                            </Link>
-                        );
-                    })}
+                <nav className="p-4 space-y-6 overflow-y-auto max-h-[calc(100vh-64px)]">
+                    {navSections.map((section, idx) => (
+                        <div key={section.title} className="space-y-2">
+                            {idx > 0 && <div className="border-t border-slate-800/50 my-4 mx-2" />}
+                            {isOpen && (
+                                <h3 className="px-3 text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2">
+                                    {section.title}
+                                </h3>
+                            )}
+                            <div className="space-y-1">
+                                {section.items.map((item) => {
+                                    const isActive = location.pathname === item.href;
+                                    return (
+                                        <Link
+                                            key={item.name}
+                                            to={item.href}
+                                            className={cn(
+                                                'flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200',
+                                                isActive
+                                                    ? 'bg-gradient-to-r from-cyan-500/20 to-blue-600/20 text-cyan-400 border border-cyan-500/30 shadow-lg shadow-cyan-500/5'
+                                                    : 'text-slate-400 hover:text-white hover:bg-slate-800/50',
+                                                !isOpen && 'justify-center',
+                                            )}>
+                                            <item.icon className={cn('h-5 w-5 flex-shrink-0', isActive && 'text-cyan-400')} />
+                                            {isOpen && <span className="text-sm font-medium">{item.name}</span>}
+                                        </Link>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    ))}
                 </nav>
             </aside>
 
@@ -95,25 +128,35 @@ export function DashboardSidebar({ isOpen, onToggle }: DashboardSidebarProps) {
                 </div>
 
                 {/* Navigation */}
-                <nav className="p-4 space-y-2">
-                    {navItems.map((item) => {
-                        const isActive = location.pathname === item.href;
-                        return (
-                            <Link
-                                key={item.name}
-                                to={item.href}
-                                onClick={onToggle}
-                                className={cn(
-                                    'flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200',
-                                    isActive
-                                        ? 'bg-gradient-to-r from-cyan-500/20 to-blue-600/20 text-cyan-400 border border-cyan-500/30'
-                                        : 'text-slate-400 hover:text-white hover:bg-slate-800/50',
-                                )}>
-                                <item.icon className={cn('h-5 w-5', isActive && 'text-cyan-400')} />
-                                <span className="font-medium">{item.name}</span>
-                            </Link>
-                        );
-                    })}
+                <nav className="p-4 space-y-6">
+                    {navSections.map((section, idx) => (
+                        <div key={section.title} className="space-y-2">
+                            {idx > 0 && <div className="border-t border-slate-800/50 my-4 mx-2" />}
+                            <h3 className="px-3 text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2">
+                                {section.title}
+                            </h3>
+                            <div className="space-y-1">
+                                {section.items.map((item) => {
+                                    const isActive = location.pathname === item.href;
+                                    return (
+                                        <Link
+                                            key={item.name}
+                                            to={item.href}
+                                            onClick={onToggle}
+                                            className={cn(
+                                                'flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200',
+                                                isActive
+                                                    ? 'bg-gradient-to-r from-cyan-500/20 to-blue-600/20 text-cyan-400 border border-cyan-500/30'
+                                                    : 'text-slate-400 hover:text-white hover:bg-slate-800/50',
+                                            )}>
+                                            <item.icon className={cn('h-5 w-5', isActive && 'text-cyan-400')} />
+                                            <span className="font-medium text-sm">{item.name}</span>
+                                        </Link>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    ))}
                 </nav>
             </aside>
         </>

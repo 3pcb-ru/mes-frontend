@@ -36,8 +36,8 @@ import { UsersPage } from './dashboard/pages/users';
 import { ComingSoonPage } from './dashboard/pages/coming-soon';
 import { ProductsPage } from './dashboard/pages/products';
 import { FacilitiesPage } from './dashboard/pages/facilities';
-import { TracePage } from './dashboard/pages/trace';
-import { InventoryPage } from './dashboard/pages/inventory';
+import { ReportsPage } from './dashboard/pages/reports';
+import { WarehousePage } from './dashboard/pages/warehouse';
 import { WorkOrdersPage } from './dashboard/pages/work-orders';
 import { SettingsPage } from './dashboard/pages/settings';
 
@@ -98,11 +98,10 @@ export default function App() {
                     {/* Coming Soon Pages */}
                     <Route path="/dashboard/products" element={<ProductsPage />} />
                     <Route path="/dashboard/facilities" element={<FacilitiesPage />} />
-                    <Route path="/dashboard/trace" element={<TracePage />} />
-                    <Route path="/dashboard/inventory" element={<InventoryPage />} />
+                    <Route path="/dashboard/reports" element={<ReportsPage />} />
+                    <Route path="/dashboard/warehouse" element={<WarehousePage />} />
                     <Route path="/dashboard/work-orders" element={<WorkOrdersPage />} />
                     <Route path="/dashboard/settings" element={<SettingsPage />} />
-                    <Route path="/dashboard/reports" element={<ComingSoonPage />} />
                     <Route path="/dashboard/help" element={<ComingSoonPage />} />
                     <Route path="/dashboard/messages" element={<ComingSoonPage />} />
                     <Route path="/dashboard/integration" element={<ComingSoonPage />} />

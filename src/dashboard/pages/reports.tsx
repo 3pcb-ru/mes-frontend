@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import { traceService } from '@/features/trace/services/trace.service';
-import type { ActivityListItem } from '@/features/trace/types/trace.types';
+import { reportsService } from '@/features/reports/services/reports.service';
+import type { ActivityListItem } from '@/features/reports/types/reports.types';
 import { Card, CardContent } from '@/shared/components/ui/card';
 import { Input } from '@/shared/components/ui/input';
 import { Label } from '@/shared/components/ui/label';
 import { DataTableGrid, type ColumnDef } from '@/shared/components/ui/data-table-grid';
 
-export function TracePage() {
+export function ReportsPage() {
     const [items, setItems] = useState<ActivityListItem[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -20,11 +20,11 @@ export function TracePage() {
     const fetchActivities = async () => {
         setIsLoading(true);
         try {
-            const data = await traceService.listActivities();
+            const data = await reportsService.listActivities();
             setItems(Array.isArray(data) ? data : []);
         } catch (err: any) {
             console.error('API Error:', err);
-            toast.error(err?.message || 'Failed to load trace activities');
+            toast.error(err?.message || 'Failed to load report activities');
             setItems([]);
         } finally {
             setIsLoading(false);
@@ -66,8 +66,8 @@ export function TracePage() {
         <div className="space-y-6 h-full flex flex-col">
             <div className="flex flex-col sm:flex-row justify-between gap-4 shrink-0">
                 <div>
-                    <h1 className="text-3xl font-bold text-white mb-2">Analytics & Traceability</h1>
-                    <p className="text-slate-400">Read-only view for all logged system activities and event traces.</p>
+                    <h1 className="text-3xl font-bold text-white mb-2">Analytics & Reports</h1>
+                    <p className="text-slate-400">Read-only view for all logged system activities and event reports.</p>
                 </div>
             </div>
 
