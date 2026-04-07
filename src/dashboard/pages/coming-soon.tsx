@@ -102,7 +102,7 @@ export function ComingSoonPage() {
                                 <Button
                                     variant="outline"
                                     onClick={() => navigate('/dashboard')}
-                                    className="border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800 hover:border-slate-600 transition-all duration-300">
+                                >
                                     <ChevronLeft className="w-4 h-4 mr-2" />
                                     {t('dashboard.coming_soon.back_to_dashboard')}
                                 </Button>

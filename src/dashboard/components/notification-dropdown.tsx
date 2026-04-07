@@ -30,7 +30,7 @@ export function NotificationDropdown() {
     return (
         <DropdownMenu onOpenChange={handleOpenChange}>
             <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="text-slate-400 hover:text-white hover:bg-slate-800/50 relative">
+                <Button variant="ghost" size="icon" className="relative">
                     <Bell className="size-6" />
                     {unreadCount > 0 && (
                         <span className="absolute top-0.5 right-0.5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-rose-500 text-[9px] font-bold text-white ring-2 ring-slate-900 animate-in fade-in zoom-in duration-300">
@@ -55,7 +55,7 @@ export function NotificationDropdown() {
                                 e.preventDefault();
                                 markAllAsRead();
                             }}
-                            className="text-xs text-cyan-400 hover:text-cyan-300 hover:bg-cyan-400/10 h-7 px-2">
+                            className="text-xs h-7 px-2">
                             {t('common.notifications.mark_all_read')}
                         </Button>
                     )}
@@ -148,7 +148,7 @@ export function NotificationDropdown() {
 
                 {notifications.length > 0 && (
                     <div className="p-2 border-t border-slate-800 bg-slate-900/50">
-                        <Button variant="ghost" size="sm" onClick={clearAll} className="w-full text-xs text-slate-500 hover:text-rose-400 hover:bg-rose-400/10 py-1">
+                        <Button variant="ghost" size="sm" onClick={clearAll} className="w-full text-xs py-1">
                             {t('common.notifications.clear_all')}
                         </Button>
                     </div>

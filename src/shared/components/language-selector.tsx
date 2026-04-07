@@ -27,7 +27,7 @@ export function LanguageSelector() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" className="flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-800">
+        <Button variant="ghost" size="sm" className="flex items-center gap-2">
           <Languages className="h-4 w-4" />
           <span className="hidden sm:inline-block">{currentLanguage.name}</span>
           <span className="sm:hidden">{currentLanguage.code.toUpperCase()}</span>

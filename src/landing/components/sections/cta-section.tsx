@@ -24,7 +24,7 @@ export function CTASection() {
                         {t('cta_banner.no_erp')}
                     </p>
                     <div>
-                        <Button size="lg" variant="secondary" className="text-lg bg-white text-blue-700 hover:bg-slate-50 shadow-xl shadow-blue-900/50">
+                        <Button size="lg" className="text-lg shadow-xl shadow-blue-500/20">
                             {t('cta_banner.button')}
                             <ArrowRight className="ml-2 h-5 w-5" />
                         </Button>

@@ -125,7 +125,8 @@ export function SettingsPage() {
                         <DialogTrigger asChild>
                             <Button
                                 size="lg"
-                                className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-12 h-12 text-lg shadow-xl shadow-cyan-500/20">
+                                className="px-12"
+                            >
                                 <Plus className="mr-2 h-5 w-5" />
                                 {t('dashboard.settings.setup.create_button')}
                             </Button>
@@ -158,7 +159,8 @@ export function SettingsPage() {
                                     <Button
                                         type="submit"
                                         disabled={isCreating}
-                                        className="w-full bg-cyan-600 hover:bg-cyan-700 h-12 text-lg font-bold shadow-lg shadow-cyan-600/20">
+                                        className="w-full"
+                                    >
                                         {isCreating ? (
                                             <div className="flex items-center gap-2">
                                                 <Loader2 className="h-5 w-5 animate-spin" />
@@ -258,7 +260,8 @@ export function SettingsPage() {
                                         <Button
                                             type="submit"
                                             disabled={isUpdating || !orgName.trim()}
-                                            className="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white px-10 h-12 shadow-lg shadow-cyan-500/20 font-bold tracking-tight transition-all active:scale-95 disabled:opacity-50">
+                                            className="px-10"
+                                        >
                                             {isUpdating ? (
                                                 <div className="flex items-center gap-2">
                                                     <Loader2 className="h-4 w-4 animate-spin" />

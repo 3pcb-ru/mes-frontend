@@ -35,12 +35,12 @@ export function Header() {
                             </Link>
                         ))}
                         <Link to="/login">
-                            <Button variant="outline" size="sm" className="border-slate-600 hover:bg-slate-800 hover:text-white font-medium">
+                            <Button variant="outline" size="sm">
                                 {t('common.sign_in', 'Sign In')}
                             </Button>
                         </Link>
                         <Link to="/signup">
-                            <Button size="sm" className="bg-cyan-500 hover:bg-cyan-600 text-white">
+                            <Button size="sm">
                                 {t('hero.cta', 'Get Started')}
                             </Button>
                         </Link>
@@ -71,12 +71,12 @@ export function Header() {
                         ))}
                         <div className="flex flex-col gap-3 pt-3">
                             <Link to="/login" onClick={() => setMobileMenuOpen(false)}>
-                                <Button variant="outline" className="w-full border-slate-600 hover:bg-slate-800 hover:text-white font-medium">
+                                <Button variant="outline" className="w-full">
                                     {t('common.sign_in', 'Sign In')}
                                 </Button>
                             </Link>
                             <Link to="/signup" onClick={() => setMobileMenuOpen(false)}>
-                                <Button className="w-full bg-cyan-500 hover:bg-cyan-600 text-white">{t('hero.cta', 'Get Started')}</Button>
+                                <Button className="w-full">{t('hero.cta', 'Get Started')}</Button>
                             </Link>
                             <div className="flex justify-center pt-2">
                                 <LanguageSelector />

@@ -283,11 +283,11 @@ export function AboutPage() {
                             {t('about.cta_desc')}
                         </p>
                         <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
-                            <Button size="lg" className="bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold px-10 h-14 text-lg rounded-2xl shadow-[0_0_30px_rgba(6,182,212,0.3)] hover:shadow-[0_0_50px_rgba(6,182,212,0.5)] transition-all">
+                            <Button size="lg" className="px-10 h-14 text-lg rounded-2xl">
                                 {t('about.cta_start')}
                                 <ArrowRight className="ml-2 h-5 w-5" />
                             </Button>
-                            <Button size="lg" variant="outline" className="border-slate-600 bg-transparent hover:bg-slate-800 text-white hover:text-white px-10 h-14 text-lg rounded-2xl">
+                            <Button size="lg" variant="outline" className="px-10 h-14 text-lg rounded-2xl">
                                 {t('about.cta_talk')}
                             </Button>
                         </div>

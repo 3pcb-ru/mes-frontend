@@ -159,7 +159,8 @@ export function ProfilePage() {
                                 <Button
                                     type="submit"
                                     disabled={isUpdating}
-                                    className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-8 shadow-lg shadow-cyan-500/20">
+                                    className="px-8"
+                                >
                                     {isUpdating ? (
                                         <div className="flex items-center gap-2">
                                             <Loader2 className="h-4 w-4 animate-spin" />

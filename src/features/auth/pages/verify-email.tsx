@@ -76,7 +76,7 @@ export function VerifyEmailPage() {
                             <h2 className="text-xl font-semibold text-white mb-2">Email verified!</h2>
                             <p className="text-slate-400 mb-6">Your email has been successfully verified. You can now sign in to your account.</p>
                             <Link to="/login">
-                                <Button className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white">Sign in</Button>
+                                <Button className="w-full">Sign in</Button>
                             </Link>
                         </>
                     )}
@@ -90,7 +90,7 @@ export function VerifyEmailPage() {
                             <p className="text-slate-400 mb-6">{error || 'The verification link is invalid or has expired.'}</p>
                             <div className="space-y-3">
                                 <Link to="/login">
-                                    <Button className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white">Go to sign in</Button>
+                                    <Button className="w-full">Go to sign in</Button>
                                 </Link>
                                 <p className="text-slate-500 text-sm">Need a new verification link? Sign in and request a new one.</p>
                             </div>

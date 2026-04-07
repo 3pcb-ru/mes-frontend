@@ -125,11 +125,11 @@ export function WarehousePage() {
                     <p className="text-slate-400">{t('dashboard.warehouse.description')}</p>
                 </div>
                 <div className="flex items-center gap-3">
-                    <Button onClick={() => setIsReceiptOpen(true)} className="bg-emerald-600 hover:bg-emerald-500 text-white gap-2 shadow-lg shadow-emerald-900/20">
+                    <Button onClick={() => setIsReceiptOpen(true)} className="gap-2">
                         <PackageCheck className="h-4 w-4" />
                         {t('dashboard.warehouse.new_receipt')}
                     </Button>
-                    <Button onClick={() => setIsShipmentOpen(true)} className="bg-blue-600 hover:bg-blue-500 text-white gap-2 shadow-lg shadow-blue-900/20">
+                    <Button onClick={() => setIsShipmentOpen(true)} className="gap-2">
                         <Send className="h-4 w-4" />
                         {t('dashboard.warehouse.new_shipment')}
                     </Button>

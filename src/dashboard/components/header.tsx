@@ -25,7 +25,7 @@ export function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
         <header className="sticky top-0 z-40 border-b border-slate-700/50 bg-slate-900/80 backdrop-blur-xl">
             <div className="flex h-16 items-center gap-4 px-6">
                 {/* Menu Toggle */}
-                <Button variant="ghost" size="icon" onClick={onMenuClick} className="lg:hidden text-slate-400 hover:text-white hover:bg-slate-800/50">
+                <Button variant="ghost" size="icon" onClick={onMenuClick} className="lg:hidden">
                     <Menu className="h-5 w-5" />
                 </Button>
 
@@ -49,7 +49,7 @@ export function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
                     {/* User Menu */}
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" className="flex items-center gap-2 px-2 text-slate-300 hover:text-white hover:bg-slate-800/50">
+                            <Button variant="ghost" className="flex items-center gap-2 px-2">
                                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center ring-2 ring-slate-800 ring-offset-2 ring-offset-slate-900 overflow-hidden">
                                     {detailedProfile?.avatarUrl ? (
                                         <img src={detailedProfile.avatarUrl} alt={t('dashboard.header.avatar')} className="w-full h-full object-cover" />

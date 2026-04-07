@@ -43,7 +43,7 @@ export function UsersPage() {
                     <h1 className="text-3xl font-bold text-white mb-2">{t('dashboard.users.title')}</h1>
                     <p className="text-slate-400">{t('dashboard.users.description')}</p>
                 </div>
-                <Button className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white gap-2">
+                <Button className="gap-2">
                     <UserPlus className="h-4 w-4" />
                     <span>{t('dashboard.users.add_user')}</span>
                 </Button>
@@ -61,7 +61,7 @@ export function UsersPage() {
                                 className="pl-9 bg-slate-900 border-slate-700 text-white focus:border-cyan-500 w-full"
                             />
                         </div>
-                        <Button variant="outline" className="border-slate-700 text-slate-300 hover:bg-slate-800 gap-2">
+                        <Button variant="outline" className="gap-2">
                             <Filter className="h-4 w-4" />
                             <span>{t('dashboard.users.filters')}</span>
                         </Button>
@@ -129,7 +129,7 @@ export function UsersPage() {
                                             <td className="px-6 py-4 text-right">
                                                 <DropdownMenu>
                                                     <DropdownMenuTrigger asChild>
-                                                        <Button variant="ghost" size="icon" className="text-slate-400 hover:text-white hover:bg-slate-700/50">
+                                                        <Button variant="ghost" size="icon">
                                                             <MoreHorizontal className="h-4 w-4" />
                                                         </Button>
                                                     </DropdownMenuTrigger>

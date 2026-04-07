@@ -128,7 +128,7 @@ export function ResetPasswordPage() {
                         <h2 className="text-xl font-semibold text-white mb-2">Password reset successful!</h2>
                         <p className="text-slate-400 mb-6">Your password has been reset. You can now sign in with your new password.</p>
                         <Link to="/login">
-                            <Button className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white">Sign in</Button>
+                            <Button className="w-full">Sign in</Button>
                         </Link>
                     </div>
                 </div>
@@ -210,7 +210,7 @@ export function ResetPasswordPage() {
                             <Button
                                 type="submit"
                                 disabled={isLoading || code.length !== 6}
-                                className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white">
+                                className="w-full">
                                 {isLoading ? (
                                     <>
                                         <Loader2 className="mr-2 h-5 w-5 animate-spin" />
@@ -296,7 +296,7 @@ export function ResetPasswordPage() {
                             <Button
                                 type="submit"
                                 disabled={isLoading}
-                                className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white">
+                                className="w-full">
                                 {isLoading ? (
                                     <>
                                         <Loader2 className="mr-2 h-5 w-5 animate-spin" />

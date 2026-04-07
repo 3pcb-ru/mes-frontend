@@ -215,7 +215,7 @@ export function FacilitiesPage() {
                     <Button
                         variant={viewMode === 'tree' ? 'secondary' : 'ghost'}
                         size="sm"
-                        className={cn("h-8 gap-2", viewMode === 'tree' ? "bg-slate-800 text-white" : "text-slate-400")}
+                        className="h-8 gap-2"
                         onClick={() => setViewMode('tree')}
                     >
                         <Blocks className="h-4 w-4" />
@@ -224,7 +224,7 @@ export function FacilitiesPage() {
                     <Button
                         variant={viewMode === 'diagram' ? 'secondary' : 'ghost'}
                         size="sm"
-                        className={cn("h-8 gap-2", viewMode === 'diagram' ? "bg-slate-800 text-white" : "text-slate-400")}
+                        className="h-8 gap-2"
                         onClick={() => setViewMode('diagram')}
                     >
                         <LayoutGrid className="h-4 w-4" />
@@ -383,7 +383,7 @@ export function FacilitiesPage() {
                                                     {t('dashboard.facilities.buttons.cancel')}
                                                 </Button>
                                             </DialogClose>
-                                            <Button onClick={() => handleMove()} className="bg-cyan-600 hover:bg-cyan-700 text-white">{t('dashboard.facilities.buttons.move_node')}</Button>
+                                            <Button onClick={() => handleMove()}>{t('dashboard.facilities.buttons.move_node')}</Button>
                                         </div>
                                     </DialogFooter>
                                 </DialogContent>
@@ -452,7 +452,7 @@ export function FacilitiesPage() {
                                                 {t('dashboard.facilities.buttons.cancel')}
                                             </Button>
                                         </DialogClose>
-                                        <Button onClick={handleUpdateNode} className="bg-cyan-600 hover:bg-cyan-700 text-white">{t('dashboard.facilities.buttons.save_changes')}</Button>
+                                        <Button onClick={handleUpdateNode}>{t('dashboard.facilities.buttons.save_changes')}</Button>
                                     </DialogFooter>
                                 </DialogContent>
                             </Dialog>
@@ -479,9 +479,9 @@ export function FacilitiesPage() {
                                             </Button>
                                         </DialogClose>
                                         <Button 
+                                            variant="destructive"
                                             onClick={handleDelete} 
                                             disabled={isDeleting}
-                                            className="bg-red-600 hover:bg-red-700 text-white"
                                         >
                                             {isDeleting ? t('dashboard.facilities.buttons.deleting') : t('dashboard.facilities.buttons.delete_node')}
                                         </Button>

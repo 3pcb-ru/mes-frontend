@@ -74,7 +74,7 @@ export function HeroSection() {
                     <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
                         <Button
                             size="lg"
-                            className="h-16 px-10 text-xl font-bold bg-cyan-500 hover:bg-cyan-400 text-slate-950 border-0 rounded-2xl shadow-[0_0_40px_rgba(6,182,212,0.4)] hover:shadow-[0_0_60px_rgba(6,182,212,0.6)] transition-all duration-300"
+                            className="h-16 px-10 text-xl font-bold rounded-2xl"
                         >
                             {t('hero.cta_primary')}
                             <ArrowRight className="ml-2 h-6 w-6" />
@@ -82,7 +82,7 @@ export function HeroSection() {
                         <Button
                             size="lg"
                             variant="outline"
-                            className="h-16 px-10 text-xl font-medium border-slate-600 hover:bg-white/5 hover:border-slate-400 text-white rounded-2xl backdrop-blur-sm bg-white/5 transition-all duration-300"
+                            className="h-16 px-10 text-xl font-medium rounded-2xl backdrop-blur-sm bg-white/5"
                         >
                             {t('hero.cta_secondary')}
                         </Button>
