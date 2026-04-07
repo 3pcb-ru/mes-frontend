@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { Loader2, CheckCircle, XCircle, Mail } from 'lucide-react';
 import { authService } from '../services/auth.service';
@@ -9,6 +10,7 @@ import type { ApiError } from '@/shared/lib/api-client';
 type VerificationState = 'loading' | 'success' | 'error';
 
 export function VerifyEmailPage() {
+    const { t } = useTranslation();
     const { token } = useParams<{ token: string }>();
     const navigate = useNavigate();
     const [state, setState] = useState<VerificationState>('loading');
@@ -18,7 +20,7 @@ export function VerifyEmailPage() {
         const verifyEmail = async () => {
             if (!token) {
                 setState('error');
-                setError('Invalid verification link');
+                setError(t('auth.verify_email.error.description'));
                 return;
             }
 
@@ -28,7 +30,7 @@ export function VerifyEmailPage() {
             } catch (err) {
                 const apiError = err as ApiError;
                 setState('error');
-                setError(apiError.message || 'Failed to verify email');
+                setError(apiError.message || t('auth.verify_email.error.description'));
             }
         };
 
@@ -63,8 +65,8 @@ export function VerifyEmailPage() {
                             <div className="w-16 h-16 bg-cyan-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
                                 <Loader2 className="h-8 w-8 text-cyan-400 animate-spin" />
                             </div>
-                            <h2 className="text-xl font-semibold text-white mb-2">Verifying your email...</h2>
-                            <p className="text-slate-400">Please wait while we verify your email address.</p>
+                            <h2 className="text-xl font-semibold text-white mb-2">{t('auth.verify_email.verifying.title')}</h2>
+                            <p className="text-slate-400">{t('auth.verify_email.verifying.description')}</p>
                         </>
                     )}
 
@@ -73,10 +75,10 @@ export function VerifyEmailPage() {
                             <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
                                 <CheckCircle className="h-8 w-8 text-green-400" />
                             </div>
-                            <h2 className="text-xl font-semibold text-white mb-2">Email verified!</h2>
-                            <p className="text-slate-400 mb-6">Your email has been successfully verified. You can now sign in to your account.</p>
+                            <h2 className="text-xl font-semibold text-white mb-2">{t('auth.verify_email.success.title')}</h2>
+                            <p className="text-slate-400 mb-6">{t('auth.verify_email.success.description')}</p>
                             <Link to="/login">
-                                <Button className="w-full">Sign in</Button>
+                                <Button className="w-full">{t('auth.verify_email.success.button')}</Button>
                             </Link>
                         </>
                     )}
@@ -86,13 +88,13 @@ export function VerifyEmailPage() {
                             <div className="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
                                 <XCircle className="h-8 w-8 text-red-400" />
                             </div>
-                            <h2 className="text-xl font-semibold text-white mb-2">Verification failed</h2>
-                            <p className="text-slate-400 mb-6">{error || 'The verification link is invalid or has expired.'}</p>
+                            <h2 className="text-xl font-semibold text-white mb-2">{t('auth.verify_email.error.title')}</h2>
+                            <p className="text-slate-400 mb-6">{error || t('auth.verify_email.error.description')}</p>
                             <div className="space-y-3">
                                 <Link to="/login">
-                                    <Button className="w-full">Go to sign in</Button>
+                                    <Button className="w-full">{t('auth.verify_email.error.button')}</Button>
                                 </Link>
-                                <p className="text-slate-500 text-sm">Need a new verification link? Sign in and request a new one.</p>
+                                <p className="text-slate-500 text-sm">{t('auth.verify_email.error.new_link_hint')}</p>
                             </div>
                         </>
                     )}

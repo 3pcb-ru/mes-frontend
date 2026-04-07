@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, Mail, Lock, User, Building2, Loader2, ArrowRight, Check, X } from 'lucide-react';
 import { useAuth } from '../store/auth.store';
@@ -27,6 +28,7 @@ interface ValidationErrors {
 }
 
 export function SignupPage() {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const { signup, isLoading, error, clearError } = useAuth();
 
@@ -46,10 +48,10 @@ export function SignupPage() {
 
     const getPasswordStrength = (password: string): { met: boolean; label: string }[] => {
         return [
-            { met: password.length >= 8, label: 'At least 8 characters' },
-            { met: /[A-Z]/.test(password), label: 'One uppercase letter' },
-            { met: /[a-z]/.test(password), label: 'One lowercase letter' },
-            { met: /\d/.test(password), label: 'One number' },
+            { met: password.length >= 8, label: t('auth.signup.password_requirements.min_length') },
+            { met: /[A-Z]/.test(password), label: t('auth.signup.password_requirements.uppercase') },
+            { met: /[a-z]/.test(password), label: t('auth.signup.password_requirements.lowercase') },
+            { met: /\d/.test(password), label: t('auth.signup.password_requirements.number') },
         ];
     };
 
@@ -64,41 +66,41 @@ export function SignupPage() {
         const errors: ValidationErrors = {};
 
         if (!formData.firstName.trim()) {
-            errors.firstName = 'First name is required';
+            errors.firstName = t('auth.signup.errors.first_name_required');
         } else if (!isValidName(formData.firstName)) {
-            errors.firstName = 'Please enter a valid name';
+            errors.firstName = t('auth.signup.errors.first_name_invalid');
         }
 
         if (!formData.lastName.trim()) {
-            errors.lastName = 'Last name is required';
+            errors.lastName = t('auth.signup.errors.last_name_required');
         } else if (!isValidName(formData.lastName)) {
-            errors.lastName = 'Please enter a valid name';
+            errors.lastName = t('auth.signup.errors.last_name_invalid');
         }
 
         if (!formData.organizationName.trim()) {
-            errors.organizationName = 'Organization/Company name is required';
+            errors.organizationName = t('auth.signup.errors.org_name_required');
         } else if (formData.organizationName.length < 2) {
-            errors.organizationName = 'Organization name must be at least 2 characters';
+            errors.organizationName = t('auth.signup.errors.org_name_min');
         } else if (formData.organizationName.length > 100) {
-            errors.organizationName = 'Organization name must be less than 100 characters';
+            errors.organizationName = t('auth.signup.errors.org_name_max');
         }
 
         if (!formData.email.trim()) {
-            errors.email = 'Email is required';
+            errors.email = t('auth.signup.errors.email_required');
         } else if (!isValidEmail(formData.email)) {
-            errors.email = 'Please enter a valid email address';
+            errors.email = t('auth.signup.errors.email_invalid');
         }
 
         if (!formData.password) {
-            errors.password = 'Password is required';
+            errors.password = t('auth.signup.errors.password_required');
         } else if (!isValidPassword(formData.password)) {
-            errors.password = 'Password does not meet requirements';
+            errors.password = t('auth.signup.errors.password_requirements');
         }
 
         if (!formData.confirmPassword) {
-            errors.confirmPassword = 'Please confirm your password';
+            errors.confirmPassword = t('auth.signup.errors.confirm_password_required');
         } else if (formData.password !== formData.confirmPassword) {
-            errors.confirmPassword = 'Passwords do not match';
+            errors.confirmPassword = t('auth.signup.errors.passwords_dont_match');
         }
 
         setValidationErrors(errors);
@@ -160,8 +162,8 @@ export function SignupPage() {
                         <Logo className="h-10 w-10" />
                         <span className="text-2xl font-bold text-white">GRVT MES</span>
                     </Link>
-                    <h1 className="text-3xl font-bold text-white mb-2">Create your account</h1>
-                    <p className="text-slate-400">Get started with GRVT MES Platform</p>
+                    <h1 className="text-3xl font-bold text-white mb-2">{t('auth.signup.title')}</h1>
+                    <p className="text-slate-400">{t('auth.signup.subtitle')}</p>
                 </div>
 
                 {/* Signup Card */}
@@ -175,14 +177,14 @@ export function SignupPage() {
                             {/* First Name */}
                             <div className="space-y-2">
                                 <Label htmlFor="firstName" className="text-slate-300">
-                                    First Name
+                                    {t('auth.signup.first_name_label')}
                                 </Label>
                                 <div className="relative">
                                     <User className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
                                     <Input
                                         id="firstName"
                                         type="text"
-                                        placeholder="John"
+                                        placeholder={t('auth.signup.first_name_placeholder')}
                                         value={formData.firstName}
                                         onChange={(e) => updateField('firstName', e.target.value)}
                                         className="pl-10 bg-slate-900/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-cyan-500 focus:ring-cyan-500/20"
@@ -194,12 +196,12 @@ export function SignupPage() {
                             {/* Last Name */}
                             <div className="space-y-2">
                                 <Label htmlFor="lastName" className="text-slate-300">
-                                    Last Name
+                                    {t('auth.signup.last_name_label')}
                                 </Label>
                                 <Input
                                     id="lastName"
                                     type="text"
-                                    placeholder="Doe"
+                                    placeholder={t('auth.signup.last_name_placeholder')}
                                     value={formData.lastName}
                                     onChange={(e) => updateField('lastName', e.target.value)}
                                     className="bg-slate-900/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-cyan-500 focus:ring-cyan-500/20"
@@ -211,14 +213,14 @@ export function SignupPage() {
                         {/* Organization Name */}
                         <div className="space-y-2">
                             <Label htmlFor="organizationName" className="text-slate-300">
-                                Organization / Company Name
+                                {t('auth.signup.org_name_label')}
                             </Label>
                             <div className="relative">
                                 <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
                                 <Input
                                     id="organizationName"
                                     type="text"
-                                    placeholder="Acme Manufacturing Inc."
+                                    placeholder={t('auth.signup.org_name_placeholder')}
                                     value={formData.organizationName}
                                     onChange={(e) => updateField('organizationName', e.target.value)}
                                     className="pl-10 bg-slate-900/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-cyan-500 focus:ring-cyan-500/20"
@@ -230,14 +232,14 @@ export function SignupPage() {
                         {/* Email */}
                         <div className="space-y-2">
                             <Label htmlFor="email" className="text-slate-300">
-                                Email
+                                {t('auth.signup.email_label')}
                             </Label>
                             <div className="relative">
                                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
                                 <Input
                                     id="email"
                                     type="email"
-                                    placeholder="john@company.com"
+                                    placeholder={t('auth.signup.email_placeholder')}
                                     value={formData.email}
                                     onChange={(e) => updateField('email', e.target.value)}
                                     className="pl-10 bg-slate-900/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-cyan-500 focus:ring-cyan-500/20"
@@ -249,14 +251,14 @@ export function SignupPage() {
                         {/* Password */}
                         <div className="space-y-2">
                             <Label htmlFor="password" className="text-slate-300">
-                                Password
+                                {t('auth.signup.password_label')}
                             </Label>
                             <div className="relative">
                                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
                                 <Input
                                     id="password"
                                     type={showPassword ? 'text' : 'password'}
-                                    placeholder="Create a strong password"
+                                    placeholder={t('auth.signup.password_placeholder')}
                                     value={formData.password}
                                     onChange={(e) => updateField('password', e.target.value)}
                                     className="pl-10 pr-10 bg-slate-900/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-cyan-500 focus:ring-cyan-500/20"
@@ -286,14 +288,14 @@ export function SignupPage() {
                         {/* Confirm Password */}
                         <div className="space-y-2">
                             <Label htmlFor="confirmPassword" className="text-slate-300">
-                                Confirm Password
+                                {t('auth.signup.confirm_password_label')}
                             </Label>
                             <div className="relative">
                                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
                                 <Input
                                     id="confirmPassword"
                                     type={showConfirmPassword ? 'text' : 'password'}
-                                    placeholder="Confirm your password"
+                                    placeholder={t('auth.signup.confirm_password_placeholder')}
                                     value={formData.confirmPassword}
                                     onChange={(e) => updateField('confirmPassword', e.target.value)}
                                     className="pl-10 pr-10 bg-slate-900/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-cyan-500 focus:ring-cyan-500/20"
@@ -317,11 +319,11 @@ export function SignupPage() {
                             {isLoading ? (
                                 <>
                                     <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                                    Creating account...
+                                    {t('auth.signup.submitting')}
                                 </>
                             ) : (
                                 <>
-                                    Create account
+                                    {t('auth.signup.submit')}
                                     <ArrowRight className="ml-2 h-5 w-5" />
                                 </>
                             )}
@@ -331,28 +333,28 @@ export function SignupPage() {
                     {/* Divider */}
                     <div className="my-6 flex items-center gap-4">
                         <div className="flex-1 h-px bg-slate-700" />
-                        <span className="text-slate-500 text-sm">or</span>
+                        <span className="text-slate-500 text-sm">{t('auth.signup.divider')}</span>
                         <div className="flex-1 h-px bg-slate-700" />
                     </div>
 
                     {/* Sign In Link */}
                     <p className="text-center text-slate-400">
-                        Already have an account?{' '}
+                        {t('auth.signup.have_account')}{' '}
                         <Link to="/login" className="text-cyan-400 hover:text-cyan-300 font-medium transition-colors">
-                            Sign in
+                            {t('auth.signup.sign_in')}
                         </Link>
                     </p>
                 </div>
 
                 {/* Footer */}
                 <p className="text-center text-slate-500 text-sm mt-8">
-                    By creating an account, you agree to our{' '}
+                    {t('auth.signup.footer_agree')}{' '}
                     <Link to="/terms" className="text-slate-400 hover:text-slate-300">
-                        Terms of Service
+                        {t('nav.terms_of_service')}
                     </Link>{' '}
-                    and{' '}
+                    {t('auth.signup.footer_and')}{' '}
                     <Link to="/privacy" className="text-slate-400 hover:text-slate-300">
-                        Privacy Policy
+                        {t('nav.privacy_policy')}
                     </Link>
                 </p>
             </div>

@@ -735,6 +735,187 @@
       "saving": "Kaydediliyor...",
       "save_changes": "Değişiklikleri Kaydet"
     }
+  },
+  "auth": {
+    "login": {
+      "title": "Tekrar hoş geldiniz",
+      "subtitle": "Devam etmek için hesabınıza giriş yapın",
+      "email_label": "E-posta",
+      "email_placeholder": "E-posta adresinizi girin",
+      "password_label": "Şifre",
+      "password_placeholder": "Şifrenizi girin",
+      "forgot_password": "Şifrenizi mi unuttunuz?",
+      "submit": "Giriş yap",
+      "submitting": "Giriş yapılıyor...",
+      "no_account": "Hesabınız yok mu?",
+      "create_account": "Hesap oluştur",
+      "footer_agree": "Giriş yaparak şunları kabul etmiş olursunuz:",
+      "footer_and": "ve",
+      "divider": "veya",
+      "errors": {
+        "email_required": "E-posta gereklidir",
+        "email_invalid": "Lütfen geçerli bir e-posta adresi girin",
+        "password_required": "Şifre gereklidir"
+      }
+    },
+    "signup": {
+      "title": "Hesabınızı oluşturun",
+      "subtitle": "GRVT MES Platformu ile hemen başlayın",
+      "first_name_label": "Ad",
+      "first_name_placeholder": "Adınız",
+      "last_name_label": "Soyad",
+      "last_name_placeholder": "Soyadınız",
+      "org_name_label": "Organizasyon / Şirket Adı",
+      "org_name_placeholder": "Acme Üretim Ltd. Şti.",
+      "email_label": "E-posta",
+      "email_placeholder": "ad@sirket.com",
+      "password_label": "Şifre",
+      "password_placeholder": "Güçlü bir şifre oluşturun",
+      "confirm_password_label": "Şifreyi Onayla",
+      "confirm_password_placeholder": "Şifrenizi tekrar girin",
+      "password_requirements": {
+        "min_length": "En az 8 karakter",
+        "uppercase": "Bir büyük harf",
+        "lowercase": "Bir küçük harf",
+        "number": "Bir rakam"
+      },
+      "submit": "Hesap oluştur",
+      "submitting": "Hesap oluşturuluyor...",
+      "have_account": "Zaten bir hesabınız var mı?",
+      "sign_in": "Giriş yap",
+      "footer_agree": "Hesap oluşturarak şunları kabul etmiş olursunuz:",
+      "footer_and": "ve",
+      "divider": "veya",
+      "errors": {
+        "first_name_required": "Ad gereklidir",
+        "first_name_invalid": "Lütfen geçerli bir ad girin",
+        "last_name_required": "Soyad gereklidir",
+        "last_name_invalid": "Lütfen geçerli bir soyad girin",
+        "org_name_required": "Organizasyon/Şirket adı gereklidir",
+        "org_name_min": "Organizasyon adı en az 2 karakter olmalıdır",
+        "org_name_max": "Organizasyon adı 100 karakterden az olmalıdır",
+        "email_required": "E-posta gereklidir",
+        "email_invalid": "Lütfen geçerli bir e-posta adresi girin",
+        "password_required": "Şifre gereklidir",
+        "password_requirements": "Şifre gereksinimleri karşılamıyor",
+        "confirm_password_required": "Lütfen şifrenizi onaylayın",
+        "passwords_dont_match": "Şifreler eşleşmiyor"
+      }
+    },
+    "reset_password": {
+      "forgot_password_title": "Şifrenizi mi unuttunuz?",
+      "forgot_password_subtitle": "Endişelenmeyin, size e-posta ile bir sıfırlama kodu göndereceğiz",
+      "email_label": "E-posta",
+      "email_placeholder": "E-posta adresinizi girin",
+      "submit_send_code": "Sıfırlama kodu gönder",
+      "submitting_send_code": "Kod gönderiliyor...",
+      "back_to_login": "Giriş sayfasına dön",
+      "success_title": "E-postanızı kontrol edin",
+      "success_description": "Şu adrese 6 haneli bir doğrulama kodu gönderdik:",
+      "success_button": "Doğrulama kodunu girin",
+      "resend_hint": "E-postayı almadınız mı? Tekrar deneyin",
+      "enter_code_title": "Doğrulama kodunu girin",
+      "enter_code_subtitle": "E-postanıza gönderdiğimiz 6 haneli kodu girin",
+      "verification_code_label": "Doğrulama Kodu",
+      "verify_button": "Kodu doğrula",
+      "verifying_button": "Doğrulanıyor...",
+      "new_password_title": "Yeni şifre oluşturun",
+      "new_password_subtitle": "Yeni şifreniz önceki şifrelerinizden farklı olmalıdır",
+      "new_password_label": "Yeni Şifre",
+      "new_password_placeholder": "Yeni şifre girin",
+      "confirm_password_label": "Şifreyi Onayla",
+      "confirm_password_placeholder": "Yeni şifreyi onaylayın",
+      "reset_button": "Şifreyi sıfırla",
+      "resetting_button": "Sıfırlanıyor...",
+      "done_title": "Şifre başarıyla sıfırlandı!",
+      "done_description": "Şifreniz sıfırlandı. Artık yeni şifrenizle giriş yapabilirsiniz.",
+      "done_button": "Giriş yap",
+      "errors": {
+        "email_required": "E-posta gereklidir",
+        "email_invalid": "Lütfen geçerli bir e-posta adresi girin",
+        "send_failed": "Sıfırlama kodu gönderilemedi",
+        "code_invalid": "Lütfen geçerli bir 6 haneli kod girin",
+        "validate_failed": "Geçersiz kod",
+        "password_requirements": "Şifre gereksinimleri karşılamıyor",
+        "passwords_dont_match": "Şifreler eşleşmiyor",
+        "reset_failed": "Şifre sıfırlanamadı"
+      }
+    },
+    "verify_email": {
+      "verifying": {
+        "title": "E-postanız doğrulanıyor...",
+        "description": "E-posta adresinizi doğrularken lütfen bekleyin."
+      },
+      "success": {
+        "title": "E-posta doğrulandı!",
+        "description": "E-postanız başarıyla doğrulandı. Artık hesabınıza giriş yapabilirsiniz.",
+        "button": "Giriş yap"
+      },
+      "error": {
+        "title": "Doğrulama başarısız",
+        "description": "Bu doğrulama bağlantısı geçersiz veya süresi dolmuş.",
+        "button": "Giriş sayfasına git",
+        "new_link_hint": "Yeni bir doğrulama bağlantısına mı ihtiyacınız var? Giriş yapın ve yeni bir tane isteyin."
+      }
+    }
+  },
+  "ui": {
+    "pagination": {
+      "label": "Sayfalama",
+      "prev": "Önceki sayfaya git",
+      "next": "Sonraki sayfaya git",
+      "more": "Daha fazla sayfa",
+      "prev_text": "Önceki",
+      "next_text": "Sonraki"
+    },
+    "breadcrumb": {
+      "label": "Gezinti Çubuğu",
+      "more": "Daha fazla"
+    },
+    "sidebar": {
+      "toggle": "Kenar Çubuğunu Aç/Kapat",
+      "mobile_title": "Kenar Çubuğu",
+      "mobile_description": "Mobil kenar çubuğunu görüntüler."
+    },
+    "sheet": {
+      "close": "Kapat"
+    },
+    "carousel": {
+      "label": "Atlıkarınca",
+      "slide_label": "Slayt",
+      "prev": "Önceki slayt",
+      "next": "Sonraki slayt"
+    }
+  },
+  "legal": {
+    "terms": {
+      "title": "Kullanım Koşulları",
+      "last_updated": "Son güncelleme",
+      "s1_title": "1. Koşulların Kabulü",
+      "s1_content": "GRVT MES'e erişerek veya kullanarak, bu Kullanım Koşullarına bağlı kalmayı kabul etmiş sayılırsınız. Bu koşulların tamamını kabul etmiyorsanız, hizmetlerimizi kullanmayın.",
+      "s2_title": "2. Hizmetin Kullanımı",
+      "s2_content": "Hesabınızın ve şifrenizin gizliliğini korumaktan siz sorumlusunuz. Hesabınız altında gerçekleşen tüm faaliyetlerin sorumluluğunu kabul etmeyi onaylıyorsunuz.",
+      "s3_title": "3. Fikri Mülkiyet",
+      "s3_content": "Hizmet ve orijinal içeriği, özellikleri ve işlevselliği GRVT MES ve lisans verenlerinin münhasır mülkiyetindedir ve öyle kalacaktır.",
+      "s4_title": "4. Sorumluluğun Sınırlandırılması",
+      "s4_content": "Hiçbir durumda GRVT MES, direktörleri, çalışanları, ortakları, acenteleri, tedarikçileri veya bağlı kuruluşları dolaylı, arızi, özel veya sonuç odaklı zararlardan sorumlu tutulamaz.",
+      "s5_title": "5. Koşullardaki Değişiklikler",
+      "s5_content": "Bu Koşulları herhangi bir zamanda kendi takdirimize bağlı olarak değiştirme veya yenisiyle değiştirme hakkını saklı tutarız. Neyin önemli bir değişiklik teşkil edeceği tamamen bizim takdirimizde olacaktır."
+    },
+    "privacy": {
+      "title": "Gizlilik Politikası",
+      "last_updated": "Son güncelleme",
+      "s1_title": "1. Topladığımız Bilgiler",
+      "s1_content": "Bir hesap oluşturduğunuzda, hizmetlerimizi kullandığınızda veya bizimle iletişim kurduğunuzda bize doğrudan sağladığınız bilgileri toplarız. Bu, adınızı, e-posta adresinizi ve şirket bilgilerinizi içerebilir.",
+      "s2_title": "2. Bilgilerinizi Nasıl Kullanıyoruz",
+      "s2_content": "Topladığımız bilgileri hizmetlerimizi sağlamak, sürdürmek ve iyileştirmek, yenilerini geliştirmek ve GRVT MES'i ve kullanıcılarımızı korumak için kullanırız.",
+      "s3_title": "3. Veri Güvenliği",
+      "s3_content": "Kişisel bilgilerinizi korumaya yardımcı olmak için idari, teknik ve fiziksel güvenlik önlemleri kullanıyoruz. Bize sağladığınız kişisel bilgileri güvence altına almak için makul adımlar atmış olsak da, çabalarımıza rağmen hiçbir güvenlik önleminin mükemmel veya aşılamaz olmadığını lütfen unutmayın.",
+      "s4_title": "4. Bilgilerin Paylaşılması",
+      "s4_content": "Kişisel bilgilerinizi, onayınız veya yasal nedenler gibi bu politikada açıklanan durumlar haricinde, GRVT MES dışındaki şirketler, kuruluşlar veya bireylerle paylaşmıyoruz.",
+      "s5_title": "5. Erişim Hakkınız",
+      "s5_content": "Hakkınızda tuttuğumuz bilgilerin bir kopyasını isteme hakkına sahipsiniz. Kişisel bilgilerinizin bir kısmını veya tamamını kopyalamak isterseniz lütfen bize e-posta gönderin."
+    }
   }
 }
 

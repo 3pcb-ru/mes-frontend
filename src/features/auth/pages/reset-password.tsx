@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Eye, EyeOff, Lock, Loader2, ArrowLeft, CheckCircle, Check, X } from 'lucide-react';
 import { authService } from '../services/auth.service';
@@ -13,6 +14,7 @@ import type { ApiError } from '@/shared/lib/api-client';
 type Step = 'code' | 'password';
 
 export function ResetPasswordPage() {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const location = useLocation();
     const initialEmail = (location.state as { email?: string })?.email || '';
@@ -36,10 +38,10 @@ export function ResetPasswordPage() {
 
     const getPasswordStrength = (password: string): { met: boolean; label: string }[] => {
         return [
-            { met: password.length >= 8, label: 'At least 8 characters' },
-            { met: /[A-Z]/.test(password), label: 'One uppercase letter' },
-            { met: /[a-z]/.test(password), label: 'One lowercase letter' },
-            { met: /\d/.test(password), label: 'One number' },
+            { met: password.length >= 8, label: t('auth.signup.password_requirements.min_length') },
+            { met: /[A-Z]/.test(password), label: t('auth.signup.password_requirements.uppercase') },
+            { met: /[a-z]/.test(password), label: t('auth.signup.password_requirements.lowercase') },
+            { met: /\d/.test(password), label: t('auth.signup.password_requirements.number') },
         ];
     };
 
@@ -49,10 +51,10 @@ export function ResetPasswordPage() {
         const errors: typeof validationErrors = {};
 
         if (!email.trim() || !isValidEmail(email)) {
-            errors.email = 'Please enter a valid email';
+            errors.email = t('auth.reset_password.errors.email_invalid');
         }
         if (!code || !isValidResetCode(code)) {
-            errors.code = 'Please enter a valid 6-digit code';
+            errors.code = t('auth.reset_password.errors.code_invalid');
         }
 
         if (Object.keys(errors).length > 0) {
@@ -69,7 +71,7 @@ export function ResetPasswordPage() {
             setStep('password');
         } catch (err) {
             const apiError = err as ApiError;
-            setError(apiError.message || 'Invalid code');
+            setError(apiError.message || t('auth.reset_password.errors.validate_failed'));
         } finally {
             setIsLoading(false);
         }
@@ -81,10 +83,10 @@ export function ResetPasswordPage() {
         const errors: typeof validationErrors = {};
 
         if (!isValidPassword(newPassword)) {
-            errors.password = 'Password does not meet requirements';
+            errors.password = t('auth.reset_password.errors.password_requirements');
         }
         if (newPassword !== confirmPassword) {
-            errors.confirmPassword = 'Passwords do not match';
+            errors.confirmPassword = t('auth.reset_password.errors.passwords_dont_match');
         }
 
         if (Object.keys(errors).length > 0) {
@@ -102,7 +104,7 @@ export function ResetPasswordPage() {
             setIsSuccess(true);
         } catch (err) {
             const apiError = err as ApiError;
-            setError(apiError.message || 'Failed to reset password');
+            setError(apiError.message || t('auth.reset_password.errors.reset_failed'));
         } finally {
             setIsLoading(false);
         }
@@ -125,10 +127,10 @@ export function ResetPasswordPage() {
                         <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
                             <CheckCircle className="h-8 w-8 text-green-400" />
                         </div>
-                        <h2 className="text-xl font-semibold text-white mb-2">Password reset successful!</h2>
-                        <p className="text-slate-400 mb-6">Your password has been reset. You can now sign in with your new password.</p>
+                        <h2 className="text-xl font-semibold text-white mb-2">{t('auth.reset_password.done_title')}</h2>
+                        <p className="text-slate-400 mb-6">{t('auth.reset_password.done_description')}</p>
                         <Link to="/login">
-                            <Button className="w-full">Sign in</Button>
+                            <Button className="w-full">{t('auth.reset_password.done_button')}</Button>
                         </Link>
                     </div>
                 </div>
@@ -153,9 +155,9 @@ export function ResetPasswordPage() {
                         <Logo className="h-10 w-10" />
                         <span className="text-2xl font-bold text-white">GRVT MES</span>
                     </Link>
-                    <h1 className="text-3xl font-bold text-white mb-2">{step === 'code' ? 'Enter verification code' : 'Create new password'}</h1>
+                    <h1 className="text-3xl font-bold text-white mb-2">{step === 'code' ? t('auth.reset_password.enter_code_title') : t('auth.reset_password.new_password_title')}</h1>
                     <p className="text-slate-400">
-                        {step === 'code' ? 'Enter the 6-digit code we sent to your email' : 'Your new password must be different from previous passwords'}
+                        {step === 'code' ? t('auth.reset_password.enter_code_subtitle') : t('auth.reset_password.new_password_subtitle')}
                     </p>
                 </div>
 
@@ -169,12 +171,12 @@ export function ResetPasswordPage() {
                             {!initialEmail && (
                                 <div className="space-y-2">
                                     <Label htmlFor="email" className="text-slate-300">
-                                        Email
+                                        {t('auth.reset_password.email_label')}
                                     </Label>
                                     <Input
                                         id="email"
                                         type="email"
-                                        placeholder="Enter your email"
+                                        placeholder={t('auth.reset_password.email_placeholder')}
                                         value={email}
                                         onChange={(e) => {
                                             setEmail(e.target.value);
@@ -188,7 +190,7 @@ export function ResetPasswordPage() {
 
                             {/* OTP Input */}
                             <div className="space-y-2">
-                                <Label className="text-slate-300">Verification Code</Label>
+                                <Label className="text-slate-300">{t('auth.reset_password.verification_code_label')}</Label>
                                 <div className="flex justify-center">
                                     <InputOTP
                                         maxLength={6}
@@ -214,10 +216,10 @@ export function ResetPasswordPage() {
                                 {isLoading ? (
                                     <>
                                         <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                                        Verifying...
+                                        {t('auth.reset_password.verifying_button')}
                                     </>
                                 ) : (
-                                    'Verify code'
+                                    t('auth.reset_password.verify_button')
                                 )}
                             </Button>
                         </form>
@@ -228,14 +230,14 @@ export function ResetPasswordPage() {
                             {/* New Password */}
                             <div className="space-y-2">
                                 <Label htmlFor="newPassword" className="text-slate-300">
-                                    New Password
+                                    {t('auth.reset_password.new_password_label')}
                                 </Label>
                                 <div className="relative">
                                     <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
                                     <Input
                                         id="newPassword"
                                         type={showPassword ? 'text' : 'password'}
-                                        placeholder="Enter new password"
+                                        placeholder={t('auth.reset_password.new_password_placeholder')}
                                         value={newPassword}
                                         onChange={(e) => {
                                             setNewPassword(e.target.value);
@@ -268,14 +270,14 @@ export function ResetPasswordPage() {
                             {/* Confirm Password */}
                             <div className="space-y-2">
                                 <Label htmlFor="confirmPassword" className="text-slate-300">
-                                    Confirm Password
+                                    {t('auth.reset_password.confirm_password_label')}
                                 </Label>
                                 <div className="relative">
                                     <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
                                     <Input
                                         id="confirmPassword"
                                         type={showConfirmPassword ? 'text' : 'password'}
-                                        placeholder="Confirm new password"
+                                        placeholder={t('auth.reset_password.confirm_password_placeholder')}
                                         value={confirmPassword}
                                         onChange={(e) => {
                                             setConfirmPassword(e.target.value);
@@ -300,10 +302,10 @@ export function ResetPasswordPage() {
                                 {isLoading ? (
                                     <>
                                         <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                                        Resetting...
+                                        {t('auth.reset_password.resetting_button')}
                                     </>
                                 ) : (
-                                    'Reset password'
+                                    t('auth.reset_password.reset_button')
                                 )}
                             </Button>
                         </form>
@@ -313,7 +315,7 @@ export function ResetPasswordPage() {
                     <div className="mt-6 text-center">
                         <Link to="/login" className="inline-flex items-center gap-2 text-slate-400 hover:text-slate-300 transition-colors">
                             <ArrowLeft className="h-4 w-4" />
-                            Back to sign in
+                            {t('auth.reset_password.back_to_login')}
                         </Link>
                     </div>
                 </div>

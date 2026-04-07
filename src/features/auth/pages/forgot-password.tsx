@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Mail, Loader2, ArrowLeft, CheckCircle } from 'lucide-react';
 import { authService } from '../services/auth.service';
@@ -10,6 +11,7 @@ import { Logo } from '@/shared/components/logo';
 import type { ApiError } from '@/shared/lib/api-client';
 
 export function ForgotPasswordPage() {
+    const { t } = useTranslation();
     const [email, setEmail] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -22,12 +24,12 @@ export function ForgotPasswordPage() {
         setValidationError(null);
 
         if (!email.trim()) {
-            setValidationError('Email is required');
+            setValidationError(t('auth.reset_password.errors.email_required'));
             return;
         }
 
         if (!isValidEmail(email)) {
-            setValidationError('Please enter a valid email address');
+            setValidationError(t('auth.reset_password.errors.email_invalid'));
             return;
         }
 
@@ -37,7 +39,7 @@ export function ForgotPasswordPage() {
             setIsSuccess(true);
         } catch (err) {
             const apiError = err as ApiError;
-            setError(apiError.message || 'Failed to send reset code');
+            setError(apiError.message || t('auth.reset_password.errors.send_failed'));
         } finally {
             setIsLoading(false);
         }
@@ -62,8 +64,8 @@ export function ForgotPasswordPage() {
                         <Logo className="h-10 w-10" />
                         <span className="text-2xl font-bold text-white">GRVT MES</span>
                     </Link>
-                    <h1 className="text-3xl font-bold text-white mb-2">Forgot password?</h1>
-                    <p className="text-slate-400">No worries, we'll send you a reset code via email</p>
+                    <h1 className="text-3xl font-bold text-white mb-2">{t('auth.reset_password.forgot_password_title')}</h1>
+                    <p className="text-slate-400">{t('auth.reset_password.forgot_password_subtitle')}</p>
                 </div>
 
                 {/* Card */}
@@ -73,13 +75,13 @@ export function ForgotPasswordPage() {
                             <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
                                 <CheckCircle className="h-8 w-8 text-green-400" />
                             </div>
-                            <h2 className="text-xl font-semibold text-white mb-2">Check your email</h2>
+                            <h2 className="text-xl font-semibold text-white mb-2">{t('auth.reset_password.success_title')}</h2>
                             <p className="text-slate-400 mb-6">
-                                We've sent a 6-digit verification code to <span className="text-cyan-400">{email}</span>
+                                {t('auth.reset_password.success_description')} <span className="text-cyan-400">{email}</span>
                             </p>
                             <Link to="/reset-password" state={{ email }}>
                                 <Button className="w-full">
-                                    Enter verification code
+                                    {t('auth.reset_password.success_button')}
                                 </Button>
                             </Link>
                             <button
@@ -88,7 +90,7 @@ export function ForgotPasswordPage() {
                                     setEmail('');
                                 }}
                                 className="mt-4 text-slate-400 hover:text-slate-300 text-sm transition-colors">
-                                Didn't receive the email? Try again
+                                {t('auth.reset_password.resend_hint')}
                             </button>
                         </div>
                     ) : (
@@ -99,14 +101,14 @@ export function ForgotPasswordPage() {
                             {/* Email Field */}
                             <div className="space-y-2">
                                 <Label htmlFor="email" className="text-slate-300">
-                                    Email
+                                    {t('auth.reset_password.email_label')}
                                 </Label>
                                 <div className="relative">
                                     <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
                                     <Input
                                         id="email"
                                         type="email"
-                                        placeholder="Enter your email"
+                                        placeholder={t('auth.reset_password.email_placeholder')}
                                         value={email}
                                         onChange={(e) => {
                                             setEmail(e.target.value);
@@ -127,10 +129,10 @@ export function ForgotPasswordPage() {
                                 {isLoading ? (
                                     <>
                                         <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                                        Sending code...
+                                        {t('auth.reset_password.submitting_send_code')}
                                     </>
                                 ) : (
-                                    'Send reset code'
+                                    t('auth.reset_password.submit_send_code')
                                 )}
                             </Button>
                         </form>
@@ -140,7 +142,7 @@ export function ForgotPasswordPage() {
                     <div className="mt-6 text-center">
                         <Link to="/login" className="inline-flex items-center gap-2 text-slate-400 hover:text-slate-300 transition-colors">
                             <ArrowLeft className="h-4 w-4" />
-                            Back to sign in
+                            {t('auth.reset_password.back_to_login')}
                         </Link>
                     </div>
                 </div>

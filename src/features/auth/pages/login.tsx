@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { SessionExpiredAlert } from '@/shared/components/session-expired-alert';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Eye, EyeOff, Mail, Lock, Loader2, ArrowRight } from 'lucide-react';
@@ -12,6 +13,7 @@ import { useFormValidation } from '@/shared/hooks/use-form-validation';
 import { FormError } from '@/shared/components/ui/form-error';
 
 export function LoginPage() {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const location = useLocation();
     const { login, isLoading, error, clearError: authClearError } = useAuth();
@@ -25,13 +27,13 @@ export function LoginPage() {
         const errors: Record<string, string> = {};
 
         if (!email.trim()) {
-            errors.email = 'Email is required';
+            errors.email = t('auth.login.errors.email_required');
         } else if (!isValidEmail(email)) {
-            errors.email = 'Please enter a valid email address';
+            errors.email = t('auth.login.errors.email_invalid');
         }
 
         if (!password) {
-            errors.password = 'Password is required';
+            errors.password = t('auth.login.errors.password_required');
         }
 
         if (Object.keys(errors).length > 0) {
@@ -90,8 +92,8 @@ export function LoginPage() {
                         <Logo className="h-10 w-10" />
                         <span className="text-2xl font-bold text-white">GRVT MES</span>
                     </Link>
-                    <h1 className="text-3xl font-bold text-white mb-2">Welcome back</h1>
-                    <p className="text-slate-400">Sign in to your account to continue</p>
+                    <h1 className="text-3xl font-bold text-white mb-2">{t('auth.login.title')}</h1>
+                    <p className="text-slate-400">{t('auth.login.subtitle')}</p>
                 </div>
 
                 {/* Login Card */}
@@ -103,14 +105,14 @@ export function LoginPage() {
                         {/* Email Field */}
                         <div className="space-y-2">
                             <Label htmlFor="email" className="text-slate-300">
-                                Email
+                                {t('auth.login.email_label')}
                             </Label>
                             <div className="relative">
                                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
                                 <Input
                                     id="email"
                                     type="email"
-                                    placeholder="Enter your email"
+                                    placeholder={t('auth.login.email_placeholder')}
                                     value={email}
                                     aria-invalid={!!validationErrors.email}
                                     onChange={(e) => {
@@ -127,10 +129,10 @@ export function LoginPage() {
                         <div className="space-y-2">
                             <div className="flex items-center justify-between">
                                 <Label htmlFor="password" className="text-slate-300">
-                                    Password
+                                    {t('auth.login.password_label')}
                                 </Label>
                                 <Link to="/forgot-password" className="text-sm text-cyan-400 hover:text-cyan-300 transition-colors">
-                                    Forgot password?
+                                    {t('auth.login.forgot_password')}
                                 </Link>
                             </div>
                             <div className="relative">
@@ -138,7 +140,7 @@ export function LoginPage() {
                                 <Input
                                     id="password"
                                     type={showPassword ? 'text' : 'password'}
-                                    placeholder="Enter your password"
+                                    placeholder={t('auth.login.password_placeholder')}
                                     value={password}
                                     aria-invalid={!!validationErrors.password}
                                     onChange={(e) => {
@@ -166,11 +168,11 @@ export function LoginPage() {
                             {isLoading ? (
                                 <>
                                     <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                                    Signing in...
+                                    {t('auth.login.submitting')}
                                 </>
                             ) : (
                                 <>
-                                    Sign in
+                                    {t('auth.login.submit')}
                                     <ArrowRight className="ml-2 h-5 w-5" />
                                 </>
                             )}
@@ -180,28 +182,28 @@ export function LoginPage() {
                     {/* Divider */}
                     <div className="my-6 flex items-center gap-4">
                         <div className="flex-1 h-px bg-slate-700" />
-                        <span className="text-slate-500 text-sm">or</span>
+                        <span className="text-slate-500 text-sm">{t('auth.login.divider')}</span>
                         <div className="flex-1 h-px bg-slate-700" />
                     </div>
 
                     {/* Sign Up Link */}
                     <p className="text-center text-slate-400">
-                        Don't have an account?{' '}
+                        {t('auth.login.no_account')}{' '}
                         <Link to="/signup" className="text-cyan-400 hover:text-cyan-300 font-medium transition-colors">
-                            Create account
+                            {t('auth.login.create_account')}
                         </Link>
                     </p>
                 </div>
 
                 {/* Footer */}
                 <p className="text-center text-slate-500 text-sm mt-8">
-                    By signing in, you agree to our{' '}
+                    {t('auth.login.footer_agree')}{' '}
                     <Link to="/terms" className="text-slate-400 hover:text-slate-300">
-                        Terms of Service
+                        {t('nav.terms_of_service', 'Terms of Service')}
                     </Link>{' '}
-                    and{' '}
+                    {t('auth.login.footer_and')}{' '}
                     <Link to="/privacy" className="text-slate-400 hover:text-slate-300">
-                        Privacy Policy
+                        {t('nav.privacy_policy', 'Privacy Policy')}
                     </Link>
                 </p>
             </div>

@@ -735,6 +735,187 @@
       "saving": "Saving...",
       "save_changes": "Save Changes"
     }
+  },
+  "auth": {
+    "login": {
+      "title": "Welcome back",
+      "subtitle": "Sign in to your account to continue",
+      "email_label": "Email",
+      "email_placeholder": "Enter your email",
+      "password_label": "Password",
+      "password_placeholder": "Enter your password",
+      "forgot_password": "Forgot password?",
+      "submit": "Sign in",
+      "submitting": "Signing in...",
+      "no_account": "Don't have an account?",
+      "create_account": "Create account",
+      "footer_agree": "By signing in, you agree to our",
+      "footer_and": "and",
+      "divider": "or",
+      "errors": {
+        "email_required": "Email is required",
+        "email_invalid": "Please enter a valid email address",
+        "password_required": "Password is required"
+      }
+    },
+    "signup": {
+      "title": "Create your account",
+      "subtitle": "Get started with GRVT MES Platform",
+      "first_name_label": "First Name",
+      "first_name_placeholder": "John",
+      "last_name_label": "Last Name",
+      "last_name_placeholder": "Doe",
+      "org_name_label": "Organization / Company Name",
+      "org_name_placeholder": "Acme Manufacturing Inc.",
+      "email_label": "Email",
+      "email_placeholder": "john@company.com",
+      "password_label": "Password",
+      "password_placeholder": "Create a strong password",
+      "confirm_password_label": "Confirm Password",
+      "confirm_password_placeholder": "Confirm your password",
+      "password_requirements": {
+        "min_length": "At least 8 characters",
+        "uppercase": "One uppercase letter",
+        "lowercase": "One lowercase letter",
+        "number": "One number"
+      },
+      "submit": "Create account",
+      "submitting": "Creating account...",
+      "have_account": "Already have an account?",
+      "sign_in": "Sign in",
+      "footer_agree": "By creating an account, you agree to our",
+      "footer_and": "and",
+      "divider": "or",
+      "errors": {
+        "first_name_required": "First name is required",
+        "first_name_invalid": "Please enter a valid name",
+        "last_name_required": "Last name is required",
+        "last_name_invalid": "Please enter a valid name",
+        "org_name_required": "Organization/Company name is required",
+        "org_name_min": "Organization name must be at least 2 characters",
+        "org_name_max": "Organization name must be less than 100 characters",
+        "email_required": "Email is required",
+        "email_invalid": "Please enter a valid email address",
+        "password_required": "Password is required",
+        "password_requirements": "Password does not meet requirements",
+        "confirm_password_required": "Please confirm your password",
+        "passwords_dont_match": "Passwords do not match"
+      }
+    },
+    "reset_password": {
+      "forgot_password_title": "Forgot password?",
+      "forgot_password_subtitle": "No worries, we'll send you a reset code via email",
+      "email_label": "Email",
+      "email_placeholder": "Enter your email",
+      "submit_send_code": "Send reset code",
+      "submitting_send_code": "Sending code...",
+      "back_to_login": "Back to sign in",
+      "success_title": "Check your email",
+      "success_description": "We've sent a 6-digit verification code to",
+      "success_button": "Enter verification code",
+      "resend_hint": "Didn't receive the email? Try again",
+      "enter_code_title": "Enter verification code",
+      "enter_code_subtitle": "Enter the 6-digit code we sent to your email",
+      "verification_code_label": "Verification Code",
+      "verify_button": "Verify code",
+      "verifying_button": "Verifying...",
+      "new_password_title": "Create new password",
+      "new_password_subtitle": "Your new password must be different from previous passwords",
+      "new_password_label": "New Password",
+      "new_password_placeholder": "Enter new password",
+      "confirm_password_label": "Confirm Password",
+      "confirm_password_placeholder": "Confirm new password",
+      "reset_button": "Reset password",
+      "resetting_button": "Resetting...",
+      "done_title": "Password reset successful!",
+      "done_description": "Your password has been reset. You can now sign in with your new password.",
+      "done_button": "Sign in",
+      "errors": {
+        "email_required": "Email is required",
+        "email_invalid": "Please enter a valid email address",
+        "send_failed": "Failed to send reset code",
+        "code_invalid": "Please enter a valid 6-digit code",
+        "validate_failed": "Invalid code",
+        "password_requirements": "Password does not meet requirements",
+        "passwords_dont_match": "Passwords do not match",
+        "reset_failed": "Failed to reset password"
+      }
+    },
+    "verify_email": {
+      "verifying": {
+        "title": "Verifying your email...",
+        "description": "Please wait while we verify your email address."
+      },
+      "success": {
+        "title": "Email verified!",
+        "description": "Your email has been successfully verified. You can now sign in to your account.",
+        "button": "Sign in"
+      },
+      "error": {
+        "title": "Verification failed",
+        "description": "This verification link is invalid or has expired.",
+        "button": "Go to sign in",
+        "new_link_hint": "Need a new verification link? Sign in and request a new one."
+      }
+    }
+  },
+  "ui": {
+    "pagination": {
+      "label": "Pagination",
+      "prev": "Go to previous page",
+      "next": "Go to next page",
+      "more": "More pages",
+      "prev_text": "Previous",
+      "next_text": "Next"
+    },
+    "breadcrumb": {
+      "label": "Breadcrumb",
+      "more": "More"
+    },
+    "sidebar": {
+      "toggle": "Toggle Sidebar",
+      "mobile_title": "Sidebar",
+      "mobile_description": "Displays the mobile sidebar."
+    },
+    "sheet": {
+      "close": "Close"
+    },
+    "carousel": {
+      "label": "Carousel",
+      "slide_label": "Slide",
+      "prev": "Previous slide",
+      "next": "Next slide"
+    }
+  },
+  "legal": {
+    "terms": {
+      "title": "Terms of Service",
+      "last_updated": "Last updated",
+      "s1_title": "1. Acceptance of Terms",
+      "s1_content": "By accessing or using GRVT MES, you agree to be bound by these Terms of Service. If you do not agree to all of these terms, do not use our services.",
+      "s2_title": "2. Use of Service",
+      "s2_content": "You are responsible for maintaining the confidentiality of your account and password. You agree to accept responsibility for all activities that occur under your account.",
+      "s3_title": "3. Intellectual Property",
+      "s3_content": "The service and its original content, features, and functionality are and will remain the exclusive property of GRVT MES and its licensors.",
+      "s4_title": "4. Limitation of Liability",
+      "s4_content": "In no event shall GRVT MES, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential or punitive damages.",
+      "s5_title": "5. Changes to Terms",
+      "s5_content": "We reserve the right, at our sole discretion, to modify or replace these Terms at any time. What constitutes a material change will be determined at our sole discretion."
+    },
+    "privacy": {
+      "title": "Privacy Policy",
+      "last_updated": "Last updated",
+      "s1_title": "1. Information We Collect",
+      "s1_content": "We collect information you provide directly to us, such as when you create an account, use our services, or communicate with us. This may include your name, email address, and company information.",
+      "s2_title": "2. How We Use Your Information",
+      "s2_content": "We use the information we collect to provide, maintain, and improve our services, to develop new ones, and to protect GRVT MES and our users.",
+      "s3_title": "3. Data Security",
+      "s3_content": "We use administrative, technical, and physical security measures to help protect your personal information. While we have taken reasonable steps to secure the personal information you provide to us, please be aware that despite our efforts, no security measures are perfect or impenetrable.",
+      "s4_title": "4. Sharing of Information",
+      "s4_content": "We do not share your personal information with companies, organizations, or individuals outside of GRVT MES except in the cases described in this policy, such as with your consent or for legal reasons.",
+      "s5_title": "5. Your Right to Access",
+      "s5_content": "You have the right to request a copy of the information that we hold about you. If you would like a copy of some or all of your personal information, please email us."
+    }
   }
 }
 
