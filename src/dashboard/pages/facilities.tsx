@@ -16,7 +16,7 @@ import { FormError } from '@/shared/components/ui/form-error';
 import { TableView } from '@/shared/components/ui/table-view';
 import { NodeDiagramView } from '@/shared/components/ui/node-diagram-view';
 import { cn } from '@/shared/lib/utils';
-import { LayoutGrid, AlertTriangle, Trash2, ArrowRightLeft, Pencil } from 'lucide-react';
+import { LayoutGrid, AlertTriangle, Trash2, ArrowRightLeft, Pencil, ArrowUpToLine } from 'lucide-react';
 import { NODE_STATUS_CHANGE_REASONS, NODE_TYPES, type NodeType, type NodeStatusChangeReason } from '@/features/facilities/types/facilities.types';
 import { getNodeType } from '@/shared/lib/node-utils';
 import {
@@ -165,10 +165,11 @@ export function FacilitiesPage() {
         }
     };
 
-    const handleMove = async () => {
+    const handleMove = async (overrideParentId?: string | null) => {
         if (!selectedNodeId) return;
         try {
-            await facilitiesService.moveFacility(selectedNodeId, newParentId);
+            const pId = overrideParentId !== undefined ? overrideParentId : newParentId;
+            await facilitiesService.moveFacility(selectedNodeId, pId);
             toast.success('Node moved successfully');
             setIsMoveDialogOpen(false);
             await fetchNodes();
@@ -357,13 +358,31 @@ export function FacilitiesPage() {
                                             placeholder="Select new parent (or leave empty for Root)..."
                                         />
                                     </div>
-                                    <DialogFooter>
-                                        <DialogClose asChild>
-                                            <Button variant="outline" className="bg-transparent border-slate-700 hover:bg-slate-800 text-slate-300">
-                                                Cancel
-                                            </Button>
-                                        </DialogClose>
-                                        <Button onClick={handleMove} className="bg-cyan-600 hover:bg-cyan-700 text-white">Move Node</Button>
+                                    <DialogFooter className="sm:justify-between gap-4 flex-col sm:flex-row">
+                                        <div className="flex-1">
+                                            {selectedNode.parentId && (
+                                                <Button 
+                                                    variant="outline" 
+                                                    className="w-full sm:w-auto h-9 bg-slate-800 border-slate-700 hover:bg-slate-700 text-slate-300 gap-2"
+                                                    onClick={() => {
+                                                        setNewParentId(null);
+                                                        // Execute move immediately with null override
+                                                        handleMove(null);
+                                                    }}
+                                                >
+                                                    <ArrowUpToLine className="size-4 text-amber-400" />
+                                                    Make Independent (Set as Root)
+                                                </Button>
+                                            )}
+                                        </div>
+                                        <div className="flex gap-2 justify-end">
+                                            <DialogClose asChild>
+                                                <Button variant="outline" className="bg-transparent border-slate-700 hover:bg-slate-800 text-slate-300">
+                                                    Cancel
+                                                </Button>
+                                            </DialogClose>
+                                            <Button onClick={() => handleMove()} className="bg-cyan-600 hover:bg-cyan-700 text-white">Move Node</Button>
+                                        </div>
                                     </DialogFooter>
                                 </DialogContent>
                             </Dialog>
