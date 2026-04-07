@@ -703,6 +703,37 @@
           "update_failed": "Failed to update organization"
         }
       }
+    },
+    "profile": {
+      "title": "Profile Settings",
+      "description": "Manage your personal information and account preferences.",
+      "verified": "Verified Account",
+      "personal_info": {
+        "title": "Personal Information",
+        "description": "Update your basic profile information.",
+        "avatar_label": "Profile Picture",
+        "avatar_hint": "Recommended: 256x256px. PNG or JPG.",
+        "first_name": "First Name",
+        "first_name_placeholder": "Enter your first name",
+        "last_name": "Last Name",
+        "last_name_placeholder": "Enter your last name",
+        "email": "Email Address",
+        "email_empty": "No email provided",
+        "email_hint": "Email is used for account identification and cannot be changed."
+      },
+      "account_details": {
+        "title": "Account Role & Organization",
+        "description": "View your assigned role and organization information.",
+        "permissions": "{{count}} active permissions",
+        "active_status": "Active",
+        "assigned_org": "Assigned Organization"
+      },
+      "messages": {
+        "update_success": "Profile updated successfully",
+        "update_failed": "Failed to update profile"
+      },
+      "saving": "Saving...",
+      "save_changes": "Save Changes"
     }
   }
 }

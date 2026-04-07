@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { User, Mail, Shield, Building2, Loader2, CheckCircle2 } from 'lucide-react';
 import { useAuth } from '@/features/auth/store/auth.store';
 import { Logo } from '@/shared/components/logo';
@@ -12,6 +13,7 @@ import { toast } from 'sonner';
 import { FileCardUpload } from '@/shared/components/ui/file-card-upload';
 
 export function ProfilePage() {
+    const { t } = useTranslation();
     const { user, detailedProfile, fetchProfile, setDetailedProfile } = useAuth();
     const [isUpdating, setIsUpdating] = useState(false);
     const [avatarId, setAvatarId] = useState<string | null>(null);
@@ -58,9 +60,9 @@ export function ProfilePage() {
                 avatarId: avatarId || undefined,
             });
             await fetchProfile();
-            toast.success('Profile updated successfully');
+            toast.success(t('dashboard.profile.messages.update_success'));
         } catch (err: any) {
-            toast.error(err?.message || 'Failed to update profile');
+            toast.error(err?.message || t('dashboard.profile.messages.update_failed'));
         } finally {
             setIsUpdating(false);
         }
@@ -70,13 +72,13 @@ export function ProfilePage() {
         <div className="max-w-4xl mx-auto space-y-8">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-white mb-2">Profile Settings</h1>
-                    <p className="text-slate-400">Manage your personal information and account preferences.</p>
+                    <h1 className="text-3xl font-bold text-white mb-2">{t('dashboard.profile.title')}</h1>
+                    <p className="text-slate-400">{t('dashboard.profile.description')}</p>
                 </div>
                 {detailedProfile?.isVerified && (
                     <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-sm font-medium">
                         <CheckCircle2 className="h-4 w-4" />
-                        Verified Account
+                        {t('dashboard.profile.verified')}
                     </div>
                 )}
             </div>
@@ -87,16 +89,16 @@ export function ProfilePage() {
                     <CardHeader>
                         <CardTitle className="text-white flex items-center gap-2">
                             <User className="h-5 w-5 text-cyan-400" />
-                            Personal Information
+                            {t('dashboard.profile.personal_info.title')}
                         </CardTitle>
-                        <CardDescription className="text-slate-400">Update your basic profile information.</CardDescription>
+                        <CardDescription className="text-slate-400">{t('dashboard.profile.personal_info.description')}</CardDescription>
                     </CardHeader>
                     <CardContent>
                         <form onSubmit={handleUpdate} className="space-y-8">
                             <div className="flex flex-col lg:flex-row gap-12 items-start">
                                 {/* Avatar Section */}
                                 <FileCardUpload
-                                    label="Profile Picture"
+                                    label={t('dashboard.profile.personal_info.avatar_label')}
                                     type={FILE_TYPE.USER_AVATAR}
                                     value={avatarId}
                                     previewUrl={detailedProfile?.avatarUrl}
@@ -107,50 +109,50 @@ export function ProfilePage() {
                                             setDetailedProfile({ ...detailedProfile, avatarUrl: url || undefined });
                                         }
                                     }}
-                                    size="w-32 h-32"
+                                    size="size-32"
                                     placeholderIcon={<Logo className="h-12 w-12 text-slate-500" />}
-                                    description="Recommended: 256x256px. PNG or JPG."
+                                    description={t('dashboard.profile.personal_info.avatar_hint')}
                                 />
 
                                 <div className="flex-1 space-y-6 w-full lg:max-w-xl">
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                         <div className="space-y-2">
                                             <Label htmlFor="firstName" className="text-slate-300">
-                                                First Name
+                                                {t('dashboard.profile.personal_info.first_name')}
                                             </Label>
                                             <Input
                                                 id="firstName"
                                                 value={formData.firstName}
                                                 onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                                                 className="bg-slate-900 border-slate-700 text-white focus:border-cyan-500"
-                                                placeholder="Enter your first name"
+                                                placeholder={t('dashboard.profile.personal_info.first_name_placeholder')}
                                             />
                                         </div>
                                         <div className="space-y-2">
                                             <Label htmlFor="lastName" className="text-slate-300">
-                                                Last Name
+                                                {t('dashboard.profile.personal_info.last_name')}
                                             </Label>
                                             <Input
                                                 id="lastName"
                                                 value={formData.lastName}
                                                 onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                                                 className="bg-slate-900 border-slate-700 text-white focus:border-cyan-500"
-                                                placeholder="Enter your last name"
+                                                placeholder={t('dashboard.profile.personal_info.last_name_placeholder')}
                                             />
                                         </div>
                                     </div>
 
                                     <div className="space-y-2">
                                         <Label htmlFor="email" className="text-slate-300">
-                                            Email Address
+                                            {t('dashboard.profile.personal_info.email')}
                                         </Label>
                                         <div className="relative group">
                                             <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500" />
                                             <div className="pl-9 py-2 bg-slate-900/40 border border-slate-700/50 rounded-md text-slate-400 text-sm flex items-center h-10 select-none">
-                                                {formData.email || 'No email provided'}
+                                                {formData.email || t('dashboard.profile.personal_info.email_empty')}
                                             </div>
                                         </div>
-                                        <p className="text-[10px] text-slate-500 italic">Email is used for account identification and cannot be changed.</p>
+                                        <p className="text-[10px] text-slate-500 italic">{t('dashboard.profile.personal_info.email_hint')}</p>
                                     </div>
                                 </div>
                             </div>
@@ -164,10 +166,10 @@ export function ProfilePage() {
                                     {isUpdating ? (
                                         <div className="flex items-center gap-2">
                                             <Loader2 className="h-4 w-4 animate-spin" />
-                                            <span>Saving...</span>
+                                            <span>{t('dashboard.profile.saving')}</span>
                                         </div>
                                     ) : (
-                                        'Save Changes'
+                                        t('dashboard.profile.save_changes')
                                     )}
                                 </Button>
                             </div>
@@ -181,9 +183,9 @@ export function ProfilePage() {
                         <CardHeader>
                             <CardTitle className="text-white flex items-center gap-2">
                                 <Shield className="h-5 w-5 text-purple-400" />
-                                Account Role & Organization
+                                {t('dashboard.profile.account_details.title')}
                             </CardTitle>
-                            <CardDescription className="text-slate-400">View your assigned role and organization information.</CardDescription>
+                            <CardDescription className="text-slate-400">{t('dashboard.profile.account_details.description')}</CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-4">
                             {detailedProfile.role && (
@@ -194,10 +196,10 @@ export function ProfilePage() {
                                         </div>
                                         <div>
                                             <p className="text-white font-medium">{detailedProfile.role.name}</p>
-                                            <p className="text-xs text-slate-500 mt-0.5">{detailedProfile.role.permissions?.length || 0} active permissions</p>
+                                            <p className="text-xs text-slate-500 mt-0.5">{t('dashboard.profile.account_details.permissions', { count: detailedProfile.role.permissions?.length || 0 })}</p>
                                         </div>
                                     </div>
-                                    <span className="text-xs px-2 py-1 rounded-full bg-purple-500/20 text-purple-400">Active</span>
+                                    <span className="text-xs px-2 py-1 rounded-full bg-purple-500/20 text-purple-400">{t('dashboard.profile.account_details.active_status')}</span>
                                 </div>
                             )}
 
@@ -209,7 +211,7 @@ export function ProfilePage() {
                                         </div>
                                         <div>
                                             <p className="text-white font-medium">{detailedProfile.organization.name}</p>
-                                            <p className="text-xs text-slate-500 mt-0.5">{detailedProfile.organization.location || 'Assigned Organization'}</p>
+                                            <p className="text-xs text-slate-500 mt-0.5">{detailedProfile.organization.location || t('dashboard.profile.account_details.assigned_org')}</p>
                                         </div>
                                     </div>
                                 </div>

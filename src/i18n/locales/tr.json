@@ -703,6 +703,37 @@
           "update_failed": "Organizasyon güncellenemedi"
         }
       }
+    },
+    "profile": {
+      "title": "Profil Ayarları",
+      "description": "Kişisel bilgilerinizi ve hesap tercihlerinizi yönetin.",
+      "verified": "Doğrulanmış Hesap",
+      "personal_info": {
+        "title": "Kişisel Bilgiler",
+        "description": "Temel profil bilgilerinizi güncelleyin.",
+        "avatar_label": "Profil Resmi",
+        "avatar_hint": "Önerilen: 256x256px. PNG veya JPG.",
+        "first_name": "Ad",
+        "first_name_placeholder": "Adınızı girin",
+        "last_name": "Soyad",
+        "last_name_placeholder": "Soyadınızı girin",
+        "email": "E-posta Adresi",
+        "email_empty": "E-posta adresi belirtilmedi",
+        "email_hint": "E-posta adresi hesap kimliği için kullanılır ve değiştirilemez."
+      },
+      "account_details": {
+        "title": "Hesap Rolü ve Organizasyon",
+        "description": "Atanan rolünüzü ve organizasyon bilgilerinizi görüntüleyin.",
+        "permissions": "{{count}} aktif izin",
+        "active_status": "Aktif",
+        "assigned_org": "Atanan Organizasyon"
+      },
+      "messages": {
+        "update_success": "Profil başarıyla güncellendi",
+        "update_failed": "Profil güncellenemedi"
+      },
+      "saving": "Kaydediliyor...",
+      "save_changes": "Değişiklikleri Kaydet"
     }
   }
 }
