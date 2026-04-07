@@ -6,6 +6,7 @@ import { Button } from '@/shared/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/shared/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback } from '@/shared/components/ui/avatar';
 import { cn } from '@/shared/lib/utils';
+import { useTranslation } from 'react-i18next';
 
 const typeConfig: Record<NotificationType, { icon: any; color: string; bg: string }> = {
     system: { icon: Info, color: 'text-blue-400', bg: 'bg-blue-400/10' },
@@ -17,6 +18,7 @@ const typeConfig: Record<NotificationType, { icon: any; color: string; bg: strin
 };
 
 export function NotificationDropdown() {
+    const { t } = useTranslation();
     const { notifications, unreadCount, isLoading, fetchNotifications, markAsRead, markAllAsRead, removeNotification, clearAll } = useNotifications();
 
     const handleOpenChange = (open: boolean) => {
@@ -40,9 +42,9 @@ export function NotificationDropdown() {
             <DropdownMenuContent align="end" className="w-80 sm:w-96 bg-slate-900/95 backdrop-blur-xl border-slate-700 p-0 shadow-2xl overflow-hidden">
                 <DropdownMenuLabel className="p-4 border-b border-slate-800 flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                        <span className="text-base font-semibold text-white">Notifications</span>
+                        <span className="text-base font-semibold text-white">{t('common.notifications.title')}</span>
                         {unreadCount > 0 && (
-                            <span className="px-1.5 py-0.5 rounded-full bg-rose-500/10 text-rose-400 text-[10px] font-bold uppercase tracking-wider">{unreadCount} New</span>
+                            <span className="px-1.5 py-0.5 rounded-full bg-rose-500/10 text-rose-400 text-[10px] font-bold uppercase tracking-wider">{t('common.notifications.unread_count', { count: unreadCount })}</span>
                         )}
                     </div>
                     {notifications.length > 0 && (
@@ -54,7 +56,7 @@ export function NotificationDropdown() {
                                 markAllAsRead();
                             }}
                             className="text-xs text-cyan-400 hover:text-cyan-300 hover:bg-cyan-400/10 h-7 px-2">
-                            Mark all as read
+                            {t('common.notifications.mark_all_read')}
                         </Button>
                     )}
                 </DropdownMenuLabel>
@@ -63,7 +65,7 @@ export function NotificationDropdown() {
                     {isLoading ? (
                         <div className="flex flex-col items-center justify-center py-12 px-4">
                             <div className="w-8 h-8 border-2 border-cyan-500 border-t-transparent rounded-full animate-spin mb-3" />
-                            <p className="text-xs text-slate-500">Loading notifications...</p>
+                            <p className="text-xs text-slate-500">{t('common.notifications.loading')}</p>
                         </div>
                     ) : notifications.length > 0 ? (
                         <div className="flex flex-col">
@@ -138,16 +140,16 @@ export function NotificationDropdown() {
                             <div className="w-16 h-16 rounded-full bg-slate-800/50 flex items-center justify-center mb-4">
                                 <Bell className="size-8 text-slate-600" />
                             </div>
-                            <h3 className="text-sm font-medium text-white mb-1">No notifications yet</h3>
-                            <p className="text-xs text-slate-500 max-w-[200px]">When you receive notifications, they will appear here.</p>
+                            <h3 className="text-sm font-medium text-white mb-1">{t('common.notifications.empty_title')}</h3>
+                            <p className="text-xs text-slate-500 max-w-[200px]">{t('common.notifications.empty_description')}</p>
                         </div>
-                    )}
+                    ) }
                 </div>
 
                 {notifications.length > 0 && (
                     <div className="p-2 border-t border-slate-800 bg-slate-900/50">
                         <Button variant="ghost" size="sm" onClick={clearAll} className="w-full text-xs text-slate-500 hover:text-rose-400 hover:bg-rose-400/10 py-1">
-                            Clear all history
+                            {t('common.notifications.clear_all')}
                         </Button>
                     </div>
                 )}

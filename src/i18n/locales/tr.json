@@ -236,6 +236,474 @@
   "common": {
     "language": "Dil",
     "select_language": "Dil Seçin",
-    "sign_in": "Giriş Yap"
+    "sign_in": "Giriş Yap",
+    "actions": {
+      "cancel": "İptal",
+      "save": "Kaydet",
+      "create": "Oluştur",
+      "edit": "Düzenle",
+      "delete": "Sil",
+      "update": "Güncelle",
+      "search": "Ara",
+      "filter": "Filtrele",
+      "close": "Kapat",
+      "back": "Geri",
+      "loading": "Yükleniyor...",
+      "confirm_delete_title": "{{item}}'i Sil",
+      "confirm_delete_description": "Bu işlem geri alınamaz. Bu {{item}}'i silmek istediğinizden emin misiniz?",
+      "deleting": "Siliniyor..."
+    },
+    "notifications": {
+      "title": "Bildirimler",
+      "unread_count": "{{count}} Yeni",
+      "mark_all_read": "Tümünü okundu olarak işaretle",
+      "loading": "Bildirimler yükleniyor...",
+      "empty_title": "Henüz bildirim yok",
+      "empty_description": "Bildirim aldığınızda burada görünecektir.",
+      "clear_all": "Tüm geçmişi temizle"
+    },
+    "entities": {
+      "product": "Ürün",
+      "user": "Kullanıcı",
+      "container": "Konteyner",
+      "work_order": "İş Emri",
+      "organization": "Organizasyon",
+      "facility": "Tesis",
+      "node": "Düğüm"
+    },
+    "components": {
+      "table_view": {
+        "search": "Ara...",
+        "no_options": "Seçenek bulunamadı.",
+        "select_option": "Bir seçenek belirleyin..."
+      },
+      "node_diagram": {
+        "create_node": "Düğüm Oluştur",
+        "top_down": "Yukarıdan Aşağıya",
+        "left_right": "Soldan Sağa"
+      },
+      "status": {
+        "IDLE": "Boşta",
+        "READY": "Hazır",
+        "IN_PROGRESS": "Devam Ediyor",
+        "COMPLETED": "Tamamlandı",
+        "PLANNED": "Planlandı",
+        "RELEASED": "Yayınlandı",
+        "CLOSED": "Kapalı",
+        "DOWN": "Çalışmıyor",
+        "ERROR": "Hata",
+        "SCRAP": "Hurda",
+        "ACTIVE": "Aktif",
+        "INACTIVE": "Pasif",
+        "MAINTENANCE": "Bakım",
+        "OTHER": "Diğer",
+        "UNKNOWN": "Bilinmeyen"
+      }
+    }
+  },
+  "dashboard": {
+    "header": {
+      "search": "Ara...",
+      "profile": "Profil",
+      "notifications": "Bildirimler",
+      "logout": "Çıkış Yap",
+      "user": "Kullanıcı",
+      "avatar": "Avatar"
+    },
+    "sidebar": {
+      "nav": {
+        "main": "Ana",
+        "dashboard": "Gösterge Paneli",
+        "operations": "Operasyonlar",
+        "production": "Üretim",
+        "warehouse": "Depo",
+        "analytics": "Analitik",
+        "reports": "Raporlar",
+        "configuration": "Yapılandırma",
+        "products": "Ürün Ağacı",
+        "users": "Kullanıcılar ve Roller",
+        "facilities": "Tesis Düzeni",
+        "settings": "Ayarlar"
+      }
+    },
+    "home": {
+      "welcome": "Tekrar hoş geldiniz, {{name}}! 👋",
+      "user_fallback": "Kullanıcı",
+      "subtitle": "İşte bugün üretim operasyonlarınızda olup bitenler.",
+      "stats": {
+        "active_work_orders": "Aktif İş Emirleri",
+        "nodes_down": "Devre Dışı Düğümler",
+        "nodes_error": "Hatalı Düğümler",
+        "recent_trace_activities": "Son İzlenebilirlik Aktiviteleri",
+        "from_last_shift": "son vardiyadan {{change}}"
+      },
+      "recent_activity": {
+        "title": "Son İzlenebilirlik Aktiviteleri",
+        "description": "Düğümlerinizde ve iş emirlerinizde kaydedilen en son eylemler.",
+        "node_state_changed": "Düğüm Durumu Değişti - Hat {{line}}",
+        "operator_changed_status": "Operatör, {{station}} istasyonu durumunu {{status}} olarak değiştirdi",
+        "mins_ago": "{{count}} dk önce"
+      }
+    },
+    "coming_soon": {
+      "default_title": "Çok Yakında",
+      "default_description": "Size bu özelliği sunmak için çok çalışıyoruz. Güncellemeler için takipte kalın!",
+      "development_in_progress": "Geliştirme aşamasında",
+      "back_to_dashboard": "Gösterge Paneline Dön",
+      "pages": {
+        "products": {
+          "title": "Ürün Yönetimi",
+          "description": "Gelişmiş ürün kataloğu ve envanter yönetimi özellikleri şu anda geliştirilme aşamasındadır."
+        },
+        "settings": {
+          "title": "Sistem Ayarları",
+          "description": "Kapsamlı sistem yapılandırması ve tercih yönetimi kontrolleri üzerinde çalışılıyor."
+        },
+        "reports": {
+          "title": "Raporlar Merkezi",
+          "description": "Yaklaşan raporlama motorumuzla ayrıntılı üretim, kalite ve performans raporları oluşturun."
+        },
+        "help": {
+          "title": "Yardım ve Destek",
+          "description": "Size daha iyi yardımcı olmak için kapsamlı bir bilgi tabanı ve destek bilet sistemi."
+        },
+        "messages": {
+          "title": "Mesajlar",
+          "description": "Gerçek zamanlı ekip işbirliği ve mesajlaşma özellikleri oluşturuluyor."
+        },
+        "integration": {
+          "title": "Entegrasyonlar",
+          "description": "Üçüncü taraf araçlara ve hizmetlere sorunsuz bir şekilde bağlanın. Entegrasyon merkezi çok yakında."
+        }
+      }
+    },
+    "facilities": {
+      "messages": {
+        "load_failed": "Düğümler yüklenemedi",
+        "delete_success": "Düğüm başarıyla silindi",
+        "delete_failed": "Düğüm silinemedi. Aktif alt düğümleri veya İş Emirlerini kontrol edin.",
+        "update_success": "Düğüm başarıyla güncellendi",
+        "update_failed": "Düğüm güncellenemedi",
+        "move_success": "Düğüm başarıyla taşındı",
+        "move_failed": "Düğüm taşınamadı",
+        "create_success": "Düğüm başarıyla oluşturuldu",
+        "create_failed": "Düğüm oluşturulamadı"
+      },
+      "header": {
+        "title": "Tesis Düzeni",
+        "description": "Fabrika katlarından bireysel iş istasyonlarına kadar tesis yapınızın haritasını çıkarın ve üretim hatlarını yönetin."
+      },
+      "buttons": {
+        "hierarchy": "Hiyerarşi",
+        "layout_mode": "Düzen Modu",
+        "cancel": "İptal",
+        "save_changes": "Değişiklikleri Kaydet",
+        "deleting": "Siliniyor...",
+        "delete_node": "Düğümü Sil",
+        "update_node": "Düğümü Güncelle",
+        "move_node": "Düğümü Taşı",
+        "create_node": "Düğüm Oluştur"
+      },
+      "dialogs": {
+        "move": {
+          "title": "Düğümü Taşı",
+          "description": "\"{{name}}\" için yeni bir ana düğüm seçin. Bu işlem hiyerarşik yolu yeniden hesaplayacaktır.",
+          "new_parent": "Yeni Ana Düğüm",
+          "placeholder": "Yeni ana düğüm seçin (veya Kök için boş bırakın)...",
+          "make_independent": "Bağımsız Yap (Kök Olarak Ayarla)"
+        },
+        "update": {
+          "title": "Düğümü Güncelle",
+          "description": "\"{{name}}\" için kimlik ve durumu değiştirin",
+          "node_name": "Düğüm Adı",
+          "node_type": "Düğüm Türü",
+          "status": "Durum",
+          "reason": "Güncelleme Nedeni",
+          "select_type": "Tür seçin...",
+          "select_reason": "Neden seçin..."
+        },
+        "delete": {
+          "title": "Düğümü Sil",
+          "confirm": "\"{{name}}\" düğümünü silmek istediğinizden emin misiniz?",
+          "warning1": "Düğümün geçmişi varsa arşivlenecektir. Geçmişi yoksa kalıcı olarak silinecektir.",
+          "warning2": "Düğümün aktif alt düğümleri varsa veya İş Emirlerinde referans gösteriliyorsa silme işlemi başarısız olur."
+        },
+        "create": {
+          "title": "Düğüm Oluştur",
+          "desc_child": "{{name}} altında bir alt düğüm oluşturuluyor",
+          "desc_root": "Bir kök düğüm oluşturuluyor.",
+          "parent_locked": "Ana Düğüm (Kilitli)",
+          "node_name": "Düğüm Adı",
+          "node_name_placeholder": "örn. Montaj İstasyonu 1",
+          "definition_id": "Tanım ID (İsteğe Bağlı)",
+          "definition_placeholder": "Tanım seçin..."
+        }
+      },
+      "tree": {
+        "search_placeholder": "Düğümleri ara...",
+        "no_nodes": "Düğüm bulunamadı."
+      },
+      "tabs": {
+        "overview": "Genel Bakış",
+        "contents": "İçerikler",
+        "capabilities": "Yetenekler",
+        "activity": "Aktivite Günlüğü",
+        "content": {
+          "node_type": "Düğüm Türü",
+          "path": "Yol",
+          "attributes": "Nitelikler",
+          "unknown": "Bilinmeyen",
+          "na": "B/Y",
+          "empty_contents": "Envanter öğeleri veya alt düğümler burada görünecektir.",
+          "empty_capabilities": "Belirli bir yetenek tanımlanmadı.",
+          "empty_activity": "İzlenebilirlik akışı burada yükleniyor..."
+        }
+      },
+      "empty_state": {
+        "title": "Düğüm Seçilmedi",
+        "description": "Detaylarını, hiyerarşi içeriklerini ve yeteneklerini görüntülemek için ağaçtan bir düğüm seçin."
+      }
+    },
+    "production": {
+      "title": "Üretim Yürütme",
+      "description": "İş Emirleri (Work Orders) aracılığıyla üretim iş akışlarını yönetin.",
+      "create_button": "İş Emri Oluştur",
+      "columns": {
+        "planned": "Planlandı",
+        "ready": "Yürütmeye Hazır",
+        "in_progress": "Devam Ediyor",
+        "completed": "Tamamlandı"
+      },
+      "empty_state": "Burada iş emri bulunmuyor",
+      "order_card": {
+        "target_qty": "Hedef Mik:",
+        "units": "birim",
+        "start_date": "Başlangıç:",
+        "not_scheduled": "Planlanmadı"
+      },
+      "drawer": {
+        "title": "İş Emri Oluştur",
+        "description": "Yeni bir üretim yürütme oturumu başlatın.",
+        "bom_revision_id": "Malzeme Listesi (BOM) Revizyon ID",
+        "target_quantity": "Hedef Miktar",
+        "planned_start_date": "Planlanan Başlangıç Tarihi",
+        "bom_placeholder": "örn. BOM-REV-A1",
+        "qty_placeholder": "örn. 50"
+      },
+      "messages": {
+        "load_failed": "İş emirleri yüklenemedi",
+        "create_success": "İş emri başarıyla oluşturuldu",
+        "create_failed": "İş emri oluşturulamadı"
+      }
+    },
+    "warehouse": {
+      "title": "Depo Yönetimi",
+      "description": "Depolama alanlarını yönetin, konteyner konumlarını izleyin ve stok operasyonlarını yürütün.",
+      "new_receipt": "Yeni Mal Kabul",
+      "new_shipment": "Yeni Sevkiyat",
+      "root_storage": "Kök Depolama",
+      "sub_locations": "Alt Konumlar",
+      "sub_areas": "Alt Alanlar",
+      "no_sub_areas": "bu seviyede alt konum bulunamadı.",
+      "storage_area": "Depolama Alanı",
+      "stored_containers": "Depolanan Konteynerler (LPN)",
+      "search_placeholder": "LPN Ara...",
+      "empty_location": "Bu konum şu anda boş.",
+      "table": {
+        "lpn": "Taşıma Birimi Kodu (LPN)",
+        "type": "Tür",
+        "created_at": "Oluşturulma",
+        "actions": "İşlemler"
+      },
+      "tooltips": {
+        "qc_check": "Kalite Kontrol (QC) Kontrolü",
+        "move": "Taşı",
+        "remove": "Kaldır"
+      },
+      "receipt_modal": {
+        "title": "Malzeme Kabulü",
+        "description": "Depoya yeni öğelerin gelişini kaydedin.",
+        "fields": {
+          "lpn": "Taşıma Birimi Kodu (LPN) / Takip No",
+          "lpn_hint": "Bir barkod veya takip numarası atayın",
+          "item": "Öğe / Parça No",
+          "quantity": "Miktar",
+          "source": "Kaynak (Tedarikçi/Harici)",
+          "expected_date": "Beklenen Tarih",
+          "expected_date_hint": "İsteğe bağlı planlanan varış",
+          "actual_date": "Fiili Tarih",
+          "actual_date_hint": "İsteğe bağlı varış zaman damgası",
+          "type": "Konteyner Türü",
+          "type_hint": "örn. PALLET, KUTU, MAKARA (REEL)"
+        }
+      },
+      "shipment_modal": {
+        "title": "Giden Sevkiyat",
+        "description": "Depodan ayrılan öğeleri kaydedin.",
+        "fields": {
+          "lpn": "Taşıma Birimi Kodu (LPN) / Takip No",
+          "quantity": "Gönderilecek Miktar",
+          "destination": "Varış Noktası",
+          "destination_hint": "Üretim veya Müşteri",
+          "expected_date": "Beklenen Sevkiyat Tarihi",
+          "actual_date": "Fiili Sevkiyat Tarihi"
+        }
+      },
+      "messages": {
+        "load_failed": "Depo verileri yüklenemedi",
+        "receipt_success": "Kabul kaydı başarıyla oluşturuldu",
+        "receipt_failed": "Kabul oluşturulamadı",
+        "shipment_success": "Sevkiyat kaydı başarıyla oluşturuldu",
+        "shipment_failed": "Sevkiyat oluşturulamadı",
+        "move_success": "Konteyner başarıyla taşındı",
+        "move_failed": "Konteyner taşınamadı"
+      }
+    },
+    "reports": {
+      "title": "Analitik ve Raporlar",
+      "description": "Tüm kayıtlı sistem aktiviteleri ve olay raporları için salt okunur görünüm.",
+      "filters": {
+        "action_type": "İşlem Türü",
+        "node_id": "Düğüm ID",
+        "user_id": "Kullanıcı ID",
+        "job_id": "İş / İş Emri ID",
+        "action_placeholder": "örn. status_change",
+        "node_placeholder": "Düğüm UUID'sine göre filtrele...",
+        "user_placeholder": "Kullanıcı UUID'sine göre filtrele...",
+        "job_placeholder": "İş UUID'sine göre filtrele..."
+      },
+      "table": {
+        "action_type": "İşlem Türü",
+        "date": "Tarih",
+        "user_id": "Kullanıcı ID",
+        "node_id": "Düğüm ID",
+        "job_id": "İş ID",
+        "metadata": "Meta Veri",
+        "system": "Sistem"
+      },
+      "messages": {
+        "load_failed": "Rapor aktiviteleri yüklenemedi"
+      }
+    },
+    "products": {
+      "title": "Malzeme Listeleri (BOM)",
+      "description": "Merkezi mühendislik ürün kataloğunuzu ve stok kodlarınızı (SKU) yönetin.",
+      "add_button": "Ürün Ekle",
+      "search_placeholder": "Stok Kodu (SKU) veya Adına göre ara...",
+      "table": {
+        "sku": "Stok Kodu (SKU)",
+        "name": "Ad",
+        "organization": "Organizasyon",
+        "actions": "İşlemler"
+      },
+      "drawer": {
+        "title_create": "Ürün Oluştur",
+        "title_edit": "Ürünü Düzenle",
+        "description": "Belirli ürün yapılandırmalarını ve ana veri tanımlarını yönetin.",
+        "sku": "Stok Kodu (SKU)",
+        "name": "Ad",
+        "sku_placeholder": "örn. PROD-001",
+        "name_placeholder": "örn. Navigasyon GPS Modülü v2"
+      },
+      "messages": {
+        "load_failed": "Ürünler yüklenemedi",
+        "create_success": "Ürün başarıyla oluşturuldu",
+        "update_success": "Ürün başarıyla güncellendi",
+        "save_failed": "Ürün kaydedilemedi",
+        "delete_success": "Ürün başarıyla silindi",
+        "delete_failed": "Ürün silinemedi"
+      }
+    },
+    "users": {
+      "title": "Kullanıcı Yönetimi",
+      "description": "Tüm sistem kullanıcılarını ve izinlerini görüntüleyin ve yönetin.",
+      "add_user": "Kullanıcı Ekle",
+      "search_placeholder": "Kullanıcıları ad veya e-postaya göre ara...",
+      "filters": "Filtreler",
+      "loading": "Kullanıcılar yükleniyor...",
+      "table": {
+        "user": "Kullanıcı",
+        "role": "Rol",
+        "status": "Durum",
+        "joined": "Katılım"
+      },
+      "status": {
+        "verified": "Doğrulanmış",
+        "pending": "Beklemede"
+      },
+      "actions": {
+        "title": "İşlemler",
+        "view_profile": "Profili Görüntüle",
+        "edit_permissions": "İzinleri Düzenle",
+        "disable_account": "Hesabı Devre Dışı Bırak"
+      },
+      "no_users_found": "Aramanızla eşleşen kullanıcı bulunamadı.",
+      "clear_filters": "Tüm filtreleri temizle"
+    },
+    "settings": {
+      "title": "Platform Ayarları",
+      "description": "Organizasyonunuzun yasal kimliğini, markasını ve küresel kurallarını yönetin.",
+      "loading": "Profil yükleniyor...",
+      "status_active": "Organizasyon Aktif",
+      "setup": {
+        "title": "Organizasyonunuzu Kurun",
+        "description": "Tesisinizi ve üretim hatlarınızı yönetmeye başlamak için önce bir organizasyon profili oluşturmanız gerekir.",
+        "features": {
+          "identity": {
+            "title": "Kimlik",
+            "desc": "Şirket adınızı ve markanızı tanımlayın."
+          },
+          "global_layout": {
+            "title": "Küresel Düzen",
+            "desc": "Katların ve iş istasyonlarının haritasını çıkarın."
+          },
+          "smart_tracking": {
+            "title": "Akıllı Takip",
+            "desc": "Üretimi gerçek zamanlı olarak izleyin."
+          }
+        },
+        "create_button": "Organizasyonumu Oluştur",
+        "refresh_button": "Zaten bir organizasyonunuz var mı? Profili Yenile",
+        "modal": {
+          "title": "Kimliği Başlat",
+          "description": "Şirket veya tesis adınızı girin. Logoları ve markalamayı bir sonraki adımda yönetebilirsiniz.",
+          "org_name_label": "Organizasyon Adı",
+          "org_name_placeholder": "örn. GRVT Manufacturing",
+          "creating": "Oluşturuluyor...",
+          "submit_button": "Organizasyonu Oluştur ve Bağla"
+        },
+        "messages": {
+          "enter_name": "Lütfen bir organizasyon adı girin",
+          "create_success": "Organizasyon başarıyla oluşturuldu",
+          "create_failed": "Organizasyon oluşturulamadı"
+        }
+      },
+      "main": {
+        "title": "Platform Ayarları",
+        "description": "Organizasyonunuzun yasal kimliğini, markasını ve küresel kurallarını yönetin.",
+        "status_active": "Organizasyon Aktif",
+        "profile_card": {
+          "title": "Profil ve Markalama",
+          "description": "Platform genelinde görünen kimlik ayarları.",
+          "logo_label": "Kurumsal Logo",
+          "logo_hint": "Önerilen: 512x512px. SVG or PNG.",
+          "required_chip": "Gerekli",
+          "setup_hint": "Tüm özelliklerin kilidini açmak için kimlik kurulumunuzu tamamlayın.",
+          "syncing": "Kimlik Senkronize Ediliyor...",
+          "save_button": "Platform Markalamasını Kaydet",
+          "live_chip": "Web'de Canlı"
+        },
+        "upcoming": {
+          "work_hours": "Küresel Çalışma Saatleri",
+          "compliance": "Uyum ve Güvenlik",
+          "label": "Gelecek Özellik"
+        },
+        "messages": {
+          "update_success": "Organizasyon ayarları başarıyla güncellendi",
+          "update_failed": "Organizasyon güncellenemedi"
+        }
+      }
+    }
   }
 }
+

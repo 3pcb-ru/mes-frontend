@@ -236,6 +236,474 @@
   "common": {
     "language": "Language",
     "select_language": "Select Language",
-    "sign_in": "Sign In"
+    "sign_in": "Sign In",
+    "actions": {
+      "cancel": "Cancel",
+      "save": "Save",
+      "create": "Create",
+      "edit": "Edit",
+      "delete": "Delete",
+      "update": "Update",
+      "search": "Search",
+      "filter": "Filter",
+      "close": "Close",
+      "back": "Back",
+      "loading": "Loading...",
+      "confirm_delete_title": "Delete {{item}}",
+      "confirm_delete_description": "This action cannot be undone. Are you sure you want to delete this {{item}}?",
+      "deleting": "Deleting..."
+    },
+    "notifications": {
+      "title": "Notifications",
+      "unread_count": "{{count}} New",
+      "mark_all_read": "Mark all as read",
+      "loading": "Loading notifications...",
+      "empty_title": "No notifications yet",
+      "empty_description": "When you receive notifications, they will appear here.",
+      "clear_all": "Clear all history"
+    },
+    "entities": {
+      "product": "Product",
+      "user": "User",
+      "container": "Container",
+      "work_order": "Work Order",
+      "organization": "Organization",
+      "facility": "Facility",
+      "node": "Node"
+    },
+    "components": {
+      "table_view": {
+        "search": "Search...",
+        "no_options": "No options found.",
+        "select_option": "Select an option..."
+      },
+      "node_diagram": {
+        "create_node": "Create Node",
+        "top_down": "Top Down",
+        "left_right": "Left Right"
+      },
+      "status": {
+        "IDLE": "Idle",
+        "READY": "Ready",
+        "IN_PROGRESS": "In Progress",
+        "COMPLETED": "Completed",
+        "PLANNED": "Planned",
+        "RELEASED": "Released",
+        "CLOSED": "Closed",
+        "DOWN": "Down",
+        "ERROR": "Error",
+        "SCRAP": "Scrap",
+        "ACTIVE": "Active",
+        "INACTIVE": "Inactive",
+        "MAINTENANCE": "Maintenance",
+        "OTHER": "Other",
+        "UNKNOWN": "Unknown"
+      }
+    }
+  },
+  "dashboard": {
+    "header": {
+      "search": "Search...",
+      "profile": "Profile",
+      "notifications": "Notifications",
+      "logout": "Log out",
+      "user": "User",
+      "avatar": "Avatar"
+    },
+    "sidebar": {
+      "nav": {
+        "main": "Main",
+        "dashboard": "Dashboard",
+        "operations": "Operations",
+        "production": "Production",
+        "warehouse": "Warehouse",
+        "analytics": "Analytics",
+        "reports": "Reports",
+        "configuration": "Configuration",
+        "products": "Bill of Materials",
+        "users": "Users & Roles",
+        "facilities": "Layout",
+        "settings": "Settings"
+      }
+    },
+    "home": {
+      "welcome": "Welcome back, {{name}}! 👋",
+      "user_fallback": "User",
+      "subtitle": "Here's what's happening with your manufacturing operations today.",
+      "stats": {
+        "active_work_orders": "Active Work Orders",
+        "nodes_down": "Nodes Down",
+        "nodes_error": "Nodes Error",
+        "recent_trace_activities": "Recent Trace Activities",
+        "from_last_shift": "{{change}} from last shift"
+      },
+      "recent_activity": {
+        "title": "Recent Traceability Activities",
+        "description": "Latest actions logged across your nodes and work orders.",
+        "node_state_changed": "Node State Changed - Line {{line}}",
+        "operator_changed_status": "Operator changed station {{station}} status to {{status}}",
+        "mins_ago": "{{count}} mins ago"
+      }
+    },
+    "coming_soon": {
+      "default_title": "Coming Soon",
+      "default_description": "We're working hard to bring you this feature. Stay tuned for updates!",
+      "development_in_progress": "Development in progress",
+      "back_to_dashboard": "Back to Dashboard",
+      "pages": {
+        "products": {
+          "title": "Products Management",
+          "description": "Advanced product catalog and inventory management features are currently under development."
+        },
+        "settings": {
+          "title": "System Settings",
+          "description": "Comprehensive system configuration and preference management controls are in the works."
+        },
+        "reports": {
+          "title": "Reports Center",
+          "description": "Generate detailed production, quality, and performance reports with our upcoming reporting engine."
+        },
+        "help": {
+          "title": "Help & Support",
+          "description": "A comprehensive knowledge base and support ticket system to assist you better."
+        },
+        "messages": {
+          "title": "Messages",
+          "description": "Real-time team collaboration and messaging features are being built."
+        },
+        "integration": {
+          "title": "Integrations",
+          "description": "Connect with third-party tools and services seamlessly. Integration hub is coming soon."
+        }
+      }
+    },
+    "facilities": {
+      "messages": {
+        "load_failed": "Failed to load nodes",
+        "delete_success": "Node deleted successfully",
+        "delete_failed": "Failed to delete node. Check for active children or Work Orders.",
+        "update_success": "Node updated successfully",
+        "update_failed": "Failed to update node",
+        "move_success": "Node moved successfully",
+        "move_failed": "Failed to move node",
+        "create_success": "Node created successfully",
+        "create_failed": "Failed to create node"
+      },
+      "header": {
+        "title": "Layout",
+        "description": "Map out your facility structure and manage production lines, from factory floors to individual workstations."
+      },
+      "buttons": {
+        "hierarchy": "Hierarchy",
+        "layout_mode": "Layout Mode",
+        "cancel": "Cancel",
+        "save_changes": "Save Changes",
+        "deleting": "Deleting...",
+        "delete_node": "Delete Node",
+        "update_node": "Update Node",
+        "move_node": "Move Node",
+        "create_node": "Create Node"
+      },
+      "dialogs": {
+        "move": {
+          "title": "Move Node",
+          "description": "Select a new parent for \"{{name}}\". This will recalculate the hierarchical path.",
+          "new_parent": "New Parent Node",
+          "placeholder": "Select new parent (or leave empty for Root)...",
+          "make_independent": "Make Independent (Set as Root)"
+        },
+        "update": {
+          "title": "Update Node",
+          "description": "Modify identification and status for \"{{name}}\"",
+          "node_name": "Node Name",
+          "node_type": "Node Type",
+          "status": "Status",
+          "reason": "Reason for Update",
+          "select_type": "Select type...",
+          "select_reason": "Select reason..."
+        },
+        "delete": {
+          "title": "Delete Node",
+          "confirm": "Are you sure you want to delete \"{{name}}\"?",
+          "warning1": "If the node has history, it will be archived. If it has no history, it will be permanently removed.",
+          "warning2": "Deletion will fail if the node has active child nodes or is referenced in Work Orders."
+        },
+        "create": {
+          "title": "Create Node",
+          "desc_child": "Creating a child node under {{name}}",
+          "desc_root": "Creating a root node.",
+          "parent_locked": "Parent Node (Locked)",
+          "node_name": "Node Name",
+          "node_name_placeholder": "e.g. Assembly Station 1",
+          "definition_id": "Definition ID (Optional)",
+          "definition_placeholder": "Select definition..."
+        }
+      },
+      "tree": {
+        "search_placeholder": "Search nodes...",
+        "no_nodes": "No nodes found."
+      },
+      "tabs": {
+        "overview": "Overview",
+        "contents": "Contents",
+        "capabilities": "Capabilities",
+        "activity": "Activity Log",
+        "content": {
+          "node_type": "Node Type",
+          "path": "Path",
+          "attributes": "Attributes",
+          "unknown": "Unknown",
+          "na": "N/A",
+          "empty_contents": "Inventory items or sub-nodes will appear here.",
+          "empty_capabilities": "No specific capabilities defined.",
+          "empty_activity": "Traceability feed loads here..."
+        }
+      },
+      "empty_state": {
+        "title": "No Node Selected",
+        "description": "Select a node from the tree to view its details, hierarchy contents, and capabilities."
+      }
+    },
+    "production": {
+      "title": "Production Execution",
+      "description": "Manage manufacturing workflows via Work Orders.",
+      "create_button": "Create Work Order",
+      "columns": {
+        "planned": "Planned",
+        "ready": "Ready for Execution",
+        "in_progress": "In Progress",
+        "completed": "Completed"
+      },
+      "empty_state": "No work orders here",
+      "order_card": {
+        "target_qty": "Target Qty:",
+        "units": "units",
+        "start_date": "Start:",
+        "not_scheduled": "Not scheduled"
+      },
+      "drawer": {
+        "title": "Create Work Order",
+        "description": "Initialize a new production execution run.",
+        "bom_revision_id": "BOM Revision ID",
+        "target_quantity": "Target Quantity",
+        "planned_start_date": "Planned Start Date",
+        "bom_placeholder": "e.g. BOM-REV-A1",
+        "qty_placeholder": "e.g. 50"
+      },
+      "messages": {
+        "load_failed": "Failed to load work orders",
+        "create_success": "Work order created successfully",
+        "create_failed": "Failed to create work order"
+      }
+    },
+    "warehouse": {
+      "title": "Warehouse Management",
+      "description": "Manage storage areas, track container locations, and handle stock operations.",
+      "new_receipt": "New Receipt",
+      "new_shipment": "New Shipment",
+      "root_storage": "Root Storage",
+      "sub_locations": "Sub-locations",
+      "sub_areas": "Sub-areas",
+      "no_sub_areas": "No child locations found at this level.",
+      "storage_area": "Storage Area",
+      "stored_containers": "Stored Containers (LPNs)",
+      "search_placeholder": "Search LPN...",
+      "empty_location": "This location is currently empty.",
+      "table": {
+        "lpn": "LPN",
+        "type": "Type",
+        "created_at": "Created At",
+        "actions": "Actions"
+      },
+      "tooltips": {
+        "qc_check": "QC Check",
+        "move": "Move",
+        "remove": "Remove"
+      },
+      "receipt_modal": {
+        "title": "Material Receipt",
+        "description": "Record the arrival of new items into the warehouse.",
+        "fields": {
+          "lpn": "LPN / Tracking #",
+          "lpn_hint": "Assign a barcode or tracking number",
+          "item": "Item / Part #",
+          "quantity": "Quantity",
+          "source": "Source (Vendor/External)",
+          "expected_date": "Expected Date",
+          "expected_date_hint": "Optional planned arrival",
+          "actual_date": "Actual Date",
+          "actual_date_hint": "Optional arrival timestamp",
+          "type": "Container Type",
+          "type_hint": "e.g. PALLET, BOX, REEL"
+        }
+      },
+      "shipment_modal": {
+        "title": "Outbound Shipment",
+        "description": "Record items leaving the warehouse.",
+        "fields": {
+          "lpn": "LPN / Tracking #",
+          "quantity": "Quantity to Ship",
+          "destination": "Destination",
+          "destination_hint": "Production or Customer",
+          "expected_date": "Expected Ship Date",
+          "actual_date": "Actual Ship Date"
+        }
+      },
+      "messages": {
+        "load_failed": "Failed to load warehouse data",
+        "receipt_success": "Receipt record created successfully",
+        "receipt_failed": "Failed to create receipt",
+        "shipment_success": "Shipment record created successfully",
+        "shipment_failed": "Failed to create shipment",
+        "move_success": "Container moved successfully",
+        "move_failed": "Failed to move container"
+      }
+    },
+    "reports": {
+      "title": "Analytics & Reports",
+      "description": "Read-only view for all logged system activities and event reports.",
+      "filters": {
+        "action_type": "Action Type",
+        "node_id": "Node ID",
+        "user_id": "User ID",
+        "job_id": "Job / Work Order ID",
+        "action_placeholder": "e.g. status_change",
+        "node_placeholder": "Filter by Node UUID...",
+        "user_placeholder": "Filter by User UUID...",
+        "job_placeholder": "Filter by Job UUID..."
+      },
+      "table": {
+        "action_type": "Action Type",
+        "date": "Date",
+        "user_id": "User ID",
+        "node_id": "Node ID",
+        "job_id": "Job ID",
+        "metadata": "Metadata",
+        "system": "System"
+      },
+      "messages": {
+        "load_failed": "Failed to load report activities"
+      }
+    },
+    "products": {
+      "title": "Bills of Materials",
+      "description": "Manage your central engineering product catalog and SKUs.",
+      "add_button": "Add Product",
+      "search_placeholder": "Search by SKU or Name...",
+      "table": {
+        "sku": "SKU",
+        "name": "Name",
+        "organization": "Organization",
+        "actions": "Actions"
+      },
+      "drawer": {
+        "title_create": "Create Product",
+        "title_edit": "Edit Product",
+        "description": "Manage specific product configurations and master data definition.",
+        "sku": "SKU",
+        "name": "Name",
+        "sku_placeholder": "e.g. PROD-001",
+        "name_placeholder": "e.g. Navigation GPS Module v2"
+      },
+      "messages": {
+        "load_failed": "Failed to load products",
+        "create_success": "Product created successfully",
+        "update_success": "Product updated successfully",
+        "save_failed": "Failed to save product",
+        "delete_success": "Product deleted successfully",
+        "delete_failed": "Failed to delete product"
+      }
+    },
+    "users": {
+      "title": "User Management",
+      "description": "View and manage all system users and their permissions.",
+      "add_user": "Add User",
+      "search_placeholder": "Search users by name or email...",
+      "filters": "Filters",
+      "loading": "Loading users...",
+      "table": {
+        "user": "User",
+        "role": "Role",
+        "status": "Status",
+        "joined": "Joined"
+      },
+      "status": {
+        "verified": "Verified",
+        "pending": "Pending"
+      },
+      "actions": {
+        "title": "Actions",
+        "view_profile": "View Profile",
+        "edit_permissions": "Edit Permissions",
+        "disable_account": "Disable Account"
+      },
+      "no_users_found": "No users found matching your search.",
+      "clear_filters": "Clear all filters"
+    },
+    "settings": {
+      "title": "Platform Settings",
+      "description": "Manage your organization's legal identity, branding, and global rules.",
+      "loading": "Loading profile...",
+      "status_active": "Organization Active",
+      "setup": {
+        "title": "Setup Your Organization",
+        "description": "To start managing your facility and production lines, you first need to create an organization profile.",
+        "features": {
+          "identity": {
+            "title": "Identity",
+            "desc": "Define your company name and branding."
+          },
+          "global_layout": {
+            "title": "Global Layout",
+            "desc": "Map out floors and workstations."
+          },
+          "smart_tracking": {
+            "title": "Smart Tracking",
+            "desc": "Monitor production in real-time."
+          }
+        },
+        "create_button": "Create My Organization",
+        "refresh_button": "Already have an organization? Refresh Profile",
+        "modal": {
+          "title": "Initialize Identity",
+          "description": "Enter your company or facility name. You can manage logos and branding in the next step.",
+          "org_name_label": "Organization Name",
+          "org_name_placeholder": "e.g. GRVT Manufacturing",
+          "creating": "Creating...",
+          "submit_button": "Create and Link Organization"
+        },
+        "messages": {
+          "enter_name": "Please enter an organization name",
+          "create_success": "Organization created successfully",
+          "create_failed": "Failed to create organization"
+        }
+      },
+      "main": {
+        "title": "Platform Settings",
+        "description": "Manage your organization's legal identity, branding, and global rules.",
+        "status_active": "Organization Active",
+        "profile_card": {
+          "title": "Profile & Branding",
+          "description": "Identity settings visible across the platform.",
+          "logo_label": "Corporate Logo",
+          "logo_hint": "Recommended: 512x512px. SVG or PNG.",
+          "required_chip": "Required",
+          "setup_hint": "Finish setting up your identity to unlock all features.",
+          "syncing": "Syncing Identity...",
+          "save_button": "Save Platform Branding",
+          "live_chip": "Live on Web"
+        },
+        "upcoming": {
+          "work_hours": "Global Work Hours",
+          "compliance": "Compliance & Security",
+          "label": "Upcoming Feature"
+        },
+        "messages": {
+          "update_success": "Organization settings updated successfully",
+          "update_failed": "Failed to update organization"
+        }
+      }
+    }
   }
 }
+

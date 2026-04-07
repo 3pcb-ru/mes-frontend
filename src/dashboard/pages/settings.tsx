@@ -11,8 +11,10 @@ import { toast } from 'sonner';
 import { FileCardUpload } from '@/shared/components/ui/file-card-upload';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/shared/components/ui/dialog';
 import { Logo } from '@/shared/components/logo';
+import { useTranslation } from 'react-i18next';
 
 export function SettingsPage() {
+    const { t } = useTranslation();
     const { user, detailedProfile, fetchProfile } = useAuth();
     const [isUpdating, setIsUpdating] = useState(false);
     const [isCreating, setIsCreating] = useState(false);
@@ -41,19 +43,19 @@ export function SettingsPage() {
     const handleCreateOrganization = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!newOrgName.trim()) {
-            toast.error('Please enter an organization name');
+            toast.error(t('dashboard.settings.setup.messages.enter_name'));
             return;
         }
 
         setIsCreating(true);
         try {
             await usersService.createOrganization({ name: newOrgName.trim() });
-            toast.success('Organization created successfully');
+            toast.success(t('dashboard.settings.setup.messages.create_success'));
             setIsCreateModalOpen(false);
             await fetchProfile();
         } catch (err: any) {
             console.error('Create error:', err);
-            toast.error(err?.message || 'Failed to create organization');
+            toast.error(err?.message || t('dashboard.settings.setup.messages.create_failed'));
         } finally {
             setIsCreating(false);
         }
@@ -68,10 +70,10 @@ export function SettingsPage() {
                 logoId: logoId,
             });
             await fetchProfile();
-            toast.success('Organization settings updated successfully');
+            toast.success(t('dashboard.settings.main.messages.update_success'));
         } catch (err: any) {
             console.error('Update error:', err);
-            toast.error(err?.message || 'Failed to update organization');
+            toast.error(err?.message || t('dashboard.settings.main.messages.update_failed'));
         } finally {
             setIsUpdating(false);
         }
@@ -82,7 +84,7 @@ export function SettingsPage() {
             <div className="flex items-center justify-center h-64">
                 <div className="flex flex-col items-center gap-4">
                     <Loader2 className="h-8 w-8 animate-spin text-cyan-500" />
-                    <p className="text-slate-500 text-sm animate-pulse">Loading profile...</p>
+                    <p className="text-slate-500 text-sm animate-pulse">{t('common.actions.loading')}</p>
                 </div>
             </div>
         );
@@ -99,16 +101,16 @@ export function SettingsPage() {
                         <Building2 className="h-10 w-10 text-cyan-400" />
                     </div>
                     <div className="space-y-2">
-                        <h1 className="text-3xl font-bold text-white">Setup Your Organization</h1>
-                        <p className="text-slate-400 max-w-md mx-auto">To start managing your facility and production lines, you first need to create an organization profile.</p>
+                        <h1 className="text-3xl font-bold text-white">{t('dashboard.settings.setup.title')}</h1>
+                        <p className="text-slate-400 max-w-md mx-auto">{t('dashboard.settings.setup.description')}</p>
                     </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8">
                     {[
-                        { title: 'Identity', desc: 'Define your company name and branding.', icon: ShieldCheck },
-                        { title: 'Global Layout', desc: 'Map out floors and workstations.', icon: Globe },
-                        { title: 'Smart Tracking', desc: 'Monitor production in real-time.', icon: Factory },
+                        { title: t('dashboard.settings.setup.features.identity.title'), desc: t('dashboard.settings.setup.features.identity.desc'), icon: ShieldCheck },
+                        { title: t('dashboard.settings.setup.features.global_layout.title'), desc: t('dashboard.settings.setup.features.global_layout.desc'), icon: Globe },
+                        { title: t('dashboard.settings.setup.features.smart_tracking.title'), desc: t('dashboard.settings.setup.features.smart_tracking.desc'), icon: Factory },
                     ].map((feature, i) => (
                         <div key={i} className="p-6 rounded-xl bg-slate-800/30 border border-slate-700/50 space-y-3">
                             <feature.icon className="h-6 w-6 text-cyan-400" />
@@ -125,27 +127,27 @@ export function SettingsPage() {
                                 size="lg"
                                 className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-12 h-12 text-lg shadow-xl shadow-cyan-500/20">
                                 <Plus className="mr-2 h-5 w-5" />
-                                Create My Organization
+                                {t('dashboard.settings.setup.create_button')}
                             </Button>
                         </DialogTrigger>
                         <DialogContent className="bg-slate-900 border-slate-800 text-white sm:max-w-[425px]">
                             <form onSubmit={handleCreateOrganization}>
                                 <DialogHeader>
-                                    <DialogTitle className="text-xl font-bold">Initialize Identity</DialogTitle>
+                                    <DialogTitle className="text-xl font-bold">{t('dashboard.settings.setup.modal.title')}</DialogTitle>
                                     <DialogDescription className="text-slate-400">
-                                        Enter your company or facility name. You can manage logos and branding in the next step.
+                                        {t('dashboard.settings.setup.modal.description')}
                                     </DialogDescription>
                                 </DialogHeader>
                                 <div className="grid gap-4 py-6">
                                     <div className="space-y-2">
                                         <Label htmlFor="createOrgName" className="text-slate-300">
-                                            Organization Name
+                                            {t('dashboard.settings.setup.modal.org_name_label')}
                                         </Label>
                                         <Input
                                             id="createOrgName"
                                             value={newOrgName}
                                             onChange={(e) => setNewOrgName(e.target.value)}
-                                            placeholder="e.g. GRVT Manufacturing"
+                                            placeholder={t('dashboard.settings.setup.modal.org_name_placeholder')}
                                             className="bg-slate-950 border-slate-700 text-white h-12 text-lg transition-all focus:border-cyan-500"
                                             autoFocus
                                             required
@@ -160,10 +162,10 @@ export function SettingsPage() {
                                         {isCreating ? (
                                             <div className="flex items-center gap-2">
                                                 <Loader2 className="h-5 w-5 animate-spin" />
-                                                <span>Creating...</span>
+                                                <span>{t('dashboard.settings.setup.modal.creating')}</span>
                                             </div>
                                         ) : (
-                                            'Create and Link Organization'
+                                            t('dashboard.settings.setup.modal.submit_button')
                                         )}
                                     </Button>
                                 </DialogFooter>
@@ -172,7 +174,7 @@ export function SettingsPage() {
                     </Dialog>
 
                     <Button variant="ghost" size="sm" onClick={() => fetchProfile()} className="text-slate-500 hover:text-white">
-                        Already have an organization? Refresh Profile
+                        {t('dashboard.settings.setup.refresh_button')}
                     </Button>
                 </div>
             </div>
@@ -184,12 +186,12 @@ export function SettingsPage() {
         <div className="max-w-4xl mx-auto space-y-8 pb-12">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-white mb-2">Platform Settings</h1>
-                    <p className="text-slate-400">Manage your organization's legal identity, branding, and global rules.</p>
+                    <h1 className="text-3xl font-bold text-white mb-2">{t('dashboard.settings.main.title')}</h1>
+                    <p className="text-slate-400">{t('dashboard.settings.main.description')}</p>
                 </div>
                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 text-sm font-medium">
                     <CheckCircle2 className="h-4 w-4" />
-                    Organization Active
+                    {t('dashboard.settings.main.status_active')}
                 </div>
             </div>
 
@@ -202,8 +204,8 @@ export function SettingsPage() {
                                 <Building2 className="h-5 w-5 text-cyan-400" />
                             </div>
                             <div>
-                                <CardTitle className="text-white">Profile & Branding</CardTitle>
-                                <CardDescription className="text-slate-400 text-xs">Identity settings visible across the platform.</CardDescription>
+                                <CardTitle className="text-white">{t('dashboard.settings.main.profile_card.title')}</CardTitle>
+                                <CardDescription className="text-slate-400 text-xs">{t('dashboard.settings.main.profile_card.description')}</CardDescription>
                             </div>
                         </div>
                     </CardHeader>
@@ -212,7 +214,7 @@ export function SettingsPage() {
                             <div className="flex flex-col lg:flex-row gap-x-16 gap-y-10 items-start">
                                 {/* Left Side: Logo (Shrink-0) */}
                                 <FileCardUpload
-                                    label="Corporate Logo"
+                                    label={t('dashboard.settings.main.profile_card.logo_label')}
                                     type={FILE_TYPE.ORGANIZATION_LOGO}
                                     value={logoId}
                                     previewUrl={detailedProfile.organization?.logoUrl}
@@ -220,16 +222,16 @@ export function SettingsPage() {
                                     onRemove={() => setLogoId(null)}
                                     size="w-40 h-40"
                                     placeholderIcon={<Factory className="h-14 w-14 text-slate-500" />}
-                                    description="Recommended: 512x512px. SVG or PNG."
+                                    description={t('dashboard.settings.main.profile_card.logo_hint')}
                                 />
 
                                 {/* Right Side: Identity Controls (Flex-1) */}
                                 <div className="flex-1 w-full flex flex-col justify-between self-stretch py-2">
                                     <div className="space-y-4">
                                         <Label htmlFor="orgName" className="text-slate-300 font-semibold flex items-center justify-between">
-                                            <span>Organization Name</span>
+                                            <span>{t('dashboard.settings.setup.modal.org_name_label')}</span>
                                             <span className="text-[10px] font-normal text-slate-500 uppercase tracking-widest">
-                                                {detailedProfile.organization?.name ? 'Verified' : 'Required'}
+                                                {detailedProfile.organization?.name ? t('dashboard.users.status.verified') : t('dashboard.settings.main.profile_card.required_chip')}
                                             </span>
                                         </Label>
                                         <div className="relative group/input max-w-xl">
@@ -239,14 +241,14 @@ export function SettingsPage() {
                                                 value={orgName}
                                                 onChange={(e) => setOrgName(e.target.value)}
                                                 className="bg-slate-950 border-slate-700 text-white focus:border-cyan-500 h-14 pl-12 text-lg font-medium transition-all"
-                                                placeholder="Enter Company Name"
+                                                placeholder={t('dashboard.settings.setup.modal.org_name_placeholder')}
                                                 required
                                             />
                                         </div>
                                         {!detailedProfile.organization?.name && (
                                             <p className="text-xs text-amber-500 italic pl-1 flex items-center gap-1">
                                                 <AlertTriangle className="h-3 w-3" />
-                                                Finish setting up your identity to unlock all features.
+                                                {t('dashboard.settings.main.profile_card.setup_hint')}
                                             </p>
                                         )}
                                     </div>
@@ -260,15 +262,15 @@ export function SettingsPage() {
                                             {isUpdating ? (
                                                 <div className="flex items-center gap-2">
                                                     <Loader2 className="h-4 w-4 animate-spin" />
-                                                    <span>Syncing Identity...</span>
+                                                    <span>{t('dashboard.settings.main.profile_card.syncing')}</span>
                                                 </div>
                                             ) : (
-                                                'Save Platform Branding'
+                                                t('dashboard.settings.main.profile_card.save_button')
                                             )}
                                         </Button>
                                         <div className="hidden lg:flex items-center gap-2 text-[10px] text-slate-500 uppercase font-bold tracking-widest">
                                             <Globe className="h-3.5 w-3.5 text-blue-400/50" />
-                                            Live on Web
+                                            {t('dashboard.settings.main.profile_card.live_chip')}
                                         </div>
                                     </div>
                                 </div>
@@ -281,18 +283,18 @@ export function SettingsPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 opacity-40 grayscale pointer-events-none">
                     <Card className="bg-slate-800/10 border-slate-700/30 border-dashed">
                         <CardHeader>
-                            <CardTitle className="text-slate-400 text-base">Global Work Hours</CardTitle>
+                            <CardTitle className="text-slate-400 text-base">{t('dashboard.settings.main.upcoming.work_hours')}</CardTitle>
                         </CardHeader>
                         <CardContent className="h-24 flex items-center justify-center">
-                            <span className="text-[10px] text-slate-600 uppercase font-bold tracking-widest italic">Upcoming Feature</span>
+                            <span className="text-[10px] text-slate-600 uppercase font-bold tracking-widest italic">{t('dashboard.settings.main.upcoming.label')}</span>
                         </CardContent>
                     </Card>
                     <Card className="bg-slate-800/10 border-slate-700/30 border-dashed">
                         <CardHeader>
-                            <CardTitle className="text-slate-400 text-base">Compliance & Security</CardTitle>
+                            <CardTitle className="text-slate-400 text-base">{t('dashboard.settings.main.upcoming.compliance')}</CardTitle>
                         </CardHeader>
                         <CardContent className="h-24 flex items-center justify-center">
-                            <span className="text-[10px] text-slate-600 uppercase font-bold tracking-widest italic">Upcoming Feature</span>
+                            <span className="text-[10px] text-slate-600 uppercase font-bold tracking-widest italic">{t('dashboard.settings.main.upcoming.label')}</span>
                         </CardContent>
                     </Card>
                 </div>

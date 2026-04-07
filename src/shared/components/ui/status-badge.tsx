@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Badge, type badgeVariants } from './badge';
 import { type VariantProps } from 'class-variance-authority';
 import { cn } from './utils';
+import { useTranslation } from 'react-i18next';
 
 export type StandardStatus = 'IDLE' | 'READY' | 'IN_PROGRESS' | 'COMPLETED' | 'PLANNED' | 'RELEASED' | 'CLOSED' | 'DOWN' | 'ERROR' | 'SCRAP' | 'ACTIVE' | 'INACTIVE';
 
@@ -10,6 +11,8 @@ interface StatusBadgeProps extends React.ComponentProps<typeof Badge> {
 }
 
 export function StatusBadge({ status, className, ...props }: StatusBadgeProps) {
+    const { t } = useTranslation();
+
     const getBadgeVariant = (s: string): VariantProps<typeof badgeVariants>['variant'] => {
         const normalized = s.toUpperCase();
         switch (normalized) {
@@ -59,7 +62,7 @@ export function StatusBadge({ status, className, ...props }: StatusBadgeProps) {
 
     return (
         <Badge variant={getBadgeVariant(status)} className={cn(getCustomColorClasses(status), 'transition-colors font-semibold tracking-wide capitalize', className)} {...props}>
-            {status.replace(/_/g, ' ')}
+            {t(`common.components.status.${status.toUpperCase()}`, status.replace(/_/g, ' '))}
         </Badge>
     );
 }

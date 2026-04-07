@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { Plus, GripVertical, FileText } from 'lucide-react';
 import { toast } from 'sonner';
 import { workOrdersService } from '@/features/work-orders/services/work-orders.service';
@@ -9,19 +9,21 @@ import { StatusBadge } from '@/shared/components/ui/status-badge';
 import { SlideOutDrawer } from '@/shared/components/ui/slide-out-drawer';
 import { Label } from '@/shared/components/ui/label';
 import { Input } from '@/shared/components/ui/input';
-
-const COLUMNS = [
-    { id: 'PLANNED', label: 'Planned' },
-    { id: 'RELEASED', label: 'Ready for Execution' },
-    { id: 'IN_PROGRESS', label: 'In Progress' },
-    { id: 'CLOSED', label: 'Completed' },
-] as const;
+import { useTranslation } from 'react-i18next';
 
 export function WorkOrdersPage() {
+    const { t } = useTranslation();
     const [items, setItems] = useState<WorkOrderListItem[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [formData, setFormData] = useState<Partial<WorkOrderListItem>>({});
+
+    const COLUMNS = useMemo(() => [
+        { id: 'PLANNED', label: t('dashboard.production.columns.planned') },
+        { id: 'RELEASED', label: t('dashboard.production.columns.ready') },
+        { id: 'IN_PROGRESS', label: t('dashboard.production.columns.in_progress') },
+        { id: 'CLOSED', label: t('dashboard.production.columns.completed') },
+    ], [t]);
 
     const fetchOrders = async () => {
         setIsLoading(true);
@@ -30,7 +32,7 @@ export function WorkOrdersPage() {
             setItems(Array.isArray(data) ? data : []);
         } catch (err: any) {
             console.error(err);
-            toast.error(err?.message || 'Failed to load work orders');
+            toast.error(err?.message || t('dashboard.production.messages.load_failed'));
             setItems([]);
         } finally {
             setIsLoading(false);
@@ -48,13 +50,13 @@ export function WorkOrdersPage() {
                 ...formData,
                 targetQuantity: Number(formData.targetQuantity),
             });
-            toast.success('Work order created successfully');
+            toast.success(t('dashboard.production.messages.create_success'));
             setIsDrawerOpen(false);
             setFormData({});
             await fetchOrders();
         } catch (err: any) {
             console.error('Error creating work order:', err);
-            toast.error(err?.message || 'Failed to create work order');
+            toast.error(err?.message || t('dashboard.production.messages.create_failed'));
         }
     };
 
@@ -62,12 +64,12 @@ export function WorkOrdersPage() {
         <div className="flex flex-col h-[calc(100vh-8rem)] gap-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 shrink-0">
                 <div>
-                    <h1 className="text-3xl font-bold text-white mb-2">Production Execution</h1>
-                    <p className="text-slate-400">Manage manufacturing workflows via Work Orders.</p>
+                    <h1 className="text-3xl font-bold text-white mb-2">{t('dashboard.production.title')}</h1>
+                    <p className="text-slate-400">{t('dashboard.production.description')}</p>
                 </div>
                 <div className="flex items-center shrink min-w-0">
                     <Button onClick={() => setIsDrawerOpen(true)} className="flex items-center gap-2">
-                        <Plus className="h-4 w-4" /> Create Work Order
+                        <Plus className="h-4 w-4" /> {t('dashboard.production.create_button')}
                     </Button>
                 </div>
             </div>
@@ -86,7 +88,9 @@ export function WorkOrdersPage() {
                                 {isLoading ? (
                                     Array.from({ length: 2 }).map((_, i) => <div key={i} className="h-28 rounded-lg bg-slate-800/20 animate-pulse border border-slate-800/50" />)
                                 ) : columnItems.length === 0 ? (
-                                    <div className="text-center p-8 text-slate-500 text-xs border border-dashed border-slate-700 rounded-lg">No work orders here</div>
+                                    <div className="text-center p-8 text-slate-500 text-xs border border-dashed border-slate-700 rounded-lg">
+                                        {t('dashboard.production.empty_state')}
+                                    </div>
                                 ) : (
                                     columnItems.map((order) => (
                                         <div
@@ -104,9 +108,9 @@ export function WorkOrdersPage() {
 
                                             <div className="mb-3">
                                                 <p className="text-xs text-slate-400">
-                                                    Target Qty: <span className="text-slate-200">{order.targetQuantity} units</span>
+                                                    {t('dashboard.production.order_card.target_qty')} <span className="text-slate-200">{order.targetQuantity} {t('dashboard.production.order_card.units')}</span>
                                                 </p>
-                                                <p className="text-xs text-slate-400">Start: {order.plannedStartDate || 'Not scheduled'}</p>
+                                                <p className="text-xs text-slate-400">{t('dashboard.production.order_card.start_date')} {order.plannedStartDate || t('dashboard.production.order_card.not_scheduled')}</p>
                                             </div>
 
                                             <div className="flex justify-between items-end">
@@ -122,22 +126,27 @@ export function WorkOrdersPage() {
                 })}
             </div>
 
-            <SlideOutDrawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen} title="Create Work Order" description="Initialize a new production execution run.">
+            <SlideOutDrawer 
+                open={isDrawerOpen} 
+                onOpenChange={setIsDrawerOpen} 
+                title={t('dashboard.production.drawer.title')} 
+                description={t('dashboard.production.drawer.description')}
+            >
                 <form onSubmit={handleCreate} className="space-y-5 pt-4">
                     <div className="space-y-2">
                         <Label>
-                            BOM Revision ID <span className="text-destructive">*</span>
+                            {t('dashboard.production.drawer.bom_revision_id')} <span className="text-destructive">*</span>
                         </Label>
                         <Input
                             required
                             value={formData.bomRevisionId || ''}
                             onChange={(e) => setFormData({ ...formData, bomRevisionId: e.target.value })}
-                            placeholder="e.g. BOM-REV-A1"
+                            placeholder={t('dashboard.production.drawer.bom_placeholder')}
                         />
                     </div>
                     <div className="space-y-2">
                         <Label>
-                            Target Quantity <span className="text-destructive">*</span>
+                            {t('dashboard.production.drawer.target_quantity')} <span className="text-destructive">*</span>
                         </Label>
                         <Input
                             type="number"
@@ -145,18 +154,18 @@ export function WorkOrdersPage() {
                             min="1"
                             value={formData.targetQuantity || ''}
                             onChange={(e) => setFormData({ ...formData, targetQuantity: Number(e.target.value) })}
-                            placeholder="e.g. 50"
+                            placeholder={t('dashboard.production.drawer.qty_placeholder')}
                         />
                     </div>
                     <div className="space-y-2">
-                        <Label>Planned Start Date</Label>
+                        <Label>{t('dashboard.production.drawer.planned_start_date')}</Label>
                         <Input type="date" value={formData.plannedStartDate || ''} onChange={(e) => setFormData({ ...formData, plannedStartDate: e.target.value })} />
                     </div>
                     <div className="pt-6 flex justify-end gap-3 border-t border-slate-800">
                         <Button type="button" variant="outline" onClick={() => setIsDrawerOpen(false)}>
-                            Cancel
+                            {t('common.actions.cancel')}
                         </Button>
-                        <Button type="submit">Release Order</Button>
+                        <Button type="submit">{t('dashboard.production.create_button')}</Button>
                     </div>
                 </form>
             </SlideOutDrawer>

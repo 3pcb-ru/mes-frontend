@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { Package, Plus } from 'lucide-react';
 import { toast } from 'sonner';
 import { productsService } from '@/features/products/services/products.service';
@@ -10,8 +10,10 @@ import { Label } from '@/shared/components/ui/label';
 import { Input } from '@/shared/components/ui/input';
 import { TableActions } from '@/shared/components/table-actions';
 import { getModuleActions } from '@/shared/lib/module-actions-config';
+import { useTranslation } from 'react-i18next';
 
 export function ProductsPage() {
+    const { t } = useTranslation();
     const [items, setItems] = useState<ProductListItem[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -28,7 +30,7 @@ export function ProductsPage() {
             setItems(Array.isArray(data) ? data : []);
         } catch (err: any) {
             console.error('API Error:', err);
-            toast.error(err?.message || 'Failed to load products');
+            toast.error(err?.message || t('dashboard.products.messages.load_failed'));
             setItems([]);
         } finally {
             setIsLoading(false);
@@ -45,16 +47,16 @@ export function ProductsPage() {
             const payload = { ...formData, sku: formData.sku!, name: formData.name! };
             if (editingItem) {
                 await productsService.updateProduct(editingItem.id, payload);
-                toast.success('Product updated successfully');
+                toast.success(t('dashboard.products.messages.update_success'));
             } else {
                 await productsService.createProduct(payload);
-                toast.success('Product created successfully');
+                toast.success(t('dashboard.products.messages.create_success'));
             }
             handleCloseDrawer();
             await fetchProducts();
         } catch (err: any) {
             console.error('Error saving product:', err);
-            toast.error(err?.message || 'Failed to save product');
+            toast.error(err?.message || t('dashboard.products.messages.save_failed'));
         }
     };
 
@@ -70,11 +72,11 @@ export function ProductsPage() {
     const handleDelete = async (id: string) => {
         try {
             await productsService.deleteProduct(id);
-            toast.success('Product deleted successfully');
+            toast.success(t('dashboard.products.messages.delete_success'));
             await fetchProducts();
         } catch (err: any) {
             console.error('Delete error:', err);
-            toast.error(err?.message || 'Failed to delete product');
+            toast.error(err?.message || t('dashboard.products.messages.delete_failed'));
         }
     };
 
@@ -86,12 +88,12 @@ export function ProductsPage() {
 
     const filteredItems = items.filter((p) => p.name?.toLowerCase().includes(searchQuery.toLowerCase()) || '' || p.sku?.toLowerCase().includes(searchQuery.toLowerCase()) || '');
 
-    const columns: ColumnDef<ProductListItem>[] = [
-        { header: 'SKU', accessorKey: 'sku' },
-        { header: 'Name', accessorKey: 'name' },
-        { header: 'Organization', accessorKey: 'organizationId' },
+    const columns: ColumnDef<ProductListItem>[] = useMemo(() => [
+        { header: t('dashboard.products.table.sku'), accessorKey: 'sku' },
+        { header: t('dashboard.products.table.name'), accessorKey: 'name' },
+        { header: t('dashboard.products.table.organization'), accessorKey: 'organizationId' },
         {
-            header: 'Actions',
+            header: t('dashboard.products.table.actions'),
             cell: (item) =>
                 (moduleActions.canEdit || moduleActions.canDelete) && (
                     <div className="flex justify-end pr-4">
@@ -99,59 +101,59 @@ export function ProductsPage() {
                             id={item.id}
                             onEdit={moduleActions.canEdit ? handleEdit : undefined}
                             onDelete={moduleActions.canDelete ? handleDelete : undefined}
-                            itemName="product"
+                            itemName={t('common.entities.product')}
                         />
                     </div>
                 ),
         },
-    ];
+    ], [t, moduleActions]);
 
     return (
         <div className="space-y-6 h-full flex flex-col">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 shrink-0">
                 <div>
-                    <h1 className="text-3xl font-bold text-white mb-2">Bills of Materials</h1>
-                    <p className="text-slate-400">Manage your central engineering product catalog and SKUs.</p>
+                    <h1 className="text-3xl font-bold text-white mb-2">{t('dashboard.products.title')}</h1>
+                    <p className="text-slate-400">{t('dashboard.products.description')}</p>
                 </div>
                 <div className="flex items-center gap-3 shrink min-w-0">
                     <Button onClick={() => setIsDrawerOpen(true)} className="flex items-center gap-2 whitespace-nowrap shrink-0">
-                        <Plus className="h-4 w-4" /> Add Product
+                        <Plus className="h-4 w-4" /> {t('dashboard.products.add_button')}
                     </Button>
                 </div>
             </div>
 
             <div className="flex-1 min-h-0 bg-slate-900/50 border border-slate-700/50 rounded-lg p-4 overflow-y-auto">
-                <DataTableGrid data={filteredItems} columns={columns} isLoading={isLoading} onSearch={setSearchQuery} searchPlaceholder="Search by SKU or Name..." pageCount={1} />
+                <DataTableGrid data={filteredItems} columns={columns} isLoading={isLoading} onSearch={setSearchQuery} searchPlaceholder={t('dashboard.products.search_placeholder')} pageCount={1} />
             </div>
 
             <SlideOutDrawer
                 open={isDrawerOpen}
                 onOpenChange={(open) => !open && handleCloseDrawer()}
-                title={editingItem ? 'Edit Product' : 'Create Product'}
-                description="Manage specific product configurations and master data definition.">
+                title={editingItem ? t('dashboard.products.drawer.title_edit') : t('dashboard.products.drawer.title_create')}
+                description={t('dashboard.products.drawer.description')}>
                 <form onSubmit={handleCreateOrUpdate} className="space-y-6 pt-4">
                     <div className="space-y-2">
                         <Label>
-                            SKU <span className="text-destructive">*</span>
+                            {t('dashboard.products.drawer.sku')} <span className="text-destructive">*</span>
                         </Label>
-                        <Input required value={formData.sku || ''} onChange={(e) => setFormData({ ...formData, sku: e.target.value })} placeholder="e.g. PROD-001" />
+                        <Input required value={formData.sku || ''} onChange={(e) => setFormData({ ...formData, sku: e.target.value })} placeholder={t('dashboard.products.drawer.sku_placeholder')} />
                     </div>
                     <div className="space-y-2">
                         <Label>
-                            Name <span className="text-destructive">*</span>
+                            {t('dashboard.products.drawer.name')} <span className="text-destructive">*</span>
                         </Label>
                         <Input
                             required
                             value={formData.name || ''}
                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                            placeholder="e.g. Navigation GPS Module v2"
+                            placeholder={t('dashboard.products.drawer.name_placeholder')}
                         />
                     </div>
                     <div className="pt-6 flex justify-end gap-3 border-t border-slate-800">
                         <Button type="button" variant="outline" onClick={handleCloseDrawer}>
-                            Cancel
+                            {t('common.actions.cancel')}
                         </Button>
-                        <Button type="submit">Save Product</Button>
+                        <Button type="submit">{t('common.actions.save')}</Button>
                     </div>
                 </form>
             </SlideOutDrawer>

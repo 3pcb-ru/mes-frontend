@@ -4,46 +4,48 @@ import { cn } from '@/shared/lib/utils';
 import { useAuth } from '@/features/auth/store/auth.store';
 import { Logo } from '@/shared/components/logo';
 import { Button } from '@/shared/components/ui/button';
+import { useTranslation } from 'react-i18next';
 
 interface DashboardSidebarProps {
     isOpen: boolean;
     onToggle: () => void;
 }
 
-const navSections = [
-    {
-        title: 'Main',
-        items: [
-            { name: 'Dashboard', icon: LayoutDashboard, href: '/dashboard' },
-        ]
-    },
-    {
-        title: 'Operations',
-        items: [
-            { name: 'Production', icon: Activity, href: '/dashboard/work-orders' },
-            { name: 'Warehouse', icon: Warehouse, href: '/dashboard/warehouse' },
-        ]
-    },
-    {
-        title: 'Analytics',
-        items: [
-            { name: 'Reports', icon: FileBarChart, href: '/dashboard/reports' },
-        ]
-    },
-    {
-        title: 'Configuration',
-        items: [
-            { name: 'Bill of Materials', icon: Package, href: '/dashboard/products' },
-            { name: 'Users & Roles', icon: Users, href: '/dashboard/users' },
-            { name: 'Layout', icon: Network, href: '/dashboard/facilities' },
-            { name: 'Settings', icon: Settings, href: '/dashboard/settings' },
-        ]
-    }
-];
-
 export function DashboardSidebar({ isOpen, onToggle }: DashboardSidebarProps) {
     const location = useLocation();
     const { user, detailedProfile } = useAuth();
+    const { t } = useTranslation();
+
+    const navSections = [
+        {
+            title: t('dashboard.sidebar.nav.main'),
+            items: [
+                { name: t('dashboard.sidebar.nav.dashboard'), icon: LayoutDashboard, href: '/dashboard' },
+            ]
+        },
+        {
+            title: t('dashboard.sidebar.nav.operations'),
+            items: [
+                { name: t('dashboard.sidebar.nav.production'), icon: Activity, href: '/dashboard/work-orders' },
+                { name: t('dashboard.sidebar.nav.warehouse'), icon: Warehouse, href: '/dashboard/warehouse' },
+            ]
+        },
+        {
+            title: t('dashboard.sidebar.nav.analytics'),
+            items: [
+                { name: t('dashboard.sidebar.nav.reports'), icon: FileBarChart, href: '/dashboard/reports' },
+            ]
+        },
+        {
+            title: t('dashboard.sidebar.nav.configuration'),
+            items: [
+                { name: t('dashboard.sidebar.nav.products'), icon: Package, href: '/dashboard/products' },
+                { name: t('dashboard.sidebar.nav.users'), icon: Users, href: '/dashboard/users' },
+                { name: t('dashboard.sidebar.nav.facilities'), icon: Network, href: '/dashboard/facilities' },
+                { name: t('dashboard.sidebar.nav.settings'), icon: Settings, href: '/dashboard/settings' },
+            ]
+        }
+    ];
     const organization = detailedProfile?.organization;
     const orgName = organization?.name || user?.organizationName || 'GRVT MES';
     const orgLogo = organization?.logoUrl;

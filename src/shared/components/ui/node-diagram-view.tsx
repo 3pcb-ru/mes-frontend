@@ -22,6 +22,7 @@ import type { FacilityListItem, NodeType } from '@/features/facilities/types/fac
 import { Button } from './button';
 import { Maximize2, LayoutGrid, Plus } from 'lucide-react';
 import { getNodeType } from '@/shared/lib/node-utils';
+import { useTranslation } from 'react-i18next';
 
 const nodeTypes = {
     custom: CustomNode,
@@ -75,6 +76,7 @@ const getLayoutedElements = (nodes: Node<CustomNodeData>[], edges: Edge[], direc
 
 
 export function NodeDiagramView({ nodes: rawNodes, selectedNodeId, onNodeSelect, onAdd }: NodeDiagramViewProps) {
+    const { t } = useTranslation();
     const [nodes, setNodes, onNodesChange] = useNodesState<Node<CustomNodeData>>([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
 
@@ -194,7 +196,7 @@ export function NodeDiagramView({ nodes: rawNodes, selectedNodeId, onNodeSelect,
                         onClick={() => onAdd?.()}
                     >
                         <Plus className="w-4 h-4 mr-1.5" />
-                        Create Node
+                        {t('common.components.node_diagram.create_node')}
                     </Button>
                 </Panel>
                 <Panel position="top-right" className="flex gap-2">
@@ -205,7 +207,7 @@ export function NodeDiagramView({ nodes: rawNodes, selectedNodeId, onNodeSelect,
                         onClick={() => onLayout('TB')}
                     >
                         <LayoutGrid className="w-4 h-4 mr-2" />
-                        Top Down
+                        {t('common.components.node_diagram.top_down')}
                     </Button>
                     <Button 
                         size="sm" 
@@ -214,7 +216,7 @@ export function NodeDiagramView({ nodes: rawNodes, selectedNodeId, onNodeSelect,
                         onClick={() => onLayout('LR')}
                     >
                         <Maximize2 className="w-4 h-4 mr-2" />
-                        Left Right
+                        {t('common.components.node_diagram.left_right')}
                     </Button>
                 </Panel>
             </ReactFlow>

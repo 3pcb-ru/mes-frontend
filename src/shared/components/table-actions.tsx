@@ -11,6 +11,7 @@ import {
     AlertDialogTitle,
 } from './ui/alert-dialog';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface TableActionsProps {
     id: string;
@@ -21,6 +22,7 @@ interface TableActionsProps {
 }
 
 export function TableActions({ id, onEdit, onDelete, isDeleting = false, itemName = 'item' }: TableActionsProps) {
+    const { t } = useTranslation();
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -49,7 +51,7 @@ export function TableActions({ id, onEdit, onDelete, isDeleting = false, itemNam
                         size="sm"
                         onClick={() => onEdit(id)}
                         className="text-cyan-400 hover:text-cyan-300 hover:bg-cyan-500/10"
-                        title="Edit"
+                        title={t('common.actions.edit')}
                     >
                         <Pencil className="h-4 w-4" />
                     </Button>
@@ -61,7 +63,7 @@ export function TableActions({ id, onEdit, onDelete, isDeleting = false, itemNam
                         onClick={() => setIsDeleteDialogOpen(true)}
                         disabled={isDeleting || isLoading}
                         className="text-red-400 hover:text-red-300 hover:bg-red-500/10"
-                        title="Delete"
+                        title={t('common.actions.delete')}
                     >
                         <Trash2 className="h-4 w-4" />
                     </Button>
@@ -72,19 +74,19 @@ export function TableActions({ id, onEdit, onDelete, isDeleting = false, itemNam
                 <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
                     <AlertDialogContent>
                         <AlertDialogHeader>
-                            <AlertDialogTitle>Delete {itemName}</AlertDialogTitle>
+                            <AlertDialogTitle>{t('common.actions.confirm_delete_title', { item: itemName })}</AlertDialogTitle>
                             <AlertDialogDescription>
-                                This action cannot be undone. Are you sure you want to delete this {itemName}?
+                                {t('common.actions.confirm_delete_description', { item: itemName })}
                             </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
-                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogCancel>{t('common.actions.cancel')}</AlertDialogCancel>
                             <AlertDialogAction
                                 onClick={handleDelete}
                                 disabled={isLoading}
                                 className="bg-red-600 hover:bg-red-700"
                             >
-                                {isLoading ? 'Deleting...' : 'Delete'}
+                                {isLoading ? t('common.actions.deleting') : t('common.actions.delete')}
                             </AlertDialogAction>
                         </AlertDialogFooter>
                     </AlertDialogContent>
@@ -93,3 +95,5 @@ export function TableActions({ id, onEdit, onDelete, isDeleting = false, itemNam
         </>
     );
 }
+
+export default TableActions;

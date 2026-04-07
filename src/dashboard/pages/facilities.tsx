@@ -12,6 +12,7 @@ import { StatusBadge } from '@/shared/components/ui/status-badge';
 import { SlideOutDrawer } from '@/shared/components/ui/slide-out-drawer';
 import { Label } from '@/shared/components/ui/label';
 import { useFormValidation } from '@/shared/hooks/use-form-validation';
+import { useTranslation } from 'react-i18next';
 import { FormError } from '@/shared/components/ui/form-error';
 import { TableView } from '@/shared/components/ui/table-view';
 import { NodeDiagramView } from '@/shared/components/ui/node-diagram-view';
@@ -44,6 +45,7 @@ export function FacilitiesPage() {
     const [isCreateOpen, setIsCreateOpen] = useState(false);
     const [formData, setFormData] = useState<Partial<FacilityListItem>>({});
     const { validationErrors, handleApiError, clearError, resetErrors } = useFormValidation();
+    const { t } = useTranslation();
     const [viewMode, setViewMode] = useState<'tree' | 'diagram'>('tree');
 
     // Deletion states
@@ -68,7 +70,7 @@ export function FacilitiesPage() {
             setNodes(Array.isArray(data) ? data : []);
         } catch (err: any) {
             console.error(err);
-            toast.error(err?.message || 'Failed to load nodes');
+            toast.error(err?.message || t('dashboard.facilities.messages.load_failed'));
             setNodes([]);
         } finally {
             setIsLoading(false);
@@ -125,13 +127,13 @@ export function FacilitiesPage() {
         setIsDeleting(true);
         try {
             const result = await facilitiesService.deleteFacility(selectedNodeId);
-            toast.success(result?.message || 'Node deleted successfully');
+            toast.success(result?.message || t('dashboard.facilities.messages.delete_success'));
             setSelectedNodeId(undefined);
             setIsDeleteDialogOpen(false);
             await fetchNodes();
         } catch (err: any) {
             console.error('Error deleting node', err);
-            toast.error(err?.message || 'Failed to delete node. Check for active children or Work Orders.');
+            toast.error(err?.message || t('dashboard.facilities.messages.delete_failed'));
         } finally {
             setIsDeleting(false);
         }
@@ -156,12 +158,12 @@ export function FacilitiesPage() {
                 });
             }
             
-            toast.success('Node updated successfully');
+            toast.success(t('dashboard.facilities.messages.update_success'));
             setIsStatusDialogOpen(false);
             await fetchNodes();
         } catch (err: any) {
             console.error('Error updating node', err);
-            toast.error(err?.message || 'Failed to update node');
+            toast.error(err?.message || t('dashboard.facilities.messages.update_failed'));
         }
     };
 
@@ -170,12 +172,12 @@ export function FacilitiesPage() {
         try {
             const pId = overrideParentId !== undefined ? overrideParentId : newParentId;
             await facilitiesService.moveFacility(selectedNodeId, pId);
-            toast.success('Node moved successfully');
+            toast.success(t('dashboard.facilities.messages.move_success'));
             setIsMoveDialogOpen(false);
             await fetchNodes();
         } catch (err: any) {
             console.error('Error moving node', err);
-            toast.error(err?.message || 'Failed to move node');
+            toast.error(err?.message || t('dashboard.facilities.messages.move_failed'));
         }
     };
 
@@ -190,14 +192,14 @@ export function FacilitiesPage() {
             };
 
             await facilitiesService.createFacility(payload);
-            toast.success('Node created successfully');
+            toast.success(t('dashboard.facilities.messages.create_success'));
             setIsCreateOpen(false);
             setFormData({});
             await fetchNodes();
         } catch (err: any) {
             console.error('Error creating node', err);
             if (!handleApiError(err)) {
-                toast.error(err?.message || 'Failed to create node');
+                toast.error(err?.message || t('dashboard.facilities.messages.create_failed'));
             }
         }
     };
@@ -206,8 +208,8 @@ export function FacilitiesPage() {
         <div className="flex flex-col h-[calc(100vh-8rem)] gap-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 shrink-0">
                 <div>
-                    <h1 className="text-3xl font-bold text-white mb-1">Layout</h1>
-                    <p className="text-slate-400">Map out your facility structure and manage production lines, from factory floors to individual workstations.</p>
+                    <h1 className="text-3xl font-bold text-white mb-1">{t('dashboard.facilities.header.title')}</h1>
+                    <p className="text-slate-400">{t('dashboard.facilities.header.description')}</p>
                 </div>
                 <div className="flex items-center gap-2 bg-slate-900/50 p-1 rounded-lg border border-slate-800">
                     <Button
@@ -217,7 +219,7 @@ export function FacilitiesPage() {
                         onClick={() => setViewMode('tree')}
                     >
                         <Blocks className="h-4 w-4" />
-                        Hierarchy
+                        {t('dashboard.facilities.buttons.hierarchy')}
                     </Button>
                     <Button
                         variant={viewMode === 'diagram' ? 'secondary' : 'ghost'}
@@ -226,7 +228,7 @@ export function FacilitiesPage() {
                         onClick={() => setViewMode('diagram')}
                     >
                         <LayoutGrid className="h-4 w-4" />
-                        Layout Mode
+                        {t('dashboard.facilities.buttons.layout_mode')}
                     </Button>
                 </div>
             </div>
@@ -236,7 +238,7 @@ export function FacilitiesPage() {
                     <Card className="w-1/3 min-w-[300px] flex flex-col bg-slate-900/50 border-slate-700/50 dark text-slate-300">
                         <CardHeader className="border-b border-slate-800 pb-4 shrink-0">
                             <div className="flex gap-2 mb-2">
-                                <Input placeholder="Search nodes..." value={search} onChange={(e) => setSearch(e.target.value)} className="h-9 bg-slate-800/50 text-slate-200" />
+                                <Input placeholder={t('dashboard.facilities.tree.search_placeholder')} value={search} onChange={(e) => setSearch(e.target.value)} className="h-9 bg-slate-800/50 text-slate-200" />
                                 <Button
                                     size="icon"
                                     variant="outline"
@@ -256,7 +258,7 @@ export function FacilitiesPage() {
                                     <Loader2 className="animate-spin text-slate-500" />
                                 </div>
                             ) : treeData.length === 0 ? (
-                                <div className="text-center p-8 text-slate-500 text-sm">No nodes found.</div>
+                                <div className="text-center p-8 text-slate-500 text-sm">{t('dashboard.facilities.tree.no_nodes')}</div>
                             ) : (
                                 <NodeTreeView data={treeData} selectedNodeId={selectedNodeId} onNodeSelect={(n) => setSelectedNodeId(n.id)} />
                             )}
@@ -302,7 +304,7 @@ export function FacilitiesPage() {
                                                 variant="ghost" 
                                                 size="icon" 
                                                 className="h-8 w-8 text-slate-400 hover:text-cyan-400"
-                                                title="Update Node"
+                                                title={t('dashboard.facilities.buttons.update_node')}
                                                 onClick={() => {
                                                     setEditName(selectedNode.name);
                                                     setNewStatus(selectedNode.status || 'IDLE');
@@ -315,7 +317,7 @@ export function FacilitiesPage() {
                                                 variant="ghost" 
                                                 size="icon" 
                                                 className="h-8 w-8 text-slate-400 hover:text-amber-400"
-                                                title="Move Node"
+                                                title={t('dashboard.facilities.buttons.move_node')}
                                                 onClick={() => {
                                                     setNewParentId(selectedNode.parentId || null);
                                                     setIsMoveDialogOpen(true);
@@ -326,7 +328,7 @@ export function FacilitiesPage() {
                                                 variant="ghost" 
                                                 size="icon" 
                                                 className="h-8 w-8 text-slate-400 hover:text-red-400"
-                                                title="Delete Node"
+                                                title={t('dashboard.facilities.buttons.delete_node')}
                                                 onClick={() => setIsDeleteDialogOpen(true)}>
                                                 <Trash2 className="size-4" />
                                             </Button>
@@ -339,13 +341,13 @@ export function FacilitiesPage() {
                             <Dialog open={isMoveDialogOpen} onOpenChange={setIsMoveDialogOpen}>
                                 <DialogContent className="bg-slate-900 border-slate-800 text-slate-200">
                                     <DialogHeader>
-                                        <DialogTitle>Move Node</DialogTitle>
+                                        <DialogTitle>{t('dashboard.facilities.dialogs.move.title')}</DialogTitle>
                                         <DialogDescription className="text-slate-400">
-                                            Select a new parent for "{selectedNode.name}". This will recalculate the hierarchical path.
+                                            {t('dashboard.facilities.dialogs.move.description', { name: selectedNode.name })}
                                         </DialogDescription>
                                     </DialogHeader>
                                     <div className="py-4">
-                                        <Label className="text-slate-400 text-xs mb-2 block">New Parent Node</Label>
+                                        <Label className="text-slate-400 text-xs mb-2 block">{t('dashboard.facilities.dialogs.move.new_parent')}</Label>
                                         <TableView
                                             value={newParentId || ''}
                                             initialLabel={nodes.find(n => n.id === newParentId)?.name}
@@ -355,7 +357,7 @@ export function FacilitiesPage() {
                                                 // Filter out the node itself and its descendants to prevent circularity
                                                 return nodes.filter(n => n.id !== selectedNodeId && (n.path === selectedNode.path || !n.path.startsWith(selectedNode.path + '.')));
                                             }}
-                                            placeholder="Select new parent (or leave empty for Root)..."
+                                            placeholder={t('dashboard.facilities.dialogs.move.placeholder')}
                                         />
                                     </div>
                                     <DialogFooter className="sm:justify-between gap-4 flex-col sm:flex-row">
@@ -371,17 +373,17 @@ export function FacilitiesPage() {
                                                     }}
                                                 >
                                                     <ArrowUpToLine className="size-4 text-amber-400" />
-                                                    Make Independent (Set as Root)
+                                                    {t('dashboard.facilities.dialogs.move.make_independent')}
                                                 </Button>
                                             )}
                                         </div>
                                         <div className="flex gap-2 justify-end">
                                             <DialogClose asChild>
                                                 <Button variant="outline" className="bg-transparent border-slate-700 hover:bg-slate-800 text-slate-300">
-                                                    Cancel
+                                                    {t('dashboard.facilities.buttons.cancel')}
                                                 </Button>
                                             </DialogClose>
-                                            <Button onClick={() => handleMove()} className="bg-cyan-600 hover:bg-cyan-700 text-white">Move Node</Button>
+                                            <Button onClick={() => handleMove()} className="bg-cyan-600 hover:bg-cyan-700 text-white">{t('dashboard.facilities.buttons.move_node')}</Button>
                                         </div>
                                     </DialogFooter>
                                 </DialogContent>
@@ -391,14 +393,14 @@ export function FacilitiesPage() {
                             <Dialog open={isStatusDialogOpen} onOpenChange={setIsStatusDialogOpen}>
                                 <DialogContent className="bg-slate-900 border-slate-800 text-slate-200">
                                     <DialogHeader>
-                                        <DialogTitle>Update Node</DialogTitle>
+                                        <DialogTitle>{t('dashboard.facilities.dialogs.update.title')}</DialogTitle>
                                         <DialogDescription className="text-slate-400">
-                                            Modify identification and status for "{selectedNode.name}"
+                                            {t('dashboard.facilities.dialogs.update.description', { name: selectedNode.name })}
                                         </DialogDescription>
                                     </DialogHeader>
                                     <div className="space-y-4 py-4">
                                         <div className="space-y-2">
-                                            <Label className="text-slate-400 text-xs">Node Name</Label>
+                                            <Label className="text-slate-400 text-xs">{t('dashboard.facilities.dialogs.update.node_name')}</Label>
                                             <Input 
                                                 value={editName} 
                                                 onChange={(e) => setEditName(e.target.value)}
@@ -406,10 +408,10 @@ export function FacilitiesPage() {
                                             />
                                         </div>
                                         <div className="space-y-2">
-                                            <Label className="text-slate-400 text-xs">Node Type</Label>
+                                            <Label className="text-slate-400 text-xs">{t('dashboard.facilities.dialogs.update.node_type')}</Label>
                                             <Select value={editType} onValueChange={(val: any) => setEditType(val)}>
                                                 <SelectTrigger className="bg-slate-800/50 border-slate-700">
-                                                    <SelectValue placeholder="Select type..." />
+                                                    <SelectValue placeholder={t('dashboard.facilities.dialogs.update.select_type')} />
                                                 </SelectTrigger>
                                                 <SelectContent className="bg-slate-900 border-slate-800">
                                                     {NODE_TYPES.map((t) => (
@@ -421,7 +423,7 @@ export function FacilitiesPage() {
                                             </Select>
                                         </div>
                                         <div className="space-y-2">
-                                            <Label className="text-slate-400 text-xs">Status</Label>
+                                            <Label className="text-slate-400 text-xs">{t('dashboard.facilities.dialogs.update.status')}</Label>
                                             <Input 
                                                 value={newStatus} 
                                                 onChange={(e) => setNewStatus(e.target.value.toUpperCase())}
@@ -429,10 +431,10 @@ export function FacilitiesPage() {
                                             />
                                         </div>
                                         <div className="space-y-2">
-                                            <Label className="text-slate-400 text-xs">Reason for Update</Label>
+                                            <Label className="text-slate-400 text-xs">{t('dashboard.facilities.dialogs.update.reason')}</Label>
                                             <Select value={statusReason} onValueChange={(val: any) => setStatusReason(val)}>
                                                 <SelectTrigger className="bg-slate-800/50 border-slate-700">
-                                                    <SelectValue placeholder="Select reason..." />
+                                                    <SelectValue placeholder={t('dashboard.facilities.dialogs.update.select_reason')} />
                                                 </SelectTrigger>
                                                 <SelectContent className="bg-slate-900 border-slate-800">
                                                     {NODE_STATUS_CHANGE_REASONS.map((r) => (
@@ -447,10 +449,10 @@ export function FacilitiesPage() {
                                     <DialogFooter>
                                         <DialogClose asChild>
                                             <Button variant="outline" className="bg-transparent border-slate-700 hover:bg-slate-800 text-slate-300">
-                                                Cancel
+                                                {t('dashboard.facilities.buttons.cancel')}
                                             </Button>
                                         </DialogClose>
-                                        <Button onClick={handleUpdateNode} className="bg-cyan-600 hover:bg-cyan-700 text-white">Save Changes</Button>
+                                        <Button onClick={handleUpdateNode} className="bg-cyan-600 hover:bg-cyan-700 text-white">{t('dashboard.facilities.buttons.save_changes')}</Button>
                                     </DialogFooter>
                                 </DialogContent>
                             </Dialog>
@@ -461,19 +463,19 @@ export function FacilitiesPage() {
                                     <DialogHeader>
                                         <DialogTitle className="flex items-center gap-2">
                                             <AlertTriangle className="text-red-500 size-5" />
-                                            Delete Node
+                                            {t('dashboard.facilities.dialogs.delete.title')}
                                         </DialogTitle>
                                         <DialogDescription className="text-slate-400">
-                                            Are you sure you want to delete "{selectedNode.name}"?
+                                            {t('dashboard.facilities.dialogs.delete.confirm', { name: selectedNode.name })}
                                             <br/><br/>
-                                            If the node has history, it will be archived. If it has no history, it will be permanently removed.
-                                            <strong> Deletion will fail if the node has active child nodes or is referenced in Work Orders.</strong>
+                                            {t('dashboard.facilities.dialogs.delete.warning1')}
+                                            <strong> {t('dashboard.facilities.dialogs.delete.warning2')}</strong>
                                         </DialogDescription>
                                     </DialogHeader>
                                     <DialogFooter>
                                         <DialogClose asChild>
                                             <Button variant="outline" className="bg-transparent border-slate-700 hover:bg-slate-800 text-slate-300">
-                                                Cancel
+                                                {t('dashboard.facilities.buttons.cancel')}
                                             </Button>
                                         </DialogClose>
                                         <Button 
@@ -481,7 +483,7 @@ export function FacilitiesPage() {
                                             disabled={isDeleting}
                                             className="bg-red-600 hover:bg-red-700 text-white"
                                         >
-                                            {isDeleting ? "Deleting..." : "Delete Node"}
+                                            {isDeleting ? t('dashboard.facilities.buttons.deleting') : t('dashboard.facilities.buttons.delete_node')}
                                         </Button>
                                     </DialogFooter>
                                 </DialogContent>
@@ -491,16 +493,16 @@ export function FacilitiesPage() {
                                     <div className="px-6 border-b border-slate-800 bg-slate-900/50 shrink-0">
                                         <TabsList className="bg-transparent border-0 mt-2">
                                             <TabsTrigger value="overview" className="data-[state=active]:bg-slate-800 text-slate-400 data-[state=active]:text-white">
-                                                Overview
+                                                {t('dashboard.facilities.tabs.overview')}
                                             </TabsTrigger>
                                             <TabsTrigger value="contents" className="data-[state=active]:bg-slate-800 text-slate-400 data-[state=active]:text-white">
-                                                Contents
+                                                {t('dashboard.facilities.tabs.contents')}
                                             </TabsTrigger>
                                             <TabsTrigger value="capabilities" className="data-[state=active]:bg-slate-800 text-slate-400 data-[state=active]:text-white">
-                                                Capabilities
+                                                {t('dashboard.facilities.tabs.capabilities')}
                                             </TabsTrigger>
                                             <TabsTrigger value="activity" className="data-[state=active]:bg-slate-800 text-slate-400 data-[state=active]:text-white">
-                                                Activity Log
+                                                {t('dashboard.facilities.tabs.activity')}
                                             </TabsTrigger>
                                         </TabsList>
                                     </div>
@@ -509,27 +511,27 @@ export function FacilitiesPage() {
                                         <TabsContent value="overview" className="m-0 space-y-4">
                                             <div className="bg-slate-800/20 rounded-lg border border-slate-800/50 overflow-hidden divide-y divide-slate-800/50">
                                                 <div className="px-4 py-3 flex justify-between items-center">
-                                                    <span className="text-sm font-medium text-slate-400">Node Type</span>
+                                                    <span className="text-sm font-medium text-slate-400">{t('dashboard.facilities.tabs.content.node_type')}</span>
                                                     <span className="text-sm text-cyan-400 font-bold uppercase tracking-wider">
                                                         {selectedNode.type || getNodeType(`${selectedNode.name} ${selectedNode.path || ''}`)}
                                                     </span>
                                                 </div>
                                                 <div className="px-4 py-3 flex justify-between items-center">
-                                                    <span className="text-sm font-medium text-slate-400">Status</span>
+                                                    <span className="text-sm font-medium text-slate-400">{t('dashboard.facilities.dialogs.update.status')}</span>
                                                     <div className="flex items-center gap-2">
-                                                        <span className="text-sm text-white">{selectedNode.status || 'Unknown'}</span>
+                                                        <span className="text-sm text-white">{selectedNode.status ? t(`common.components.status.${selectedNode.status.toUpperCase()}`) : t('dashboard.facilities.tabs.content.unknown')}</span>
                                                     </div>
                                                 </div>
                                                 <div className="px-4 py-3 flex justify-between items-center min-w-0">
-                                                    <span className="text-sm font-medium text-slate-400 shrink-0 mr-4">Path</span>
-                                                    <span className="text-sm text-white font-mono truncate ml-auto" title={selectedNode.path || 'N/A'}>
-                                                        {selectedNode.path || 'N/A'}
+                                                    <span className="text-sm font-medium text-slate-400 shrink-0 mr-4">{t('dashboard.facilities.tabs.content.path')}</span>
+                                                    <span className="text-sm text-white font-mono truncate ml-auto" title={selectedNode.path || t('dashboard.facilities.tabs.content.na')}>
+                                                        {selectedNode.path || t('dashboard.facilities.tabs.content.na')}
                                                     </span>
                                                 </div>
                                             </div>
                                             {selectedNode.attributes && Object.keys(selectedNode.attributes).length > 0 && (
                                                 <div className="bg-slate-800/30 p-4 rounded-lg border border-slate-700/30">
-                                                    <h3 className="text-sm font-medium text-slate-400 mb-3">Attributes</h3>
+                                                    <h3 className="text-sm font-medium text-slate-400 mb-3">{t('dashboard.facilities.tabs.content.attributes')}</h3>
                                                     <pre className="text-xs text-green-400 font-mono overflow-x-auto">{JSON.stringify(selectedNode.attributes, null, 2)}</pre>
                                                 </div>
                                             )}
@@ -537,7 +539,7 @@ export function FacilitiesPage() {
 
                                         <TabsContent value="contents" className="m-0">
                                             <div className="text-sm text-slate-400 text-center py-10 border border-dashed border-slate-700 rounded-lg">
-                                                Inventory items or sub-nodes will appear here.
+                                                {t('dashboard.facilities.tabs.content.empty_contents')}
                                             </div>
                                         </TabsContent>
 
@@ -550,14 +552,14 @@ export function FacilitiesPage() {
                                                         </div>
                                                     ))
                                                 ) : (
-                                                    <p className="text-sm text-slate-500">No specific capabilities defined.</p>
+                                                    <p className="text-sm text-slate-500">{t('dashboard.facilities.tabs.content.empty_capabilities')}</p>
                                                 )}
                                             </div>
                                         </TabsContent>
 
                                         <TabsContent value="activity" className="m-0">
                                             <div className="space-y-4">
-                                                <p className="text-sm text-slate-500">Traceability feed loads here...</p>
+                                                <p className="text-sm text-slate-500">{t('dashboard.facilities.tabs.content.empty_activity')}</p>
                                             </div>
                                         </TabsContent>
                                     </div>
@@ -567,8 +569,8 @@ export function FacilitiesPage() {
                     ) : (
                         <div className="flex flex-col items-center justify-center h-full text-slate-500 p-6 text-center">
                             <Blocks className="size-16 mb-4 opacity-20" />
-                            <p className="text-lg font-medium text-slate-300">No Node Selected</p>
-                            <p className="max-w-xs mt-2 text-sm">Select a node from the tree to view its details, hierarchy contents, and capabilities.</p>
+                            <p className="text-lg font-medium text-slate-300">{t('dashboard.facilities.empty_state.title')}</p>
+                            <p className="max-w-xs mt-2 text-sm">{t('dashboard.facilities.empty_state.description')}</p>
                         </div>
                     )}
                 </Card>
@@ -577,12 +579,12 @@ export function FacilitiesPage() {
             <SlideOutDrawer
                 open={isCreateOpen}
                 onOpenChange={setIsCreateOpen}
-                title="Create Node"
-                description={formData.parentId ? `Creating a child node under ${nodes.find(n => n.id === formData.parentId)?.name}` : 'Creating a root node.'}>
+                title={t('dashboard.facilities.dialogs.create.title')}
+                description={formData.parentId ? t('dashboard.facilities.dialogs.create.desc_child', { name: nodes.find((n) => n.id === formData.parentId)?.name }) : t('dashboard.facilities.dialogs.create.desc_root')}>
                 <form onSubmit={handleCreate} className="space-y-4 pt-4">
                     {formData.parentId && (
                         <div className="p-3 rounded-lg bg-cyan-500/10 border border-cyan-500/20 mb-4">
-                            <Label className="text-cyan-400 text-xs mb-1 block">Parent Node (Locked)</Label>
+                            <Label className="text-cyan-400 text-xs mb-1 block">{t('dashboard.facilities.dialogs.create.parent_locked')}</Label>
                             <div className="flex items-center gap-2 text-white font-medium">
                                 <BoxSelect className="size-4 text-cyan-500" />
                                 {nodes.find(n => n.id === formData.parentId)?.name}
@@ -590,7 +592,7 @@ export function FacilitiesPage() {
                         </div>
                     )}
                     <div className="space-y-2">
-                        <Label>Node Name</Label>
+                        <Label>{t('dashboard.facilities.dialogs.create.node_name')}</Label>
                         <Input
                             required
                             value={formData.name || ''}
@@ -599,12 +601,12 @@ export function FacilitiesPage() {
                                 setFormData({ ...formData, name: e.target.value });
                                 clearError('name');
                             }}
-                            placeholder="e.g. Assembly Station 1"
+                            placeholder={t('dashboard.facilities.dialogs.create.node_name_placeholder')}
                         />
                         <FormError message={validationErrors.name} />
                     </div>
                     <div className="space-y-2">
-                        <Label>Node Type</Label>
+                        <Label>{t('dashboard.facilities.dialogs.update.node_type')}</Label>
                         <Select 
                             value={formData.type as string || 'OTHER'} 
                             onValueChange={(val) => {
@@ -612,7 +614,7 @@ export function FacilitiesPage() {
                                 clearError('type');
                             }}>
                             <SelectTrigger className="bg-slate-800/50 border-slate-700">
-                                <SelectValue placeholder="Select type..." />
+                                <SelectValue placeholder={t('dashboard.facilities.dialogs.update.select_type')} />
                             </SelectTrigger>
                             <SelectContent className="bg-slate-900 border-slate-800">
                                 {NODE_TYPES.map((t) => (
@@ -625,7 +627,7 @@ export function FacilitiesPage() {
                         <FormError message={validationErrors.type} />
                     </div>
                     <div className="space-y-2">
-                        <Label>Definition ID (Optional)</Label>
+                        <Label>{t('dashboard.facilities.dialogs.create.definition_id')}</Label>
                         <TableView
                             value={formData.definitionId || ''}
                             onChange={(val) => {
@@ -633,16 +635,16 @@ export function FacilitiesPage() {
                                 clearError('definitionId');
                             }}
                             fetchData={() => Promise.resolve([]) /* TODO: Wire up to Definitions API when available */}
-                            placeholder="Select definition..."
+                            placeholder={t('dashboard.facilities.dialogs.create.definition_placeholder')}
                             hasError={!!validationErrors.definitionId}
                         />
                         <FormError message={validationErrors.definitionId} />
                     </div>
                     <div className="pt-4 flex justify-end gap-2">
                         <Button type="button" variant="outline" onClick={() => setIsCreateOpen(false)}>
-                            Cancel
+                            {t('dashboard.facilities.buttons.cancel')}
                         </Button>
-                        <Button type="submit">Create Node</Button>
+                        <Button type="submit">{t('dashboard.facilities.buttons.create_node')}</Button>
                     </div>
                 </form>
             </SlideOutDrawer>

@@ -6,6 +6,7 @@ import { Form, FormField, FormItem, FormLabel, FormControl } from '@/shared/comp
 import { Input } from '@/shared/components/ui/input';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/components/ui/tooltip';
 import { Info } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 type Field = {
   name: string;
@@ -28,6 +29,7 @@ type Props = {
 };
 
 export function CrudWizard({ isOpen, title, description, mode = 'create', fields, initialData = {}, onClose, onSubmit }: Props) {
+  const { t } = useTranslation();
   const form = useForm({ defaultValues: initialData });
 
   // Reset form when initialData or mode changes
@@ -46,7 +48,7 @@ export function CrudWizard({ isOpen, title, description, mode = 'create', fields
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{title ?? (mode === 'create' ? 'Create item' : 'Edit item')}</DialogTitle>
+          <DialogTitle>{title ?? (mode === 'create' ? t('common.actions.create') : t('common.actions.edit'))}</DialogTitle>
           {description && <DialogDescription>{description}</DialogDescription>}
         </DialogHeader>
 
@@ -88,8 +90,8 @@ export function CrudWizard({ isOpen, title, description, mode = 'create', fields
             ))}
 
             <DialogFooter>
-              <Button variant="ghost" type="button" onClick={onClose}>Cancel</Button>
-              <Button type="submit" className="ml-2">{mode === 'create' ? 'Create' : 'Save'}</Button>
+              <Button variant="ghost" type="button" onClick={onClose}>{t('common.actions.cancel')}</Button>
+              <Button type="submit" className="ml-2">{mode === 'create' ? t('common.actions.create') : t('common.actions.save')}</Button>
             </DialogFooter>
           </form>
         </Form>

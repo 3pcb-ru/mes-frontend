@@ -2,23 +2,25 @@ import { Activity, AlertTriangle, Blocks, Hammer } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/shared/components/ui/card';
 import { useAuth } from '@/features/auth/store/auth.store';
 import { StatusBadge } from '@/shared/components/ui/status-badge';
-
-const stats = [
-    { name: 'Active Work Orders', value: '142', change: '+12%', icon: Hammer, color: 'blue' },
-    { name: 'Nodes Down', value: '3', change: '-2', icon: AlertTriangle, color: 'red' },
-    { name: 'Nodes Error', value: '1', change: '0', icon: AlertTriangle, color: 'orange' },
-    { name: 'Recent Trace Activities', value: '891', change: '+18%', icon: Activity, color: 'cyan' },
-];
+import { useTranslation } from 'react-i18next';
 
 export function DashboardHome() {
     const { user } = useAuth();
+    const { t } = useTranslation();
+
+    const stats = [
+        { name: t('dashboard.home.stats.active_work_orders'), value: '142', change: '+12%', icon: Hammer, color: 'blue' },
+        { name: t('dashboard.home.stats.nodes_down'), value: '3', change: '-2', icon: AlertTriangle, color: 'red' },
+        { name: t('dashboard.home.stats.nodes_error'), value: '1', change: '0', icon: AlertTriangle, color: 'orange' },
+        { name: t('dashboard.home.stats.recent_trace_activities'), value: '891', change: '+18%', icon: Activity, color: 'cyan' },
+    ];
 
     return (
         <div className="space-y-8 h-full">
             {/* Welcome Section */}
             <div>
-                <h1 className="text-2xl font-bold text-white mb-2">Welcome back, {user?.firstName || 'User'}! 👋</h1>
-                <p className="text-slate-400">Here's what's happening with your manufacturing operations today.</p>
+                <h1 className="text-2xl font-bold text-white mb-2">{t('dashboard.home.welcome', { name: user?.firstName || t('dashboard.home.user_fallback') })}</h1>
+                <p className="text-slate-400">{t('dashboard.home.subtitle')}</p>
             </div>
 
             {/* Stats Grid */}
@@ -31,7 +33,7 @@ export function DashboardHome() {
                         </CardHeader>
                         <CardContent>
                             <div className="text-2xl font-bold text-white">{stat.value}</div>
-                            <p className="text-xs text-slate-400 mt-1">{stat.change} from last shift</p>
+                            <p className="text-xs text-slate-400 mt-1">{t('dashboard.home.stats.from_last_shift', { change: stat.change })}</p>
                         </CardContent>
                     </Card>
                 ))}
@@ -40,8 +42,8 @@ export function DashboardHome() {
             {/* Recent Activity */}
             <Card className="bg-slate-800/50 border-slate-700/50">
                 <CardHeader>
-                    <CardTitle className="text-white">Recent Traceability Activities</CardTitle>
-                    <CardDescription className="text-slate-400">Latest actions logged across your nodes and work orders.</CardDescription>
+                    <CardTitle className="text-white">{t('dashboard.home.recent_activity.title')}</CardTitle>
+                    <CardDescription className="text-slate-400">{t('dashboard.home.recent_activity.description')}</CardDescription>
                 </CardHeader>
                 <CardContent>
                     <div className="space-y-4">
@@ -51,12 +53,12 @@ export function DashboardHome() {
                                     <Blocks className="h-5 w-5 text-slate-400" />
                                 </div>
                                 <div className="flex-1">
-                                    <p className="text-white font-medium">Node State Changed - Line {i}</p>
-                                    <p className="text-sm text-slate-400">Operator changed station {i}A status to IN_PROGRESS</p>
+                                    <p className="text-white font-medium">{t('dashboard.home.recent_activity.node_state_changed', { line: i })}</p>
+                                    <p className="text-sm text-slate-400">{t('dashboard.home.recent_activity.operator_changed_status', { station: `${i}A`, status: 'IN_PROGRESS' })}</p>
                                 </div>
                                 <div className="text-right">
                                     <StatusBadge status={i === 2 ? 'COMPLETED' : 'IN_PROGRESS'} className="mb-1 block w-fit ml-auto" />
-                                    <p className="text-xs text-slate-500">{i * 15} mins ago</p>
+                                    <p className="text-xs text-slate-500">{t('dashboard.home.recent_activity.mins_ago', { count: i * 15 })}</p>
                                 </div>
                             </div>
                         ))}

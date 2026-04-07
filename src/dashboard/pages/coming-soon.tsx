@@ -4,54 +4,56 @@ import { Construction, ChevronLeft, Package, BarChart3, Settings, FileText, Help
 import { Button } from '@/shared/components/ui/button';
 import { Card, CardContent } from '@/shared/components/ui/card';
 
-// Map specific paths to specific icons and titles for a more tailored experience
-const PAGE_CONFIG: Record<string, { title: string; description: string; icon: LucideIcon; color: string }> = {
-    '/dashboard/products': {
-        title: 'Products Management',
-        description: 'Advanced product catalog and inventory management features are currently under development.',
-        icon: Package,
-        color: 'text-cyan-400',
-    },
-    '/dashboard/settings': {
-        title: 'System Settings',
-        description: 'Comprehensive system configuration and preference management controls are in the works.',
-        icon: Settings,
-        color: 'text-slate-400',
-    },
-    '/dashboard/reports': {
-        title: 'Reports Center',
-        description: 'Generate detailed production, quality, and performance reports with our upcoming reporting engine.',
-        icon: FileText,
-        color: 'text-orange-400',
-    },
-    '/dashboard/help': {
-        title: 'Help & Support',
-        description: 'A comprehensive knowledge base and support ticket system to assist you better.',
-        icon: HelpCircle,
-        color: 'text-green-400',
-    },
-    '/dashboard/messages': {
-        title: 'Messages',
-        description: 'Real-time team collaboration and messaging features are being built.',
-        icon: MessageSquare,
-        color: 'text-blue-400',
-    },
-    '/dashboard/integration': {
-        title: 'Integrations',
-        description: 'Connect with third-party tools and services seamlessly. Integration hub is coming soon.',
-        icon: Blocks,
-        color: 'text-pink-400',
-    },
-};
+import { useTranslation } from 'react-i18next';
 
 export function ComingSoonPage() {
     const navigate = useNavigate();
     const location = useLocation();
+    const { t } = useTranslation();
+
+    const PAGE_CONFIG: Record<string, { title: string; description: string; icon: LucideIcon; color: string }> = {
+        '/dashboard/products': {
+            title: t('dashboard.coming_soon.pages.products.title'),
+            description: t('dashboard.coming_soon.pages.products.description'),
+            icon: Package,
+            color: 'text-cyan-400',
+        },
+        '/dashboard/settings': {
+            title: t('dashboard.coming_soon.pages.settings.title'),
+            description: t('dashboard.coming_soon.pages.settings.description'),
+            icon: Settings,
+            color: 'text-slate-400',
+        },
+        '/dashboard/reports': {
+            title: t('dashboard.coming_soon.pages.reports.title'),
+            description: t('dashboard.coming_soon.pages.reports.description'),
+            icon: FileText,
+            color: 'text-orange-400',
+        },
+        '/dashboard/help': {
+            title: t('dashboard.coming_soon.pages.help.title'),
+            description: t('dashboard.coming_soon.pages.help.description'),
+            icon: HelpCircle,
+            color: 'text-green-400',
+        },
+        '/dashboard/messages': {
+            title: t('dashboard.coming_soon.pages.messages.title'),
+            description: t('dashboard.coming_soon.pages.messages.description'),
+            icon: MessageSquare,
+            color: 'text-blue-400',
+        },
+        '/dashboard/integration': {
+            title: t('dashboard.coming_soon.pages.integration.title'),
+            description: t('dashboard.coming_soon.pages.integration.description'),
+            icon: Blocks,
+            color: 'text-pink-400',
+        },
+    };
 
     // Default configuration if path not found in map
     const defaultConfig = {
-        title: 'Coming Soon',
-        description: "We're working hard to bring you this feature. Stay tuned for updates!",
+        title: t('dashboard.coming_soon.default_title'),
+        description: t('dashboard.coming_soon.default_description'),
         icon: Construction,
         color: 'text-cyan-400',
     };
@@ -94,7 +96,7 @@ export function ComingSoonPage() {
                                     transition={{ delay: 0.8, duration: 1.5, ease: 'easeInOut' }}
                                 />
                             </div>
-                            <p className="text-xs text-slate-500 font-medium tracking-wide uppercase">Development in progress</p>
+                            <p className="text-xs text-slate-500 font-medium tracking-wide uppercase">{t('dashboard.coming_soon.development_in_progress')}</p>
 
                             <div className="pt-6">
                                 <Button
@@ -102,7 +104,7 @@ export function ComingSoonPage() {
                                     onClick={() => navigate('/dashboard')}
                                     className="border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800 hover:border-slate-600 transition-all duration-300">
                                     <ChevronLeft className="w-4 h-4 mr-2" />
-                                    Back to Dashboard
+                                    {t('dashboard.coming_soon.back_to_dashboard')}
                                 </Button>
                             </div>
                         </motion.div>

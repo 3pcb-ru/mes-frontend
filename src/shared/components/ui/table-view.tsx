@@ -4,6 +4,7 @@ import { cn } from './utils';
 import { Button } from './button';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from './command';
 import { Popover, PopoverContent, PopoverTrigger } from './popover';
+import { useTranslation } from 'react-i18next';
 
 interface TableViewOptions {
     value: string;
@@ -36,11 +37,13 @@ export function TableView({
     onChange,
     fetchData,
     mapData = (item) => ({ value: item.id, label: item.name }),
-    placeholder = 'Select an option...',
+    placeholder: customPlaceholder,
     className,
     hasError,
     initialLabel,
 }: TableViewProps) {
+    const { t } = useTranslation();
+    const placeholder = customPlaceholder || t('common.components.table_view.select_option');
     const [open, setOpen] = React.useState(false);
     const [options, setOptions] = React.useState<TableViewOptions[]>([]);
     const [isLoading, setIsLoading] = React.useState(false);
@@ -104,7 +107,7 @@ export function TableView({
             </PopoverTrigger>
             <PopoverContent className="w-[--radix-popover-trigger-width] p-0 bg-slate-900 border-slate-700" align="start">
                 <Command className="bg-transparent text-slate-300">
-                    <CommandInput placeholder="Search..." className="h-9" />
+                    <CommandInput placeholder={t('common.components.table_view.search')} className="h-9" />
                     <CommandList>
                         <CommandEmpty>
                             {isLoading ? (
@@ -112,7 +115,7 @@ export function TableView({
                                     <Loader2 className="h-4 w-4 animate-spin text-slate-500" />
                                 </div>
                             ) : (
-                                "No options found."
+                                t('common.components.table_view.no_options')
                             )}
                         </CommandEmpty>
                         {!isLoading && (
