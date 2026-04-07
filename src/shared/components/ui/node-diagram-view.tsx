@@ -18,9 +18,10 @@ import dagre from 'dagre';
 import '@xyflow/react/dist/style.css';
 
 import { CustomNode, type CustomNodeData } from './custom-node';
-import type { FacilityListItem } from '@/features/facilities/types/facilities.types';
+import type { FacilityListItem, NodeType } from '@/features/facilities/types/facilities.types';
 import { Button } from './button';
 import { Maximize2, LayoutGrid, Plus } from 'lucide-react';
+import { getNodeType } from '@/shared/lib/node-utils';
 
 const nodeTypes = {
     custom: CustomNode,
@@ -72,14 +73,6 @@ const getLayoutedElements = (nodes: Node<CustomNodeData>[], edges: Edge[], direc
     return { nodes: newNodes, edges };
 };
 
-const getNodeType = (path?: string) => {
-    const p = path?.toLowerCase() || '';
-    if (p.includes('factory')) return 'factory';
-    if (p.includes('area')) return 'area';
-    if (p.includes('line')) return 'line';
-    if (p.includes('station')) return 'station';
-    return 'other';
-};
 
 export function NodeDiagramView({ nodes: rawNodes, selectedNodeId, onNodeSelect, onAdd }: NodeDiagramViewProps) {
     const [nodes, setNodes, onNodesChange] = useNodesState<Node<CustomNodeData>>([]);
@@ -92,7 +85,7 @@ export function NodeDiagramView({ nodes: rawNodes, selectedNodeId, onNodeSelect,
             data: {
                 id: n.id,
                 label: n.name,
-                type: n.type || getNodeType(n.path),
+                type: n.type || getNodeType(`${n.name} ${n.path || ''}`),
                 status: n.status || 'IDLE',
                 path: n.path,
                 selected: false,

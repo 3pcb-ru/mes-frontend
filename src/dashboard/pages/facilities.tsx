@@ -16,8 +16,9 @@ import { FormError } from '@/shared/components/ui/form-error';
 import { TableView } from '@/shared/components/ui/table-view';
 import { NodeDiagramView } from '@/shared/components/ui/node-diagram-view';
 import { cn } from '@/shared/lib/utils';
-import { LayoutGrid, AlertTriangle, Trash2, ArrowRightLeft, Settings2 } from 'lucide-react';
+import { LayoutGrid, AlertTriangle, Trash2, ArrowRightLeft, Pencil } from 'lucide-react';
 import { NODE_STATUS_CHANGE_REASONS, NODE_TYPES, type NodeType, type NodeStatusChangeReason } from '@/features/facilities/types/facilities.types';
+import { getNodeType } from '@/shared/lib/node-utils';
 import {
     Dialog,
     DialogContent,
@@ -53,6 +54,7 @@ export function FacilitiesPage() {
     const [isStatusDialogOpen, setIsStatusDialogOpen] = useState(false);
     const [newStatus, setNewStatus] = useState<string>('');
     const [editName, setEditName] = useState<string>('');
+    const [editType, setEditType] = useState<NodeType>('OTHER');
     const [statusReason, setStatusReason] = useState<NodeStatusChangeReason>('MAINTENANCE');
 
     // Move states
@@ -85,15 +87,7 @@ export function FacilitiesPage() {
             map.set(n.id, {
                 id: n.id,
                 label: n.name,
-                type: n.path?.toLowerCase().includes('factory')
-                    ? 'factory'
-                    : n.path?.toLowerCase().includes('area')
-                      ? 'area'
-                      : n.path?.toLowerCase().includes('line')
-                        ? 'line'
-                        : n.path?.toLowerCase().includes('station')
-                          ? 'station'
-                          : 'other',
+                type: (n.type || getNodeType(`${n.name} ${n.path || ''}`)) as any,
                 children: [],
             });
         });
@@ -146,10 +140,11 @@ export function FacilitiesPage() {
     const handleUpdateNode = async () => {
         if (!selectedNodeId) return;
         try {
-            // Update name if changed
-            if (editName !== (selectedNode?.name || '')) {
+            // Update name or type if changed
+            if (editName !== (selectedNode?.name || '') || editType !== (selectedNode?.type || 'OTHER')) {
                 await facilitiesService.updateFacility(selectedNodeId, {
                     name: editName,
+                    type: editType,
                 });
             }
             
@@ -310,9 +305,10 @@ export function FacilitiesPage() {
                                                 onClick={() => {
                                                     setEditName(selectedNode.name);
                                                     setNewStatus(selectedNode.status || 'IDLE');
+                                                    setEditType((selectedNode.type as NodeType) || 'OTHER');
                                                     setIsStatusDialogOpen(true);
                                                 }}>
-                                                <Settings2 className="size-4" />
+                                                <Pencil className="size-4" />
                                             </Button>
                                             <Button 
                                                 variant="ghost" 
@@ -389,6 +385,21 @@ export function FacilitiesPage() {
                                                 onChange={(e) => setEditName(e.target.value)}
                                                 className="bg-slate-800/50 border-slate-700"
                                             />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <Label className="text-slate-400 text-xs">Node Type</Label>
+                                            <Select value={editType} onValueChange={(val: any) => setEditType(val)}>
+                                                <SelectTrigger className="bg-slate-800/50 border-slate-700">
+                                                    <SelectValue placeholder="Select type..." />
+                                                </SelectTrigger>
+                                                <SelectContent className="bg-slate-900 border-slate-800">
+                                                    {NODE_TYPES.map((t) => (
+                                                        <SelectItem key={t.value} value={t.value} className="text-slate-200 focus:bg-slate-800">
+                                                            {t.label}
+                                                        </SelectItem>
+                                                    ))}
+                                                </SelectContent>
+                                            </Select>
                                         </div>
                                         <div className="space-y-2">
                                             <Label className="text-slate-400 text-xs">Status</Label>
@@ -478,6 +489,12 @@ export function FacilitiesPage() {
                                     <div className="flex-1 overflow-y-auto p-6">
                                         <TabsContent value="overview" className="m-0 space-y-4">
                                             <div className="bg-slate-800/20 rounded-lg border border-slate-800/50 overflow-hidden divide-y divide-slate-800/50">
+                                                <div className="px-4 py-3 flex justify-between items-center">
+                                                    <span className="text-sm font-medium text-slate-400">Node Type</span>
+                                                    <span className="text-sm text-cyan-400 font-bold uppercase tracking-wider">
+                                                        {selectedNode.type || getNodeType(`${selectedNode.name} ${selectedNode.path || ''}`)}
+                                                    </span>
+                                                </div>
                                                 <div className="px-4 py-3 flex justify-between items-center">
                                                     <span className="text-sm font-medium text-slate-400">Status</span>
                                                     <div className="flex items-center gap-2">

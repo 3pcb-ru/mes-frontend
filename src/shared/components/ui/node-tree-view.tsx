@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ChevronRight, ChevronDown, File, Component, LayoutGrid, Target } from 'lucide-react';
+import { ChevronRight, ChevronDown, Factory, Cpu, Box, Truck, ShieldCheck, Package } from 'lucide-react';
 import { cn } from './utils';
 
 export interface TreeNode {
@@ -25,17 +25,20 @@ interface TreeNodeItemProps {
 }
 
 function getNodeIcon(type?: string) {
-    switch (type) {
-        case 'factory':
-            return <Component className="size-4 text-blue-500" />;
-        case 'area':
-            return <LayoutGrid className="size-4 text-yellow-500" />;
-        case 'line':
-            return <Component className="size-4 text-green-500" />;
-        case 'station':
-            return <File className="size-4 text-slate-500" />;
+    const t = type?.toUpperCase() || 'OTHER';
+    switch (t) {
+        case 'FACILITY':
+            return <Factory className="size-4 text-cyan-400" />;
+        case 'PRODUCTION':
+            return <Cpu className="size-4 text-emerald-400" />;
+        case 'WAREHOUSE':
+            return <Box className="size-4 text-amber-400" />;
+        case 'LOGISTICS':
+            return <Truck className="size-4 text-indigo-400" />;
+        case 'QUALITY':
+            return <ShieldCheck className="size-4 text-rose-400" />;
         default:
-            return <Target className="size-4 text-muted-foreground" />;
+            return <Package className="size-4 text-slate-400" />;
     }
 }
 
