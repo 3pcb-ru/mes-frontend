@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Button } from '@/shared/components/ui/button';
 import heroMockupImage from '@/assets/hero-mockup.png';
+import animatedHeroVideo from '@/assets/animated-hero.mp4';
 
 export function HeroSection() {
     const { t } = useTranslation();
@@ -11,11 +12,22 @@ export function HeroSection() {
         <section className="relative overflow-hidden min-h-screen flex items-center justify-center bg-[#030213]">
             {/* Background: blurred hero image fills the full section */}
             <div className="absolute inset-0 z-0">
-                <img
-                    src={heroMockupImage}
-                    alt="Manufacturing Automation Background"
+                <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    poster={heroMockupImage}
                     className="w-full h-full object-cover opacity-40 scale-105"
-                />
+                >
+                    <source src={animatedHeroVideo} type="video/mp4" />
+                    {/* Fallback for browsers that don't support video */}
+                    <img
+                        src={heroMockupImage}
+                        alt="Manufacturing Automation Background"
+                        className="w-full h-full object-cover"
+                    />
+                </video>
                 {/* Dark overlay gradient on top of image */}
                 <div className="absolute inset-0 bg-gradient-to-b from-[#030213]/40 via-[#030213]/25 to-[#030213]" />
             </div>
