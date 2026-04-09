@@ -14,7 +14,7 @@ function ISA95Hierarchy() {
         { id: 'L4', name: 'ERP / Office (L4)', icon: Database, color: 'text-purple-400', bg: 'bg-purple-500/10' },
         { id: 'L3', name: 'MES / GRVT (L3)', icon: Activity, color: 'text-cyan-400', bg: 'bg-cyan-500/20', active: true },
         { id: 'L2', name: 'Machinery (L2)', icon: Zap, color: 'text-amber-400', bg: 'bg-amber-500/10' },
-        { id: 'L1', name: 'Physical (L1)', icon: Cpu, color: 'text-emerald-400', bg: 'bg-emerald-500/10' }
+        { id: 'L1', name: 'Physical (L1)', icon: Cpu, color: 'text-emerald-400', bg: 'bg-emerald-500/10' },
     ];
 
     return (
@@ -28,30 +28,21 @@ function ISA95Hierarchy() {
                             viewport={{ once: true }}
                             transition={{ delay: i * 0.1 }}
                             className={`w-full max-w-lg p-5 rounded-2xl border transition-all duration-500 ${
-                                level.active 
-                                    ? 'bg-cyan-500/10 border-cyan-500/30 shadow-[0_0_40px_rgba(6,182,212,0.1)] scale-105 z-10' 
-                                    : 'bg-white/5 border-white/5 opacity-60'
-                            }`}
-                        >
+                                level.active ? 'bg-cyan-500/10 border-cyan-500/30 shadow-[0_0_40px_rgba(6,182,212,0.1)] scale-105 z-10' : 'bg-white/5 border-white/5 opacity-60'
+                            }`}>
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-4">
                                     <div className={`h-10 w-10 rounded-xl ${level.bg} flex items-center justify-center`}>
                                         <level.icon className={`h-5 w-5 ${level.color}`} />
                                     </div>
-                                    <span className={`font-bold tracking-wide ${level.active ? 'text-white' : 'text-slate-400 text-sm'}`}>
-                                        {level.name}
-                                    </span>
+                                    <span className={`font-bold tracking-wide ${level.active ? 'text-white' : 'text-slate-400 text-sm'}`}>{level.name}</span>
                                 </div>
                                 {level.active && (
-                                    <span className="text-[10px] font-black uppercase tracking-widest bg-cyan-500 text-black px-2 py-0.5 rounded">
-                                        Independent L3 Layer
-                                    </span>
+                                    <span className="text-[10px] font-black uppercase tracking-widest bg-cyan-500 text-black px-2 py-0.5 rounded">Independent L3 Layer</span>
                                 )}
                             </div>
                         </motion.div>
-                        {i < levels.length - 1 && (
-                            <div className="h-6 w-px bg-gradient-to-b from-slate-700 to-transparent my-1 opacity-50" />
-                        )}
+                        {i < levels.length - 1 && <div className="h-6 w-px bg-gradient-to-b from-slate-700 to-transparent my-1 opacity-50" />}
                     </div>
                 ))}
             </div>
@@ -117,13 +108,9 @@ export function SolutionsSection() {
 
                     <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight">
                         {t('solutions.title_prefix', 'Built to')}{' '}
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">
-                            {t('solutions.title_highlight', 'Solve')}
-                        </span>
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">{t('solutions.title_highlight', 'Solve')}</span>
                     </h2>
-                    <p className="text-xl text-slate-400 max-w-3xl mx-auto font-light leading-relaxed">
-                        {t('solutions.subtitle')}
-                    </p>
+                    <p className="text-xl text-slate-400 max-w-3xl mx-auto font-light leading-relaxed">{t('solutions.subtitle')}</p>
                 </div>
 
                 {/* ISA-95 Hierarchy Visual */}
@@ -161,11 +148,11 @@ export function SolutionsSection() {
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.7, delay: 0.2 }}
                                 className="w-full lg:w-1/2">
-                                <div className="relative rounded-2xl p-1 bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700/50 shadow-2xl overflow-hidden group">
-                                    {/* Glass reflection */}
-                                    <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                                <div className="relative rounded-2xl p-1 bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700/50 shadow-2xl overflow-hidden group transition-all duration-500 hover:-translate-y-2 hover:border-cyan-500/30 hover:shadow-[0_20px_40px_rgba(6,182,212,0.15)]">
+                                    {/* Subtle background glow */}
+                                    <div className="absolute inset-0 bg-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                                    <div className="bg-slate-950 rounded-xl overflow-hidden">
+                                    <div className="relative z-10 bg-slate-950 rounded-xl overflow-hidden">
                                         <div className="relative aspect-video">
                                             <div className="absolute top-4 left-4 z-10 bg-green-500/10 border border-green-500/20 backdrop-blur-md px-3 py-1.5 rounded-full flex items-center gap-2">
                                                 <CheckCircle2 className="h-4 w-4 text-green-400" />
@@ -174,7 +161,7 @@ export function SolutionsSection() {
                                             <img
                                                 src={item.problemImg}
                                                 alt={item.solves}
-                                                className="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-opacity duration-500 mix-blend-screen"
+                                                className="w-full h-full object-cover opacity-60 transition-opacity duration-500 mix-blend-screen"
                                             />
                                             <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent" />
                                         </div>
