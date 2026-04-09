@@ -1,12 +1,63 @@
 import { motion } from 'motion/react';
 import { useTranslation } from 'react-i18next';
-import { Package, Zap, Database, Layers, CheckCircle2 } from 'lucide-react';
+import { Package, Zap, Database, Layers, CheckCircle2, Cpu, Activity, ArrowDown } from 'lucide-react';
 
 // Asset imports from old about page
 import open_connectivity from '@/assets/why/open_connectivity.png';
 import material_intelligence from '@/assets/why/material_intelligence.png';
 import trace_and_as_built from '@/assets/why/trace_and_as_built.png';
 import process_safety_and_interlocks from '@/assets/why/process_safety_and_interlocks.png';
+
+function ISA95Hierarchy() {
+    const { t } = useTranslation();
+    const levels = [
+        { id: 'L4', name: 'ERP / Office (L4)', icon: Database, color: 'text-purple-400', bg: 'bg-purple-500/10' },
+        { id: 'L3', name: 'MES / GRVT (L3)', icon: Activity, color: 'text-cyan-400', bg: 'bg-cyan-500/20', active: true },
+        { id: 'L2', name: 'Machinery (L2)', icon: Zap, color: 'text-amber-400', bg: 'bg-amber-500/10' },
+        { id: 'L1', name: 'Physical (L1)', icon: Cpu, color: 'text-emerald-400', bg: 'bg-emerald-500/10' }
+    ];
+
+    return (
+        <div className="max-w-4xl mx-auto mb-24 px-4 overflow-hidden">
+            <div className="relative flex flex-col items-center gap-4">
+                {levels.map((level, i) => (
+                    <div key={level.id} className="relative w-full flex flex-col items-center">
+                        <motion.div
+                            initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: i * 0.1 }}
+                            className={`w-full max-w-lg p-5 rounded-2xl border transition-all duration-500 ${
+                                level.active 
+                                    ? 'bg-cyan-500/10 border-cyan-500/30 shadow-[0_0_40px_rgba(6,182,212,0.1)] scale-105 z-10' 
+                                    : 'bg-white/5 border-white/5 opacity-60'
+                            }`}
+                        >
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-4">
+                                    <div className={`h-10 w-10 rounded-xl ${level.bg} flex items-center justify-center`}>
+                                        <level.icon className={`h-5 w-5 ${level.color}`} />
+                                    </div>
+                                    <span className={`font-bold tracking-wide ${level.active ? 'text-white' : 'text-slate-400 text-sm'}`}>
+                                        {level.name}
+                                    </span>
+                                </div>
+                                {level.active && (
+                                    <span className="text-[10px] font-black uppercase tracking-widest bg-cyan-500 text-black px-2 py-0.5 rounded">
+                                        Independent L3 Layer
+                                    </span>
+                                )}
+                            </div>
+                        </motion.div>
+                        {i < levels.length - 1 && (
+                            <div className="h-6 w-px bg-gradient-to-b from-slate-700 to-transparent my-1 opacity-50" />
+                        )}
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+}
 
 export function SolutionsSection() {
     const { t } = useTranslation();
@@ -74,6 +125,9 @@ export function SolutionsSection() {
                         {t('solutions.subtitle')}
                     </p>
                 </div>
+
+                {/* ISA-95 Hierarchy Visual */}
+                <ISA95Hierarchy />
 
                 <div className="space-y-32">
                     {solutions.map((item, index) => (

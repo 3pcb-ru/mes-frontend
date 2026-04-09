@@ -2,6 +2,7 @@ import { motion } from 'motion/react';
 import { useTranslation } from 'react-i18next';
 import { Globe, Target, Eye, Users, ArrowRight, MapPin, Lightbulb, Heart, Zap } from 'lucide-react';
 import { Button } from '@/shared/components/ui/button';
+import { SEO } from '@/shared/components/seo';
 
 export function AboutPage() {
     const { t } = useTranslation();
@@ -59,6 +60,10 @@ export function AboutPage() {
 
     return (
         <main className="min-h-screen bg-[#030213] text-slate-300 selection:bg-cyan-500/30">
+            <SEO 
+                title={t('seo.about_title')} 
+                description={t('seo.about_description')} 
+            />
 
             {/* ─── HERO: Who We Are ─── */}
             <section className="relative pt-36 pb-24 overflow-hidden">

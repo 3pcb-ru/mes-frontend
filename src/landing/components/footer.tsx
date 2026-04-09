@@ -90,8 +90,28 @@ export function Footer() {
                     </div>
                 </div>
 
-                <div className="mt-12 pt-2 border-t border-slate-800 text-center text-sm">
-                    <p>&copy; {new Date().getFullYear()} GRVT MES. {t('footer.rights')}</p>
+                <div className="mt-12 pt-2 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-6 text-sm">
+                    <p>
+                        &copy; {new Date().getFullYear()} GRVT MES. {t('footer.rights')}
+                    </p>
+                    <div className="flex flex-wrap justify-center items-center gap-x-8 gap-y-2">
+                        <a
+                            href="https://www.apache.org/licenses/LICENSE-2.0"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="hover:text-cyan-400 transition-colors inline-flex items-center gap-2">
+                            <span className="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[10px] font-bold tracking-wider uppercase">Apache-2.0</span>
+                            License
+                        </a>
+                        <a
+                            href="https://dannie.cc"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-slate-300 hover:text-cyan-400 transition-all font-medium flex items-center gap-1.5 group">
+                            <span>Powered by</span>
+                            <span className="text-white group-hover:text-cyan-400">Dannie</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </footer>

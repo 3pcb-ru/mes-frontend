@@ -1,4 +1,16 @@
 {
+  "seo": {
+    "default_title": "GRVT MES | Independent ISA-95 Level 3 Manufacturing Execution System",
+    "default_description": "GRVT is an open-source, ISA-95 compliant Level 3 MES built for SME electronics manufacturers. Perfect for SMT, PCB, and PCBA production control.",
+    "home_title": "Home | GRVT MES - The Independent Level 3 Layer",
+    "home_description": "Bridge the gap between your factory floor (L2) and ERP (L4) with GRVT's independent Level 3 MES. Lightweight, professional, and open-source.",
+    "about_title": "About Us | Designed by Manufacturing Experience",
+    "about_description": "Meet the Dannie team—factory owners and engineers who built GRVT to solve real-world PCB assembly and SMT production challenges.",
+    "privacy_title": "Privacy Policy | Industrial Data Security",
+    "privacy_description": "Learn how GRVT and the Dannie ecosystem manage your industrial data with professional standards and transparency.",
+    "terms_title": "Terms of Service | Industrial Usage Agreements",
+    "terms_description": "Read our terms for professional industrial use, including our production liability disclaimers and open-source license agreements."
+  },
   "nav": {
     "home": "Home",
     "about": "About Us",
@@ -11,25 +23,25 @@
   },
   "hero": {
     "badge": "The Next Generation of Manufacturing",
-    "title_1": "Ditch the Bloat.",
-    "title_2": "Take Control.",
-    "subtitle": "GRVT MES is a lightweight, cloud-based Manufacturing Execution System built for SMEs that want real production control — without ERP complexity.",
+    "title_1": "Ditch the Chaos.",
+    "title_2": "Pure Level 3 Control.",
+    "subtitle": "GRVT is an independent, ISA-95 compliant Level 3 MES designed to bridge the gap between your factory floor (L2) and any ERP (L4). Lightweight, open-source, and built for SMT precision.",
     "trust_1": "Fully ISA-95 Compliant",
-    "trust_2": "100% ERP-Agnostic",
-    "trust_3": "Deploy in Days, Not Months",
-    "cta_primary": "Launch Your Free MES",
-    "cta_secondary": "See the Architecture",
+    "trust_2": "100% ERP-Independent",
+    "trust_3": "Apache-2.0 Open Source",
+    "cta_primary": "Launch Your Free MES Core",
+    "cta_secondary": "Explore the Ecosystem",
     "cta": "Get Started"
   },
   "about": {
-    "hero_badge": "Who We Are",
+    "hero_badge": "Designed by Experience",
     "hero_title_prefix": "We Are",
-    "hero_title": "We Are Dannie",
-    "hero_subtitle": "A global Electronic Manufacturing Services (EMS) company with roots in Europe and a presence across three continents.",
-    "what_we_do_badge": "What We Do",
-    "what_we_do_title": "From Design File to Finished Product.",
-    "what_we_do_desc_1": "Dannie provides end-to-end electronics manufacturing services — from PCB assembly and component sourcing to full system integration and box builds.",
-    "what_we_do_desc_2": "Whether you're launching a first prototype or scaling to tens of thousands of units, we deliver with the same standard: full traceability, zero surprises.",
+    "hero_title": "The Dannie Team",
+    "hero_subtitle": "A team of factory owners, engineers, and production leads who spent a decade running high-mix SMT lines before writing a single line of code for GRVT.",
+    "what_we_do_badge": "The Dannie Ecosystem",
+    "what_we_do_title": "Bridging Design to Delivery.",
+    "what_we_do_desc_1": "GRVT MES is supported by Dannie's global manufacturing network. While the software provides the L3 control layer, our e-commerce platform at dannie.cc provides the sourcing, DFM checking, and Gerber-to-PCBA ordering infrastructure.",
+    "what_we_do_desc_2": "We don’t just sell software; we provide the blueprint for digital manufacturing. From prototype to mass production, we ensure your data flow is as seamless as your material flow.",
     "goal_vision_badge": "Our Goal & Vision",
     "goal_title": "Our Goal",
     "goal_desc": "To become the world's most reliable and transparent manufacturing partner for hardware companies — removing uncertainty from the supply chain, one build at a time.",
@@ -106,11 +118,11 @@
     "cta_desc": "Let's talk about your project. Our team is ready to take it from schematic to shipment."
   },
   "solutions": {
-    "badge": "The \"Light MES\" Approach",
-    "title_prefix": "Built to",
-    "title_highlight": "Solve",
-    "title": "Built to Solve",
-    "subtitle": "SME electronics manufacturers are not served well by monolithic MES or by spreadsheets. We target the \"Excel Gap\" by delivering rapid, role-specific solutions that directly eliminate your biggest chaotic problems.",
+    "badge": "The ISA-95 Compliant Stack",
+    "title_prefix": "Dedicated",
+    "title_highlight": "Level 3 Control",
+    "title": "Dedicated Level 3 Control",
+    "subtitle": "Professional electronics manufacturing requires a distinct execution layer. GRVT bridges the 'Excel Gap' between machinery (L2) and office systems (L4), delivering rapid, modular solutions for your most critical SMT challenges.",
     "problem_solved": "Problem Solved",
     "mats": {
       "title": "Material Intelligence",
@@ -887,34 +899,58 @@
       "next": "Next slide"
     }
   },
+  "seo": {
+    "home_title": "GRVT MES | Independent ISA-95 Level 3 Manufacturing Execution System",
+    "home_description": "GRVT is an open-source, ISA-95 compliant Level 3 MES built for SME electronics manufacturers. Scale your factory with pure L3 control.",
+    "about_title": "About Us | Dannie Global EMS & Manufacturing Expertise",
+    "about_description": "Learn about the team behind GRVT MES. Dannie is a global EMS partner providing PCB/PCBA manufacturing and full system integration across Europe and Asia.",
+    "privacy_title": "Privacy Policy | Industrial Data Protection",
+    "privacy_description": "Read how we handle your professional manufacturing data and maintain Level 3 security standards.",
+    "terms_title": "Terms of Service | Production Liability & Licensing",
+    "terms_description": "Understand the Apache 2.0 licensing and the professional production liability terms for using the GRVT MES platform."
+  },
+  "dannie_widget": {
+    "badge": "The Dannie Ecosystem",
+    "title_1": "From MES Control to",
+    "title_highlight": "Instant PCB Ordering",
+    "subtitle": "Our MES platform connects seamlessly with the Dannie e-commerce engine. Securely upload your designs for instant DFM analysis and competitive pricing.",
+    "feature_1": "Free Online Gerber Viewer",
+    "feature_2": "Real-time DFM Analysis",
+    "feature_3": "Global Sourcing Network",
+    "feature_4": "Prototype to Production",
+    "cta_badge": "Launch Ecosystem",
+    "cta_title": "Dannie.cc Portal",
+    "cta_button": "Visit Storefront",
+    "footer": "No login required for Gerber view"
+  },
   "legal": {
     "terms": {
       "title": "Terms of Service",
       "last_updated": "Last updated",
-      "s1_title": "1. Acceptance of Terms",
-      "s1_content": "By accessing or using GRVT MES, you agree to be bound by these Terms of Service. If you do not agree to all of these terms, do not use our services.",
-      "s2_title": "2. Use of Service",
-      "s2_content": "You are responsible for maintaining the confidentiality of your account and password. You agree to accept responsibility for all activities that occur under your account.",
-      "s3_title": "3. Intellectual Property",
-      "s3_content": "The service and its original content, features, and functionality are and will remain the exclusive property of GRVT MES and its licensors.",
-      "s4_title": "4. Limitation of Liability",
-      "s4_content": "In no event shall GRVT MES, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential or punitive damages.",
-      "s5_title": "5. Changes to Terms",
-      "s5_content": "We reserve the right, at our sole discretion, to modify or replace these Terms at any time. What constitutes a material change will be determined at our sole discretion."
+      "s1_title": "1. Industrial Use & Acceptance",
+      "s1_content": "By accessing GRVT MES, you agree to these terms for professional industrial use. This platform is provided by Dannie as a free Level 3 MES tool to support the PCB/PCBA manufacturing community. Usage is 'as is' and subject to professional oversight.",
+      "s2_title": "2. Production Liability Disclaimer",
+      "s2_content": "CRITICAL: GRVT MES is a free tool. In no event shall Dannie or the developers be liable for any production errors, manufacturing scrap, financial losses, or physical damages resulting from the use of this software. You are solely responsible for final quality control (QC) and production outcomes.",
+      "s3_title": "3. Open Source & Licensing",
+      "s3_content": "GRVT MES is licensed under the Apache License, Version 2.0. You are free to use, modify, and distribute the code, provided you adhere to the license terms. The software is provided WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND.",
+      "s4_title": "4. Ecosystem Integration",
+      "s4_content": "This service may integrate with other Dannie platforms (e.g., dannie.cc). While we strive for seamless connectivity between MES and E-commerce ordering, each service operates under its own specific functional and legal agreements.",
+      "s5_title": "5. Account Responsibility",
+      "s5_content": "You are responsible for the data integrity of your organization, facility layouts, and work orders. We provide the infrastructure; you provide the professional manufacturing logic."
     },
     "privacy": {
       "title": "Privacy Policy",
       "last_updated": "Last updated",
-      "s1_title": "1. Information We Collect",
-      "s1_content": "We collect information you provide directly to us, such as when you create an account, use our services, or communicate with us. This may include your name, email address, and company information.",
-      "s2_title": "2. How We Use Your Information",
-      "s2_content": "We use the information we collect to provide, maintain, and improve our services, to develop new ones, and to protect GRVT MES and our users.",
-      "s3_title": "3. Data Security",
-      "s3_content": "We use administrative, technical, and physical security measures to help protect your personal information. While we have taken reasonable steps to secure the personal information you provide to us, please be aware that despite our efforts, no security measures are perfect or impenetrable.",
-      "s4_title": "4. Sharing of Information",
-      "s4_content": "We do not share your personal information with companies, organizations, or individuals outside of GRVT MES except in the cases described in this policy, such as with your consent or for legal reasons.",
-      "s5_title": "5. Your Right to Access",
-      "s5_content": "You have the right to request a copy of the information that we hold about you. If you would like a copy of some or all of your personal information, please email us."
+      "s1_title": "1. Industrial Data Collection",
+      "s1_content": "We collect professional information (name, work email, company name) and manufacturing metadata (facility nodes, BOM structures) required to operate your Level 3 MES. We do not currently store highly sensitive personal financial data on this platform.",
+      "s2_title": "2. International Data Flow",
+      "s2_content": "Dannie is a global entity. Your data may be processed in the EU (Lithuania) or other regional hubs. We adhere to high standards of data protection (GDPR-aligned) regardless of where the processing occurs.",
+      "s3_title": "3. Purpose of Processing",
+      "s3_content": "The primary purpose of this tool is to provide free production value and act as a gateway to the broader Dannie ecosystem, including our e-commerce and assembly services at dannie.cc.",
+      "s4_title": "4. Data Security & Risk",
+      "s4_content": "We implement industry-standard technical and organizational measures. However, as an open-access free tool, you acknowledge that no cloud system is 100% impenetrable and you use the service at your own risk.",
+      "s5_title": "5. Data Retention",
+      "s5_content": "We retain your manufacturing configurations as long as your account is active. You may request data deletion or account closure at any time through our support channels."
     }
   }
 }

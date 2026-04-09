@@ -1,10 +1,15 @@
 import { useTranslation } from 'react-i18next';
+import { SEO } from '@/shared/components/seo';
 
 export function PrivacyPage() {
     const { t, i18n } = useTranslation();
 
     return (
         <main className="pt-32 pb-20 px-4 md:px-6 max-w-4xl mx-auto">
+            <SEO 
+                title={t('seo.privacy_title')} 
+                description={t('seo.privacy_description')} 
+            />
             <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-8 text-center">{t('legal.privacy.title')}</h1>
 
             <div className="space-y-8 text-slate-300">

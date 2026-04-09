@@ -28,7 +28,7 @@
     "hero_subtitle": "Avrupa kökenli ve üç kıtada varlığı olan küresel bir Elektronik Üretim Hizmetleri (EMS) şirketiyiz.",
     "what_we_do_badge": "Ne Yapıyoruz",
     "what_we_do_title": "Tasarım Dosyasından Bitmiş Ürüne.",
-    "what_we_do_desc_1": "Dannie, PCB montajı ve bileşen tedariğinden tam sistem entegrasyonuna ve kutu yapımına kadar uçtan uca elektronik üretim hizmetleri sunar.",
+    "what_we_do_desc_1": "GRVT MES, Dannie'nin küresel üretim ağı tarafından desteklenmektedir. Yazılım L3 kontrol katmanını sağlarken, dannie.cc adresindeki e-ticaret platformumuz tedarik, DFM kontrolü ve Gerber-PCBA sipariş altyapısını sunar.",
     "what_we_do_desc_2": "İster ilk prototipinizi başlatın, ister on binlerce birime ölçeklendirin, aynı standartla teslimat yapıyoruz: tam izlenebilirlik, sıfır sürpriz.",
     "goal_vision_badge": "Hedefimiz ve Vizyonumuz",
     "goal_title": "Hedefimiz",
@@ -183,6 +183,30 @@
     "no_erp": "Sözleşme yok. ERP gerekmez.",
     "button": "Şimdi Başlayın"
   },
+  "seo": {
+    "home_title": "GRVT MES | Bağımsız ISA-95 Seviye 3 Üretim Yürütme Sistemi",
+    "home_description": "GRVT, KOBİ elektronik üreticileri için tasarlanmış, ISA-95 uyumlu açık kaynaklı Seviye 3 MES platformudur. Fabrikanızı gerçek L3 kontrolü ile ölçeklendirin.",
+    "about_title": "Hakkımızda | Dannie Global EMS ve Üretim Uzmanlığı",
+    "about_description": "GRVT MES arkasındaki ekibi tanıyın. Dannie, Avrupa ve Asya'da PCB/PCBA üretimi ve tam sistem entegrasyonu sunan küresel bir EMS ortağıdır.",
+    "privacy_title": "Gizlilik Politikası | Endüstriyel Veri Koruma",
+    "privacy_description": "Profesyonel üretim verilerinizi nasıl işlediğimizi ve Seviye 3 güvenlik standartlarını nasıl koruduğumuzu okuyun.",
+    "terms_title": "Kullanım Koşulları | Üretim Sorumluluğu ve Lisanslama",
+    "terms_description": "GRVT MES platformunu kullanmak için Apache 2.0 lisanslamasını ve profesyonel üretim sorumluluğu şartlarını inceleyin."
+  },
+  "dannie_widget": {
+    "badge": "Dannie Ekosistemi",
+    "title_1": "MES Kontrolünden",
+    "title_highlight": "Anlık PCB Siparişine",
+    "subtitle": "MES platformumuz, Dannie e-ticaret motoruyla sorunsuz bir şekilde bağlanır. Anlık DFM analizi ve rekabetçi fiyatlandırma için tasarımlarınızı güvenle yükleyin.",
+    "feature_1": "Ücretsiz Online Gerber Görüntüleyici",
+    "feature_2": "Gerçek Zamanlı DFM Analizi",
+    "feature_3": "Küresel Tedarik Ağı",
+    "feature_4": "Prototipten Serime",
+    "cta_badge": "Ekosistemi Başlat",
+    "cta_title": "Dannie.cc Portalı",
+    "cta_button": "Mağazayı Ziyaret Et",
+    "footer": "Gerber görünümü için giriş yapılması gerekmez"
+  },
   "footer": {
     "tagline": "KOBİ'ler için tasarlanmış hafif üretim yürütme sistemi.",
     "product": "Ürün",
@@ -298,6 +322,29 @@
         "MAINTENANCE": "Bakım",
         "OTHER": "Diğer",
         "UNKNOWN": "Bilinmeyen"
+      },
+      "pagination": {
+        "label": "Sayfalama",
+        "prev_text": "Önceki",
+        "next_text": "Sonraki"
+      },
+      "breadcrumb": {
+        "label": "Gezinti Çubuğu",
+        "more": "Daha Fazla"
+      },
+      "sidebar": {
+        "toggle": "Kenar Çubuğunu Kapat/Aç",
+        "mobile_title": "Menü",
+        "mobile_description": "Mobil menüyü görüntüler."
+      },
+      "sheet": {
+        "close": "Kapat"
+      },
+      "carousel": {
+        "label": "Atlıkarınca",
+        "slide_label": "Slayt",
+        "prev": "Önceki slayt",
+        "next": "Sonraki slayt"
       }
     }
   },
@@ -738,7 +785,7 @@
   },
   "auth": {
     "login": {
-      "title": "Tekrar hoş geldiniz",
+      "title": "Teşekkürler, Tekrar Hoş Geldiniz",
       "subtitle": "Devam etmek için hesabınıza giriş yapın",
       "email_label": "E-posta",
       "email_placeholder": "E-posta adresinizi girin",
@@ -797,125 +844,34 @@
         "email_required": "E-posta gereklidir",
         "email_invalid": "Lütfen geçerli bir e-posta adresi girin",
         "password_required": "Şifre gereklidir",
-        "password_requirements": "Şifre gereksinimleri karşılamıyor",
-        "confirm_password_required": "Lütfen şifrenizi onaylayın",
-        "passwords_dont_match": "Şifreler eşleşmiyor"
+        "password_requirements": "Şifre gereksinimleri karşılamıyor"
       }
-    },
-    "reset_password": {
-      "forgot_password_title": "Şifrenizi mi unuttunuz?",
-      "forgot_password_subtitle": "Endişelenmeyin, size e-posta ile bir sıfırlama kodu göndereceğiz",
-      "email_label": "E-posta",
-      "email_placeholder": "E-posta adresinizi girin",
-      "submit_send_code": "Sıfırlama kodu gönder",
-      "submitting_send_code": "Kod gönderiliyor...",
-      "back_to_login": "Giriş sayfasına dön",
-      "success_title": "E-postanızı kontrol edin",
-      "success_description": "Şu adrese 6 haneli bir doğrulama kodu gönderdik:",
-      "success_button": "Doğrulama kodunu girin",
-      "resend_hint": "E-postayı almadınız mı? Tekrar deneyin",
-      "enter_code_title": "Doğrulama kodunu girin",
-      "enter_code_subtitle": "E-postanıza gönderdiğimiz 6 haneli kodu girin",
-      "verification_code_label": "Doğrulama Kodu",
-      "verify_button": "Kodu doğrula",
-      "verifying_button": "Doğrulanıyor...",
-      "new_password_title": "Yeni şifre oluşturun",
-      "new_password_subtitle": "Yeni şifreniz önceki şifrelerinizden farklı olmalıdır",
-      "new_password_label": "Yeni Şifre",
-      "new_password_placeholder": "Yeni şifre girin",
-      "confirm_password_label": "Şifreyi Onayla",
-      "confirm_password_placeholder": "Yeni şifreyi onaylayın",
-      "reset_button": "Şifreyi sıfırla",
-      "resetting_button": "Sıfırlanıyor...",
-      "done_title": "Şifre başarıyla sıfırlandı!",
-      "done_description": "Şifreniz sıfırlandı. Artık yeni şifrenizle giriş yapabilirsiniz.",
-      "done_button": "Giriş yap",
-      "errors": {
-        "email_required": "E-posta gereklidir",
-        "email_invalid": "Lütfen geçerli bir e-posta adresi girin",
-        "send_failed": "Sıfırlama kodu gönderilemedi",
-        "code_invalid": "Lütfen geçerli bir 6 haneli kod girin",
-        "validate_failed": "Geçersiz kod",
-        "password_requirements": "Şifre gereksinimleri karşılamıyor",
-        "passwords_dont_match": "Şifreler eşleşmiyor",
-        "reset_failed": "Şifre sıfırlanamadı"
-      }
-    },
-    "verify_email": {
-      "verifying": {
-        "title": "E-postanız doğrulanıyor...",
-        "description": "E-posta adresinizi doğrularken lütfen bekleyin."
-      },
-      "success": {
-        "title": "E-posta doğrulandı!",
-        "description": "E-postanız başarıyla doğrulandı. Artık hesabınıza giriş yapabilirsiniz.",
-        "button": "Giriş yap"
-      },
-      "error": {
-        "title": "Doğrulama başarısız",
-        "description": "Bu doğrulama bağlantısı geçersiz veya süresi dolmuş.",
-        "button": "Giriş sayfasına git",
-        "new_link_hint": "Yeni bir doğrulama bağlantısına mı ihtiyacınız var? Giriş yapın ve yeni bir tane isteyin."
-      }
-    }
-  },
-  "ui": {
-    "pagination": {
-      "label": "Sayfalama",
-      "prev": "Önceki sayfaya git",
-      "next": "Sonraki sayfaya git",
-      "more": "Daha fazla sayfa",
-      "prev_text": "Önceki",
-      "next_text": "Sonraki"
-    },
-    "breadcrumb": {
-      "label": "Gezinti Çubuğu",
-      "more": "Daha fazla"
-    },
-    "sidebar": {
-      "toggle": "Kenar Çubuğunu Aç/Kapat",
-      "mobile_title": "Kenar Çubuğu",
-      "mobile_description": "Mobil kenar çubuğunu görüntüler."
-    },
-    "sheet": {
-      "close": "Kapat"
-    },
-    "carousel": {
-      "label": "Atlıkarınca",
-      "slide_label": "Slayt",
-      "prev": "Önceki slayt",
-      "next": "Sonraki slayt"
     }
   },
   "legal": {
     "terms": {
       "title": "Kullanım Koşulları",
       "last_updated": "Son güncelleme",
-      "s1_title": "1. Koşulların Kabulü",
-      "s1_content": "GRVT MES'e erişerek veya kullanarak, bu Kullanım Koşullarına bağlı kalmayı kabul etmiş sayılırsınız. Bu koşulların tamamını kabul etmiyorsanız, hizmetlerimizi kullanmayın.",
-      "s2_title": "2. Hizmetin Kullanımı",
-      "s2_content": "Hesabınızın ve şifrenizin gizliliğini korumaktan siz sorumlusunuz. Hesabınız altında gerçekleşen tüm faaliyetlerin sorumluluğunu kabul etmeyi onaylıyorsunuz.",
-      "s3_title": "3. Fikri Mülkiyet",
-      "s3_content": "Hizmet ve orijinal içeriği, özellikleri ve işlevselliği GRVT MES ve lisans verenlerinin münhasır mülkiyetindedir ve öyle kalacaktır.",
-      "s4_title": "4. Sorumluluğun Sınırlandırılması",
-      "s4_content": "Hiçbir durumda GRVT MES, direktörleri, çalışanları, ortakları, acenteleri, tedarikçileri veya bağlı kuruluşları dolaylı, arızi, özel veya sonuç odaklı zararlardan sorumlu tutulamaz.",
-      "s5_title": "5. Koşullardaki Değişiklikler",
-      "s5_content": "Bu Koşulları herhangi bir zamanda kendi takdirimize bağlı olarak değiştirme veya yenisiyle değiştirme hakkını saklı tutarız. Neyin önemli bir değişiklik teşkil edeceği tamamen bizim takdirimizde olacaktır."
+      "s1_title": "1. Endüstriyel Kullanım ve Kabul",
+      "s1_content": "GRVT MES'e erişerek, bu koşulları profesyonel endüstriyel kullanım için kabul etmiş sayılırsınız. Bu platform, PCB/PCBA üretim topluluğunu desteklemek amacıyla Dannie tarafından ücretsiz bir Seviye 3 MES aracı olarak sunulmaktadır. Kullanım 'olduğu gibi'dir ve profesyonel denetime tabidir.",
+      "s2_title": "2. Üretim Sorumluluk Reddi",
+      "s2_content": "KRİTİK: GRVT MES ücretsiz bir araçtır. Dannie veya geliştiriciler, bu yazılımın kullanımından kaynaklanan herhangi bir üretim hatası, hurda, finansal kayıp veya fiziksel hasardan hiçbir durumda sorumlu tutulamaz. Nihai kalite kontrol (QC) ve üretim sonuçlarından tamamen siz sorumlusunuz.",
+      "s3_title": "3. Açık Kaynak ve Lisanslama",
+      "s3_content": "GRVT MES, Apache Lisansı Sürüm 2.0 altında lisanslanmıştır. Lisans koşullarına bağlı kalmak kaydıyla kodu kullanmakta, değiştirmekte ve dağıtmakta özgürsünüz. Yazılım, HERHANGİ BİR GARANTİ VEYA KOŞUL OLMAKSIZIN sağlanmaktadır.",
+      "s4_title": "4. Ekosistem Entegrasyonu",
+      "s4_content": "Bu hizmet diğer Dannie platformlarıyla (örn. dannie.cc) entegre olabilir. MES ve E-ticaret siparişi arasında sorunsuz bağlantı için çabalasak da, her hizmet kendi özel fonksiyonel ve yasal anlaşmaları altında çalışır.",
+      "s5_title": "5. Hesap Sorumluluğu",
+      "s5_content": "Organizasyonunuzun veri bütünlüğünden, tesis düzenlerinden ve iş emirlerinden siz sorumlusunuz. Biz altyapıyı sağlıyoruz; siz ise profesyonel üretim mantığını sağlıyorsunuz."
     },
     "privacy": {
       "title": "Gizlilik Politikası",
       "last_updated": "Son güncelleme",
-      "s1_title": "1. Topladığımız Bilgiler",
-      "s1_content": "Bir hesap oluşturduğunuzda, hizmetlerimizi kullandığınızda veya bizimle iletişim kurduğunuzda bize doğrudan sağladığınız bilgileri toplarız. Bu, adınızı, e-posta adresinizi ve şirket bilgilerinizi içerebilir.",
-      "s2_title": "2. Bilgilerinizi Nasıl Kullanıyoruz",
-      "s2_content": "Topladığımız bilgileri hizmetlerimizi sağlamak, sürdürmek ve iyileştirmek, yenilerini geliştirmek ve GRVT MES'i ve kullanıcılarımızı korumak için kullanırız.",
-      "s3_title": "3. Veri Güvenliği",
-      "s3_content": "Kişisel bilgilerinizi korumaya yardımcı olmak için idari, teknik ve fiziksel güvenlik önlemleri kullanıyoruz. Bize sağladığınız kişisel bilgileri güvence altına almak için makul adımlar atmış olsak da, çabalarımıza rağmen hiçbir güvenlik önleminin mükemmel veya aşılamaz olmadığını lütfen unutmayın.",
-      "s4_title": "4. Bilgilerin Paylaşılması",
-      "s4_content": "Kişisel bilgilerinizi, onayınız veya yasal nedenler gibi bu politikada açıklanan durumlar haricinde, GRVT MES dışındaki şirketler, kuruluşlar veya bireylerle paylaşmıyoruz.",
-      "s5_title": "5. Erişim Hakkınız",
-      "s5_content": "Hakkınızda tuttuğumuz bilgilerin bir kopyasını isteme hakkına sahipsiniz. Kişisel bilgilerinizin bir kısmını veya tamamını kopyalamak isterseniz lütfen bize e-posta gönderin."
+      "s1_title": "1. Endüstriyel Veri Toplama",
+      "s1_content": "Seviye 3 MES'inizi çalıştırmak için gerekli olan profesyonel bilgileri (ad, iş e-postası, şirket adı) ve üretim meta verilerini (tesis düğümleri, BOM yapıları) topluyoruz. Şu anda bu platformda hassas kişisel finansal veriler saklamıyoruz.",
+      "s2_title": "2. Uluslararası Veri Akışı",
+      "s2_content": "Dannie küresel ağının (Litvanya, Türkiye, Çin) bir parçası olarak, endüstriyel verileriniz kesintisiz Seviye 3 kullanılabilirliği ve desteği sağlamak amacıyla bu bölgeler arasında işlenebilir.",
+      "s3_title": "3. Lead Magnet Amacı",
+      "s3_content": "Bu aracın birincil amacı, ücretsiz üretim değeri sağlamak ve dannie.cc adresindeki e-ticaret ve montaj hizmetlerimiz dahil olmak üzere daha geniş Dannie ekosistemine bir giriş kapısı görevi görmektir."
     }
   }
 }
-
