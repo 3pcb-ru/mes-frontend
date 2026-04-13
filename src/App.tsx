@@ -27,6 +27,7 @@ import { SignupPage } from './features/auth/pages/signup';
 import { ForgotPasswordPage } from './features/auth/pages/forgot-password';
 import { ResetPasswordPage } from './features/auth/pages/reset-password';
 import { VerifyEmailPage } from './features/auth/pages/verify-email';
+import { AcceptInvitationPage } from './features/auth/pages/accept-invitation';
 import { ProtectedRoute } from './features/auth/components/protected-route';
 
 // Dashboard Pages
@@ -83,6 +84,7 @@ export default function App() {
                 <Route path="/forgot-password" element={<ForgotPasswordPage />} />
                 <Route path="/reset-password" element={<ResetPasswordPage />} />
                 <Route path="/verify/:token" element={<VerifyEmailPage />} />
+                <Route path="/accept-invitation" element={<AcceptInvitationPage />} />
 
                 {/* Dashboard Routes (protected) */}
                 <Route

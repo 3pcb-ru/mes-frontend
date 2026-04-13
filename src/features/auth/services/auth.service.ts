@@ -12,6 +12,7 @@ import type {
     MessageResponse,
     VerificationStatusResponse,
 } from '../types/auth.types';
+import { type AcceptInvitationDto } from '@/features/users/types/users.types';
 
 const AUTH_BASE = '/auth';
 
@@ -41,9 +42,13 @@ export const authService = {
     },
 
     /**
-     * Logout current user
-     * DELETE /auth/logout
+     * Accept a user invitation and set password
+     * POST /auth/accept-invitation
      */
+    async acceptInvitation(data: AcceptInvitationDto): Promise<LoginResponse> {
+        return apiClient.post<LoginResponse>(`${AUTH_BASE}/accept-invitation`, data);
+    },
+
     /**
      * Logout current user (invalidates both tokens)
      * DELETE /auth/logout

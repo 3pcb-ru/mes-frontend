@@ -1,0 +1,184 @@
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { Eye, EyeOff, Lock, Loader2, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { useAuth } from '../store/auth.store';
+import { Button } from '@/shared/components/ui/button';
+import { Input } from '@/shared/components/ui/input';
+import { Label } from '@/shared/components/ui/label';
+import { Logo } from '@/shared/components/logo';
+import { useFormValidation } from '@/shared/hooks/use-form-validation';
+import { FormError } from '@/shared/components/ui/form-error';
+
+export function AcceptInvitationPage() {
+    const { t } = useTranslation();
+    const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const { acceptInvitation, isLoading, error, clearError: authClearError } = useAuth();
+
+    const token = searchParams.get('token') || '';
+    const email = searchParams.get('email') || '';
+
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
+    
+    const { validationErrors, handleApiError, clearError, resetErrors } = useFormValidation();
+
+    const validateForm = (): boolean => {
+        const errors: Record<string, string> = {};
+
+        if (!password) {
+            errors.password = t('auth.accept_invitation.errors.password_required', 'Password is required');
+        } else if (password.length < 8) {
+            errors.password = t('auth.accept_invitation.errors.password_too_short', 'Password must be at least 8 characters');
+        }
+
+        if (password !== confirmPassword) {
+            errors.confirmPassword = t('auth.accept_invitation.errors.passwords_dont_match', 'Passwords do not match');
+        }
+
+        if (Object.keys(errors).length > 0) {
+            handleApiError({ statusCode: 422, validationErrors: errors });
+            return false;
+        }
+
+        return true;
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        authClearError();
+        resetErrors();
+
+        if (!token) {
+            handleApiError({ statusCode: 400, message: 'Invalid or missing invitation token.' });
+            return;
+        }
+
+        if (!validateForm()) return;
+
+        try {
+            await acceptInvitation({ token, password });
+            setIsSuccess(true);
+            setTimeout(() => {
+                navigate('/dashboard');
+            }, 2000);
+        } catch (err: any) {
+            handleApiError(err);
+        }
+    };
+
+    if (isSuccess) {
+        return (
+            <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 flex items-center justify-center p-4">
+                <div className="bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-8 shadow-2xl w-full max-w-md text-center">
+                    <div className="w-20 h-20 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-emerald-500/30">
+                        <CheckCircle2 className="h-10 w-10 text-emerald-400" />
+                    </div>
+                    <h1 className="text-2xl font-bold text-white mb-2">{t('auth.accept_invitation.success_title', 'Invitation Accepted!')}</h1>
+                    <p className="text-slate-400 mb-6">{t('auth.accept_invitation.success_message', 'Your account has been set up successfully. Redirecting to dashboard...')}</p>
+                    <Loader2 className="h-6 w-6 animate-spin text-cyan-500 mx-auto" />
+                </div>
+            </div>
+        );
+    }
+
+    return (
+        <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 relative overflow-hidden flex items-center justify-center p-4">
+            {/* Animated gradient orbs */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <div className="absolute top-0 -left-4 w-96 h-96 bg-blue-500/30 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob" />
+                <div className="absolute top-0 -right-4 w-96 h-96 bg-purple-500/30 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000" />
+                <div className="absolute -bottom-8 left-20 w-96 h-96 bg-cyan-500/30 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-4000" />
+            </div>
+
+            {/* Grid pattern overlay */}
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+
+            <div className="relative z-10 w-full max-w-md">
+                <div className="text-center mb-8">
+                    <Link to="/" className="inline-flex items-center gap-2 mb-6">
+                        <Logo className="h-10 w-10" />
+                        <span className="text-2xl font-bold text-white">GRVT MES</span>
+                    </Link>
+                    <h1 className="text-3xl font-bold text-white mb-2">{t('auth.accept_invitation.title', 'Welcome to the Team')}</h1>
+                    <p className="text-slate-400">
+                        {t('auth.accept_invitation.subtitle', 'Please set up your password to activate your account for')} {email}
+                    </p>
+                </div>
+
+                <div className="bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-8 shadow-2xl">
+                    {!token ? (
+                        <div className="bg-red-500/10 border border-red-500/50 rounded-lg p-4 text-red-400 text-sm text-center">
+                            {t('auth.accept_invitation.errors.invalid_link', 'This invitation link is invalid or expired.')}
+                        </div>
+                    ) : (
+                        <form onSubmit={handleSubmit} className="space-y-6">
+                            {error && <div className="bg-red-500/10 border border-red-500/50 rounded-lg p-4 text-red-400 text-sm">{error}</div>}
+
+                            <div className="space-y-2">
+                                <Label htmlFor="password">{t('auth.accept_invitation.password_label', 'New Password')}</Label>
+                                <div className="relative">
+                                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
+                                    <Input
+                                        id="password"
+                                        type={showPassword ? 'text' : 'password'}
+                                        placeholder="••••••••"
+                                        value={password}
+                                        onChange={(e) => {
+                                            setPassword(e.target.value);
+                                            clearError('password');
+                                        }}
+                                        className="pl-10 pr-10 bg-slate-900/50 border-slate-600 text-white"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowPassword(!showPassword)}
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-300">
+                                        {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                                    </button>
+                                </div>
+                                <FormError message={validationErrors.password} />
+                            </div>
+
+                            <div className="space-y-2">
+                                <Label htmlFor="confirmPassword">{t('auth.accept_invitation.confirm_password_label', 'Confirm Password')}</Label>
+                                <div className="relative">
+                                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
+                                    <Input
+                                        id="confirmPassword"
+                                        type={showPassword ? 'text' : 'password'}
+                                        placeholder="••••••••"
+                                        value={confirmPassword}
+                                        onChange={(e) => {
+                                            setConfirmPassword(e.target.value);
+                                            clearError('confirmPassword');
+                                        }}
+                                        className="pl-10 bg-slate-900/50 border-slate-600 text-white"
+                                    />
+                                </div>
+                                <FormError message={validationErrors.confirmPassword} />
+                            </div>
+
+                            <Button type="submit" disabled={isLoading} className="w-full">
+                                {isLoading ? (
+                                    <>
+                                        <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                                        {t('auth.accept_invitation.submitting', 'Activating...')}
+                                    </>
+                                ) : (
+                                    <>
+                                        {t('auth.accept_invitation.submit', 'Set Password & Activate')}
+                                        <ArrowRight className="ml-2 h-5 w-5" />
+                                    </>
+                                )}
+                            </Button>
+                        </form>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+}

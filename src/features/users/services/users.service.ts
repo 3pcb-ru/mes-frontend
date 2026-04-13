@@ -1,5 +1,5 @@
 import { apiClient } from '@/shared/lib/api-client';
-import { type DetailedProfile, type UserListItem, type Organization, type UpdateUserProfileDto } from '../types/users.types';
+import { type DetailedProfile, type UserListItem, type Organization, type UpdateUserProfileDto, type InviteUserDto, type UpdateUserStatusDto } from '../types/users.types';
 
 const USERS_BASE = '/users';
 
@@ -35,6 +35,31 @@ export const usersService = {
     async listUsers(): Promise<UserListItem[]> {
         return apiClient.get<UserListItem[]>(USERS_BASE);
     },
+
+    /**
+     * Invite a new user
+     * POST /users/invite
+     */
+    async inviteUser(data: InviteUserDto): Promise<void> {
+        return apiClient.post(`${USERS_BASE}/invite`, data);
+    },
+
+    /**
+     * Update user status (Active/Inactive)
+     * PATCH /users/:userId/status
+     */
+    async updateStatus(userId: string, data: UpdateUserStatusDto): Promise<DetailedProfile> {
+        return apiClient.patch<DetailedProfile>(`${USERS_BASE}/${userId}/status`, data);
+    },
+
+    /**
+     * Soft delete user (Short-cut for deactivating)
+     * DELETE /users/:userId
+     */
+    async deleteUser(userId: string): Promise<void> {
+        return apiClient.delete(`${USERS_BASE}/${userId}`);
+    },
+
     /**
      * Create a new organization and link it to the user
      * POST /organization
@@ -42,6 +67,7 @@ export const usersService = {
     async createOrganization(data: { name: string }): Promise<any> {
         return apiClient.post<any>('/organization', data);
     },
+
     /**
      * Get organization branding/info
      * GET /organization
@@ -49,6 +75,7 @@ export const usersService = {
     async getOrganization(): Promise<Organization> {
         return apiClient.get<Organization>('/organization');
     },
+
     /**
      * Update current organization branding/info
      * PATCH /organization

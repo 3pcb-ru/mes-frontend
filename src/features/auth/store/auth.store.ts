@@ -4,7 +4,7 @@ import { authService } from '../services/auth.service';
 import { usersService } from '@/features/users/services/users.service';
 import { useNotificationStore } from '@/features/notifications/store/notifications.store';
 import type { User, LoginDto, SignupDto } from '../types/auth.types';
-import type { DetailedProfile } from '@/features/users/types/users.types';
+import type { AcceptInvitationDto, DetailedProfile } from '@/features/users/types/users.types';
 import type { ApiError } from '@/shared/lib/api-client';
 
 interface AuthState {
@@ -22,6 +22,7 @@ interface AuthState {
     // Actions
     login: (credentials: LoginDto) => Promise<void>;
     signup: (data: SignupDto) => Promise<void>;
+    acceptInvitation: (data: AcceptInvitationDto) => Promise<void>;
     logout: () => Promise<void>;
     fetchProfile: () => Promise<void>;
     clearError: () => void;
@@ -100,6 +101,33 @@ export const useAuthStore = create<AuthState>()(
                     const apiError = err as ApiError;
                     set({
                         error: apiError.message || 'Signup failed',
+                        isLoading: false,
+                    });
+                    throw err;
+                }
+            },
+
+            // Accept invitation action
+            acceptInvitation: async (data: AcceptInvitationDto) => {
+                set({ isLoading: true, error: null });
+                try {
+                    const response = await authService.acceptInvitation(data);
+                    localStorage.setItem(AUTH_TOKEN_KEY, response.accessToken);
+                    localStorage.setItem(REFRESH_TOKEN_KEY, response.refreshToken);
+                    set({
+                        user: response.user,
+                        token: response.accessToken,
+                        isAuthenticated: true,
+                        isLoading: false,
+                        detailedProfile: null, // Will be fetched via fetchProfile
+                    });
+                    // Fetch full profile and notifications in the background
+                    get().fetchProfile();
+                    useNotificationStore.getState().fetchNotifications();
+                } catch (err) {
+                    const apiError = err as ApiError;
+                    set({
+                        error: apiError.message || 'Invitation acceptance failed',
                         isLoading: false,
                     });
                     throw err;
@@ -195,6 +223,7 @@ export const useAuth = () => {
         error: store.error,
         login: store.login,
         signup: store.signup,
+        acceptInvitation: store.acceptInvitation,
         logout: store.logout,
         fetchProfile: store.fetchProfile,
         setDetailedProfile: store.setDetailedProfile,
