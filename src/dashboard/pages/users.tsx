@@ -68,7 +68,11 @@ export function UsersPage() {
         const newStatus = user.deletedAt ? 'active' : 'inactive';
         try {
             await usersService.updateStatus(user.id, { status: newStatus });
-            toast.success(t(`dashboard.users.status.update_${newStatus}_success`, `User ${newStatus === 'active' ? 'reactivated' : 'deactivated'} successfully`));
+            if (newStatus === 'inactive') {
+                toast.warning(t('dashboard.users.status.update_inactive_success', 'User deactivated successfully'));
+            } else {
+                toast.success(t('dashboard.users.status.update_active_success', 'User reactivated successfully'));
+            }
             fetchUsers();
         } catch (err: any) {
             toast.error(err.message || t('dashboard.users.errors.status_update_failed', 'Failed to update user status'));
@@ -89,7 +93,7 @@ export function UsersPage() {
         if (!window.confirm(t('dashboard.roles.delete_confirm', 'Are you sure you want to delete this role?'))) return;
         try {
             await rolesService.deleteRole(roleId);
-            toast.success(t('dashboard.roles.delete_success', 'Role deleted successfully'));
+            toast.warning(t('dashboard.roles.delete_success', 'Role deleted successfully'));
             fetchRoles();
         } catch (err: any) {
             toast.error(err.message || t('dashboard.roles.errors.delete_failed', 'Failed to delete role'));
