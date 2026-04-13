@@ -34,7 +34,9 @@ export function UsersPage() {
         setIsUsersLoading(true);
         try {
             const data = await usersService.listUsers();
-            setUsers(data);
+            // Handle potential wrapped response from API (e.g. { users: [] })
+            const userList = Array.isArray(data) ? data : (data as any)?.users || [];
+            setUsers(userList);
         } catch (err) {
             console.error('Failed to fetch users:', err);
             toast.error(t('dashboard.users.errors.fetch_failed', 'Failed to load users'));
@@ -47,7 +49,9 @@ export function UsersPage() {
         setIsRolesLoading(true);
         try {
             const data = await rolesService.lookupRoles();
-            setRoles(data);
+            // Handle potential wrapped response from API (e.g. { roles: [] })
+            const roleList = Array.isArray(data) ? data : (data as any)?.roles || [];
+            setRoles(roleList);
         } catch (err) {
             console.error('Failed to fetch roles:', err);
             toast.error(t('dashboard.roles.errors.fetch_failed', 'Failed to load roles'));
@@ -100,11 +104,11 @@ export function UsersPage() {
         }
     };
 
-    const filteredUsers = users.filter(
+    const filteredUsers = (Array.isArray(users) ? users : []).filter(
         (user) =>
-            user.firstName.toLowerCase().includes(userSearchQuery.toLowerCase()) ||
-            user.lastName.toLowerCase().includes(userSearchQuery.toLowerCase()) ||
-            user.email.toLowerCase().includes(userSearchQuery.toLowerCase()),
+            user?.firstName?.toLowerCase().includes(userSearchQuery.toLowerCase()) ||
+            user?.lastName?.toLowerCase().includes(userSearchQuery.toLowerCase()) ||
+            user?.email?.toLowerCase().includes(userSearchQuery.toLowerCase()),
     );
 
     return (
