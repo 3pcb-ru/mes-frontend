@@ -229,8 +229,16 @@ export function UsersPage() {
                                                 <tr key={user.id} className={cn('hover:bg-slate-800/30 transition-colors group', user.deletedAt && 'opacity-60')}>
                                                     <td className="px-6 py-4">
                                                         <div className="flex items-center gap-3">
-                                                            <div className="w-10 h-10 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-400 group-hover:border-cyan-500/50 group-hover:text-cyan-400 transition-all">
-                                                                <Users className="h-5 w-5" />
+                                                            <div className="relative w-10 h-10 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center overflow-hidden group-hover:border-cyan-500/50 transition-all shrink-0">
+                                                                {user.avatarUrl ? (
+                                                                    <img src={user.avatarUrl} alt={`${user.firstName} ${user.lastName}`} className="w-full h-full object-cover" />
+                                                                ) : (
+                                                                    <div className="flex items-center justify-center text-xs font-bold text-slate-400 group-hover:text-cyan-400 uppercase">
+                                                                        {user.firstName?.[0]}
+                                                                        {user.lastName?.[0]}
+                                                                        {!user.firstName && !user.lastName && <Users className="h-5 w-5" />}
+                                                                    </div>
+                                                                )}
                                                             </div>
                                                             <div>
                                                                 <p className="text-white font-medium">

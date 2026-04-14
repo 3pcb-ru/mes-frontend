@@ -54,6 +54,8 @@ export interface UserListItem {
     isVerified: boolean;
     createdAt: string;
     deletedAt?: string | null;
+    avatarId?: string | null;
+    avatarUrl?: string | null;
 }
 
 export interface InviteUserDto {
