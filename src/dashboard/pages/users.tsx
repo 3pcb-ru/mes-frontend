@@ -1,12 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Users, Search, Filter, MoreHorizontal, UserPlus, Mail, Shield, CheckCircle2, XCircle, Loader2, Plus, Copy, Edit, Trash2, Power, PowerOff } from 'lucide-react';
+import { Users, Search, Filter, UserPlus, Mail, ShieldCheck, CheckCircle2, XCircle, Loader2, Plus, Copy, Edit, Trash2, Power, PowerOff, Eye, Shield } from 'lucide-react';
 import { usersService } from '@/features/users/services/users.service';
 import { rolesService } from '@/features/users/services/roles.service';
 import type { UserListItem, RoleWithPermissions } from '@/features/users/types/users.types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/components/ui/card';
 import { Input } from '@/shared/components/ui/input';
 import { Button } from '@/shared/components/ui/button';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/shared/components/ui/dropdown-menu';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/components/ui/tabs';
 import { useTranslation } from 'react-i18next';
 import { InviteUserModal } from '@/features/users/components/invite-user-modal';
@@ -209,19 +208,21 @@ export function UsersPage() {
                                     <table className="w-full text-left border-collapse">
                                         <thead>
                                             <tr className="border-b border-slate-700/50 bg-slate-900/40">
-                                                <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                                                <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider text-left">
                                                     {t('dashboard.users.table.user', 'User')}
                                                 </th>
-                                                <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                                                <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider text-left hidden sm:table-cell">
                                                     {t('dashboard.users.table.role', 'Role')}
                                                 </th>
-                                                <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                                                <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider text-left">
                                                     {t('dashboard.users.table.status', 'Status')}
                                                 </th>
-                                                <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                                                <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider text-left hidden lg:table-cell">
                                                     {t('dashboard.users.table.joined', 'Joined')}
                                                 </th>
-                                                <th className="px-6 py-4 text-right"></th>
+                                                <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider text-right">
+                                                    {t('dashboard.users.actions.title', 'Actions')}
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody className="divide-y divide-slate-700/30">
@@ -251,7 +252,7 @@ export function UsersPage() {
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td className="px-6 py-4">
+                                                    <td className="px-6 py-4 hidden sm:table-cell">
                                                         <div className="flex items-center gap-2">
                                                             <Badge variant="outline" className="text-sm text-slate-300 capitalize">
                                                                 {typeof user.role === 'string' ? user.role : (user.role as any)?.name || t('common.unknown', 'Unknown')}
@@ -276,7 +277,7 @@ export function UsersPage() {
                                                             </span>
                                                         )}
                                                     </td>
-                                                    <td className="px-6 py-4">
+                                                    <td className="px-6 py-4 hidden lg:table-cell">
                                                         <div className="space-y-0.5">
                                                             <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
                                                                 {user.isVerified
@@ -295,42 +296,38 @@ export function UsersPage() {
                                                         </div>
                                                     </td>
                                                     <td className="px-6 py-4 text-right">
-                                                        <DropdownMenu>
-                                                            <DropdownMenuTrigger asChild>
-                                                                <Button variant="ghost" size="icon" className="text-slate-500 hover:text-white hover:bg-slate-700/50">
-                                                                    <MoreHorizontal className="h-4 w-4" />
-                                                                </Button>
-                                                            </DropdownMenuTrigger>
-                                                            <DropdownMenuContent align="end" className="bg-slate-900 border-slate-800 text-slate-300 w-48 shadow-2xl">
-                                                                <DropdownMenuLabel className="text-xs text-slate-500">
-                                                                    {t('dashboard.users.actions.title', 'User Actions')}
-                                                                </DropdownMenuLabel>
-                                                                <DropdownMenuSeparator className="bg-slate-800" />
-                                                                <DropdownMenuItem className="focus:bg-slate-800 cursor-pointer text-sm">
-                                                                    {t('dashboard.users.actions.view_profile', 'View Profile')}
-                                                                </DropdownMenuItem>
-                                                                <DropdownMenuItem className="focus:bg-slate-800 cursor-pointer text-sm">
-                                                                    {t('dashboard.users.actions.edit_role', 'Change Role')}
-                                                                </DropdownMenuItem>
-                                                                <DropdownMenuSeparator className="bg-slate-800" />
-                                                                <DropdownMenuItem
-                                                                    onClick={() => handleToggleUserStatus(user)}
-                                                                    className={cn(
-                                                                        'focus:bg-slate-800 cursor-pointer text-sm font-medium',
-                                                                        user.deletedAt ? 'text-emerald-400' : 'text-amber-400',
-                                                                    )}>
-                                                                    {user.deletedAt ? (
-                                                                        <>
-                                                                            <Power className="h-4 w-4 mr-2" /> {t('dashboard.users.actions.activate', 'Activate Account')}
-                                                                        </>
-                                                                    ) : (
-                                                                        <>
-                                                                            <PowerOff className="h-4 w-4 mr-2" /> {t('dashboard.users.actions.deactivate', 'Deactivate Account')}
-                                                                        </>
-                                                                    )}
-                                                                </DropdownMenuItem>
-                                                            </DropdownMenuContent>
-                                                        </DropdownMenu>
+                                                        <div className="flex items-center justify-end gap-1 sm:gap-2">
+                                                            <Button
+                                                                variant="ghost"
+                                                                size="icon"
+                                                                className="h-8 w-8 text-slate-400 hover:text-white hover:bg-slate-700/50"
+                                                                title={t('dashboard.users.actions.view_profile')}
+                                                            >
+                                                                <Eye className="h-4 w-4" />
+                                                            </Button>
+                                                            <Button
+                                                                variant="ghost"
+                                                                size="icon"
+                                                                className="h-8 w-8 text-slate-400 hover:text-purple-400 hover:bg-purple-500/10"
+                                                                title={t('dashboard.users.actions.change_role')}
+                                                            >
+                                                                <ShieldCheck className="h-4 w-4" />
+                                                            </Button>
+                                                            <Button
+                                                                variant="ghost"
+                                                                size="icon"
+                                                                onClick={() => handleToggleUserStatus(user)}
+                                                                className={cn(
+                                                                    "h-8 w-8 transition-colors",
+                                                                    user.deletedAt
+                                                                        ? "text-slate-500 hover:text-emerald-400 hover:bg-emerald-500/10"
+                                                                        : "text-slate-400 hover:text-amber-400 hover:bg-amber-500/10"
+                                                                )}
+                                                                title={user.deletedAt ? t('dashboard.users.actions.activate') : t('dashboard.users.actions.deactivate')}
+                                                            >
+                                                                {user.deletedAt ? <Power className="h-4 w-4" /> : <PowerOff className="h-4 w-4" />}
+                                                            </Button>
+                                                        </div>
                                                     </td>
                                                 </tr>
                                             ))}

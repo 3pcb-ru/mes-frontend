@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from 'react';
-import { Loader2, Plus, Box, Warehouse, ChevronRight, PackageCheck, Send, Move, ClipboardList, MoreHorizontal, Search } from 'lucide-react';
+import { Loader2, Plus, Box, Warehouse, ChevronRight, PackageCheck, Send, Move, ClipboardList, Search, LogOut } from 'lucide-react';
 import { toast } from 'sonner';
 import { warehouseService } from '@/features/warehouse/services/warehouse.service';
 import { facilitiesService } from '@/features/facilities/services/facilities.service';
@@ -251,14 +251,14 @@ export function WarehousePage() {
                                                 </td>
                                                 <td className="px-6 py-4 text-right">
                                                     <div className="flex items-center justify-end gap-2">
-                                                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-slate-400 hover:text-white" title={t('dashboard.warehouse.tooltips.qc_check')}>
+                                                        <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-white hover:bg-slate-700/50" title={t('dashboard.warehouse.tooltips.qc_check')}>
                                                             <PackageCheck className="h-4 w-4" />
                                                         </Button>
-                                                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-slate-400 hover:text-white" title={t('dashboard.warehouse.tooltips.move')}>
+                                                        <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-white hover:bg-slate-700/50" title={t('dashboard.warehouse.tooltips.move')}>
                                                             <Move className="h-4 w-4" />
                                                         </Button>
-                                                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-slate-400 hover:text-red-400" title={t('dashboard.warehouse.tooltips.remove')}>
-                                                            <MoreHorizontal className="h-4 w-4" />
+                                                        <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-red-400 hover:bg-red-500/10" title={t('dashboard.warehouse.tooltips.remove')}>
+                                                            <LogOut className="h-4 w-4" />
                                                         </Button>
                                                     </div>
                                                 </td>

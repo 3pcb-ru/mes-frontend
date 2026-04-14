@@ -530,7 +530,7 @@
       "tooltips": {
         "qc_check": "QC Check",
         "move": "Move",
-        "remove": "Remove"
+        "remove": "Remove from storage"
       },
       "receipt_modal": {
         "title": "Material Receipt",
@@ -595,6 +595,14 @@
       },
       "messages": {
         "load_failed": "Failed to load report activities"
+      },
+      "actions": {
+        "title": "Actions",
+        "view_details": "View Details"
+      },
+      "details_modal": {
+        "title": "Activity Details",
+        "close": "Close"
       }
     },
     "products": {
@@ -660,7 +668,9 @@
       "actions": {
         "title": "Actions",
         "view_profile": "View Profile",
-        "edit_permissions": "Edit Permissions",
+        "change_role": "Change Role",
+        "activate": "Activate Account",
+        "deactivate": "Deactivate Account",
         "disable_account": "Disable Account"
       },
       "no_users_found": "No users found matching your search.",

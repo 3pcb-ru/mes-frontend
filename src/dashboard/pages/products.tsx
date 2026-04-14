@@ -89,14 +89,26 @@ export function ProductsPage() {
     const filteredItems = items.filter((p) => p.name?.toLowerCase().includes(searchQuery.toLowerCase()) || '' || p.sku?.toLowerCase().includes(searchQuery.toLowerCase()) || '');
 
     const columns: ColumnDef<ProductListItem>[] = useMemo(() => [
-        { header: t('dashboard.products.table.sku'), accessorKey: 'sku' },
+        { 
+            header: t('dashboard.products.table.sku'), 
+            accessorKey: 'sku',
+            className: 'hidden sm:table-cell',
+            headerClassName: 'hidden sm:table-cell'
+        },
         { header: t('dashboard.products.table.name'), accessorKey: 'name' },
-        { header: t('dashboard.products.table.organization'), accessorKey: 'organizationId' },
+        { 
+            header: t('dashboard.products.table.organization'), 
+            accessorKey: 'organizationId',
+            className: 'hidden lg:table-cell',
+            headerClassName: 'hidden lg:table-cell'
+        },
         {
             header: t('dashboard.products.table.actions'),
+            headerClassName: 'text-right pr-4',
+            className: 'text-right',
             cell: (item) =>
                 (moduleActions.canEdit || moduleActions.canDelete) && (
-                    <div className="flex justify-end pr-4">
+                    <div className="flex justify-end pr-0">
                         <TableActions
                             id={item.id}
                             onEdit={moduleActions.canEdit ? handleEdit : undefined}

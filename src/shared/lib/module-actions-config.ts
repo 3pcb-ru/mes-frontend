@@ -25,6 +25,18 @@ export const MODULE_ACTIONS_CONFIG = {
         canEdit: true,
         canDelete: true,
     },
+    users: {
+        canEdit: true,
+        canDelete: true,
+    },
+    roles: {
+        canEdit: true,
+        canDelete: true,
+    },
+    reports: {
+        canEdit: false,
+        canDelete: false,
+    },
 } as const;
 
 export type ModuleKey = keyof typeof MODULE_ACTIONS_CONFIG;

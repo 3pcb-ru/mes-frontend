@@ -8,6 +8,8 @@ export interface ColumnDef<T> {
     header: string;
     accessorKey?: keyof T;
     cell?: (item: T) => React.ReactNode;
+    headerClassName?: string;
+    className?: string;
 }
 
 interface DataTableGridProps<T> {
@@ -56,7 +58,7 @@ export function DataTableGrid<T>({
                     <TableHeader>
                         <TableRow>
                             {columns.map((col, idx) => (
-                                <TableHead key={idx}>{col.header}</TableHead>
+                                <TableHead key={idx} className={col.headerClassName}>{col.header}</TableHead>
                             ))}
                         </TableRow>
                     </TableHeader>
@@ -71,7 +73,7 @@ export function DataTableGrid<T>({
                             data.map((item, rowIdx) => (
                                 <TableRow key={rowIdx}>
                                     {columns.map((col, colIdx) => (
-                                        <TableCell key={colIdx}>{col.cell ? col.cell(item) : col.accessorKey ? String(item[col.accessorKey]) : null}</TableCell>
+                                        <TableCell key={colIdx} className={col.className}>{col.cell ? col.cell(item) : col.accessorKey ? String(item[col.accessorKey]) : null}</TableCell>
                                     ))}
                                 </TableRow>
                             ))

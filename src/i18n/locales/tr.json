@@ -565,7 +565,7 @@
       "tooltips": {
         "qc_check": "Kalite Kontrol (QC) Kontrolü",
         "move": "Taşı",
-        "remove": "Kaldır"
+        "remove": "Depodan kaldır"
       },
       "receipt_modal": {
         "title": "Malzeme Kabulü",
@@ -630,6 +630,14 @@
       },
       "messages": {
         "load_failed": "Rapor aktiviteleri yüklenemedi"
+      },
+      "actions": {
+        "title": "İşlemler",
+        "view_details": "Detaylar"
+      },
+      "details_modal": {
+        "title": "Aktivite Detayları",
+        "close": "Kapat"
       }
     },
     "products": {
@@ -695,7 +703,9 @@
       "actions": {
         "title": "İşlemler",
         "view_profile": "Profili Görüntüle",
-        "edit_permissions": "İzinleri Düzenle",
+        "change_role": "Rolü Değiştir",
+        "activate": "Hesabı Etkinleştir",
+        "deactivate": "Hesabı Devre Dışı Bırak",
         "disable_account": "Hesabı Devre Dışı Bırak"
       },
       "no_users_found": "Aramanızla eşleşen kullanıcı bulunamadı.",
