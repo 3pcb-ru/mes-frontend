@@ -18,7 +18,7 @@ import { cn } from '@/shared/lib/utils';
 export function UsersPage() {
     const { t } = useTranslation();
     const [activeTab, setActiveTab] = useState('users');
-    
+
     // Users state
     const [users, setUsers] = useState<UserListItem[]>([]);
     const [isUsersLoading, setIsUsersLoading] = useState(true);
@@ -35,13 +35,31 @@ export function UsersPage() {
     const fetchUsers = useCallback(async () => {
         setIsUsersLoading(true);
         try {
-            const data = await usersService.listUsers();
-            // Handle potential wrapped response from API (e.g. { users: [] })
-            const userList = Array.isArray(data) ? data : (data as any)?.users || [];
+            const response = await usersService.listUsers();
+            console.log('Users API Response:', response);
+
+            // Handle various backend response structures
+            let userList: UserListItem[] = [];
+            if (Array.isArray(response)) {
+                userList = response;
+            } else if (response && typeof response === 'object') {
+                // Check common data wrappers
+                userList = (response as any).data || (response as any).users || (response as any).items || [];
+            }
+
             setUsers(userList);
-        } catch (err) {
+        } catch (err: any) {
             console.error('Failed to fetch users:', err);
-            toast.error(t('dashboard.users.errors.fetch_failed', 'Failed to load users'));
+            const errorMessage = err.message || t('dashboard.users.errors.fetch_failed', 'Failed to load users');
+
+            // Specialized messaging for auth/permission issues
+            if (err.statusCode === 401) {
+                toast.error(t('common.errors.unauthorized', 'Session expired. Please log in again.'));
+            } else if (err.statusCode === 403) {
+                toast.error(t('common.errors.forbidden', 'You do not have permission to view users.'));
+            } else {
+                toast.error(errorMessage);
+            }
         } finally {
             setIsUsersLoading(false);
         }
@@ -130,12 +148,19 @@ export function UsersPage() {
                 </div>
                 <div className="flex items-center gap-3">
                     {activeTab === 'users' ? (
-                        <Button className="gap-2 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 border-0 shadow-lg shadow-cyan-500/20" onClick={() => setIsInviteModalOpen(true)}>
+                        <Button
+                            className="gap-2 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 border-0 shadow-lg shadow-cyan-500/20"
+                            onClick={() => setIsInviteModalOpen(true)}>
                             <UserPlus className="h-4 w-4" />
                             <span>{t('dashboard.users.add_user', 'Invite User')}</span>
                         </Button>
                     ) : (
-                        <Button className="gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 border-0 shadow-lg shadow-purple-500/20" onClick={() => { setSelectedRole(null); setIsRoleModalOpen(true); }}>
+                        <Button
+                            className="gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 border-0 shadow-lg shadow-purple-500/20"
+                            onClick={() => {
+                                setSelectedRole(null);
+                                setIsRoleModalOpen(true);
+                            }}>
                             <Plus className="h-4 w-4" />
                             <span>{t('dashboard.roles.add_role', 'Create Role')}</span>
                         </Button>
@@ -185,16 +210,24 @@ export function UsersPage() {
                                     <table className="w-full text-left border-collapse">
                                         <thead>
                                             <tr className="border-b border-slate-700/50 bg-slate-900/40">
-                                                <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">{t('dashboard.users.table.user', 'User')}</th>
-                                                <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">{t('dashboard.users.table.role', 'Role')}</th>
-                                                <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">{t('dashboard.users.table.status', 'Status')}</th>
-                                                <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">{t('dashboard.users.table.joined', 'Joined')}</th>
+                                                <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                                                    {t('dashboard.users.table.user', 'User')}
+                                                </th>
+                                                <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                                                    {t('dashboard.users.table.role', 'Role')}
+                                                </th>
+                                                <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                                                    {t('dashboard.users.table.status', 'Status')}
+                                                </th>
+                                                <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                                                    {t('dashboard.users.table.joined', 'Joined')}
+                                                </th>
                                                 <th className="px-6 py-4 text-right"></th>
                                             </tr>
                                         </thead>
                                         <tbody className="divide-y divide-slate-700/30">
                                             {filteredUsers.map((user) => (
-                                                <tr key={user.id} className={cn("hover:bg-slate-800/30 transition-colors group", user.deletedAt && "opacity-60")}>
+                                                <tr key={user.id} className={cn('hover:bg-slate-800/30 transition-colors group', user.deletedAt && 'opacity-60')}>
                                                     <td className="px-6 py-4">
                                                         <div className="flex items-center gap-3">
                                                             <div className="w-10 h-10 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-400 group-hover:border-cyan-500/50 group-hover:text-cyan-400 transition-all">
@@ -213,8 +246,10 @@ export function UsersPage() {
                                                     </td>
                                                     <td className="px-6 py-4">
                                                         <div className="flex items-center gap-2">
-                                                            <Shield className="h-4 w-4 text-brand-secondary" />
-                                                            <span className="text-sm text-slate-300 capitalize">{user.role}</span>
+                                                            <Shield className="h-4 w-4 text-brand-secondary text-slate-500" />
+                                                            <span className="text-sm text-slate-300 capitalize">
+                                                                {typeof user.role === 'string' ? user.role : (user.role as any)?.name || t('common.unknown', 'Unknown')}
+                                                            </span>
                                                         </div>
                                                     </td>
                                                     <td className="px-6 py-4">
@@ -236,7 +271,15 @@ export function UsersPage() {
                                                         )}
                                                     </td>
                                                     <td className="px-6 py-4">
-                                                        <p className="text-sm text-slate-400">{new Date(user.createdAt).toLocaleDateString()}</p>
+                                                        <p className="text-sm text-slate-400">
+                                                            {new Date(user.createdAt).toLocaleString(undefined, {
+                                                                year: 'numeric',
+                                                                month: 'short',
+                                                                day: 'numeric',
+                                                                hour: '2-digit',
+                                                                minute: '2-digit'
+                                                            })}
+                                                        </p>
                                                     </td>
                                                     <td className="px-6 py-4 text-right">
                                                         <DropdownMenu>
@@ -246,7 +289,9 @@ export function UsersPage() {
                                                                 </Button>
                                                             </DropdownMenuTrigger>
                                                             <DropdownMenuContent align="end" className="bg-slate-900 border-slate-800 text-slate-300 w-48 shadow-2xl">
-                                                                <DropdownMenuLabel className="text-xs text-slate-500">{t('dashboard.users.actions.title', 'User Actions')}</DropdownMenuLabel>
+                                                                <DropdownMenuLabel className="text-xs text-slate-500">
+                                                                    {t('dashboard.users.actions.title', 'User Actions')}
+                                                                </DropdownMenuLabel>
                                                                 <DropdownMenuSeparator className="bg-slate-800" />
                                                                 <DropdownMenuItem className="focus:bg-slate-800 cursor-pointer text-sm">
                                                                     {t('dashboard.users.actions.view_profile', 'View Profile')}
@@ -255,17 +300,20 @@ export function UsersPage() {
                                                                     {t('dashboard.users.actions.edit_role', 'Change Role')}
                                                                 </DropdownMenuItem>
                                                                 <DropdownMenuSeparator className="bg-slate-800" />
-                                                                <DropdownMenuItem 
+                                                                <DropdownMenuItem
                                                                     onClick={() => handleToggleUserStatus(user)}
                                                                     className={cn(
-                                                                        "focus:bg-slate-800 cursor-pointer text-sm font-medium",
-                                                                        user.deletedAt ? "text-emerald-400" : "text-amber-400"
-                                                                    )}
-                                                                >
+                                                                        'focus:bg-slate-800 cursor-pointer text-sm font-medium',
+                                                                        user.deletedAt ? 'text-emerald-400' : 'text-amber-400',
+                                                                    )}>
                                                                     {user.deletedAt ? (
-                                                                        <><Power className="h-4 w-4 mr-2" /> {t('dashboard.users.actions.activate', 'Activate Account')}</>
+                                                                        <>
+                                                                            <Power className="h-4 w-4 mr-2" /> {t('dashboard.users.actions.activate', 'Activate Account')}
+                                                                        </>
                                                                     ) : (
-                                                                        <><PowerOff className="h-4 w-4 mr-2" /> {t('dashboard.users.actions.deactivate', 'Deactivate Account')}</>
+                                                                        <>
+                                                                            <PowerOff className="h-4 w-4 mr-2" /> {t('dashboard.users.actions.deactivate', 'Deactivate Account')}
+                                                                        </>
                                                                     )}
                                                                 </DropdownMenuItem>
                                                             </DropdownMenuContent>
@@ -304,9 +352,15 @@ export function UsersPage() {
                                     <table className="w-full text-left border-collapse">
                                         <thead>
                                             <tr className="border-b border-slate-700/50 bg-slate-900/40">
-                                                <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">{t('dashboard.roles.table.name', 'Role Name')}</th>
-                                                <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">{t('dashboard.roles.table.type', 'Type')}</th>
-                                                <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">{t('dashboard.roles.table.permissions', 'Permissions')}</th>
+                                                <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                                                    {t('dashboard.roles.table.name', 'Role Name')}
+                                                </th>
+                                                <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                                                    {t('dashboard.roles.table.type', 'Type')}
+                                                </th>
+                                                <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                                                    {t('dashboard.roles.table.permissions', 'Permissions')}
+                                                </th>
                                                 <th className="px-6 py-4 text-right"></th>
                                             </tr>
                                         </thead>
@@ -316,7 +370,9 @@ export function UsersPage() {
                                                     <td className="px-6 py-4">
                                                         <div className="flex flex-col">
                                                             <span className="text-white font-medium">{role.name}</span>
-                                                            <span className="text-xs text-slate-500">{role.description || t('dashboard.roles.no_description', 'No description')}</span>
+                                                            <span className="text-xs text-slate-500">
+                                                                {role.description || t('dashboard.roles.no_description', 'No description')}
+                                                            </span>
                                                         </div>
                                                     </td>
                                                     <td className="px-6 py-4">
@@ -337,33 +393,33 @@ export function UsersPage() {
                                                     </td>
                                                     <td className="px-6 py-4 text-right">
                                                         <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                            <Button 
-                                                                variant="ghost" 
-                                                                size="icon" 
+                                                            <Button
+                                                                variant="ghost"
+                                                                size="icon"
                                                                 className="h-8 w-8 text-slate-400 hover:text-white"
                                                                 onClick={() => handleDuplicateRole(role.id)}
-                                                                title={t('common.duplicate', 'Duplicate')}
-                                                            >
+                                                                title={t('common.duplicate', 'Duplicate')}>
                                                                 <Copy className="h-4 w-4" />
                                                             </Button>
-                                                            <Button 
-                                                                variant="ghost" 
-                                                                size="icon" 
+                                                            <Button
+                                                                variant="ghost"
+                                                                size="icon"
                                                                 className="h-8 w-8 text-slate-400 hover:text-white"
-                                                                onClick={() => { setSelectedRole(role); setIsRoleModalOpen(true); }}
+                                                                onClick={() => {
+                                                                    setSelectedRole(role);
+                                                                    setIsRoleModalOpen(true);
+                                                                }}
                                                                 title={t('common.edit', 'Edit')}
-                                                                disabled={!role.organizationId}
-                                                            >
+                                                                disabled={!role.organizationId}>
                                                                 <Edit className="h-4 w-4" />
                                                             </Button>
-                                                            <Button 
-                                                                variant="ghost" 
-                                                                size="icon" 
+                                                            <Button
+                                                                variant="ghost"
+                                                                size="icon"
                                                                 className="h-8 w-8 text-slate-400 hover:text-red-400"
                                                                 onClick={() => handleDeleteRole(role.id)}
                                                                 title={t('common.delete', 'Delete')}
-                                                                disabled={!role.organizationId}
-                                                            >
+                                                                disabled={!role.organizationId}>
                                                                 <Trash2 className="h-4 w-4" />
                                                             </Button>
                                                         </div>
@@ -384,15 +440,14 @@ export function UsersPage() {
                 </TabsContent>
             </Tabs>
 
-            <InviteUserModal 
-                isOpen={isInviteModalOpen} 
-                onClose={() => setIsInviteModalOpen(false)} 
-                onSuccess={fetchUsers} 
-            />
+            <InviteUserModal isOpen={isInviteModalOpen} onClose={() => setIsInviteModalOpen(false)} onSuccess={fetchUsers} />
 
-            <RoleManagementModal 
-                isOpen={isRoleModalOpen} 
-                onClose={() => { setIsRoleModalOpen(false); setSelectedRole(null); }} 
+            <RoleManagementModal
+                isOpen={isRoleModalOpen}
+                onClose={() => {
+                    setIsRoleModalOpen(false);
+                    setSelectedRole(null);
+                }}
                 onSuccess={fetchRoles}
                 role={selectedRole}
             />
