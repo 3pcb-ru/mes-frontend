@@ -13,6 +13,7 @@ import { ScrollArea } from '@/shared/components/ui/scroll-area';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/components/ui/tabs';
 import { toast } from 'sonner';
 import { cn } from '@/shared/lib/utils';
+import { Badge } from '@/shared/components/ui/badge';
 
 interface RoleManagementModalProps {
     isOpen: boolean;
@@ -35,7 +36,7 @@ export function RoleManagementModal({ isOpen, onClose, onSuccess, role }: RoleMa
             if (role) {
                 setName(role.name);
                 setDescription(role.description || '');
-                setSelectedPermissions(role.permissions.map(p => p.id));
+                setSelectedPermissions(role.permissions.map((p) => p.name));
             } else {
                 setName('');
                 setDescription('');
@@ -45,15 +46,35 @@ export function RoleManagementModal({ isOpen, onClose, onSuccess, role }: RoleMa
     }, [isOpen, role]);
 
     const handleTogglePermission = (permissionId: string) => {
-        setSelectedPermissions(prev => 
-            prev.includes(permissionId) 
-                ? prev.filter(id => id !== permissionId)
-                : [...prev, permissionId]
-        );
+        setSelectedPermissions((prev) => (prev.includes(permissionId) ? prev.filter((id) => id !== permissionId) : [...prev, permissionId]));
+    };
+
+    const isModuleAllSelected = (category: string) => {
+        const modulePermissions = Object.values((Permissions as any)[category]);
+        return modulePermissions.every((slug) => selectedPermissions.includes(slug as string));
+    };
+
+    const handleToggleModule = (category: string) => {
+        const modulePermissions = Object.values((Permissions as any)[category]) as string[];
+        const allSelected = isModuleAllSelected(category);
+
+        if (allSelected) {
+            setSelectedPermissions((prev) => prev.filter((slug) => !modulePermissions.includes(slug)));
+        } else {
+            setSelectedPermissions((prev) => {
+                const newOnes = modulePermissions.filter((slug) => !prev.includes(slug));
+                return [...prev, ...newOnes];
+            });
+        }
+    };
+
+    const getModuleSelectedCount = (category: string) => {
+        const modulePermissions = Object.values((Permissions as any)[category]);
+        return modulePermissions.filter((slug) => selectedPermissions.includes(slug as string)).length;
     };
 
     const handleToggleCategory = (categoryKeys: string[]) => {
-        // This is tricky because we have IDs vs Slugs. 
+        // This is tricky because we have IDs vs Slugs.
         // Actually, the backend API uses IDs for updating permissions.
         // We need to map the permission slugs to IDs first if we want category toggle.
         // For now, let's keep it simple and just toggle individual ones.
@@ -61,7 +82,7 @@ export function RoleManagementModal({ isOpen, onClose, onSuccess, role }: RoleMa
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        
+
         if (!name.trim()) {
             toast.error(t('dashboard.roles.errors.name_required', 'Role name is required'));
             return;
@@ -84,7 +105,7 @@ export function RoleManagementModal({ isOpen, onClose, onSuccess, role }: RoleMa
                 await rolesService.createRole({
                     name,
                     description,
-                    permissionIds: selectedPermissions
+                    permissionIds: selectedPermissions,
                 });
                 toast.success(t('dashboard.roles.create_success', 'Role created successfully'));
             }
@@ -118,7 +139,9 @@ export function RoleManagementModal({ isOpen, onClose, onSuccess, role }: RoleMa
                     <div className="p-6 pt-4 space-y-6 overflow-y-auto">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="space-y-2">
-                                <Label htmlFor="roleName" className="text-slate-300">{t('dashboard.roles.name', 'Role Name')}</Label>
+                                <Label htmlFor="roleName" className="text-slate-300">
+                                    {t('dashboard.roles.name', 'Role Name')}
+                                </Label>
                                 <Input
                                     id="roleName"
                                     value={name}
@@ -129,7 +152,9 @@ export function RoleManagementModal({ isOpen, onClose, onSuccess, role }: RoleMa
                                 />
                             </div>
                             <div className="space-y-2">
-                                <Label htmlFor="roleDesc" className="text-slate-300">{t('dashboard.roles.description_label', 'Description')}</Label>
+                                <Label htmlFor="roleDesc" className="text-slate-300">
+                                    {t('dashboard.roles.description_label', 'Description')}
+                                </Label>
                                 <Input
                                     id="roleDesc"
                                     value={description}
@@ -147,47 +172,63 @@ export function RoleManagementModal({ isOpen, onClose, onSuccess, role }: RoleMa
                             </div>
 
                             <div className="border border-slate-800 rounded-xl overflow-hidden bg-slate-950/30">
-                                <Tabs defaultValue={categories[0]} className="w-full">
-                                    <div className="flex bg-slate-950/50 border-b border-slate-800">
-                                        <TabsList className="bg-transparent h-10 p-0 justify-start overflow-x-auto overflow-y-hidden">
-                                            {categories.map(category => (
-                                                <TabsTrigger 
-                                                    key={category} 
-                                                    value={category}
-                                                    className="data-[state=active]:bg-slate-800 data-[state=active]:text-white text-slate-400 px-4 py-2 text-xs capitalize rounded-none"
-                                                >
-                                                    {category.replace('_', ' ')}
-                                                </TabsTrigger>
-                                            ))}
+                                <Tabs defaultValue={categories[0]} orientation="vertical" className="w-full flex flex-row h-[400px] gap-0">
+                                    <div className="w-[200px] bg-slate-950/50 border-r border-slate-800 flex flex-col">
+                                        <TabsList className="bg-transparent w-full h-full p-0 flex flex-col justify-start items-stretch rounded-none">
+                                            <ScrollArea className="h-full">
+                                                {categories.map((category) => (
+                                                    <TabsTrigger
+                                                        key={category}
+                                                        value={category}
+                                                        className="data-[state=active]:bg-slate-800/80 data-[state=active]:text-cyan-400 text-slate-400 px-4 py-3.5 text-xs capitalize rounded-none border-l-2 border-transparent data-[state=active]:border-cyan-500 justify-start transition-all hover:bg-slate-800/40 w-full whitespace-normal text-left">
+                                                        {category.replace('_', ' ')}
+                                                    </TabsTrigger>
+                                                ))}
+                                            </ScrollArea>
                                         </TabsList>
                                     </div>
 
-                                    <div className="p-4 h-[300px]">
-                                        {categories.map(category => (
-                                            <TabsContent key={category} value={category} className="mt-0 h-full">
-                                                <ScrollArea className="h-full pr-4">
-                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div className="flex-1 bg-slate-900/10 flex flex-col min-h-0 overflow-hidden">
+                                        {categories.map((category) => (
+                                            <TabsContent key={category} value={category} className="mt-0 flex-1 flex flex-col focus-visible:outline-none min-h-0 overflow-hidden">
+                                                <div className="px-4 py-3 border-b border-slate-800 bg-slate-950/40 flex items-center justify-between shrink-0">
+                                                    <div className="flex items-center gap-3">
+                                                        <Checkbox
+                                                            id={`select-all-${category}`}
+                                                            checked={isModuleAllSelected(category)}
+                                                            onCheckedChange={() => handleToggleModule(category)}
+                                                            className="border-slate-700 data-[state=checked]:bg-cyan-600 data-[state=checked]:border-cyan-600 h-4 w-4"
+                                                        />
+                                                        <label
+                                                            htmlFor={`select-all-${category}`}
+                                                            className="text-xs font-bold text-slate-300 cursor-pointer hover:text-cyan-400 transition-colors uppercase tracking-wider">
+                                                            Select All in {category.replace('_', ' ')}
+                                                        </label>
+                                                    </div>
+                                                    <Badge variant="outline" className="bg-slate-900 border-slate-800 text-[10px] px-2 py-0 text-slate-400">
+                                                        {getModuleSelectedCount(category)} / {Object.keys((Permissions as any)[category]).length}
+                                                    </Badge>
+                                                </div>
+
+                                                <ScrollArea className="flex-1 min-h-0">
+                                                    <div className="p-4 grid grid-cols-1 gap-3">
                                                         {Object.entries((Permissions as any)[category]).map(([key, slug]) => (
-                                                            <div key={slug as string} className="flex items-start space-x-3 p-3 rounded-lg bg-slate-900/40 border border-slate-800/50 hover:border-slate-700/50 transition-colors">
-                                                                <Checkbox 
+                                                            <div
+                                                                key={slug as string}
+                                                                className="flex items-start space-x-3 p-3 rounded-lg bg-slate-900/60 border border-slate-800/50 hover:border-slate-700/50 transition-colors">
+                                                                <Checkbox
                                                                     id={slug as string}
-                                                                    // Note: We need a way to map slugs to IDs if the API uses IDs.
-                                                                    // Given the backend provided slugs, let's assume we can use slugs too or we need to fetch all permissions first.
-                                                                    // For now, I'll pass the slug as ID as a placeholder until I confirm how to get IDs.
                                                                     checked={selectedPermissions.includes(slug as string)}
                                                                     onCheckedChange={() => handleTogglePermission(slug as string)}
-                                                                    className="mt-1"
+                                                                    className="mt-1 border-slate-700 data-[state=checked]:bg-cyan-600 data-[state=checked]:border-cyan-600"
                                                                 />
                                                                 <div className="grid gap-1.5 leading-none">
                                                                     <label
                                                                         htmlFor={slug as string}
-                                                                        className="text-sm font-medium leading-none text-slate-200 peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-                                                                    >
+                                                                        className="text-sm font-medium leading-none text-slate-200 peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer">
                                                                         {key.replace(/([A-Z])/g, ' $1').trim()}
                                                                     </label>
-                                                                    <p className="text-xs text-slate-500">
-                                                                        {PermissionDescriptions[slug as string] || 'No description available'}
-                                                                    </p>
+                                                                    <p className="text-xs text-slate-500">{PermissionDescriptions[slug as string] || 'No description available'}</p>
                                                                 </div>
                                                             </div>
                                                         ))}
@@ -205,11 +246,10 @@ export function RoleManagementModal({ isOpen, onClose, onSuccess, role }: RoleMa
                         <Button type="button" variant="ghost" onClick={onClose} disabled={isSubmitting} className="text-slate-400 hover:text-white">
                             {t('common.cancel', 'Cancel')}
                         </Button>
-                        <Button 
-                            type="submit" 
-                            disabled={isSubmitting || role?.isAdmin} 
-                            className="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white min-w-[120px]"
-                        >
+                        <Button
+                            type="submit"
+                            disabled={isSubmitting || role?.isAdmin}
+                            className="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white min-w-[120px]">
                             {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Save className="h-4 w-4 mr-2" />}
                             {isEditing ? t('common.save_changes', 'Save Changes') : t('common.create', 'Create Role')}
                         </Button>

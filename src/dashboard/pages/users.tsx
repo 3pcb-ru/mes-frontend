@@ -37,8 +37,6 @@ export function UsersPage() {
         setIsUsersLoading(true);
         try {
             const response = await usersService.listUsers();
-            console.log('Users API Response:', response);
-
             // Handle various backend response structures
             let userList: UserListItem[] = [];
             if (Array.isArray(response)) {
