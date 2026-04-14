@@ -14,6 +14,7 @@ import { RoleManagementModal } from '@/features/users/components/role-management
 import { ConfirmDeleteDialog } from '@/shared/components/ui/confirm-delete-dialog';
 import { toast } from 'sonner';
 import { cn } from '@/shared/lib/utils';
+import { Badge } from '@/shared/components/ui/badge';
 
 export function UsersPage() {
     const { t } = useTranslation();
@@ -246,10 +247,9 @@ export function UsersPage() {
                                                     </td>
                                                     <td className="px-6 py-4">
                                                         <div className="flex items-center gap-2">
-                                                            <Shield className="h-4 w-4 text-brand-secondary text-slate-500" />
-                                                            <span className="text-sm text-slate-300 capitalize">
+                                                            <Badge variant="outline" className="text-sm text-slate-300 capitalize">
                                                                 {typeof user.role === 'string' ? user.role : (user.role as any)?.name || t('common.unknown', 'Unknown')}
-                                                            </span>
+                                                            </Badge>
                                                         </div>
                                                     </td>
                                                     <td className="px-6 py-4">
@@ -258,7 +258,7 @@ export function UsersPage() {
                                                                 <XCircle className="h-3 w-3" />
                                                                 {t('dashboard.users.status.inactive', 'Inactive')}
                                                             </span>
-                                                        ) : user.isVerified ? (
+                                                        ) : user.isVerified === true || (user as any).is_verified === true ? (
                                                             <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20 shadow-[0_0_10px_rgba(16,185,129,0.1)]">
                                                                 <CheckCircle2 className="h-3 w-3" />
                                                                 {t('dashboard.users.status.active', 'Active')}
@@ -271,15 +271,22 @@ export function UsersPage() {
                                                         )}
                                                     </td>
                                                     <td className="px-6 py-4">
-                                                        <p className="text-sm text-slate-400">
-                                                            {new Date(user.createdAt).toLocaleString(undefined, {
-                                                                year: 'numeric',
-                                                                month: 'short',
-                                                                day: 'numeric',
-                                                                hour: '2-digit',
-                                                                minute: '2-digit'
-                                                            })}
-                                                        </p>
+                                                        <div className="space-y-0.5">
+                                                            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
+                                                                {user.isVerified
+                                                                    ? t('dashboard.users.table.joined_label', 'Joined')
+                                                                    : t('dashboard.users.table.invited_label', 'Invited')}
+                                                            </p>
+                                                            <p className="text-xs text-slate-400">
+                                                                {new Date(user.createdAt).toLocaleString(undefined, {
+                                                                    year: 'numeric',
+                                                                    month: 'short',
+                                                                    day: 'numeric',
+                                                                    hour: '2-digit',
+                                                                    minute: '2-digit',
+                                                                })}
+                                                            </p>
+                                                        </div>
                                                     </td>
                                                     <td className="px-6 py-4 text-right">
                                                         <DropdownMenu>

@@ -23,7 +23,7 @@ export function AcceptInvitationPage() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
-    
+
     const { validationErrors, handleApiError, clearError, resetErrors } = useFormValidation();
 
     const validateForm = (): boolean => {
@@ -119,7 +119,9 @@ export function AcceptInvitationPage() {
                             {error && <div className="bg-red-500/10 border border-red-500/50 rounded-lg p-4 text-red-400 text-sm">{error}</div>}
 
                             <div className="space-y-2">
-                                <Label htmlFor="password">{t('auth.accept_invitation.password_label', 'New Password')}</Label>
+                                <Label htmlFor="password" className="text-slate-400">
+                                    {t('auth.accept_invitation.password_label', 'New Password')}
+                                </Label>
                                 <div className="relative">
                                     <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
                                     <Input
@@ -144,7 +146,9 @@ export function AcceptInvitationPage() {
                             </div>
 
                             <div className="space-y-2">
-                                <Label htmlFor="confirmPassword">{t('auth.accept_invitation.confirm_password_label', 'Confirm Password')}</Label>
+                                <Label htmlFor="confirmPassword" className="text-slate-400">
+                                    {t('auth.accept_invitation.confirm_password_label', 'Confirm Password')}
+                                </Label>
                                 <div className="relative">
                                     <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
                                     <Input
