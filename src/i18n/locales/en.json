@@ -626,6 +626,20 @@
         "delete_failed": "Failed to delete product"
       }
     },
+    "roles": {
+      "table": {
+        "name": "Role Name",
+        "type": "Type",
+        "permissions": "Permissions",
+        "actions": "Actions"
+      },
+      "no_description": "No description",
+      "perms_count": "permissions",
+      "type": {
+        "custom": "Custom",
+        "system": "System"
+      }
+    },
     "users": {
       "title": "User Management",
       "description": "View and manage all system users and their permissions.",

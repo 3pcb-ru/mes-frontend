@@ -374,13 +374,15 @@ export function UsersPage() {
                                                 <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">
                                                     {t('dashboard.roles.table.permissions', 'Permissions')}
                                                 </th>
-                                                <th className="px-6 py-4 text-right"></th>
+                                                <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider text-right">
+                                                    {t('dashboard.roles.table.actions', 'Actions')}
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody className="divide-y divide-slate-700/30">
                                             {roles.map((role) => (
-                                                <tr key={role.id} className="hover:bg-slate-800/30 transition-colors group">
-                                                    <td className="px-6 py-4">
+                                                <tr key={role.id} className="hover:bg-slate-800/30 transition-colors group text-right">
+                                                    <td className="px-6 py-4 text-left">
                                                         <div className="flex flex-col">
                                                             <span className="text-white font-medium">{role.name}</span>
                                                             <span className="text-xs text-slate-500">
@@ -388,7 +390,7 @@ export function UsersPage() {
                                                             </span>
                                                         </div>
                                                     </td>
-                                                    <td className="px-6 py-4">
+                                                    <td className="px-6 py-4 text-left">
                                                         {role.organizationId ? (
                                                             <span className="inline-flex items-center text-[10px] font-bold uppercase tracking-wider text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded border border-purple-500/20">
                                                                 {t('dashboard.roles.type.custom', 'Custom')}
@@ -399,17 +401,17 @@ export function UsersPage() {
                                                             </span>
                                                         )}
                                                     </td>
-                                                    <td className="px-6 py-4">
+                                                    <td className="px-6 py-4 text-left">
                                                         <span className="text-sm text-slate-300 font-mono bg-slate-900 px-2 py-1 rounded">
                                                             {role.permissions?.length || 0} {t('dashboard.roles.perms_count', 'permissions')}
                                                         </span>
                                                     </td>
                                                     <td className="px-6 py-4 text-right">
-                                                        <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                        <div className="flex items-center justify-end gap-2">
                                                             <Button
                                                                 variant="ghost"
                                                                 size="icon"
-                                                                className="h-8 w-8 text-slate-400 hover:text-white"
+                                                                className="h-8 w-8 text-slate-400 hover:text-white disabled:opacity-10 disabled:cursor-not-allowed"
                                                                 onClick={() => handleDuplicateRole(role.id)}
                                                                 title={t('common.duplicate', 'Duplicate')}>
                                                                 <Copy className="h-4 w-4" />
@@ -417,7 +419,7 @@ export function UsersPage() {
                                                             <Button
                                                                 variant="ghost"
                                                                 size="icon"
-                                                                className="h-8 w-8 text-slate-400 hover:text-white"
+                                                                className="h-8 w-8 text-slate-400 hover:text-white disabled:opacity-[0.15] disabled:cursor-not-allowed"
                                                                 onClick={() => {
                                                                     setSelectedRole(role);
                                                                     setIsRoleModalOpen(true);
@@ -429,7 +431,7 @@ export function UsersPage() {
                                                             <Button
                                                                 variant="ghost"
                                                                 size="icon"
-                                                                className="h-8 w-8 text-slate-400 hover:text-red-400"
+                                                                className="h-8 w-8 text-slate-400 hover:text-red-400 disabled:opacity-[0.15] disabled:cursor-not-allowed"
                                                                 onClick={() => handleDeleteRole(role.id)}
                                                                 title={t('common.delete', 'Delete')}
                                                                 disabled={!role.organizationId}>

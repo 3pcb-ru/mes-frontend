@@ -661,6 +661,20 @@
         "delete_failed": "Ürün silinemedi"
       }
     },
+    "roles": {
+      "table": {
+        "name": "Rol Adı",
+        "type": "Tür",
+        "permissions": "İzinler",
+        "actions": "İşlemler"
+      },
+      "no_description": "Açıklama yok",
+      "perms_count": "izin",
+      "type": {
+        "custom": "Özel",
+        "system": "Sistem"
+      }
+    },
     "users": {
       "title": "Kullanıcı Yönetimi",
       "description": "Tüm sistem kullanıcılarını ve izinlerini görüntüleyin ve yönetin.",
