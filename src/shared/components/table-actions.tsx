@@ -1,15 +1,6 @@
 import { Pencil, Trash2 } from 'lucide-react';
 import { Button } from './ui/button';
-import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-} from './ui/alert-dialog';
+import { ConfirmDeleteDialog } from './ui/confirm-delete-dialog';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -71,26 +62,14 @@ export function TableActions({ id, onEdit, onDelete, isDeleting = false, itemNam
             </div>
 
             {onDelete && (
-                <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
-                    <AlertDialogContent>
-                        <AlertDialogHeader>
-                            <AlertDialogTitle>{t('common.actions.confirm_delete_title', { item: itemName })}</AlertDialogTitle>
-                            <AlertDialogDescription>
-                                {t('common.actions.confirm_delete_description', { item: itemName })}
-                            </AlertDialogDescription>
-                        </AlertDialogHeader>
-                        <AlertDialogFooter>
-                            <AlertDialogCancel>{t('common.actions.cancel')}</AlertDialogCancel>
-                            <AlertDialogAction
-                                onClick={handleDelete}
-                                disabled={isLoading}
-                                className="bg-red-600 hover:bg-red-700"
-                            >
-                                {isLoading ? t('common.actions.deleting') : t('common.actions.delete')}
-                            </AlertDialogAction>
-                        </AlertDialogFooter>
-                    </AlertDialogContent>
-                </AlertDialog>
+                <ConfirmDeleteDialog
+                    open={isDeleteDialogOpen}
+                    onOpenChange={setIsDeleteDialogOpen}
+                    onConfirm={handleDelete}
+                    title={t('common.actions.confirm_delete_title', { item: itemName })}
+                    description={t('common.actions.confirm_delete_description', { item: itemName })}
+                    isDeleting={isLoading}
+                />
             )}
         </>
     );

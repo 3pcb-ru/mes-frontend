@@ -11,6 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/components/ui
 import { useTranslation } from 'react-i18next';
 import { InviteUserModal } from '@/features/users/components/invite-user-modal';
 import { RoleManagementModal } from '@/features/users/components/role-management-modal';
+import { ConfirmDeleteDialog } from '@/shared/components/ui/confirm-delete-dialog';
 import { toast } from 'sonner';
 import { cn } from '@/shared/lib/utils';
 
@@ -29,6 +30,7 @@ export function UsersPage() {
     const [isRolesLoading, setIsRolesLoading] = useState(false);
     const [isRoleModalOpen, setIsRoleModalOpen] = useState(false);
     const [selectedRole, setSelectedRole] = useState<RoleWithPermissions | null>(null);
+    const [roleToDelete, setRoleToDelete] = useState<string | null>(null);
 
     const fetchUsers = useCallback(async () => {
         setIsUsersLoading(true);
@@ -93,14 +95,22 @@ export function UsersPage() {
         }
     };
 
-    const handleDeleteRole = async (roleId: string) => {
-        if (!window.confirm(t('dashboard.roles.delete_confirm', 'Are you sure you want to delete this role?'))) return;
+    const handleDeleteRole = (roleId: string) => {
+        setRoleToDelete(roleId);
+    };
+
+    const confirmDeleteRole = async () => {
+        if (!roleToDelete) return;
+        setIsRolesLoading(true); // Using existing loading state
         try {
-            await rolesService.deleteRole(roleId);
+            await rolesService.deleteRole(roleToDelete);
             toast.warning(t('dashboard.roles.delete_success', 'Role deleted successfully'));
             fetchRoles();
         } catch (err: any) {
             toast.error(err.message || t('dashboard.roles.errors.delete_failed', 'Failed to delete role'));
+        } finally {
+            setIsRolesLoading(false);
+            setRoleToDelete(null);
         }
     };
 
@@ -385,6 +395,15 @@ export function UsersPage() {
                 onClose={() => { setIsRoleModalOpen(false); setSelectedRole(null); }} 
                 onSuccess={fetchRoles}
                 role={selectedRole}
+            />
+
+            <ConfirmDeleteDialog
+                open={!!roleToDelete}
+                onOpenChange={(open) => !open && setRoleToDelete(null)}
+                onConfirm={confirmDeleteRole}
+                title={t('dashboard.roles.delete_confirm_title', 'Delete Role')}
+                description={t('dashboard.roles.delete_confirm', 'Are you sure you want to delete this role? This action cannot be undone.')}
+                isDeleting={isRolesLoading}
             />
         </div>
     );
