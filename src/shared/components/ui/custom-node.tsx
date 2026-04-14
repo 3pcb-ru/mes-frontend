@@ -29,29 +29,69 @@ export const CustomNode = React.memo(({ data, selected }: NodeProps<Node<CustomN
     
     return (
         <div className="group relative w-[240px] h-[84px] transition-all duration-200 hover:scale-[1.02]">
-            {/* Connection Points - 4 Handles like draw.io */}
+            {/* Connection Points - 4 positions, each with Source and Target handles for bidirectional support */}
+            {/* Top handles - explicit styles for precision centering and inward shift */}
             <Handle 
+                id="top-target"
                 type="target" 
                 position={Position.Top} 
-                className="!w-4 !h-4 !bg-cyan-500 !border-2 !border-slate-100 !z-50 !rounded-full !opacity-0 group-hover:!opacity-100 transition-opacity !top-0 !left-1/2 !-translate-x-1/2 !-translate-y-1/2" 
+                className="!w-3 !h-3 !bg-cyan-500 !border-2 !border-slate-100 !z-50 !rounded-full !opacity-0 group-hover:!opacity-100 transition-opacity"
+                style={{ top: '-4px', left: '50%', transform: 'translateX(-50%)', margin: 0, padding: 0 }}
+            />
+            <Handle 
+                id="top-source"
+                type="source" 
+                position={Position.Top} 
+                className="!w-3 !h-3 !bg-cyan-500 !border-2 !border-slate-100 !z-50 !rounded-full !opacity-0 group-hover:!opacity-100 transition-opacity"
+                style={{ top: '-4px', left: '50%', transform: 'translateX(-50%)', margin: 0, padding: 0 }}
             />
             
+            {/* Bottom handles - explicit styles */}
             <Handle 
+                id="bottom-target"
+                type="target" 
+                position={Position.Bottom} 
+                className="!w-3 !h-3 !bg-cyan-500 !border-2 !border-slate-100 !z-50 !rounded-full !opacity-0 group-hover:!opacity-100 transition-opacity"
+                style={{ bottom: '-4px', left: '50%', transform: 'translateX(-50%)', margin: 0, padding: 0 }}
+            />
+            <Handle 
+                id="bottom-source"
                 type="source" 
                 position={Position.Bottom} 
-                className="!w-4 !h-4 !bg-cyan-500 !border-2 !border-slate-100 !z-50 !rounded-full !opacity-0 group-hover:!opacity-100 transition-opacity !bottom-0 !left-1/2 !-translate-x-1/2 !translate-y-1/2" 
+                className="!w-3 !h-3 !bg-cyan-500 !border-2 !border-slate-100 !z-50 !rounded-full !opacity-0 group-hover:!opacity-100 transition-opacity"
+                style={{ bottom: '-4px', left: '50%', transform: 'translateX(-50%)', margin: 0, padding: 0 }}
             />
             
+            {/* Left handles - explicit styles */}
             <Handle 
+                id="left-target"
+                type="target" 
+                position={Position.Left} 
+                className="!w-3 !h-3 !bg-cyan-500 !border-2 !border-slate-100 !z-50 !rounded-full !opacity-0 group-hover:!opacity-100 transition-opacity"
+                style={{ left: '-4px', top: '50%', transform: 'translateY(-50%)', margin: 0, padding: 0 }}
+            />
+            <Handle 
+                id="left-source"
                 type="source" 
                 position={Position.Left} 
-                className="!w-4 !h-4 !bg-cyan-500 !border-2 !border-slate-100 !z-50 !rounded-full !opacity-0 group-hover:!opacity-100 transition-opacity !left-0 !top-1/2 !-translate-y-1/2 !-translate-x-1/2" 
+                className="!w-3 !h-3 !bg-cyan-500 !border-2 !border-slate-100 !z-50 !rounded-full !opacity-0 group-hover:!opacity-100 transition-opacity"
+                style={{ left: '-4px', top: '50%', transform: 'translateY(-50%)', margin: 0, padding: 0 }}
             />
             
+            {/* Right handles - explicit styles */}
             <Handle 
+                id="right-target"
                 type="target" 
                 position={Position.Right} 
-                className="!w-4 !h-4 !bg-cyan-500 !border-2 !border-slate-100 !z-50 !rounded-full !opacity-0 group-hover:!opacity-100 transition-opacity !right-0 !top-1/2 !-translate-y-1/2 !translate-x-1/2" 
+                className="!w-3 !h-3 !bg-cyan-500 !border-2 !border-slate-100 !z-50 !rounded-full !opacity-0 group-hover:!opacity-100 transition-opacity"
+                style={{ right: '-4px', top: '50%', transform: 'translateY(-50%)', margin: 0, padding: 0 }}
+            />
+            <Handle 
+                id="right-source"
+                type="source" 
+                position={Position.Right} 
+                className="!w-3 !h-3 !bg-cyan-500 !border-2 !border-slate-100 !z-50 !rounded-full !opacity-0 group-hover:!opacity-100 transition-opacity"
+                style={{ right: '-4px', top: '50%', transform: 'translateY(-50%)', margin: 0, padding: 0 }}
             />
 
             <GeometricShape type={nodeType} selected={selected} className="w-full h-full">

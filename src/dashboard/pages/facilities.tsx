@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from 'react';
-import { Loader2, Plus, Blocks, BoxSelect } from 'lucide-react';
+import { Loader2, Plus, FolderTree, BoxSelect } from 'lucide-react';
 import { toast } from 'sonner';
 import { facilitiesService } from '@/features/facilities/services/facilities.service';
 import type { FacilityListItem } from '@/features/facilities/types/facilities.types';
@@ -17,25 +17,11 @@ import { FormError } from '@/shared/components/ui/form-error';
 import { TableView } from '@/shared/components/ui/table-view';
 import { NodeDiagramView } from '@/shared/components/ui/node-diagram-view';
 import { cn } from '@/shared/lib/utils';
-import { LayoutGrid, AlertTriangle, Trash2, ArrowRightLeft, Pencil, ArrowUpToLine } from 'lucide-react';
+import { Network, AlertTriangle, Trash2, ArrowRightLeft, Pencil, ArrowUpToLine } from 'lucide-react';
 import { NODE_STATUS_CHANGE_REASONS, NODE_TYPES, type NodeType, type NodeStatusChangeReason } from '@/features/facilities/types/facilities.types';
 import { getNodeType } from '@/shared/lib/node-utils';
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogClose,
-} from '@/shared/components/ui/dialog';
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from '@/shared/components/ui/select';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogClose } from '@/shared/components/ui/dialog';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/components/ui/select';
 
 export function FacilitiesPage() {
     const [nodes, setNodes] = useState<FacilityListItem[]>([]);
@@ -149,7 +135,7 @@ export function FacilitiesPage() {
                     type: editType,
                 });
             }
-            
+
             // Update status if changed or if reason provided
             if (newStatus !== (selectedNode?.status || 'IDLE')) {
                 await facilitiesService.changeStatus(selectedNodeId, {
@@ -157,7 +143,7 @@ export function FacilitiesPage() {
                     reason: statusReason,
                 });
             }
-            
+
             toast.success(t('dashboard.facilities.messages.update_success'));
             setIsStatusDialogOpen(false);
             await fetchNodes();
@@ -185,10 +171,10 @@ export function FacilitiesPage() {
         e.preventDefault();
         resetErrors();
         try {
-            const payload = { 
-                ...formData, 
+            const payload = {
+                ...formData,
                 parentId: formData.parentId || selectedNodeId || undefined,
-                definitionId: formData.definitionId || undefined
+                definitionId: formData.definitionId || undefined,
             };
 
             await facilitiesService.createFacility(payload);
@@ -212,22 +198,12 @@ export function FacilitiesPage() {
                     <p className="text-slate-400">{t('dashboard.facilities.header.description')}</p>
                 </div>
                 <div className="flex items-center gap-2 bg-slate-900/50 p-1 rounded-lg border border-slate-800">
-                    <Button
-                        variant={viewMode === 'tree' ? 'secondary' : 'ghost'}
-                        size="sm"
-                        className="h-8 gap-2"
-                        onClick={() => setViewMode('tree')}
-                    >
-                        <Blocks className="h-4 w-4" />
+                    <Button variant={viewMode === 'tree' ? 'secondary' : 'ghost'} size="sm" className="h-8 gap-2" onClick={() => setViewMode('tree')}>
+                        <FolderTree className="h-4 w-4" />
                         {t('dashboard.facilities.buttons.hierarchy')}
                     </Button>
-                    <Button
-                        variant={viewMode === 'diagram' ? 'secondary' : 'ghost'}
-                        size="sm"
-                        className="h-8 gap-2"
-                        onClick={() => setViewMode('diagram')}
-                    >
-                        <LayoutGrid className="h-4 w-4" />
+                    <Button variant={viewMode === 'diagram' ? 'secondary' : 'ghost'} size="sm" className="h-8 gap-2" onClick={() => setViewMode('diagram')}>
+                        <Network className="h-4 w-4" />
                         {t('dashboard.facilities.buttons.layout_mode')}
                     </Button>
                 </div>
@@ -238,7 +214,12 @@ export function FacilitiesPage() {
                     <Card className="w-1/3 min-w-[300px] flex flex-col bg-slate-900/50 border-slate-700/50 dark text-slate-300">
                         <CardHeader className="border-b border-slate-800 pb-4 shrink-0">
                             <div className="flex gap-2 mb-2">
-                                <Input placeholder={t('dashboard.facilities.tree.search_placeholder')} value={search} onChange={(e) => setSearch(e.target.value)} className="h-9 bg-slate-800/50 text-slate-200" />
+                                <Input
+                                    placeholder={t('dashboard.facilities.tree.search_placeholder')}
+                                    value={search}
+                                    onChange={(e) => setSearch(e.target.value)}
+                                    className="h-9 bg-slate-800/50 text-slate-200"
+                                />
                                 <Button
                                     size="icon"
                                     variant="outline"
@@ -266,9 +247,9 @@ export function FacilitiesPage() {
                     </Card>
                 ) : (
                     <div className="flex-1 min-h-0 dark">
-                        <NodeDiagramView 
-                            nodes={nodes} 
-                            selectedNodeId={selectedNodeId} 
+                        <NodeDiagramView
+                            nodes={nodes}
+                            selectedNodeId={selectedNodeId}
                             onNodeSelect={(id: string) => setSelectedNodeId(id)}
                             onAdd={(parentId) => {
                                 setFormData({ parentId });
@@ -280,10 +261,8 @@ export function FacilitiesPage() {
                 )}
 
                 {/* Right Pane: Detail View */}
-                <Card className={cn(
-                    "flex flex-col bg-slate-900/50 border-slate-700/50 overflow-hidden relative dark text-slate-300",
-                    viewMode === 'tree' ? "flex-1" : "w-[400px]"
-                )}>
+                <Card
+                    className={cn('flex flex-col bg-slate-900/50 border-slate-700/50 overflow-hidden relative dark text-slate-300', viewMode === 'tree' ? 'flex-1' : 'w-[400px]')}>
                     {selectedNode ? (
                         <>
                             <CardHeader className="border-b border-slate-800 pb-4 shrink-0 bg-slate-900/80 z-10">
@@ -300,9 +279,9 @@ export function FacilitiesPage() {
                                     </div>
                                     <div className="flex items-center gap-3 shrink-0">
                                         <div className="flex items-center gap-1">
-                                            <Button 
-                                                variant="ghost" 
-                                                size="icon" 
+                                            <Button
+                                                variant="ghost"
+                                                size="icon"
                                                 className="h-8 w-8 text-slate-400 hover:text-cyan-400"
                                                 title={t('dashboard.facilities.buttons.update_node')}
                                                 onClick={() => {
@@ -313,9 +292,9 @@ export function FacilitiesPage() {
                                                 }}>
                                                 <Pencil className="size-4" />
                                             </Button>
-                                            <Button 
-                                                variant="ghost" 
-                                                size="icon" 
+                                            <Button
+                                                variant="ghost"
+                                                size="icon"
                                                 className="h-8 w-8 text-slate-400 hover:text-amber-400"
                                                 title={t('dashboard.facilities.buttons.move_node')}
                                                 onClick={() => {
@@ -324,9 +303,9 @@ export function FacilitiesPage() {
                                                 }}>
                                                 <ArrowRightLeft className="size-4" />
                                             </Button>
-                                            <Button 
-                                                variant="ghost" 
-                                                size="icon" 
+                                            <Button
+                                                variant="ghost"
+                                                size="icon"
                                                 className="h-8 w-8 text-slate-400 hover:text-red-400"
                                                 title={t('dashboard.facilities.buttons.delete_node')}
                                                 onClick={() => setIsDeleteDialogOpen(true)}>
@@ -350,12 +329,14 @@ export function FacilitiesPage() {
                                         <Label className="text-slate-400 text-xs mb-2 block">{t('dashboard.facilities.dialogs.move.new_parent')}</Label>
                                         <TableView
                                             value={newParentId || ''}
-                                            initialLabel={nodes.find(n => n.id === newParentId)?.name}
+                                            initialLabel={nodes.find((n) => n.id === newParentId)?.name}
                                             onChange={(val) => setNewParentId(val || null)}
                                             fetchData={async () => {
                                                 if (!selectedNodeId || !selectedNode) return nodes;
                                                 // Filter out the node itself and its descendants to prevent circularity
-                                                return nodes.filter(n => n.id !== selectedNodeId && (n.path === selectedNode.path || !n.path.startsWith(selectedNode.path + '.')));
+                                                return nodes.filter(
+                                                    (n) => n.id !== selectedNodeId && (n.path === selectedNode.path || !n.path.startsWith(selectedNode.path + '.')),
+                                                );
                                             }}
                                             placeholder={t('dashboard.facilities.dialogs.move.placeholder')}
                                         />
@@ -363,15 +344,14 @@ export function FacilitiesPage() {
                                     <DialogFooter className="sm:justify-between gap-4 flex-col sm:flex-row">
                                         <div className="flex-1">
                                             {selectedNode.parentId && (
-                                                <Button 
-                                                    variant="outline" 
+                                                <Button
+                                                    variant="outline"
                                                     className="w-full sm:w-auto h-9 bg-slate-800 border-slate-700 hover:bg-slate-700 text-slate-300 gap-2"
                                                     onClick={() => {
                                                         setNewParentId(null);
                                                         // Execute move immediately with null override
                                                         handleMove(null);
-                                                    }}
-                                                >
+                                                    }}>
                                                     <ArrowUpToLine className="size-4 text-amber-400" />
                                                     {t('dashboard.facilities.dialogs.move.make_independent')}
                                                 </Button>
@@ -401,11 +381,7 @@ export function FacilitiesPage() {
                                     <div className="space-y-4 py-4">
                                         <div className="space-y-2">
                                             <Label className="text-slate-400 text-xs">{t('dashboard.facilities.dialogs.update.node_name')}</Label>
-                                            <Input 
-                                                value={editName} 
-                                                onChange={(e) => setEditName(e.target.value)}
-                                                className="bg-slate-800/50 border-slate-700"
-                                            />
+                                            <Input value={editName} onChange={(e) => setEditName(e.target.value)} className="bg-slate-800/50 border-slate-700" />
                                         </div>
                                         <div className="space-y-2">
                                             <Label className="text-slate-400 text-xs">{t('dashboard.facilities.dialogs.update.node_type')}</Label>
@@ -424,11 +400,7 @@ export function FacilitiesPage() {
                                         </div>
                                         <div className="space-y-2">
                                             <Label className="text-slate-400 text-xs">{t('dashboard.facilities.dialogs.update.status')}</Label>
-                                            <Input 
-                                                value={newStatus} 
-                                                onChange={(e) => setNewStatus(e.target.value.toUpperCase())}
-                                                className="bg-slate-800/50 border-slate-700"
-                                            />
+                                            <Input value={newStatus} onChange={(e) => setNewStatus(e.target.value.toUpperCase())} className="bg-slate-800/50 border-slate-700" />
                                         </div>
                                         <div className="space-y-2">
                                             <Label className="text-slate-400 text-xs">{t('dashboard.facilities.dialogs.update.reason')}</Label>
@@ -467,7 +439,8 @@ export function FacilitiesPage() {
                                         </DialogTitle>
                                         <DialogDescription className="text-slate-400">
                                             {t('dashboard.facilities.dialogs.delete.confirm', { name: selectedNode.name })}
-                                            <br/><br/>
+                                            <br />
+                                            <br />
                                             {t('dashboard.facilities.dialogs.delete.warning1')}
                                             <strong> {t('dashboard.facilities.dialogs.delete.warning2')}</strong>
                                         </DialogDescription>
@@ -478,11 +451,7 @@ export function FacilitiesPage() {
                                                 {t('dashboard.facilities.buttons.cancel')}
                                             </Button>
                                         </DialogClose>
-                                        <Button 
-                                            variant="destructive"
-                                            onClick={handleDelete} 
-                                            disabled={isDeleting}
-                                        >
+                                        <Button variant="destructive" onClick={handleDelete} disabled={isDeleting}>
                                             {isDeleting ? t('dashboard.facilities.buttons.deleting') : t('dashboard.facilities.buttons.delete_node')}
                                         </Button>
                                     </DialogFooter>
@@ -519,12 +488,18 @@ export function FacilitiesPage() {
                                                 <div className="px-4 py-3 flex justify-between items-center">
                                                     <span className="text-sm font-medium text-slate-400">{t('dashboard.facilities.dialogs.update.status')}</span>
                                                     <div className="flex items-center gap-2">
-                                                        <span className="text-sm text-white">{selectedNode.status ? t(`common.components.status.${selectedNode.status.toUpperCase()}`) : t('dashboard.facilities.tabs.content.unknown')}</span>
+                                                        <span className="text-sm text-white">
+                                                            {selectedNode.status
+                                                                ? t(`common.components.status.${selectedNode.status.toUpperCase()}`)
+                                                                : t('dashboard.facilities.tabs.content.unknown')}
+                                                        </span>
                                                     </div>
                                                 </div>
                                                 <div className="px-4 py-3 flex justify-between items-center min-w-0">
                                                     <span className="text-sm font-medium text-slate-400 shrink-0 mr-4">{t('dashboard.facilities.tabs.content.path')}</span>
-                                                    <span className="text-sm text-white font-mono truncate ml-auto" title={selectedNode.path || t('dashboard.facilities.tabs.content.na')}>
+                                                    <span
+                                                        className="text-sm text-white font-mono truncate ml-auto"
+                                                        title={selectedNode.path || t('dashboard.facilities.tabs.content.na')}>
                                                         {selectedNode.path || t('dashboard.facilities.tabs.content.na')}
                                                     </span>
                                                 </div>
@@ -568,7 +543,7 @@ export function FacilitiesPage() {
                         </>
                     ) : (
                         <div className="flex flex-col items-center justify-center h-full text-slate-500 p-6 text-center">
-                            <Blocks className="size-16 mb-4 opacity-20" />
+                            <FolderTree className="size-16 mb-4 opacity-20" />
                             <p className="text-lg font-medium text-slate-300">{t('dashboard.facilities.empty_state.title')}</p>
                             <p className="max-w-xs mt-2 text-sm">{t('dashboard.facilities.empty_state.description')}</p>
                         </div>
@@ -580,14 +555,18 @@ export function FacilitiesPage() {
                 open={isCreateOpen}
                 onOpenChange={setIsCreateOpen}
                 title={t('dashboard.facilities.dialogs.create.title')}
-                description={formData.parentId ? t('dashboard.facilities.dialogs.create.desc_child', { name: nodes.find((n) => n.id === formData.parentId)?.name }) : t('dashboard.facilities.dialogs.create.desc_root')}>
+                description={
+                    formData.parentId
+                        ? t('dashboard.facilities.dialogs.create.desc_child', { name: nodes.find((n) => n.id === formData.parentId)?.name })
+                        : t('dashboard.facilities.dialogs.create.desc_root')
+                }>
                 <form onSubmit={handleCreate} className="space-y-4 pt-4">
                     {formData.parentId && (
                         <div className="p-3 rounded-lg bg-cyan-500/10 border border-cyan-500/20 mb-4">
                             <Label className="text-cyan-400 text-xs mb-1 block">{t('dashboard.facilities.dialogs.create.parent_locked')}</Label>
                             <div className="flex items-center gap-2 text-white font-medium">
                                 <BoxSelect className="size-4 text-cyan-500" />
-                                {nodes.find(n => n.id === formData.parentId)?.name}
+                                {nodes.find((n) => n.id === formData.parentId)?.name}
                             </div>
                         </div>
                     )}
@@ -607,8 +586,8 @@ export function FacilitiesPage() {
                     </div>
                     <div className="space-y-2">
                         <Label>{t('dashboard.facilities.dialogs.update.node_type')}</Label>
-                        <Select 
-                            value={formData.type as string || 'OTHER'} 
+                        <Select
+                            value={(formData.type as string) || 'OTHER'}
                             onValueChange={(val) => {
                                 setFormData({ ...formData, type: val as NodeType });
                                 clearError('type');

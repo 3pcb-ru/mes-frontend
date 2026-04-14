@@ -71,7 +71,13 @@ const getLayoutedElements = (nodes: Node<CustomNodeData>[], edges: Edge[], direc
         };
     });
 
-    return { nodes: newNodes, edges };
+    const newEdges = edges.map((edge) => ({
+        ...edge,
+        sourceHandle: isHorizontal ? 'right-source' : 'bottom-source',
+        targetHandle: isHorizontal ? 'left-target' : 'top-target',
+    }));
+
+    return { nodes: newNodes, edges: newEdges };
 };
 
 
@@ -102,6 +108,8 @@ export function NodeDiagramView({ nodes: rawNodes, selectedNodeId, onNodeSelect,
                 id: `e-${n.parentId}-${n.id}`,
                 source: n.parentId!,
                 target: n.id,
+                sourceHandle: 'bottom-source', // Default for TB layout
+                targetHandle: 'top-target',    // Default for TB layout
                 type: ConnectionLineType.SmoothStep,
                 animated: true,
                 markerEnd: {

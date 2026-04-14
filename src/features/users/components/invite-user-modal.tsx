@@ -166,8 +166,8 @@ export function InviteUserModal({ isOpen, onClose, onSuccess }: InviteUserModalP
                                     </div>
                                 ) : (
                                     roles.map((role) => (
-                                        <SelectItem key={role.id} value={role.id} className="focus:bg-slate-800 focus:text-white cursor-pointer">
-                                            <div className="flex flex-col">
+                                        <SelectItem key={role.id} value={role.id} textValue={role.name} className="focus:bg-slate-800 focus:text-white cursor-pointer">
+                                            <div className="flex flex-col items-start text-left">
                                                 <span className="font-medium">{role.name}</span>
                                                 {role.description && <span className="text-xs text-slate-500">{role.description}</span>}
                                             </div>
