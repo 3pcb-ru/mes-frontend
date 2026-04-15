@@ -274,6 +274,10 @@
       "empty_description": "When you receive notifications, they will appear here.",
       "clear_all": "Clear all history"
     },
+    "empty": {
+      "no_data": "No data found",
+      "adjust_search": "Adjust your search or filters to see more results"
+    },
     "entities": {
       "product": "Product",
       "user": "User",

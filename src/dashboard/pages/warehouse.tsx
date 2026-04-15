@@ -1,23 +1,23 @@
 import { useEffect, useState, useMemo } from 'react';
-import { Loader2, Plus, Box, Warehouse, ChevronRight, PackageCheck, Send, Move, ClipboardList, Search, LogOut } from 'lucide-react';
+import { Loader2, Plus, Box, Warehouse, ChevronRight, PackageCheck, Send, Move, ClipboardList, Search, LogOut, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
-import { warehouseService } from '@/features/warehouse/services/warehouse.service';
-import { facilitiesService } from '@/features/facilities/services/facilities.service';
+import { useWarehouseStore } from '@/features/warehouse/store/warehouse.store';
 import type { ContainerListItem } from '@/features/warehouse/types/warehouse.types';
 import type { FacilityListItem } from '@/features/facilities/types/facilities.types';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/shared/components/ui/card';
+import type { ApiError } from '@/shared/lib/api-client';
+import { Card, CardContent, CardHeader, CardTitle } from '@/shared/components/ui/card';
 import { Input } from '@/shared/components/ui/input';
 import { Button } from '@/shared/components/ui/button';
 import { Badge } from '@/shared/components/ui/badge';
+import { DataTableGrid, type ColumnDef } from '@/shared/components/ui/data-table-grid';
+import { Skeleton } from '@/shared/components/ui/skeleton';
 import CrudWizard from '@/shared/components/crud-wizard';
 import { cn } from '@/shared/lib/utils';
 import { useTranslation } from 'react-i18next';
 
 export function WarehousePage() {
     const { t } = useTranslation();
-    const [allNodes, setAllNodes] = useState<FacilityListItem[]>([]);
-    const [allContainers, setAllContainers] = useState<ContainerListItem[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const { allNodes, allContainers, isLoading, fetchData, createContainer, moveContainer } = useWarehouseStore();
     const [currentNodeId, setCurrentNodeId] = useState<string | null>(null);
     const [search, setSearch] = useState('');
     
@@ -25,28 +25,9 @@ export function WarehousePage() {
     const [isReceiptOpen, setIsReceiptOpen] = useState(false);
     const [isShipmentOpen, setIsShipmentOpen] = useState(false);
 
-    const fetchData = async () => {
-        setIsLoading(true);
-        try {
-            const nodesResult = await facilitiesService.listFacilities();
-            const containersResult = await warehouseService.listContainers();
-            
-            const nodes = Array.isArray(nodesResult) ? nodesResult : (nodesResult as any)?.data || [];
-            const containers = Array.isArray(containersResult) ? containersResult : (containersResult as any)?.data || [];
-
-            setAllNodes(Array.isArray(nodes) ? nodes : []);
-            setAllContainers(Array.isArray(containers) ? containers : []);
-        } catch (err: any) {
-            console.error(err);
-            toast.error(err?.message || t('dashboard.warehouse.messages.load_failed'));
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
     useEffect(() => {
-        fetchData();
-    }, []);
+        fetchData().catch(() => {});
+    }, [fetchData]);
 
     // Breadcrumb logic
     const breadcrumbs = useMemo(() => {
@@ -71,47 +52,79 @@ export function WarehousePage() {
 
     const handleReceipt = async (values: any) => {
         try {
-            // Mocking record creation as per plan
-            await warehouseService.createContainer({ 
+            await createContainer({ 
                 ...values, 
                 locationNodeId: currentNodeId || undefined 
             });
             toast.success(t('dashboard.warehouse.messages.receipt_success'));
             setIsReceiptOpen(false);
-            fetchData();
-        } catch (err: any) {
-            toast.error(err?.message || t('dashboard.warehouse.messages.receipt_failed'));
+        } catch (err) {
+            const apiError = err as ApiError;
+            toast.error(apiError.message || t('dashboard.warehouse.messages.receipt_failed'));
         }
     };
 
-    const handleShipment = async (values: any) => {
+    const handleShipment = async (_values: any) => {
         try {
-            // Mocking shipment as per plan
             toast.success(t('dashboard.warehouse.messages.shipment_success'));
             setIsShipmentOpen(false);
-        } catch (err: any) {
-            toast.error(err?.message || t('dashboard.warehouse.messages.shipment_failed'));
+        } catch (err) {
+            const apiError = err as ApiError;
+            toast.error(apiError.message || t('dashboard.warehouse.messages.shipment_failed'));
         }
     };
 
     const handleMove = async (containerId: string, targetNodeId: string) => {
         try {
-            await warehouseService.moveContainer(containerId, { targetNodeId });
+            await moveContainer(containerId, { targetNodeId });
             toast.success(t('dashboard.warehouse.messages.move_success'));
-            fetchData();
-        } catch (err: any) {
-            toast.error(err?.message || t('dashboard.warehouse.messages.move_failed'));
+        } catch (err) {
+            const apiError = err as ApiError;
+            toast.error(apiError.message || t('dashboard.warehouse.messages.move_failed'));
         }
     };
 
-    if (isLoading) {
-        return (
-            <div className="flex flex-col items-center justify-center h-[calc(100vh-200px)] gap-4">
-                <Loader2 className="h-10 w-10 animate-spin text-cyan-500" />
-                <p className="text-slate-400 font-medium italic">{t('common.actions.loading')}</p>
-            </div>
-        );
-    }
+    const columns: ColumnDef<ContainerListItem>[] = useMemo(() => [
+        { 
+            header: t('dashboard.warehouse.table.lpn'), 
+            accessorKey: 'lpn',
+            cell: (item) => <span className="font-medium text-white group-hover:text-cyan-400 transition-colors">{item.lpn}</span>
+        },
+        { 
+            header: t('dashboard.warehouse.table.type'),
+            cell: (item) => (
+                <Badge variant="outline" className="bg-slate-800 border-slate-700 text-slate-400 font-mono text-[10px]">
+                    {item.type || t('common.status.UNKNOWN')}
+                </Badge>
+            )
+        },
+        { 
+            header: t('dashboard.warehouse.table.created_at'),
+            cell: (item) => <span className="text-xs text-slate-400">{new Date(item.createdAt || Date.now()).toLocaleDateString()}</span>
+        },
+        {
+            header: t('dashboard.warehouse.table.actions'),
+            headerClassName: 'text-right',
+            className: 'text-right',
+            cell: (item) => (
+                <div className="flex items-center justify-end gap-2 pr-0">
+                    <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-white hover:bg-slate-700/50" title={t('dashboard.warehouse.tooltips.qc_check')}>
+                        <PackageCheck className="h-4 w-4" />
+                    </Button>
+                    <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-white hover:bg-slate-700/50" title={t('dashboard.warehouse.tooltips.move')}>
+                        <Move className="h-4 w-4" />
+                    </Button>
+                    <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-red-400 hover:bg-red-500/10" title={t('dashboard.warehouse.tooltips.remove')} id={`delete-container-${item.id}`}>
+                        <LogOut className="h-4 w-4" />
+                    </Button>
+                </div>
+            )
+        }
+    ], [t]);
+
+    const filteredContainers = useMemo(() => {
+        return currentContainers.filter(c => c.lpn.toLowerCase().includes(search.toLowerCase()));
+    }, [currentContainers, search]);
 
     return (
         <div className="space-y-6">
@@ -123,15 +136,20 @@ export function WarehousePage() {
                         {t('dashboard.warehouse.title')}
                     </h1>
                     <p className="text-slate-400">{t('dashboard.warehouse.description')}</p>
-                </div>
-                <div className="flex items-center gap-3">
-                    <Button onClick={() => setIsReceiptOpen(true)} className="gap-2">
-                        <PackageCheck className="h-4 w-4" />
-                        {t('dashboard.warehouse.new_receipt')}
+                    <Button
+                        id="new-receipt-button"
+                        className="gap-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 border-0 shadow-lg shadow-emerald-500/20"
+                        onClick={() => setIsReceiptOpen(true)}>
+                        <Plus className="h-4 w-4" />
+                        <span>{t('dashboard.warehouse.new_receipt')}</span>
                     </Button>
-                    <Button onClick={() => setIsShipmentOpen(true)} className="gap-2">
+                    <Button
+                        id="new-shipment-button"
+                        variant="outline"
+                        className="gap-2 bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800"
+                        onClick={() => setIsShipmentOpen(true)}>
                         <Send className="h-4 w-4" />
-                        {t('dashboard.warehouse.new_shipment')}
+                        <span>{t('dashboard.warehouse.new_shipment')}</span>
                     </Button>
                 </div>
             </div>
@@ -172,8 +190,24 @@ export function WarehousePage() {
                         </div>
                     </CardHeader>
                     <CardContent className="p-0">
-                        {currentSubNodes.length === 0 ? (
-                            <div className="py-12 text-center">
+                        {isLoading ? (
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4">
+                                {Array.from({ length: 4 }).map((_, i) => (
+                                    <div key={i} className="flex items-center justify-between p-4 rounded-xl bg-slate-800/20 border border-slate-800/50">
+                                        <div className="flex items-center gap-3">
+                                            <Skeleton className="h-9 w-9 rounded-lg" />
+                                            <div className="space-y-2">
+                                                <Skeleton className="h-4 w-20" />
+                                                <Skeleton className="h-3 w-16" />
+                                            </div>
+                                        </div>
+                                        <Skeleton className="h-4 w-4" />
+                                    </div>
+                                ))}
+                            </div>
+                        ) : currentSubNodes.length === 0 ? (
+                            <div className="py-12 text-center px-6">
+                                <Box className="h-10 w-10 text-slate-800 mx-auto mb-3 opacity-40" />
                                 <p className="text-slate-500 text-sm">{t('dashboard.warehouse.no_sub_areas')}</p>
                             </div>
                         ) : (
@@ -218,56 +252,8 @@ export function WarehousePage() {
                             />
                         </div>
                     </CardHeader>
-                    <CardContent className="p-0">
-                        {currentContainers.length === 0 ? (
-                            <div className="py-16 text-center">
-                                <Box className="h-12 w-12 text-slate-700 mx-auto mb-4 opacity-50" />
-                                <p className="text-slate-500">{t('dashboard.warehouse.empty_location')}</p>
-                            </div>
-                        ) : (
-                            <div className="overflow-x-auto">
-                                <table className="w-full text-left border-collapse">
-                                    <thead>
-                                        <tr className="border-b border-slate-800 bg-slate-900/20">
-                                            <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-slate-500">{t('dashboard.warehouse.table.lpn')}</th>
-                                            <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-slate-500">{t('dashboard.warehouse.table.type')}</th>
-                                            <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-slate-500">{t('dashboard.warehouse.table.created_at')}</th>
-                                            <th className="px-6 py-4 text-right text-[10px] font-bold uppercase tracking-wider text-slate-500">{t('dashboard.warehouse.table.actions')}</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="divide-y divide-slate-800/50">
-                                        {currentContainers.filter(c => c.lpn.toLowerCase().includes(search.toLowerCase())).map((c) => (
-                                            <tr key={c.id} className="group hover:bg-slate-800/30 transition-colors">
-                                                <td className="px-6 py-4">
-                                                    <div className="text-sm font-medium text-white group-hover:text-cyan-400 transition-colors">{c.lpn}</div>
-                                                </td>
-                                                <td className="px-6 py-4">
-                                                    <Badge variant="outline" className="bg-slate-800 border-slate-700 text-slate-400 font-mono text-[10px]">
-                                                        {c.type || t('common.status.UNKNOWN')}
-                                                    </Badge>
-                                                </td>
-                                                <td className="px-6 py-4 text-xs text-slate-400">
-                                                    {new Date(c.createdAt || Date.now()).toLocaleDateString()}
-                                                </td>
-                                                <td className="px-6 py-4 text-right">
-                                                    <div className="flex items-center justify-end gap-2">
-                                                        <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-white hover:bg-slate-700/50" title={t('dashboard.warehouse.tooltips.qc_check')}>
-                                                            <PackageCheck className="h-4 w-4" />
-                                                        </Button>
-                                                        <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-white hover:bg-slate-700/50" title={t('dashboard.warehouse.tooltips.move')}>
-                                                            <Move className="h-4 w-4" />
-                                                        </Button>
-                                                        <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-red-400 hover:bg-red-500/10" title={t('dashboard.warehouse.tooltips.remove')}>
-                                                            <LogOut className="h-4 w-4" />
-                                                        </Button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
-                        )}
+                    <CardContent className="p-0 border-t border-slate-800/50">
+                        <DataTableGrid data={filteredContainers} columns={columns} isLoading={isLoading} />
                     </CardContent>
                 </Card>
             </div>

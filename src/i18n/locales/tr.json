@@ -286,6 +286,10 @@
       "empty_description": "Bildirim aldığınızda burada görünecektir.",
       "clear_all": "Tüm geçmişi temizle"
     },
+    "empty": {
+      "no_data": "Veri bulunamadı",
+      "adjust_search": "Daha fazla sonuç görmek için aramanızı veya filtrelerinizi düzenleyin"
+    },
     "entities": {
       "product": "Ürün",
       "user": "Kullanıcı",

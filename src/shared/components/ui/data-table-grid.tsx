@@ -2,7 +2,9 @@ import * as React from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './table';
 import { Input } from './input';
 import { Button } from './button';
-import { ChevronLeft, ChevronRight, Search } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Search, Inbox } from 'lucide-react';
+import { Skeleton } from './skeleton';
+import { useTranslation } from 'react-i18next';
 
 export interface ColumnDef<T> {
     header: string;
@@ -33,6 +35,8 @@ export function DataTableGrid<T>({
     onPageChange,
     isLoading = false,
 }: DataTableGridProps<T>) {
+    const { t } = useTranslation();
+
     const [searchTerm, setSearchTerm] = React.useState('');
 
     React.useEffect(() => {
@@ -58,29 +62,45 @@ export function DataTableGrid<T>({
                     <TableHeader>
                         <TableRow>
                             {columns.map((col, idx) => (
-                                <TableHead key={idx} className={col.headerClassName}>{col.header}</TableHead>
+                                <TableHead key={idx} className={col.headerClassName}>
+                                    {col.header}
+                                </TableHead>
                             ))}
                         </TableRow>
                     </TableHeader>
                     <TableBody>
                         {isLoading ? (
-                            <TableRow>
-                                <TableCell colSpan={columns.length} className="h-24 text-center">
-                                    Loading...
-                                </TableCell>
-                            </TableRow>
+                            Array.from({ length: 5 }).map((_, rowIdx) => (
+                                <TableRow key={`skeleton-${rowIdx}`} className="border-b border-slate-700/30">
+                                    {columns.map((col, colIdx) => (
+                                        <TableCell key={`skeleton-cell-${colIdx}`} className={col.className}>
+                                            <Skeleton className="h-6 w-full bg-slate-800/50" />
+                                        </TableCell>
+                                    ))}
+                                </TableRow>
+                            ))
                         ) : data.length ? (
                             data.map((item, rowIdx) => (
-                                <TableRow key={rowIdx}>
+                                <TableRow key={rowIdx} className="hover:bg-slate-800/30 transition-colors">
                                     {columns.map((col, colIdx) => (
-                                        <TableCell key={colIdx} className={col.className}>{col.cell ? col.cell(item) : col.accessorKey ? String(item[col.accessorKey]) : null}</TableCell>
+                                        <TableCell key={colIdx} className={col.className}>
+                                            {col.cell ? col.cell(item) : col.accessorKey ? String(item[col.accessorKey]) : null}
+                                        </TableCell>
                                     ))}
                                 </TableRow>
                             ))
                         ) : (
                             <TableRow>
-                                <TableCell colSpan={columns.length} className="h-24 text-center">
-                                    No results.
+                                <TableCell colSpan={columns.length} className="h-64">
+                                    <div className="flex flex-col items-center justify-center gap-4 text-slate-500">
+                                        <div className="w-16 h-16 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center">
+                                            <Inbox className="h-8 w-8 text-slate-700" />
+                                        </div>
+                                        <div className="text-center">
+                                            <p className="font-medium text-slate-400">{t('common.empty.no_data', 'No data found')}</p>
+                                            <p className="text-xs">{t('common.empty.adjust_search', 'Adjust your search or filters to see more results')}</p>
+                                        </div>
+                                    </div>
                                 </TableCell>
                             </TableRow>
                         )}

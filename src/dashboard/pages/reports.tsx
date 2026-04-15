@@ -1,7 +1,8 @@
 import { useEffect, useState, useMemo } from 'react';
 import { toast } from 'sonner';
-import { reportsService } from '@/features/reports/services/reports.service';
+import { useReportsStore } from '@/features/reports/store/reports.store';
 import type { ActivityListItem } from '@/features/reports/types/reports.types';
+import type { ApiError } from '@/shared/lib/api-client';
 import { Card, CardContent } from '@/shared/components/ui/card';
 import { Input } from '@/shared/components/ui/input';
 import { Label } from '@/shared/components/ui/label';
@@ -13,8 +14,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '
 
 export function ReportsPage() {
     const { t } = useTranslation();
-    const [items, setItems] = useState<ActivityListItem[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const { items, isLoading, fetchActivities } = useReportsStore();
 
     // Advanced Filters
     const [searchAction, setSearchAction] = useState('');
@@ -26,23 +26,9 @@ export function ReportsPage() {
     const [selectedItem, setSelectedItem] = useState<ActivityListItem | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const fetchActivities = async () => {
-        setIsLoading(true);
-        try {
-            const data = await reportsService.listActivities();
-            setItems(Array.isArray(data) ? data : []);
-        } catch (err: any) {
-            console.error('API Error:', err);
-            toast.error(err?.message || t('dashboard.reports.messages.load_failed'));
-            setItems([]);
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
     useEffect(() => {
-        fetchActivities();
-    }, []);
+        fetchActivities().catch(() => {});
+    }, [fetchActivities]);
 
     const filteredItems = items.filter((a) => {
         const matchAction = a.actionType?.toLowerCase().includes(searchAction.toLowerCase()) ?? true;
@@ -115,19 +101,19 @@ export function ReportsPage() {
                 <CardContent className="p-4 grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div className="space-y-1.5">
                         <Label className="text-xs text-slate-400 uppercase tracking-wider">{t('dashboard.reports.filters.action_type')}</Label>
-                        <Input placeholder={t('dashboard.reports.filters.action_placeholder')} value={searchAction} onChange={(e) => setSearchAction(e.target.value)} />
+                        <Input id="filter-action-type" placeholder={t('dashboard.reports.filters.action_placeholder')} value={searchAction} onChange={(e) => setSearchAction(e.target.value)} />
                     </div>
                     <div className="space-y-1.5">
                         <Label className="text-xs text-slate-400 uppercase tracking-wider">{t('dashboard.reports.filters.node_id')}</Label>
-                        <Input placeholder={t('dashboard.reports.filters.node_placeholder')} value={filterNode} onChange={(e) => setFilterNode(e.target.value)} />
+                        <Input id="filter-node-id" placeholder={t('dashboard.reports.filters.node_placeholder')} value={filterNode} onChange={(e) => setFilterNode(e.target.value)} />
                     </div>
                     <div className="space-y-1.5">
                         <Label className="text-xs text-slate-400 uppercase tracking-wider">{t('dashboard.reports.filters.user_id')}</Label>
-                        <Input placeholder={t('dashboard.reports.filters.user_placeholder')} value={filterUser} onChange={(e) => setFilterUser(e.target.value)} />
+                        <Input id="filter-user-id" placeholder={t('dashboard.reports.filters.user_placeholder')} value={filterUser} onChange={(e) => setFilterUser(e.target.value)} />
                     </div>
                     <div className="space-y-1.5">
                         <Label className="text-xs text-slate-400 uppercase tracking-wider">{t('dashboard.reports.filters.job_id')}</Label>
-                        <Input placeholder={t('dashboard.reports.filters.job_placeholder')} value={filterJob} onChange={(e) => setFilterJob(e.target.value)} />
+                        <Input id="filter-job-id" placeholder={t('dashboard.reports.filters.job_placeholder')} value={filterJob} onChange={(e) => setFilterJob(e.target.value)} />
                     </div>
                 </CardContent>
             </Card>

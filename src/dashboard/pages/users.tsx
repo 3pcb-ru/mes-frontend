@@ -1,9 +1,9 @@
-import { useState, useEffect, useCallback } from 'react';
-import { Users, Search, Filter, UserPlus, Mail, ShieldCheck, CheckCircle2, XCircle, Loader2, Plus, Copy, Edit, Trash2, Power, PowerOff, Eye, Shield } from 'lucide-react';
-import { usersService } from '@/features/users/services/users.service';
-import { rolesService } from '@/features/users/services/roles.service';
+import { useState, useEffect } from 'react';
+import { Users, Search, Filter, UserPlus, Mail, ShieldCheck, CheckCircle2, XCircle, Loader2, Plus, Copy, Edit, Trash2, Power, PowerOff, Eye, Shield, Inbox } from 'lucide-react';
+import { useUsersStore } from '@/features/users/store/users.store';
 import type { UserListItem, RoleWithPermissions } from '@/features/users/types/users.types';
-import { Card, CardContent, CardHeader, CardTitle } from '@/shared/components/ui/card';
+import { Skeleton } from '@/shared/components/ui/skeleton';
+import { Card, CardContent, CardHeader } from '@/shared/components/ui/card';
 import { Input } from '@/shared/components/ui/input';
 import { Button } from '@/shared/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/components/ui/tabs';
@@ -17,85 +17,44 @@ import { Badge } from '@/shared/components/ui/badge';
 
 export function UsersPage() {
     const { t } = useTranslation();
-    const [activeTab, setActiveTab] = useState('users');
+    const {
+        users,
+        roles,
+        isUsersLoading,
+        isRolesLoading,
+        fetchUsers,
+        fetchRoles,
+        updateUserStatus,
+        duplicateRole,
+        deleteRole,
+    } = useUsersStore();
 
-    // Users state
-    const [users, setUsers] = useState<UserListItem[]>([]);
-    const [isUsersLoading, setIsUsersLoading] = useState(true);
+    const [activeTab, setActiveTab] = useState('users');
     const [userSearchQuery, setUserSearchQuery] = useState('');
     const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
 
-    // Roles state
-    const [roles, setRoles] = useState<RoleWithPermissions[]>([]);
-    const [isRolesLoading, setIsRolesLoading] = useState(false);
+    // Roles state (UI only)
     const [isRoleModalOpen, setIsRoleModalOpen] = useState(false);
     const [selectedRole, setSelectedRole] = useState<RoleWithPermissions | null>(null);
     const [roleToDelete, setRoleToDelete] = useState<string | null>(null);
 
-    const fetchUsers = useCallback(async () => {
-        setIsUsersLoading(true);
-        try {
-            const response = await usersService.listUsers();
-            // Handle various backend response structures
-            let userList: UserListItem[] = [];
-            if (Array.isArray(response)) {
-                userList = response;
-            } else if (response && typeof response === 'object') {
-                // Check common data wrappers
-                userList = (response as any).data || (response as any).users || (response as any).items || [];
-            }
-
-            setUsers(userList);
-        } catch (err: any) {
-            console.error('Failed to fetch users:', err);
-            const errorMessage = err.message || t('dashboard.users.errors.fetch_failed', 'Failed to load users');
-
-            // Specialized messaging for auth/permission issues
-            if (err.statusCode === 401) {
-                toast.error(t('common.errors.unauthorized', 'Session expired. Please log in again.'));
-            } else if (err.statusCode === 403) {
-                toast.error(t('common.errors.forbidden', 'You do not have permission to view users.'));
-            } else {
-                toast.error(errorMessage);
-            }
-        } finally {
-            setIsUsersLoading(false);
-        }
-    }, [t]);
-
-    const fetchRoles = useCallback(async () => {
-        setIsRolesLoading(true);
-        try {
-            const data = await rolesService.lookupRoles();
-            // Handle potential wrapped response from API (e.g. { roles: [] })
-            const roleList = Array.isArray(data) ? data : (data as any)?.roles || [];
-            setRoles(roleList);
-        } catch (err) {
-            console.error('Failed to fetch roles:', err);
-            toast.error(t('dashboard.roles.errors.fetch_failed', 'Failed to load roles'));
-        } finally {
-            setIsRolesLoading(false);
-        }
-    }, [t]);
-
     useEffect(() => {
         if (activeTab === 'users') {
-            fetchUsers();
+            fetchUsers().catch(() => {});
         } else if (activeTab === 'roles') {
-            fetchRoles();
+            fetchRoles().catch(() => {});
         }
     }, [activeTab, fetchUsers, fetchRoles]);
 
     const handleToggleUserStatus = async (user: UserListItem) => {
         const newStatus = user.deletedAt ? 'active' : 'inactive';
         try {
-            await usersService.updateStatus(user.id, { status: newStatus });
+            await updateUserStatus(user.id, { status: newStatus });
             if (newStatus === 'inactive') {
                 toast.warning(t('dashboard.users.status.update_inactive_success', 'User deactivated successfully'));
             } else {
                 toast.success(t('dashboard.users.status.update_active_success', 'User reactivated successfully'));
             }
-            fetchUsers();
         } catch (err: any) {
             toast.error(err.message || t('dashboard.users.errors.status_update_failed', 'Failed to update user status'));
         }
@@ -103,9 +62,8 @@ export function UsersPage() {
 
     const handleDuplicateRole = async (roleId: string) => {
         try {
-            await rolesService.duplicateRole(roleId);
+            await duplicateRole(roleId);
             toast.success(t('dashboard.roles.duplicate_success', 'Role duplicated successfully'));
-            fetchRoles();
         } catch (err: any) {
             toast.error(err.message || t('dashboard.roles.errors.duplicate_failed', 'Failed to duplicate role'));
         }
@@ -117,15 +75,12 @@ export function UsersPage() {
 
     const confirmDeleteRole = async () => {
         if (!roleToDelete) return;
-        setIsRolesLoading(true); // Using existing loading state
         try {
-            await rolesService.deleteRole(roleToDelete);
+            await deleteRole(roleToDelete);
             toast.warning(t('dashboard.roles.delete_success', 'Role deleted successfully'));
-            fetchRoles();
         } catch (err: any) {
             toast.error(err.message || t('dashboard.roles.errors.delete_failed', 'Failed to delete role'));
         } finally {
-            setIsRolesLoading(false);
             setRoleToDelete(null);
         }
     };
@@ -147,6 +102,7 @@ export function UsersPage() {
                 <div className="flex items-center gap-3">
                     {activeTab === 'users' ? (
                         <Button
+                            id="invite-user-button"
                             className="gap-2 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 border-0 shadow-lg shadow-cyan-500/20"
                             onClick={() => setIsInviteModalOpen(true)}>
                             <UserPlus className="h-4 w-4" />
@@ -154,6 +110,7 @@ export function UsersPage() {
                         </Button>
                     ) : (
                         <Button
+                            id="create-role-button"
                             className="gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 border-0 shadow-lg shadow-purple-500/20"
                             onClick={() => {
                                 setSelectedRole(null);
@@ -185,6 +142,7 @@ export function UsersPage() {
                                 <div className="relative flex-1">
                                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500" />
                                     <Input
+                                        id="user-search-input"
                                         placeholder={t('dashboard.users.search_placeholder', 'Search users...')}
                                         value={userSearchQuery}
                                         onChange={(e) => setUserSearchQuery(e.target.value)}
@@ -199,9 +157,25 @@ export function UsersPage() {
                         </CardHeader>
                         <CardContent className="p-0">
                             {isUsersLoading ? (
-                                <div className="flex flex-col items-center justify-center py-20 gap-4">
-                                    <Loader2 className="h-8 w-8 animate-spin text-cyan-500" />
-                                    <p className="text-slate-400">{t('common.loading', 'Loading users...')}</p>
+                                <div className="divide-y divide-slate-700/30">
+                                    {Array.from({ length: 5 }).map((_, i) => (
+                                        <div key={i} className="px-6 py-4 flex items-center justify-between">
+                                            <div className="flex items-center gap-3">
+                                                <Skeleton className="h-10 w-10 rounded-full" />
+                                                <div className="space-y-2">
+                                                    <Skeleton className="h-4 w-32" />
+                                                    <Skeleton className="h-3 w-48" />
+                                                </div>
+                                            </div>
+                                            <Skeleton className="h-8 w-24 hidden sm:block" />
+                                            <Skeleton className="h-6 w-16" />
+                                            <div className="flex gap-2">
+                                                <Skeleton className="h-8 w-8 rounded-md" />
+                                                <Skeleton className="h-8 w-8 rounded-md" />
+                                                <Skeleton className="h-8 w-8 rounded-md" />
+                                            </div>
+                                        </div>
+                                    ))}
                                 </div>
                             ) : filteredUsers.length > 0 ? (
                                 <div className="overflow-x-auto">
@@ -335,9 +309,9 @@ export function UsersPage() {
                                     </table>
                                 </div>
                             ) : (
-                                <div className="flex flex-col items-center justify-center py-24 gap-4">
+                                <div className="flex flex-col items-center justify-center py-24 gap-4 px-6">
                                     <div className="w-16 h-16 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-700">
-                                        <Users className="h-8 w-8" />
+                                        <Inbox className="h-8 w-8" />
                                     </div>
                                     <p className="text-slate-500 font-medium">{t('dashboard.users.no_users_found', 'No users found matching your search.')}</p>
                                     <Button variant="link" className="text-cyan-500 hover:text-cyan-400" onClick={() => setUserSearchQuery('')}>
@@ -353,9 +327,22 @@ export function UsersPage() {
                     <Card className="bg-slate-800/50 border-slate-700/50 backdrop-blur-sm overflow-hidden">
                         <CardContent className="p-0">
                             {isRolesLoading ? (
-                                <div className="flex flex-col items-center justify-center py-20 gap-4">
-                                    <Loader2 className="h-8 w-8 animate-spin text-purple-500" />
-                                    <p className="text-slate-400">{t('common.loading', 'Loading roles...')}</p>
+                                <div className="divide-y divide-slate-700/30">
+                                    {Array.from({ length: 3 }).map((_, i) => (
+                                        <div key={i} className="px-6 py-6 flex items-center justify-between">
+                                            <div className="space-y-2">
+                                                <Skeleton className="h-5 w-40" />
+                                                <Skeleton className="h-3 w-64" />
+                                            </div>
+                                            <Skeleton className="h-6 w-20" />
+                                            <Skeleton className="h-7 w-24" />
+                                            <div className="flex gap-2">
+                                                <Skeleton className="h-8 w-8 rounded-md" />
+                                                <Skeleton className="h-8 w-8 rounded-md" />
+                                                <Skeleton className="h-8 w-8 rounded-md" />
+                                            </div>
+                                        </div>
+                                    ))}
                                 </div>
                             ) : roles.length > 0 ? (
                                 <div className="overflow-x-auto">
@@ -431,7 +418,8 @@ export function UsersPage() {
                                                                 className="h-8 w-8 text-slate-400 hover:text-red-400 disabled:opacity-[0.15] disabled:cursor-not-allowed"
                                                                 onClick={() => handleDeleteRole(role.id)}
                                                                 title={t('common.delete', 'Delete')}
-                                                                disabled={!role.organizationId}>
+                                                                disabled={!role.organizationId}
+                                                                id={`delete-role-${role.id}`}>
                                                                 <Trash2 className="h-4 w-4" />
                                                             </Button>
                                                         </div>

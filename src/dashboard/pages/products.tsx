@@ -1,8 +1,9 @@
 import { useEffect, useState, useMemo } from 'react';
 import { Package, Plus } from 'lucide-react';
 import { toast } from 'sonner';
-import { productsService } from '@/features/products/services/products.service';
+import { useProductsStore } from '@/features/products/store/products.store';
 import type { ProductListItem } from '@/features/products/types/products.types';
+import type { ApiError } from '@/shared/lib/api-client';
 import { Button } from '@/shared/components/ui/button';
 import { DataTableGrid, type ColumnDef } from '@/shared/components/ui/data-table-grid';
 import { SlideOutDrawer } from '@/shared/components/ui/slide-out-drawer';
@@ -14,8 +15,7 @@ import { useTranslation } from 'react-i18next';
 
 export function ProductsPage() {
     const { t } = useTranslation();
-    const [items, setItems] = useState<ProductListItem[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const { items, isLoading, fetchProducts, createProduct, updateProduct, deleteProduct } = useProductsStore();
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [editingItem, setEditingItem] = useState<ProductListItem | null>(null);
@@ -23,40 +23,25 @@ export function ProductsPage() {
 
     const moduleActions = getModuleActions('products');
 
-    const fetchProducts = async () => {
-        setIsLoading(true);
-        try {
-            const data = await productsService.listProducts();
-            setItems(Array.isArray(data) ? data : []);
-        } catch (err: any) {
-            console.error('API Error:', err);
-            toast.error(err?.message || t('dashboard.products.messages.load_failed'));
-            setItems([]);
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
     useEffect(() => {
-        fetchProducts();
-    }, []);
+        fetchProducts().catch(() => {});
+    }, [fetchProducts]);
 
     const handleCreateOrUpdate = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const payload = { ...formData, sku: formData.sku!, name: formData.name! };
+            const payload = { sku: formData.sku!, name: formData.name! };
             if (editingItem) {
-                await productsService.updateProduct(editingItem.id, payload);
+                await updateProduct(editingItem.id, payload);
                 toast.success(t('dashboard.products.messages.update_success'));
             } else {
-                await productsService.createProduct(payload);
+                await createProduct(payload);
                 toast.success(t('dashboard.products.messages.create_success'));
             }
             handleCloseDrawer();
-            await fetchProducts();
-        } catch (err: any) {
-            console.error('Error saving product:', err);
-            toast.error(err?.message || t('dashboard.products.messages.save_failed'));
+        } catch (err) {
+            const apiError = err as ApiError;
+            toast.error(apiError.message || t('dashboard.products.messages.save_failed'));
         }
     };
 
@@ -71,12 +56,11 @@ export function ProductsPage() {
 
     const handleDelete = async (id: string) => {
         try {
-            await productsService.deleteProduct(id);
+            await deleteProduct(id);
             toast.success(t('dashboard.products.messages.delete_success'));
-            await fetchProducts();
-        } catch (err: any) {
-            console.error('Delete error:', err);
-            toast.error(err?.message || t('dashboard.products.messages.delete_failed'));
+        } catch (err) {
+            const apiError = err as ApiError;
+            toast.error(apiError.message || t('dashboard.products.messages.delete_failed'));
         }
     };
 
@@ -128,7 +112,7 @@ export function ProductsPage() {
                     <p className="text-slate-400">{t('dashboard.products.description')}</p>
                 </div>
                 <div className="flex items-center gap-3 shrink min-w-0">
-                    <Button onClick={() => setIsDrawerOpen(true)} className="flex items-center gap-2 whitespace-nowrap shrink-0">
+                    <Button id="add-product-button" onClick={() => setIsDrawerOpen(true)} className="flex items-center gap-2 whitespace-nowrap shrink-0">
                         <Plus className="h-4 w-4" /> {t('dashboard.products.add_button')}
                     </Button>
                 </div>
@@ -148,13 +132,14 @@ export function ProductsPage() {
                         <Label>
                             {t('dashboard.products.drawer.sku')} <span className="text-destructive">*</span>
                         </Label>
-                        <Input required value={formData.sku || ''} onChange={(e) => setFormData({ ...formData, sku: e.target.value })} placeholder={t('dashboard.products.drawer.sku_placeholder')} />
+                        <Input id="product-sku-input" required value={formData.sku || ''} onChange={(e) => setFormData({ ...formData, sku: e.target.value })} placeholder={t('dashboard.products.drawer.sku_placeholder')} />
                     </div>
                     <div className="space-y-2">
                         <Label>
                             {t('dashboard.products.drawer.name')} <span className="text-destructive">*</span>
                         </Label>
                         <Input
+                            id="product-name-input"
                             required
                             value={formData.name || ''}
                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -162,10 +147,10 @@ export function ProductsPage() {
                         />
                     </div>
                     <div className="pt-6 flex justify-end gap-3 border-t border-slate-800">
-                        <Button type="button" variant="outline" onClick={handleCloseDrawer}>
+                        <Button id="cancel-product-button" type="button" variant="outline" onClick={handleCloseDrawer}>
                             {t('common.actions.cancel')}
                         </Button>
-                        <Button type="submit">{t('common.actions.save')}</Button>
+                        <Button id="save-product-button" type="submit">{t('common.actions.save')}</Button>
                     </div>
                 </form>
             </SlideOutDrawer>
