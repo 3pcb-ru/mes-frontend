@@ -17,15 +17,32 @@ export const AiChatComponent = () => {
     const [error, setError] = useState<string | null>(null);
     const [isBlocked, setIsBlocked] = useState(false);
 
-    const { isGenerating, currentLayout, generateLayout, savePage } = useVibeStore();
+    const { isGenerating, currentLayout, generateLayout, savePage, coolDownUntil } = useVibeStore();
     const scrollRef = useRef<HTMLDivElement>(null);
+    const [secondsLeft, setSecondsLeft] = useState(0);
+
+    // Cool-down Ticker
+    useEffect(() => {
+        if (!coolDownUntil) return;
+
+        const tick = () => {
+            const left = Math.ceil((coolDownUntil - Date.now()) / 1000);
+            setSecondsLeft(Math.max(0, left));
+        };
+
+        tick();
+        const interval = setInterval(tick, 1000);
+        return () => clearInterval(interval);
+    }, [coolDownUntil]);
+
+    const isCoolingDown = secondsLeft > 0;
 
     // Auto-scroll to bottom of chat
     useEffect(() => {
         if (scrollRef.current) {
             scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
         }
-    }, [isGenerating, currentLayout]);
+    }, [isGenerating, currentLayout, error]);
 
     const validatePrompt = (text: string): string | null => {
         if (text.length < 5) return 'Prompt is too short. Please provide a descriptive sentence.';
@@ -44,7 +61,7 @@ export const AiChatComponent = () => {
     };
 
     const handleGenerate = async () => {
-        if (!prompt.trim()) return;
+        if (!prompt.trim() || isCoolingDown) return;
 
         const validationError = validatePrompt(prompt);
         if (validationError) {
@@ -70,9 +87,18 @@ export const AiChatComponent = () => {
             }
 
             setError(message);
-            toast.error('Vibe Agent Error', {
-                description: message,
-            });
+
+            // Special toast for coolDown
+            if (err?.response?.data?.retryAfter) {
+                toast.warning('Quota Limit Reached', {
+                    description: `AI is resting for ${err.response.data.retryAfter}s. Please wait.`,
+                    duration: 5000,
+                });
+            } else {
+                toast.error('Vibe Agent Error', {
+                    description: message,
+                });
+            }
             console.error('Generation failed:', err);
         }
     };
@@ -123,9 +149,14 @@ export const AiChatComponent = () => {
                                     <div>
                                         <CardTitle className="text-sm font-bold text-white uppercase tracking-tight">Vibe Agent</CardTitle>
                                         <div className="flex items-center gap-1">
-                                            <div className={cn('h-1.5 w-1.5 rounded-full', isBlocked ? 'bg-red-500' : 'bg-emerald-500 animate-pulse')} />
+                                            <div
+                                                className={cn(
+                                                    'h-1.5 w-1.5 rounded-full',
+                                                    isBlocked ? 'bg-red-500' : isCoolingDown ? 'bg-amber-500' : 'bg-emerald-500 animate-pulse',
+                                                )}
+                                            />
                                             <span className="text-[10px] text-slate-500 uppercase font-bold tracking-widest">
-                                                {isBlocked ? 'System Locked' : 'Protocol Active'}
+                                                {isBlocked ? 'System Locked' : isCoolingDown ? 'CoolDown Active' : 'Protocol Active'}
                                             </span>
                                         </div>
                                     </div>
@@ -158,6 +189,29 @@ export const AiChatComponent = () => {
                                             our premium component library.
                                         </div>
 
+                                        {isCoolingDown && (
+                                            <div className="bg-amber-500/10 border border-amber-500/20 p-4 rounded-2xl space-y-3 transition-all duration-500 animate-in fade-in zoom-in-95">
+                                                <div className="flex items-center justify-between">
+                                                    <div className="flex items-center gap-2 text-amber-500 font-bold text-[10px] uppercase tracking-wider">
+                                                        <Loader2 className="h-3 w-3 animate-spin" />
+                                                        AI CoolDown Active
+                                                    </div>
+                                                    <span className="text-xs font-mono text-amber-400">{secondsLeft}s</span>
+                                                </div>
+                                                <div className="h-1 w-full bg-slate-800 rounded-full overflow-hidden">
+                                                    <motion.div
+                                                        className="h-full bg-amber-500"
+                                                        initial={{ width: '100%' }}
+                                                        animate={{ width: '0%' }}
+                                                        transition={{ duration: secondsLeft, ease: 'linear' }}
+                                                    />
+                                                </div>
+                                                <p className="text-[10px] text-slate-400 leading-tight">
+                                                    Protocol limit reached (Free Tier). The agent is recalibrating sensors. Please wait.
+                                                </p>
+                                            </div>
+                                        )}
+
                                         {isGenerating && (
                                             <div className="flex items-center gap-2 text-cyan-400">
                                                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -170,13 +224,17 @@ export const AiChatComponent = () => {
                                                 <div className="flex items-center gap-2 mb-1">
                                                     <div className="h-1.5 w-1.5 rounded-full bg-red-500 animate-pulse" />
                                                     <p className="font-bold uppercase tracking-tighter">
-                                                        {error.includes('demand') || error.includes('unavailable') ? 'System Overload' : 'Architectural Breach'}
+                                                        {error.includes('quota') || error.includes('limit')
+                                                            ? 'Resource Limit'
+                                                            : error.includes('demand') || error.includes('unavailable')
+                                                              ? 'System Overload'
+                                                              : 'Architectural Breach'}
                                                     </p>
                                                 </div>
                                                 <p className="opacity-90">{error}</p>
-                                                {(error.includes('demand') || error.includes('unavailable')) && (
+                                                {(error.includes('demand') || error.includes('unavailable') || error.includes('quota')) && (
                                                     <p className="mt-2 text-[10px] text-red-400/60 italic uppercase tracking-widest font-bold">
-                                                        Action: Wait 30s and re-submit protocol
+                                                        {error.includes('quota') ? 'Action: System coolDown required' : 'Action: Wait 30s and re-submit protocol'}
                                                     </p>
                                                 )}
                                             </div>

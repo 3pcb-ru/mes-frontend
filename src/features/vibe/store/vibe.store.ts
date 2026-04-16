@@ -15,12 +15,14 @@ interface VibeState {
     pages: VibePage[];
     isGenerating: boolean;
     currentLayout: any | null;
+    coolDownUntil: number | null;
 
     // Actions
     fetchPages: () => Promise<void>;
     generateLayout: (prompt: string, apiManifest: any, componentsManifest: any) => Promise<void>;
     savePage: (name: string, category: VibePage['category']) => Promise<void>;
     deletePage: (id: string) => Promise<void>;
+    setCoolDown: (seconds: number) => void;
 }
 
 export const useVibeStore = create<VibeState>()(
@@ -29,6 +31,7 @@ export const useVibeStore = create<VibeState>()(
             pages: [],
             isGenerating: false,
             currentLayout: null,
+            coolDownUntil: null,
 
             fetchPages: async () => {
                 try {
@@ -40,6 +43,11 @@ export const useVibeStore = create<VibeState>()(
             },
 
             generateLayout: async (prompt, apiManifest, componentsManifest) => {
+                const { coolDownUntil } = get();
+                if (coolDownUntil && coolDownUntil > Date.now()) {
+                    throw new Error(`AI is cooling down. Please wait ${Math.ceil((coolDownUntil - Date.now()) / 1000)}s.`);
+                }
+
                 set({ isGenerating: true });
                 try {
                     const layout = await apiClient.post<any>('/vibe/generate', {
@@ -48,8 +56,12 @@ export const useVibeStore = create<VibeState>()(
                         componentsManifest,
                     });
                     set({ currentLayout: layout });
-                } catch (error) {
+                } catch (error: any) {
                     console.error('Failed to generate layout:', error);
+                    const retryAfter = error?.response?.data?.retryAfter;
+                    if (retryAfter) {
+                        get().setCoolDown(retryAfter);
+                    }
                     throw error;
                 } finally {
                     set({ isGenerating: false });
@@ -85,6 +97,10 @@ export const useVibeStore = create<VibeState>()(
                 } catch (error) {
                     console.error('Failed to delete vibe page:', error);
                 }
+            },
+
+            setCoolDown: (seconds) => {
+                set({ coolDownUntil: Date.now() + seconds * 1000 });
             },
         }),
         {
