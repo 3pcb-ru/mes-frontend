@@ -6,8 +6,8 @@ import { Toaster } from '@/shared/components/ui/sonner';
  * App - Main entry point with route-based code splitting
  */
 
-// Layouts (Keep eager if core/small, or lazy if heavy)
-import { LandingLayout } from './landing/layouts/landing-layout';
+// Layouts (Lazy loaded for optimal code splitting)
+const LandingLayout = lazy(() => import('./landing/layouts/landing-layout').then((m) => ({ default: m.LandingLayout })));
 import { DashboardLayout } from './dashboard/layouts/dashboard-layout';
 
 // Loading Component
@@ -17,19 +17,19 @@ const PageLoader = () => (
     </div>
 );
 
-// Landing Pages (Eager - usually landing needs fast LCP)
-import { HomePage } from './landing/pages/home';
-import { AboutPage } from './landing/pages/about';
-import { PrivacyPage } from './landing/pages/privacy';
-import { TermsPage } from './landing/pages/terms';
+// Landing Pages (Lazy)
+const HomePage = lazy(() => import('./landing/pages/home').then((m) => ({ default: m.HomePage })));
+const AboutPage = lazy(() => import('./landing/pages/about').then((m) => ({ default: m.AboutPage })));
+const PrivacyPage = lazy(() => import('./landing/pages/privacy').then((m) => ({ default: m.PrivacyPage })));
+const TermsPage = lazy(() => import('./landing/pages/terms').then((m) => ({ default: m.TermsPage })));
 
-// Auth Pages (Eager - critical path)
-import { LoginPage } from './features/auth/pages/login';
-import { SignupPage } from './features/auth/pages/signup';
-import { ForgotPasswordPage } from './features/auth/pages/forgot-password';
-import { ResetPasswordPage } from './features/auth/pages/reset-password';
-import { VerifyEmailPage } from './features/auth/pages/verify-email';
-import { AcceptInvitationPage } from './features/auth/pages/accept-invitation';
+// Auth Pages (Lazy)
+const LoginPage = lazy(() => import('./features/auth/pages/login').then((m) => ({ default: m.LoginPage })));
+const SignupPage = lazy(() => import('./features/auth/pages/signup').then((m) => ({ default: m.SignupPage })));
+const ForgotPasswordPage = lazy(() => import('./features/auth/pages/forgot-password').then((m) => ({ default: m.ForgotPasswordPage })));
+const ResetPasswordPage = lazy(() => import('./features/auth/pages/reset-password').then((m) => ({ default: m.ResetPasswordPage })));
+const VerifyEmailPage = lazy(() => import('./features/auth/pages/verify-email').then((m) => ({ default: m.VerifyEmailPage })));
+const AcceptInvitationPage = lazy(() => import('./features/auth/pages/accept-invitation').then((m) => ({ default: m.AcceptInvitationPage })));
 import { ProtectedRoute } from './features/auth/components/protected-route';
 
 // Dashboard Pages (LAZY LOADED - Protocol compliance)
@@ -41,6 +41,7 @@ const FacilitiesPage = lazy(() => import('./dashboard/pages/facilities').then((m
 const ReportsPage = lazy(() => import('./dashboard/pages/reports').then((m) => ({ default: m.ReportsPage })));
 const WarehousePage = lazy(() => import('./dashboard/pages/warehouse').then((m) => ({ default: m.WarehousePage })));
 const WorkOrdersPage = lazy(() => import('./dashboard/pages/work-orders').then((m) => ({ default: m.WorkOrdersPage })));
+const ExecutionPage = lazy(() => import('./dashboard/pages/execution')); // Default export handled automatically
 const SettingsPage = lazy(() => import('./dashboard/pages/settings').then((m) => ({ default: m.SettingsPage })));
 const ComingSoonPage = lazy(() => import('./dashboard/pages/coming-soon').then((m) => ({ default: m.ComingSoonPage })));
 
@@ -111,6 +112,7 @@ export default function App() {
                         <Route path="/dashboard/reports" element={<ReportsPage />} />
                         <Route path="/dashboard/warehouse" element={<WarehousePage />} />
                         <Route path="/dashboard/work-orders" element={<WorkOrdersPage />} />
+                        <Route path="/dashboard/execution" element={<ExecutionPage />} />
                         <Route path="/dashboard/settings" element={<SettingsPage />} />
                         <Route path="/dashboard/help" element={<ComingSoonPage />} />
                         <Route path="/dashboard/messages" element={<ComingSoonPage />} />

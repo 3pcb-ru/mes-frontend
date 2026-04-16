@@ -6,15 +6,15 @@ import { UserSchema, RoleSchema, OrganizationSchema } from '../../../shared/type
  */
 
 export const UserListItemSchema = z.object({
-    id: z.string().uuid(),
+    id: z.uuidv4(),
     email: z.string().email(),
     firstName: z.string(),
     lastName: z.string(),
-    role: z.string(), // Backwards compatibility for list display
+    role: z.union([z.string(), RoleSchema]), // Backwards compatibility + Relation support
     isVerified: z.boolean(),
     createdAt: z.string(),
     deletedAt: z.string().nullable().optional(),
-    avatarId: z.string().uuid().nullable().optional(),
+    avatarId: z.uuidv4().nullable().optional(),
     avatarUrl: z.string().url().nullable().optional(),
 });
 
@@ -26,7 +26,7 @@ export const InviteUserSchema = z.object({
     email: z.string().email('Please enter a valid email address'),
     firstName: z.string().min(1, 'First name is required'),
     lastName: z.string().min(1, 'Last name is required'),
-    roleId: z.string().uuid('Invalid role ID'),
+    roleId: z.uuidv4('Invalid role ID'),
 });
 
 export const UpdateUserStatusSchema = z.object({

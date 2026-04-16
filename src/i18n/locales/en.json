@@ -332,6 +332,7 @@
         "dashboard": "Dashboard",
         "operations": "Operations",
         "production": "Production",
+        "execution": "Execution",
         "warehouse": "Warehouse",
         "analytics": "Analytics",
         "reports": "Reports",
@@ -510,6 +511,33 @@
         "load_failed": "Failed to load work orders",
         "create_success": "Work order created successfully",
         "create_failed": "Failed to create work order"
+      }
+    },
+    "execution": {
+      "title": "Production Execution",
+      "subtitle": "Monitor and manage live production jobs across facilities.",
+      "stats": {
+        "total_jobs": "Total Jobs",
+        "in_progress": "In Progress",
+        "pending": "Pending"
+      },
+      "table": {
+        "job_id": "Job ID",
+        "work_order": "Work Order",
+        "status": "Status",
+        "station": "Station",
+        "actions": "Actions"
+      },
+      "actions": {
+        "start": "Start",
+        "complete": "Complete"
+      },
+      "messages": {
+        "load_failed": "Failed to load jobs",
+        "start_success": "Job started successfully",
+        "start_failed": "Failed to start job",
+        "complete_success": "Job completed successfully",
+        "complete_failed": "Failed to complete job"
       }
     },
     "warehouse": {

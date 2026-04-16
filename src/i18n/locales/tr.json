@@ -367,6 +367,7 @@
         "dashboard": "Gösterge Paneli",
         "operations": "Operasyonlar",
         "production": "Üretim",
+        "execution": "Yürütme",
         "warehouse": "Depo",
         "analytics": "Analitik",
         "reports": "Raporlar",
@@ -545,6 +546,33 @@
         "load_failed": "İş emirleri yüklenemedi",
         "create_success": "İş emri başarıyla oluşturuldu",
         "create_failed": "İş emri oluşturulamadı"
+      }
+    },
+    "execution": {
+      "title": "Üretim Yürütme",
+      "subtitle": "Tesislerdeki canlı üretim işlerini izleyin ve yönetin.",
+      "stats": {
+        "total_jobs": "Toplam İşler",
+        "in_progress": "Devam Edenler",
+        "pending": "Bekleyenler"
+      },
+      "table": {
+        "job_id": "İş ID",
+        "work_order": "İş Emri",
+        "status": "Durum",
+        "station": "İstasyon",
+        "actions": "İşlemler"
+      },
+      "actions": {
+        "start": "Başlat",
+        "complete": "Tamamla"
+      },
+      "messages": {
+        "load_failed": "İşler yüklenemedi",
+        "start_success": "İş başarıyla başlatıldı",
+        "start_failed": "İş başlatılamadı",
+        "complete_success": "İş başarıyla tamamlandı",
+        "complete_failed": "İş tamamlanamadı"
       }
     },
     "warehouse": {

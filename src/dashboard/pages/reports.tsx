@@ -1,8 +1,5 @@
 import { useEffect, useState, useMemo } from 'react';
-import { toast } from 'sonner';
-import { useReportsStore } from '@/features/reports/store/reports.store';
-import type { ActivityListItem } from '@/features/reports/types/reports.types';
-import type { ApiError } from '@/shared/lib/api-client';
+import { useReports } from '@/features/reports/store/reports.store';
 import { Card, CardContent } from '@/shared/components/ui/card';
 import { Input } from '@/shared/components/ui/input';
 import { Label } from '@/shared/components/ui/label';
@@ -11,10 +8,11 @@ import { useTranslation } from 'react-i18next';
 import { Info } from 'lucide-react';
 import { Button } from '@/shared/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/shared/components/ui/dialog';
+import type { ActivityListItem } from '@/features/reports/types/reports.types';
 
 export function ReportsPage() {
     const { t } = useTranslation();
-    const { items, isLoading, fetchActivities } = useReportsStore();
+    const { activities, isLoading, fetchActivities } = useReports();
 
     // Advanced Filters
     const [searchAction, setSearchAction] = useState('');
@@ -30,7 +28,7 @@ export function ReportsPage() {
         fetchActivities().catch(() => {});
     }, [fetchActivities]);
 
-    const filteredItems = items.filter((a) => {
+    const filteredItems = activities.filter((a) => {
         const matchAction = a.actionType?.toLowerCase().includes(searchAction.toLowerCase()) ?? true;
         const matchNode = filterNode ? a.nodeId?.toLowerCase().includes(filterNode.toLowerCase()) : true;
         const matchUser = filterUser ? a.userId?.toLowerCase().includes(filterUser.toLowerCase()) : true;
@@ -101,15 +99,30 @@ export function ReportsPage() {
                 <CardContent className="p-4 grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div className="space-y-1.5">
                         <Label className="text-xs text-slate-400 uppercase tracking-wider">{t('dashboard.reports.filters.action_type')}</Label>
-                        <Input id="filter-action-type" placeholder={t('dashboard.reports.filters.action_placeholder')} value={searchAction} onChange={(e) => setSearchAction(e.target.value)} />
+                        <Input
+                            id="filter-action-type"
+                            placeholder={t('dashboard.reports.filters.action_placeholder')}
+                            value={searchAction}
+                            onChange={(e) => setSearchAction(e.target.value)}
+                        />
                     </div>
                     <div className="space-y-1.5">
                         <Label className="text-xs text-slate-400 uppercase tracking-wider">{t('dashboard.reports.filters.node_id')}</Label>
-                        <Input id="filter-node-id" placeholder={t('dashboard.reports.filters.node_placeholder')} value={filterNode} onChange={(e) => setFilterNode(e.target.value)} />
+                        <Input
+                            id="filter-node-id"
+                            placeholder={t('dashboard.reports.filters.node_placeholder')}
+                            value={filterNode}
+                            onChange={(e) => setFilterNode(e.target.value)}
+                        />
                     </div>
                     <div className="space-y-1.5">
                         <Label className="text-xs text-slate-400 uppercase tracking-wider">{t('dashboard.reports.filters.user_id')}</Label>
-                        <Input id="filter-user-id" placeholder={t('dashboard.reports.filters.user_placeholder')} value={filterUser} onChange={(e) => setFilterUser(e.target.value)} />
+                        <Input
+                            id="filter-user-id"
+                            placeholder={t('dashboard.reports.filters.user_placeholder')}
+                            value={filterUser}
+                            onChange={(e) => setFilterUser(e.target.value)}
+                        />
                     </div>
                     <div className="space-y-1.5">
                         <Label className="text-xs text-slate-400 uppercase tracking-wider">{t('dashboard.reports.filters.job_id')}</Label>

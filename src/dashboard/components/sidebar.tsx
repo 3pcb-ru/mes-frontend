@@ -1,5 +1,21 @@
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Package, Users, Settings, FileBarChart, ChevronLeft, ChevronRight, FileText, HelpCircle, MessageSquare, Blocks, Factory, Activity, Warehouse, Network } from 'lucide-react';
+import {
+    LayoutDashboard,
+    Package,
+    Users,
+    Settings,
+    FileBarChart,
+    ChevronLeft,
+    ChevronRight,
+    FileText,
+    HelpCircle,
+    MessageSquare,
+    Blocks,
+    Factory,
+    Activity,
+    Warehouse,
+    Network,
+} from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
 import { useAuth } from '@/features/auth/store/auth.store';
 import { Logo } from '@/shared/components/logo';
@@ -19,22 +35,19 @@ export function DashboardSidebar({ isOpen, onToggle }: DashboardSidebarProps) {
     const navSections = [
         {
             title: t('dashboard.sidebar.nav.main'),
-            items: [
-                { name: t('dashboard.sidebar.nav.dashboard'), icon: LayoutDashboard, href: '/dashboard' },
-            ]
+            items: [{ name: t('dashboard.sidebar.nav.dashboard'), icon: LayoutDashboard, href: '/dashboard' }],
         },
         {
             title: t('dashboard.sidebar.nav.operations'),
             items: [
                 { name: t('dashboard.sidebar.nav.production'), icon: Activity, href: '/dashboard/work-orders' },
+                { name: t('dashboard.sidebar.nav.execution'), icon: Blocks, href: '/dashboard/execution' },
                 { name: t('dashboard.sidebar.nav.warehouse'), icon: Warehouse, href: '/dashboard/warehouse' },
-            ]
+            ],
         },
         {
             title: t('dashboard.sidebar.nav.analytics'),
-            items: [
-                { name: t('dashboard.sidebar.nav.reports'), icon: FileBarChart, href: '/dashboard/reports' },
-            ]
+            items: [{ name: t('dashboard.sidebar.nav.reports'), icon: FileBarChart, href: '/dashboard/reports' }],
         },
         {
             title: t('dashboard.sidebar.nav.configuration'),
@@ -43,11 +56,11 @@ export function DashboardSidebar({ isOpen, onToggle }: DashboardSidebarProps) {
                 { name: t('dashboard.sidebar.nav.users'), icon: Users, href: '/dashboard/users' },
                 { name: t('dashboard.sidebar.nav.facilities'), icon: Network, href: '/dashboard/facilities' },
                 { name: t('dashboard.sidebar.nav.settings'), icon: Settings, href: '/dashboard/settings' },
-            ]
-        }
+            ],
+        },
     ];
     const organization = detailedProfile?.organization;
-    const orgName = organization?.name || user?.organizationName || 'GRVT MES';
+    const orgName = organization?.name || user?.organization?.name || 'GRVT MES';
     const orgLogo = organization?.logoUrl;
 
     return (
@@ -79,11 +92,7 @@ export function DashboardSidebar({ isOpen, onToggle }: DashboardSidebarProps) {
                     {navSections.map((section, idx) => (
                         <div key={section.title} className="space-y-2">
                             {idx > 0 && <div className="border-t border-slate-800/50 my-4 mx-2" />}
-                            {isOpen && (
-                                <h3 className="px-3 text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2">
-                                    {section.title}
-                                </h3>
-                            )}
+                            {isOpen && <h3 className="px-3 text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2">{section.title}</h3>}
                             <div className="space-y-1">
                                 {section.items.map((item) => {
                                     const isActive = location.pathname === item.href;
@@ -134,9 +143,7 @@ export function DashboardSidebar({ isOpen, onToggle }: DashboardSidebarProps) {
                     {navSections.map((section, idx) => (
                         <div key={section.title} className="space-y-2">
                             {idx > 0 && <div className="border-t border-slate-800/50 my-4 mx-2" />}
-                            <h3 className="px-3 text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2">
-                                {section.title}
-                            </h3>
+                            <h3 className="px-3 text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2">{section.title}</h3>
                             <div className="space-y-1">
                                 {section.items.map((item) => {
                                     const isActive = location.pathname === item.href;

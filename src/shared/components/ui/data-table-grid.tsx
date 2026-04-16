@@ -4,6 +4,7 @@ import { Input } from './input';
 import { Button } from './button';
 import { ChevronLeft, ChevronRight, Search, Inbox } from 'lucide-react';
 import { Skeleton } from './skeleton';
+import { cn } from '@/shared/lib/utils';
 import { useTranslation } from 'react-i18next';
 
 export interface ColumnDef<T> {
@@ -23,6 +24,7 @@ interface DataTableGridProps<T> {
     currentPage?: number;
     onPageChange?: (page: number) => void;
     isLoading?: boolean;
+    className?: string;
 }
 
 export function DataTableGrid<T>({
@@ -34,6 +36,7 @@ export function DataTableGrid<T>({
     currentPage = 1,
     onPageChange,
     isLoading = false,
+    className,
 }: DataTableGridProps<T>) {
     const { t } = useTranslation();
 
@@ -47,7 +50,7 @@ export function DataTableGrid<T>({
     }, [searchTerm, onSearch]);
 
     return (
-        <div className="flex flex-col gap-4 w-full">
+        <div className={cn("flex flex-col gap-4 w-full", className)}>
             {onSearch && (
                 <div className="flex items-center gap-2 max-w-sm">
                     <div className="relative w-full">

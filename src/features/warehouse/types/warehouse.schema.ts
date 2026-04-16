@@ -5,10 +5,10 @@ import { z } from 'zod';
  */
 
 export const ContainerListItemSchema = z.object({
-    id: z.string().uuid(),
+    id: z.uuidv4(),
     lpn: z.string().min(1, 'LPN is required'),
-    organizationId: z.string().uuid().optional(),
-    locationNodeId: z.string().uuid().nullable().optional(),
+    organizationId: z.uuidv4().optional(),
+    locationNodeId: z.uuidv4().nullable().optional(),
     type: z.string().optional(),
     createdAt: z.string().optional(),
 });
@@ -21,12 +21,12 @@ export const CreateContainerSchema = z.object({
     expectedDate: z.string().optional(),
     actualDate: z.string().optional(),
     type: z.string().optional(),
-    locationNodeId: z.string().uuid().optional(),
+    locationNodeId: z.uuidv4().optional(),
 });
 
 export const MoveContainerSchema = z.object({
-    targetNodeId: z.string().uuid('Invalid target node ID'),
-    userId: z.string().uuid().optional(),
+    targetNodeId: z.uuidv4('Invalid target node ID'),
+    userId: z.uuidv4().optional(),
 });
 
 // ============================================
