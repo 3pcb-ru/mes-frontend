@@ -3,13 +3,14 @@ import { Plus, GripVertical, FileText } from 'lucide-react';
 import { toast } from 'sonner';
 import { workOrdersService } from '@/features/work-orders/services/work-orders.service';
 import type { WorkOrderListItem } from '@/features/work-orders/types/work-orders.types';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/shared/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/shared/components/ui/card';
 import { Button } from '@/shared/components/ui/button';
 import { StatusBadge } from '@/shared/components/ui/status-badge';
 import { SlideOutDrawer } from '@/shared/components/ui/slide-out-drawer';
 import { Label } from '@/shared/components/ui/label';
 import { Input } from '@/shared/components/ui/input';
 import { useTranslation } from 'react-i18next';
+import { ApiError } from '@/shared/lib/api-client';
 
 export function WorkOrdersPage() {
     const { t } = useTranslation();
@@ -18,21 +19,25 @@ export function WorkOrdersPage() {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [formData, setFormData] = useState<Partial<WorkOrderListItem>>({});
 
-    const COLUMNS = useMemo(() => [
-        { id: 'PLANNED', label: t('dashboard.production.columns.planned') },
-        { id: 'RELEASED', label: t('dashboard.production.columns.ready') },
-        { id: 'IN_PROGRESS', label: t('dashboard.production.columns.in_progress') },
-        { id: 'CLOSED', label: t('dashboard.production.columns.completed') },
-    ], [t]);
+    const COLUMNS = useMemo(
+        () => [
+            { id: 'PLANNED', label: t('dashboard.production.columns.planned') },
+            { id: 'RELEASED', label: t('dashboard.production.columns.ready') },
+            { id: 'IN_PROGRESS', label: t('dashboard.production.columns.in_progress') },
+            { id: 'CLOSED', label: t('dashboard.production.columns.completed') },
+        ],
+        [t],
+    );
 
     const fetchOrders = async () => {
         setIsLoading(true);
         try {
             const data = await workOrdersService.listWorkOrders();
             setItems(Array.isArray(data) ? data : []);
-        } catch (err: any) {
-            console.error(err);
-            toast.error(err?.message || t('dashboard.production.messages.load_failed'));
+        } catch (err) {
+            const apiError = err as ApiError;
+            console.error(apiError);
+            toast.error(apiError?.message || t('dashboard.production.messages.load_failed'));
             setItems([]);
         } finally {
             setIsLoading(false);
@@ -54,9 +59,10 @@ export function WorkOrdersPage() {
             setIsDrawerOpen(false);
             setFormData({});
             await fetchOrders();
-        } catch (err: any) {
-            console.error('Error creating work order:', err);
-            toast.error(err?.message || t('dashboard.production.messages.create_failed'));
+        } catch (err) {
+            const apiError = err as ApiError;
+            console.error('Error creating work order:', apiError);
+            toast.error(apiError?.message || t('dashboard.production.messages.create_failed'));
         }
     };
 
@@ -108,9 +114,14 @@ export function WorkOrdersPage() {
 
                                             <div className="mb-3">
                                                 <p className="text-xs text-slate-400">
-                                                    {t('dashboard.production.order_card.target_qty')} <span className="text-slate-200">{order.targetQuantity} {t('dashboard.production.order_card.units')}</span>
+                                                    {t('dashboard.production.order_card.target_qty')}{' '}
+                                                    <span className="text-slate-200">
+                                                        {order.targetQuantity} {t('dashboard.production.order_card.units')}
+                                                    </span>
                                                 </p>
-                                                <p className="text-xs text-slate-400">{t('dashboard.production.order_card.start_date')} {order.plannedStartDate || t('dashboard.production.order_card.not_scheduled')}</p>
+                                                <p className="text-xs text-slate-400">
+                                                    {t('dashboard.production.order_card.start_date')} {order.plannedStartDate || t('dashboard.production.order_card.not_scheduled')}
+                                                </p>
                                             </div>
 
                                             <div className="flex justify-between items-end">
@@ -126,12 +137,11 @@ export function WorkOrdersPage() {
                 })}
             </div>
 
-            <SlideOutDrawer 
-                open={isDrawerOpen} 
-                onOpenChange={setIsDrawerOpen} 
-                title={t('dashboard.production.drawer.title')} 
-                description={t('dashboard.production.drawer.description')}
-            >
+            <SlideOutDrawer
+                open={isDrawerOpen}
+                onOpenChange={setIsDrawerOpen}
+                title={t('dashboard.production.drawer.title')}
+                description={t('dashboard.production.drawer.description')}>
                 <form onSubmit={handleCreate} className="space-y-5 pt-4">
                     <div className="space-y-2">
                         <Label>

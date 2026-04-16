@@ -1,0 +1,75 @@
+{
+  "pages": [
+    {
+      "name": "LoginPage",
+      "route": "/login",
+      "path": "src/features/auth/pages/login.tsx",
+      "description": "Authentication entry point with email/password flow."
+    },
+    {
+      "name": "DashboardLayout",
+      "route": "/",
+      "path": "src/dashboard/layouts/dashboard-layout.tsx",
+      "description": "Main shell with sidebar navigation and user profile."
+    },
+    {
+      "name": "UsersPage",
+      "route": "/users",
+      "path": "src/dashboard/pages/users.tsx",
+      "description": "Team management with invite, status update, and role assignment."
+    },
+    {
+      "name": "WorkOrdersPage",
+      "route": "/production",
+      "path": "src/dashboard/pages/work-orders.tsx",
+      "description": "Production kanban board for managing work order statuses."
+    },
+    {
+      "name": "ExecutionPage",
+      "route": "/execution",
+      "path": "src/dashboard/pages/execution.tsx",
+      "description": "Operator interface for starting and completing production steps."
+    },
+    {
+      "name": "ReportsPage",
+      "route": "/reports",
+      "path": "src/dashboard/pages/reports.tsx",
+      "description": "Traceability and activity reporting engine."
+    },
+    {
+      "name": "FacilitiesPage",
+      "route": "/facilities",
+      "path": "src/dashboard/pages/facilities.tsx",
+      "description": "Factory hierarchy management (Sites, Areas, Lines, Cells)."
+    },
+    {
+      "name": "ProductsPage",
+      "route": "/products",
+      "path": "src/dashboard/pages/products.tsx",
+      "description": "Catalog of items, SKUs, and manufacturing definitions."
+    },
+    {
+      "name": "WarehousePage",
+      "route": "/warehouse",
+      "path": "src/dashboard/pages/warehouse.tsx",
+      "description": "Inventory management and location tracking."
+    }
+  ],
+  "shared_components": [
+    {
+      "name": "DataTableGrid",
+      "path": "src/shared/components/ui/data-table-grid.tsx",
+      "description": "Standardized table wrapper with search and pagination."
+    },
+    {
+      "name": "SlideOutDrawer",
+      "path": "src/shared/components/ui/slide-out-drawer.tsx",
+      "description": "Drawer component for entity creation and editing."
+    },
+    {
+      "name": "TableActions",
+      "path": "src/shared/components/table-actions.tsx",
+      "description": "Action menu for edit/delete operations."
+    }
+  ]
+}

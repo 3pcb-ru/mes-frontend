@@ -1,9 +1,10 @@
 import { useEffect, useState, useMemo } from 'react';
 import { Loader2, Plus, FolderTree, BoxSelect } from 'lucide-react';
 import { toast } from 'sonner';
-import { facilitiesService } from '@/features/facilities/services/facilities.service';
-import type { FacilityListItem } from '@/features/facilities/types/facilities.types';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/shared/components/ui/card';
+import { useFacilities } from '@/features/facilities/store/facilities.store';
+import { type CreateFacilityDto } from '@/features/facilities/types/facilities.schema';
+import type { ApiError } from '@/shared/lib/api-client';
+import { Card, CardContent, CardHeader, CardTitle } from '@/shared/components/ui/card';
 import { Input } from '@/shared/components/ui/input';
 import { Button } from '@/shared/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/components/ui/tabs';
@@ -24,12 +25,12 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/components/ui/select';
 
 export function FacilitiesPage() {
-    const [nodes, setNodes] = useState<FacilityListItem[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [selectedNodeId, setSelectedNodeId] = useState<string | undefined>();
+    const { nodes, isLoading, selectedNodeId, selectedNode, fetchNodes, setSelectedNodeId, createFacility, updateFacility, moveFacility, deleteFacility, changeStatus } =
+        useFacilities();
+
     const [search, setSearch] = useState('');
     const [isCreateOpen, setIsCreateOpen] = useState(false);
-    const [formData, setFormData] = useState<Partial<FacilityListItem>>({});
+    const [formData, setFormData] = useState<Partial<CreateFacilityDto>>({});
     const { validationErrors, handleApiError, clearError, resetErrors } = useFormValidation();
     const { t } = useTranslation();
     const [viewMode, setViewMode] = useState<'tree' | 'diagram'>('tree');
@@ -48,24 +49,13 @@ export function FacilitiesPage() {
     // Move states
     const [isMoveDialogOpen, setIsMoveDialogOpen] = useState(false);
     const [newParentId, setNewParentId] = useState<string | null>(null);
-    const fetchNodes = async () => {
-        try {
-            const result = await facilitiesService.listFacilities();
-            // Fallback for paginated or wrapped responses
-            const data = Array.isArray(result) ? result : (result as any)?.data || [];
-            setNodes(Array.isArray(data) ? data : []);
-        } catch (err: any) {
-            console.error(err);
-            toast.error(err?.message || t('dashboard.facilities.messages.load_failed'));
-            setNodes([]);
-        } finally {
-            setIsLoading(false);
-        }
-    };
 
     useEffect(() => {
-        fetchNodes();
-    }, []);
+        fetchNodes().catch((err: ApiError) => {
+            console.error('Initial load failed', err);
+            toast.error(err?.message || t('dashboard.facilities.messages.load_failed'));
+        });
+    }, [fetchNodes]);
 
     const treeData = useMemo(() => {
         const map = new Map<string, TreeNode>();
@@ -106,20 +96,19 @@ export function FacilitiesPage() {
         return filterTree(roots);
     }, [nodes, search]);
 
-    const selectedNode = useMemo(() => nodes.find((n) => n.id === selectedNodeId), [nodes, selectedNodeId]);
+    // Removed selectedNode memo as it's provided by useFacilities()
 
     const handleDelete = async () => {
         if (!selectedNodeId) return;
         setIsDeleting(true);
         try {
-            const result = await facilitiesService.deleteFacility(selectedNodeId);
-            toast.success(result?.message || t('dashboard.facilities.messages.delete_success'));
-            setSelectedNodeId(undefined);
+            await deleteFacility(selectedNodeId);
+            toast.success(t('dashboard.facilities.messages.delete_success'));
             setIsDeleteDialogOpen(false);
-            await fetchNodes();
-        } catch (err: any) {
-            console.error('Error deleting node', err);
-            toast.error(err?.message || t('dashboard.facilities.messages.delete_failed'));
+        } catch (err) {
+            const apiError = err as ApiError;
+            console.error('Error deleting node', apiError);
+            toast.error(apiError?.message || t('dashboard.facilities.messages.delete_failed'));
         } finally {
             setIsDeleting(false);
         }
@@ -130,7 +119,7 @@ export function FacilitiesPage() {
         try {
             // Update name or type if changed
             if (editName !== (selectedNode?.name || '') || editType !== (selectedNode?.type || 'OTHER')) {
-                await facilitiesService.updateFacility(selectedNodeId, {
+                await updateFacility(selectedNodeId, {
                     name: editName,
                     type: editType,
                 });
@@ -138,7 +127,7 @@ export function FacilitiesPage() {
 
             // Update status if changed or if reason provided
             if (newStatus !== (selectedNode?.status || 'IDLE')) {
-                await facilitiesService.changeStatus(selectedNodeId, {
+                await changeStatus(selectedNodeId, {
                     status: newStatus,
                     reason: statusReason,
                 });
@@ -146,10 +135,10 @@ export function FacilitiesPage() {
 
             toast.success(t('dashboard.facilities.messages.update_success'));
             setIsStatusDialogOpen(false);
-            await fetchNodes();
-        } catch (err: any) {
-            console.error('Error updating node', err);
-            toast.error(err?.message || t('dashboard.facilities.messages.update_failed'));
+        } catch (err) {
+            const apiError = err as ApiError;
+            console.error('Error updating node', apiError);
+            toast.error(apiError?.message || t('dashboard.facilities.messages.update_failed'));
         }
     };
 
@@ -157,13 +146,13 @@ export function FacilitiesPage() {
         if (!selectedNodeId) return;
         try {
             const pId = overrideParentId !== undefined ? overrideParentId : newParentId;
-            await facilitiesService.moveFacility(selectedNodeId, pId);
+            await moveFacility(selectedNodeId, pId);
             toast.success(t('dashboard.facilities.messages.move_success'));
             setIsMoveDialogOpen(false);
-            await fetchNodes();
-        } catch (err: any) {
-            console.error('Error moving node', err);
-            toast.error(err?.message || t('dashboard.facilities.messages.move_failed'));
+        } catch (err) {
+            const apiError = err as ApiError;
+            console.error('Error moving node', apiError);
+            toast.error(apiError?.message || t('dashboard.facilities.messages.move_failed'));
         }
     };
 
@@ -171,21 +160,22 @@ export function FacilitiesPage() {
         e.preventDefault();
         resetErrors();
         try {
-            const payload = {
-                ...formData,
-                parentId: formData.parentId || selectedNodeId || undefined,
-                definitionId: formData.definitionId || undefined,
+            const payload: CreateFacilityDto = {
+                name: formData.name || '',
+                parentId: formData.parentId || selectedNodeId || null,
+                definitionId: formData.definitionId || '',
+                type: formData.type || 'OTHER',
             };
 
-            await facilitiesService.createFacility(payload);
+            await createFacility(payload);
             toast.success(t('dashboard.facilities.messages.create_success'));
             setIsCreateOpen(false);
             setFormData({});
-            await fetchNodes();
-        } catch (err: any) {
-            console.error('Error creating node', err);
-            if (!handleApiError(err)) {
-                toast.error(err?.message || t('dashboard.facilities.messages.create_failed'));
+        } catch (err) {
+            const apiError = err as ApiError;
+            console.error('Error creating node', apiError);
+            if (!handleApiError(apiError)) {
+                toast.error(apiError?.message || t('dashboard.facilities.messages.create_failed'));
             }
         }
     };

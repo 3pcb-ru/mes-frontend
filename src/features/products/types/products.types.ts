@@ -1,9 +1,3 @@
-export type ProductListItem = {
-    id: string;
-    sku?: string;
-    name: string;
-    organizationId?: string;
-    createdAt?: string;
-    updatedAt?: string;
-    [key: string]: any; // Allow additional fields from backend
-};
+import { type Product, type CreateProductDto, type UpdateProductDto } from './products.schema';
+
+export type { Product, CreateProductDto, UpdateProductDto };

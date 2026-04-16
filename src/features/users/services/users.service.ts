@@ -23,7 +23,7 @@ export const usersService = {
     /**
      * Update user profile
      */
-    async updateProfile(userId: string, data: any): Promise<DetailedProfile> {
+    async updateProfile(userId: string, data: Partial<DetailedProfile>): Promise<DetailedProfile> {
         return apiClient.put<DetailedProfile>(`${USERS_BASE}/profile/${userId}`, data, {}, UserSchema);
     },
 

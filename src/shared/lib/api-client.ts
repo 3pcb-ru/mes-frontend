@@ -139,6 +139,11 @@ class ApiClient {
             throw error;
         }
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        /**
+         * NOTE: The response data type is dynamic and can be either JSON or text,
+         * and we need to handle both cases.
+         */
         let data: any;
         const contentType = response.headers.get('content-type');
         if (contentType && contentType.includes('application/json')) {
@@ -246,10 +251,10 @@ class ApiClient {
             });
         }
 
-        const apiError: ApiError & { body?: any } = {
+        const apiError: ApiError & { body?: unknown } = {
             message: extractedMessage,
             statusCode: response.status,
-            error: data && typeof data === 'object' && data.error,
+            error: data && typeof data === 'object' && (data as any).error,
             body: responseData ?? data,
             validationErrors,
         };

@@ -1,23 +1,29 @@
 import { create } from 'zustand';
 import { productsService } from '../services/products.service';
-import type { ProductListItem } from '../types/products.types';
+import type { Product, CreateProductDto, UpdateProductDto } from '../types/products.schema';
 import type { ApiError } from '@/shared/lib/api-client';
 
+/**
+ * Products Store - Managed via useProducts() accessor hook
+ * Protocols:
+ * - No direct store consumption (use useProducts)
+ * - Zero 'any' policy
+ * - Strict error propagation
+ */
+
 interface ProductsState {
-    // State
-    items: ProductListItem[];
+    items: Product[];
     isLoading: boolean;
     error: string | null;
 
-    // Actions
     fetchProducts: () => Promise<void>;
-    createProduct: (payload: { sku: string; name: string }) => Promise<void>;
-    updateProduct: (id: string, payload: Partial<ProductListItem>) => Promise<void>;
+    createProduct: (payload: CreateProductDto) => Promise<void>;
+    updateProduct: (id: string, payload: UpdateProductDto) => Promise<void>;
     deleteProduct: (id: string) => Promise<void>;
     clearError: () => void;
 }
 
-export const useProductsStore = create<ProductsState>((set, get) => ({
+const useProductsStore = create<ProductsState>((set, get) => ({
     items: [],
     isLoading: false,
     error: null,
@@ -74,3 +80,16 @@ export const useProductsStore = create<ProductsState>((set, get) => ({
 
     clearError: () => set({ error: null }),
 }));
+
+/**
+ * useProducts() Accessor Hook
+ * Centralized way to consume products state and actions.
+ */
+export const useProducts = () => {
+    const store = useProductsStore();
+    return {
+        ...store,
+        // Helper selectors can be added here
+        getProductById: (id: string) => store.items.find((p) => p.id === id),
+    };
+};

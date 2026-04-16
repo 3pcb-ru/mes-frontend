@@ -1,0 +1,57 @@
+{
+  "endpoints": [
+    {
+      "domain": "Auth",
+      "path": "/auth",
+      "endpoints": [
+        { "method": "POST", "path": "/login", "description": "Authenticates user and returns JWT." },
+        { "method": "POST", "path": "/refresh", "description": "Refreshes expired access tokens." }
+      ]
+    },
+    {
+      "domain": "Users",
+      "path": "/users",
+      "endpoints": [
+        { "method": "GET", "path": "/", "description": "List all organization users." },
+        { "method": "GET", "path": "/profile", "description": "Get current user profile." },
+        { "method": "POST", "path": "/invite", "description": "Invite new user to organization." },
+        { "method": "PATCH", "path": "/:id/status", "description": "Update user active/inactive status." }
+      ]
+    },
+    {
+      "domain": "Facilities",
+      "path": "/nodes",
+      "endpoints": [
+        { "method": "GET", "path": "/", "description": "Fetch factory node hierarchy." },
+        { "method": "POST", "path": "/", "description": "Create new facility node." },
+        { "method": "PATCH", "path": "/:id", "description": "Update facility node metadata." }
+      ]
+    },
+    {
+      "domain": "Products",
+      "path": "/products",
+      "endpoints": [
+        { "method": "GET", "path": "/", "description": "List all products." },
+        { "method": "POST", "path": "/", "description": "Register new product SKU." },
+        { "method": "PATCH", "path": "/:id", "description": "Update product details." }
+      ]
+    },
+    {
+      "domain": "Work Orders",
+      "path": "/work-orders",
+      "endpoints": [
+        { "method": "GET", "path": "/", "description": "List work orders with status filtering." },
+        { "method": "POST", "path": "/", "description": "Release new work order to production." }
+      ]
+    },
+    {
+      "domain": "Warehouse",
+      "path": "/warehouse",
+      "endpoints": [
+        { "method": "GET", "path": "/containers", "description": "List inventory units (LPNs)." },
+        { "method": "POST", "path": "/containers", "description": "Register new storage container." },
+        { "method": "POST", "path": "/containers/:id/move", "description": "Update container location nodeId." }
+      ]
+    }
+  ]
+}

@@ -1,21 +1,10 @@
-export type FacilityListItem = {
-    id: string;
-    path: string;
-    name: string;
-    parentId?: string | null;
-    definitionId?: string | null;
-    capabilities?: string[];
-    status?: string;
-    type?: NodeType;
-    attributes?: Record<string, any>;
-    createdAt?: string;
-};
+import { type FacilityListItem, type NodeDefinition, type NodeStatusChangeReason, type NodeType } from './facilities.schema';
+
+export type { FacilityListItem, NodeDefinition, NodeStatusChangeReason, NodeType };
 
 /**
- * Mirrors the backend `nodeStatusChangeReasonEnum` exactly.
- * Keep in sync with: src/modules/node/dto/change-node-status.dto.ts
+ * UI Constants for Facilities
  */
-export type NodeType = 'PRODUCTION' | 'WAREHOUSE' | 'LOGISTICS' | 'FACILITY' | 'QUALITY' | 'OTHER';
 
 export const NODE_TYPES: { value: NodeType; label: string }[] = [
     { value: 'PRODUCTION', label: 'Production / Work Center' },
@@ -25,23 +14,6 @@ export const NODE_TYPES: { value: NodeType; label: string }[] = [
     { value: 'QUALITY', label: 'Quality / Inspection' },
     { value: 'OTHER', label: 'Other/Misc' },
 ];
-
-export type NodeDefinition = {
-    id: string;
-    name: string;
-    type: NodeType;
-    attributes?: Record<string, any>;
-};
-
-export type NodeStatusChangeReason =
-    | 'NORMAL_OPERATION'
-    | 'MAINTENANCE'
-    | 'SETUP_TEARDOWN'
-    | 'MATERIAL_SHORTAGE'
-    | 'BREAKDOWN'
-    | 'QUALITY_ISSUE'
-    | 'OPERATOR_BREAK'
-    | 'OTHER';
 
 export const NODE_STATUS_CHANGE_REASONS: { value: NodeStatusChangeReason; label: string }[] = [
     { value: 'NORMAL_OPERATION', label: 'Normal Operation' },
@@ -53,4 +25,3 @@ export const NODE_STATUS_CHANGE_REASONS: { value: NodeStatusChangeReason; label:
     { value: 'OPERATOR_BREAK', label: 'Operator Break' },
     { value: 'OTHER', label: 'Other' },
 ];
-
