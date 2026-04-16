@@ -61,8 +61,8 @@ export function ProfilePage() {
             });
             await fetchProfile();
             toast.success(t('dashboard.profile.messages.update_success'));
-        } catch (err: any) {
-            toast.error(err?.message || t('dashboard.profile.messages.update_failed'));
+        } catch (err: unknown) {
+            toast.error((err as Error).message || t('dashboard.profile.messages.update_failed'));
         } finally {
             setIsUpdating(false);
         }
@@ -158,11 +158,7 @@ export function ProfilePage() {
                             </div>
 
                             <div className="flex justify-end pt-4 border-t border-slate-700/50">
-                                <Button
-                                    type="submit"
-                                    disabled={isUpdating}
-                                    className="px-8"
-                                >
+                                <Button type="submit" disabled={isUpdating} className="px-8">
                                     {isUpdating ? (
                                         <div className="flex items-center gap-2">
                                             <Loader2 className="h-4 w-4 animate-spin" />
@@ -196,7 +192,9 @@ export function ProfilePage() {
                                         </div>
                                         <div>
                                             <p className="text-white font-medium">{detailedProfile.role.name}</p>
-                                            <p className="text-xs text-slate-500 mt-0.5">{t('dashboard.profile.account_details.permissions', { count: detailedProfile.role.permissions?.length || 0 })}</p>
+                                            <p className="text-xs text-slate-500 mt-0.5">
+                                                {t('dashboard.profile.account_details.permissions', { count: detailedProfile.role.permissions?.length || 0 })}
+                                            </p>
                                         </div>
                                     </div>
                                     <span className="text-xs px-2 py-1 rounded-full bg-purple-500/20 text-purple-400">{t('dashboard.profile.account_details.active_status')}</span>
@@ -211,7 +209,9 @@ export function ProfilePage() {
                                         </div>
                                         <div>
                                             <p className="text-white font-medium">{detailedProfile.organization.name}</p>
-                                            <p className="text-xs text-slate-500 mt-0.5">{detailedProfile.organization.location || t('dashboard.profile.account_details.assigned_org')}</p>
+                                            <p className="text-xs text-slate-500 mt-0.5">
+                                                {detailedProfile.organization.name || t('dashboard.profile.account_details.assigned_org')}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>

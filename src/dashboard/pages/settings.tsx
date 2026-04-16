@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Building2, Loader2, ShieldCheck, Factory, Globe, Plus, CheckCircle2, Save, AlertTriangle } from 'lucide-react';
+import { Building2, Loader2, ShieldCheck, Factory, Globe, Plus, CheckCircle2, AlertTriangle } from 'lucide-react';
 import { useAuth } from '@/features/auth/store/auth.store';
 import { usersService } from '@/features/users/services/users.service';
-import { attachmentsService, FILE_TYPE } from '@/shared/services/attachments.service';
+import { FILE_TYPE } from '@/shared/services/attachments.service';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/shared/components/ui/card';
 import { Input } from '@/shared/components/ui/input';
 import { Label } from '@/shared/components/ui/label';
@@ -10,7 +10,6 @@ import { Button } from '@/shared/components/ui/button';
 import { toast } from 'sonner';
 import { FileCardUpload } from '@/shared/components/ui/file-card-upload';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/shared/components/ui/dialog';
-import { Logo } from '@/shared/components/logo';
 import { useTranslation } from 'react-i18next';
 
 export function SettingsPage() {
@@ -18,7 +17,7 @@ export function SettingsPage() {
     const { user, detailedProfile, fetchProfile } = useAuth();
     const [isUpdating, setIsUpdating] = useState(false);
     const [isCreating, setIsCreating] = useState(false);
-    const [orgName, setOrgName] = useState(detailedProfile?.organization?.name || user?.organizationName || '');
+    const [orgName, setOrgName] = useState(detailedProfile?.organization?.name || user?.organization?.name || '');
     const [newOrgName, setNewOrgName] = useState('');
     const [logoId, setLogoId] = useState<string | null>(detailedProfile?.organization?.logoId || null);
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -31,14 +30,14 @@ export function SettingsPage() {
 
     // Initialize state from profile
     useEffect(() => {
-        const profileName = detailedProfile?.organization?.name || user?.organizationName || '';
+        const profileName = detailedProfile?.organization?.name || user?.organization?.name || '';
         if (profileName) {
             setOrgName(profileName);
         }
         if (detailedProfile?.organization?.logoId) {
             setLogoId(detailedProfile.organization.logoId);
         }
-    }, [detailedProfile?.organization?.name, user?.organizationName]);
+    }, [detailedProfile?.organization?.name, user?.organization?.name]);
 
     const handleCreateOrganization = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -53,9 +52,9 @@ export function SettingsPage() {
             toast.success(t('dashboard.settings.setup.messages.create_success'));
             setIsCreateModalOpen(false);
             await fetchProfile();
-        } catch (err: any) {
+        } catch (err: unknown) {
             console.error('Create error:', err);
-            toast.error(err?.message || t('dashboard.settings.setup.messages.create_failed'));
+            toast.error((err as Error).message || t('dashboard.settings.setup.messages.create_failed'));
         } finally {
             setIsCreating(false);
         }
@@ -71,9 +70,9 @@ export function SettingsPage() {
             });
             await fetchProfile();
             toast.success(t('dashboard.settings.main.messages.update_success'));
-        } catch (err: any) {
+        } catch (err: unknown) {
             console.error('Update error:', err);
-            toast.error(err?.message || t('dashboard.settings.main.messages.update_failed'));
+            toast.error((err as Error).message || t('dashboard.settings.main.messages.update_failed'));
         } finally {
             setIsUpdating(false);
         }
@@ -123,10 +122,7 @@ export function SettingsPage() {
                 <div className="flex flex-col items-center gap-6 pt-8">
                     <Dialog open={isCreateModalOpen} onOpenChange={setIsCreateModalOpen}>
                         <DialogTrigger asChild>
-                            <Button
-                                size="lg"
-                                className="px-12"
-                            >
+                            <Button size="lg" className="px-12">
                                 <Plus className="mr-2 h-5 w-5" />
                                 {t('dashboard.settings.setup.create_button')}
                             </Button>
@@ -135,9 +131,7 @@ export function SettingsPage() {
                             <form onSubmit={handleCreateOrganization}>
                                 <DialogHeader>
                                     <DialogTitle className="text-xl font-bold">{t('dashboard.settings.setup.modal.title')}</DialogTitle>
-                                    <DialogDescription className="text-slate-400">
-                                        {t('dashboard.settings.setup.modal.description')}
-                                    </DialogDescription>
+                                    <DialogDescription className="text-slate-400">{t('dashboard.settings.setup.modal.description')}</DialogDescription>
                                 </DialogHeader>
                                 <div className="grid gap-4 py-6">
                                     <div className="space-y-2">
@@ -156,11 +150,7 @@ export function SettingsPage() {
                                     </div>
                                 </div>
                                 <DialogFooter>
-                                    <Button
-                                        type="submit"
-                                        disabled={isCreating}
-                                        className="w-full"
-                                    >
+                                    <Button type="submit" disabled={isCreating} className="w-full">
                                         {isCreating ? (
                                             <div className="flex items-center gap-2">
                                                 <Loader2 className="h-5 w-5 animate-spin" />
@@ -233,7 +223,9 @@ export function SettingsPage() {
                                         <Label htmlFor="orgName" className="text-slate-300 font-semibold flex items-center justify-between">
                                             <span>{t('dashboard.settings.setup.modal.org_name_label')}</span>
                                             <span className="text-[10px] font-normal text-slate-500 uppercase tracking-widest">
-                                                {detailedProfile.organization?.name ? t('dashboard.users.status.verified') : t('dashboard.settings.main.profile_card.required_chip')}
+                                                {detailedProfile.organization?.name
+                                                    ? t('dashboard.users.status.verified')
+                                                    : t('dashboard.settings.main.profile_card.required_chip')}
                                             </span>
                                         </Label>
                                         <div className="relative group/input max-w-xl">
@@ -257,11 +249,7 @@ export function SettingsPage() {
 
                                     {/* Action Header: Save Button moved here */}
                                     <div className="pt-8 lg:pt-0 flex items-center gap-6">
-                                        <Button
-                                            type="submit"
-                                            disabled={isUpdating || !orgName.trim()}
-                                            className="px-10"
-                                        >
+                                        <Button type="submit" disabled={isUpdating || !orgName.trim()} className="px-10">
                                             {isUpdating ? (
                                                 <div className="flex items-center gap-2">
                                                     <Loader2 className="h-4 w-4 animate-spin" />

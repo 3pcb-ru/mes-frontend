@@ -11,17 +11,17 @@ interface TableViewOptions {
     label: string;
 }
 
-interface TableViewProps {
+interface TableViewProps<T> {
     /** The currently selected UUID */
     value?: string;
     /** Callback fired when a new UUID is selected */
     onChange: (currentValue: string) => void;
     /** Async function to fetch the data. Should return an array of objects to be mapped. */
-    fetchData: () => Promise<any[]>;
+    fetchData: () => Promise<T[]>;
     /** Optional function to map the raw API data objects to { value (uuid), label (name) } pairs.
      * Defaults to item => { value: item.id, label: item.name }
      */
-    mapData?: (item: any) => TableViewOptions;
+    mapData?: (item: T) => TableViewOptions;
     /** Placeholder text for the trigger button */
     placeholder?: string;
     /** Custom CSS classes for the trigger button */
@@ -32,16 +32,16 @@ interface TableViewProps {
     initialLabel?: string;
 }
 
-export function TableView({
+export function TableView<T>({
     value,
     onChange,
     fetchData,
-    mapData = (item) => ({ value: item.id, label: item.name }),
+    mapData = (item: T) => ({ value: String((item as Record<string, unknown>).id || ''), label: String((item as Record<string, unknown>).name || '') }),
     placeholder: customPlaceholder,
     className,
     hasError,
     initialLabel,
-}: TableViewProps) {
+}: TableViewProps<T>) {
     const { t } = useTranslation();
     const placeholder = customPlaceholder || t('common.components.table_view.select_option');
     const [open, setOpen] = React.useState(false);
@@ -52,7 +52,7 @@ export function TableView({
     // Initial load when opened
     React.useEffect(() => {
         if (!open || hasFetched) return;
-        
+
         let active = true;
         const load = async () => {
             setIsLoading(true);
@@ -69,14 +69,14 @@ export function TableView({
                 if (active) setIsLoading(false);
             }
         };
-        
+
         load();
-        return () => { active = false; };
+        return () => {
+            active = false;
+        };
     }, [open, hasFetched, fetchData, mapData]);
 
-    const selectedOption = React.useMemo(() => 
-        options.find((opt) => opt.value === value),
-    [options, value]);
+    const selectedOption = React.useMemo(() => options.find((opt) => opt.value === value), [options, value]);
 
     // Handle the case where we have a value but haven't fetched options yet
     // The parent might have set an initial value. We want to show it nicely if possible,
@@ -93,15 +93,12 @@ export function TableView({
                     aria-expanded={open}
                     aria-invalid={hasError}
                     className={cn(
-                        "w-full justify-between bg-slate-900/50 border-slate-700 hover:bg-slate-800 text-white font-normal",
-                        !value && "text-slate-500",
-                        hasError && "border-destructive ring-destructive/20 focus-visible:ring-destructive/50",
-                        className
-                    )}
-                >
-                    <span className="truncate">
-                        {value ? displayValue : placeholder}
-                    </span>
+                        'w-full justify-between bg-slate-900/50 border-slate-700 hover:bg-slate-800 text-white font-normal',
+                        !value && 'text-slate-500',
+                        hasError && 'border-destructive ring-destructive/20 focus-visible:ring-destructive/50',
+                        className,
+                    )}>
+                    <span className="truncate">{value ? displayValue : placeholder}</span>
                     <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
             </PopoverTrigger>
@@ -125,17 +122,11 @@ export function TableView({
                                         key={option.value}
                                         value={option.label || option.value}
                                         onSelect={() => {
-                                            onChange(option.value === value ? "" : option.value);
+                                            onChange(option.value === value ? '' : option.value);
                                             setOpen(false);
                                         }}
-                                        className="text-slate-300 hover:text-white"
-                                    >
-                                        <Check
-                                            className={cn(
-                                                "mr-2 h-4 w-4",
-                                                value === option.value ? "opacity-100 text-cyan-500" : "opacity-0"
-                                            )}
-                                        />
+                                        className="text-slate-300 hover:text-white">
+                                        <Check className={cn('mr-2 h-4 w-4', value === option.value ? 'opacity-100 text-cyan-500' : 'opacity-0')} />
                                         {option.label}
                                     </CommandItem>
                                 ))}

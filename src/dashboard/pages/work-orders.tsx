@@ -1,8 +1,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import { Plus, GripVertical, FileText } from 'lucide-react';
 import { toast } from 'sonner';
-import { workOrdersService } from '@/features/work-orders/services/work-orders.service';
-import type { WorkOrderListItem } from '@/features/work-orders/types/work-orders.types';
+import { useWorkOrders } from '@/features/work-orders/store/work-orders.store';
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/components/ui/card';
 import { Button } from '@/shared/components/ui/button';
 import { StatusBadge } from '@/shared/components/ui/status-badge';
@@ -11,13 +10,17 @@ import { Label } from '@/shared/components/ui/label';
 import { Input } from '@/shared/components/ui/input';
 import { useTranslation } from 'react-i18next';
 import { ApiError } from '@/shared/lib/api-client';
+import { Skeleton } from '@/shared/components/ui/skeleton';
 
 export function WorkOrdersPage() {
     const { t } = useTranslation();
-    const [items, setItems] = useState<WorkOrderListItem[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const { workOrders, isLoading, fetchWorkOrders, createWorkOrder } = useWorkOrders();
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-    const [formData, setFormData] = useState<Partial<WorkOrderListItem>>({});
+    const [formData, setFormData] = useState<{
+        bomRevisionId?: string;
+        targetQuantity?: number;
+        plannedStartDate?: string;
+    }>({});
 
     const COLUMNS = useMemo(
         () => [
@@ -29,24 +32,12 @@ export function WorkOrdersPage() {
         [t],
     );
 
-    const fetchOrders = async () => {
-        setIsLoading(true);
-        try {
-            const data = await workOrdersService.listWorkOrders();
-            setItems(Array.isArray(data) ? data : []);
-        } catch (err) {
-            const apiError = err as ApiError;
-            console.error(apiError);
-            toast.error(apiError?.message || t('dashboard.production.messages.load_failed'));
-            setItems([]);
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
     useEffect(() => {
-        fetchOrders();
-    }, []);
+        fetchWorkOrders().catch((err: ApiError) => {
+            console.error(err);
+            toast.error(err?.message || t('dashboard.production.messages.load_failed'));
+        });
+    }, [fetchWorkOrders, t]);
 
     const handleCreate = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -56,7 +47,7 @@ export function WorkOrdersPage() {
                 return;
             }
 
-            await workOrdersService.createWorkOrder({
+            await createWorkOrder({
                 bomRevisionId: formData.bomRevisionId,
                 targetQuantity: Number(formData.targetQuantity),
                 plannedStartDate: formData.plannedStartDate || undefined,
@@ -64,7 +55,6 @@ export function WorkOrdersPage() {
             toast.success(t('dashboard.production.messages.create_success'));
             setIsDrawerOpen(false);
             setFormData({});
-            await fetchOrders();
         } catch (err) {
             const apiError = err as ApiError;
             console.error('Error creating work order:', apiError);
@@ -88,7 +78,7 @@ export function WorkOrdersPage() {
 
             <div className="flex-1 flex gap-4 min-h-0 overflow-x-auto pb-4 custom-scrollbar">
                 {COLUMNS.map((col) => {
-                    const columnItems = items.filter((w) => (w.status || 'PLANNED') === col.id);
+                    const columnItems = workOrders.filter((w) => (w.status || 'PLANNED') === col.id);
 
                     return (
                         <Card key={col.id} className="min-w-[320px] max-w-[320px] flex flex-col bg-slate-900/50 border-slate-700/50">
@@ -98,7 +88,25 @@ export function WorkOrdersPage() {
                             </CardHeader>
                             <CardContent className="p-3 flex-1 overflow-y-auto space-y-3 custom-scrollbar">
                                 {isLoading ? (
-                                    Array.from({ length: 2 }).map((_, i) => <div key={i} className="h-28 rounded-lg bg-slate-800/20 animate-pulse border border-slate-800/50" />)
+                                    Array.from({ length: 3 }).map((_, i) => (
+                                        <div key={i} className="p-3 space-y-3 rounded-lg bg-slate-800/20 border border-slate-800/50">
+                                            <div className="flex justify-between">
+                                                <div className="flex gap-2 items-center">
+                                                    <Skeleton className="h-4 w-4 rounded-full" />
+                                                    <Skeleton className="h-4 w-24" />
+                                                </div>
+                                                <Skeleton className="h-4 w-4" />
+                                            </div>
+                                            <div className="space-y-2">
+                                                <Skeleton className="h-3 w-32" />
+                                                <Skeleton className="h-3 w-28" />
+                                            </div>
+                                            <div className="flex justify-between items-end">
+                                                <Skeleton className="h-5 w-16 rounded-full" />
+                                                <Skeleton className="h-3 w-8" />
+                                            </div>
+                                        </div>
+                                    ))
                                 ) : columnItems.length === 0 ? (
                                     <div className="text-center p-8 text-slate-500 text-xs border border-dashed border-slate-700 rounded-lg">
                                         {t('dashboard.production.empty_state')}

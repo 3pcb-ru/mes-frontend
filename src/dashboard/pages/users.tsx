@@ -17,17 +17,7 @@ import { Badge } from '@/shared/components/ui/badge';
 
 export function UsersPage() {
     const { t } = useTranslation();
-    const {
-        users,
-        roles,
-        isUsersLoading,
-        isRolesLoading,
-        fetchUsers,
-        fetchRoles,
-        updateUserStatus,
-        duplicateRole,
-        deleteRole,
-    } = useUsers();
+    const { users, roles, isUsersLoading, isRolesLoading, fetchUsers, fetchRoles, updateUserStatus, duplicateRole, deleteRole } = useUsers();
 
     const [activeTab, setActiveTab] = useState('users');
     const [userSearchQuery, setUserSearchQuery] = useState('');
@@ -55,8 +45,8 @@ export function UsersPage() {
             } else {
                 toast.success(t('dashboard.users.status.update_active_success', 'User reactivated successfully'));
             }
-        } catch (err: any) {
-            toast.error(err.message || t('dashboard.users.errors.status_update_failed', 'Failed to update user status'));
+        } catch (err: unknown) {
+            toast.error((err as Error).message || t('dashboard.users.errors.status_update_failed', 'Failed to update user status'));
         }
     };
 
@@ -64,8 +54,8 @@ export function UsersPage() {
         try {
             await duplicateRole(roleId);
             toast.success(t('dashboard.roles.duplicate_success', 'Role duplicated successfully'));
-        } catch (err: any) {
-            toast.error(err.message || t('dashboard.roles.errors.duplicate_failed', 'Failed to duplicate role'));
+        } catch (err: unknown) {
+            toast.error((err as Error).message || t('dashboard.roles.errors.duplicate_failed', 'Failed to duplicate role'));
         }
     };
 
@@ -78,8 +68,8 @@ export function UsersPage() {
         try {
             await deleteRole(roleToDelete);
             toast.warning(t('dashboard.roles.delete_success', 'Role deleted successfully'));
-        } catch (err: any) {
-            toast.error(err.message || t('dashboard.roles.errors.delete_failed', 'Failed to delete role'));
+        } catch (err: unknown) {
+            toast.error((err as Error).message || t('dashboard.roles.errors.delete_failed', 'Failed to delete role'));
         } finally {
             setRoleToDelete(null);
         }
@@ -275,16 +265,14 @@ export function UsersPage() {
                                                                 variant="ghost"
                                                                 size="icon"
                                                                 className="h-8 w-8 text-slate-400 hover:text-white hover:bg-slate-700/50"
-                                                                title={t('dashboard.users.actions.view_profile')}
-                                                            >
+                                                                title={t('dashboard.users.actions.view_profile')}>
                                                                 <Eye className="h-4 w-4" />
                                                             </Button>
                                                             <Button
                                                                 variant="ghost"
                                                                 size="icon"
                                                                 className="h-8 w-8 text-slate-400 hover:text-purple-400 hover:bg-purple-500/10"
-                                                                title={t('dashboard.users.actions.change_role')}
-                                                            >
+                                                                title={t('dashboard.users.actions.change_role')}>
                                                                 <ShieldCheck className="h-4 w-4" />
                                                             </Button>
                                                             <Button
@@ -292,13 +280,12 @@ export function UsersPage() {
                                                                 size="icon"
                                                                 onClick={() => handleToggleUserStatus(user)}
                                                                 className={cn(
-                                                                    "h-8 w-8 transition-colors",
+                                                                    'h-8 w-8 transition-colors',
                                                                     user.deletedAt
-                                                                        ? "text-slate-500 hover:text-emerald-400 hover:bg-emerald-500/10"
-                                                                        : "text-slate-400 hover:text-amber-400 hover:bg-amber-500/10"
+                                                                        ? 'text-slate-500 hover:text-emerald-400 hover:bg-emerald-500/10'
+                                                                        : 'text-slate-400 hover:text-amber-400 hover:bg-amber-500/10',
                                                                 )}
-                                                                title={user.deletedAt ? t('dashboard.users.actions.activate') : t('dashboard.users.actions.deactivate')}
-                                                            >
+                                                                title={user.deletedAt ? t('dashboard.users.actions.activate') : t('dashboard.users.actions.deactivate')}>
                                                                 {user.deletedAt ? <Power className="h-4 w-4" /> : <PowerOff className="h-4 w-4" />}
                                                             </Button>
                                                         </div>

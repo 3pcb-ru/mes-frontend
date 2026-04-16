@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo } from 'react';
 import { Plus, Box, Warehouse, ChevronRight, PackageCheck, Send, Move, ClipboardList, Search, LogOut } from 'lucide-react';
 import { toast } from 'sonner';
 import { useWarehouse } from '@/features/warehouse/store/warehouse.store';
-import type { ContainerListItem } from '@/features/warehouse/types/warehouse.types';
+import type { ContainerListItem, CreateContainerDto } from '@/features/warehouse/types/warehouse.types';
 import type { FacilityListItem } from '@/features/facilities/types/facilities.types';
 import type { ApiError } from '@/shared/lib/api-client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/components/ui/card';
@@ -50,7 +50,7 @@ export function WarehousePage() {
         return allContainers.filter((c) => c.locationNodeId === currentNodeId);
     }, [currentNodeId, allContainers]);
 
-    const handleReceipt = async (values: any) => {
+    const handleReceipt = async (values: CreateContainerDto) => {
         try {
             await createContainer({
                 ...values,
@@ -64,7 +64,7 @@ export function WarehousePage() {
         }
     };
 
-    const handleShipment = async (_values: any) => {
+    const handleShipment = async (_values: { lpn: string; quantity: number; destination: string; expectedDate?: string; actualDate?: string }) => {
         try {
             toast.success(t('dashboard.warehouse.messages.shipment_success'));
             setIsShipmentOpen(false);

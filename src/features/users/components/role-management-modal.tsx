@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Shield, Lock, CheckCircle2, Loader2, Save, X, Info } from 'lucide-react';
-import { rolesService, type CreateRoleDto } from '../services/roles.service';
+import { Shield, Loader2, Save } from 'lucide-react';
+import { rolesService } from '../services/roles.service';
 import { type RoleWithPermissions } from '../types/users.types';
 import { Permissions, PermissionDescriptions } from '@/shared/constants/permissions';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/shared/components/ui/dialog';
@@ -12,8 +12,8 @@ import { Checkbox } from '@/shared/components/ui/checkbox';
 import { ScrollArea } from '@/shared/components/ui/scroll-area';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/components/ui/tabs';
 import { toast } from 'sonner';
-import { cn } from '@/shared/lib/utils';
 import { Badge } from '@/shared/components/ui/badge';
+import { ApiError } from '@/shared/lib/api-client';
 
 interface RoleManagementModalProps {
     isOpen: boolean;
@@ -36,7 +36,7 @@ export function RoleManagementModal({ isOpen, onClose, onSuccess, role }: RoleMa
             if (role) {
                 setName(role.name);
                 setDescription(role.description || '');
-                setSelectedPermissions(role.permissions.map((p) => p.name));
+                setSelectedPermissions(role?.permissions?.map((p) => p.name) || []);
             } else {
                 setName('');
                 setDescription('');
@@ -49,13 +49,13 @@ export function RoleManagementModal({ isOpen, onClose, onSuccess, role }: RoleMa
         setSelectedPermissions((prev) => (prev.includes(permissionId) ? prev.filter((id) => id !== permissionId) : [...prev, permissionId]));
     };
 
-    const isModuleAllSelected = (category: string) => {
-        const modulePermissions = Object.values((Permissions as any)[category]);
-        return modulePermissions.every((slug) => selectedPermissions.includes(slug as string));
+    const isModuleAllSelected = (category: keyof typeof Permissions) => {
+        const modulePermissions = Object.values(Permissions[category]) as string[];
+        return modulePermissions.every((slug) => selectedPermissions.includes(slug));
     };
 
-    const handleToggleModule = (category: string) => {
-        const modulePermissions = Object.values((Permissions as any)[category]) as string[];
+    const handleToggleModule = (category: keyof typeof Permissions) => {
+        const modulePermissions = Object.values(Permissions[category]) as string[];
         const allSelected = isModuleAllSelected(category);
 
         if (allSelected) {
@@ -68,16 +68,13 @@ export function RoleManagementModal({ isOpen, onClose, onSuccess, role }: RoleMa
         }
     };
 
-    const getModuleSelectedCount = (category: string) => {
-        const modulePermissions = Object.values((Permissions as any)[category]);
-        return modulePermissions.filter((slug) => selectedPermissions.includes(slug as string)).length;
+    const getModuleSelectedCount = (category: keyof typeof Permissions) => {
+        const modulePermissions = Object.values(Permissions[category]) as string[];
+        return modulePermissions.filter((slug) => selectedPermissions.includes(slug)).length;
     };
 
     const handleToggleCategory = (categoryKeys: string[]) => {
-        // This is tricky because we have IDs vs Slugs.
-        // Actually, the backend API uses IDs for updating permissions.
-        // We need to map the permission slugs to IDs first if we want category toggle.
-        // For now, let's keep it simple and just toggle individual ones.
+        // ... (skipping for now)
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -111,16 +108,17 @@ export function RoleManagementModal({ isOpen, onClose, onSuccess, role }: RoleMa
             }
             onSuccess();
             onClose();
-        } catch (err: any) {
-            console.error('Failed to save role:', err);
-            toast.error(err.message || t('dashboard.roles.errors.failed', 'Failed to save role'));
+        } catch (err: unknown) {
+            const apiError = err as ApiError;
+            console.error('Failed to save role:', apiError);
+            toast.error(apiError.message || t('dashboard.roles.errors.failed', 'Failed to save role'));
         } finally {
             setIsSubmitting(false);
         }
     };
 
     // Group permissions by category for the UI
-    const categories = Object.keys(Permissions);
+    const categories = Object.keys(Permissions) as Array<keyof typeof Permissions>;
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
@@ -206,13 +204,13 @@ export function RoleManagementModal({ isOpen, onClose, onSuccess, role }: RoleMa
                                                         </label>
                                                     </div>
                                                     <Badge variant="outline" className="bg-slate-900 border-slate-800 text-[10px] px-2 py-0 text-slate-400">
-                                                        {getModuleSelectedCount(category)} / {Object.keys((Permissions as any)[category]).length}
+                                                        {getModuleSelectedCount(category)} / {Object.keys(Permissions[category]).length}
                                                     </Badge>
                                                 </div>
 
                                                 <ScrollArea className="flex-1 min-h-0">
                                                     <div className="p-4 grid grid-cols-1 gap-3">
-                                                        {Object.entries((Permissions as any)[category]).map(([key, slug]) => (
+                                                        {Object.entries(Permissions[category]).map(([key, slug]) => (
                                                             <div
                                                                 key={slug as string}
                                                                 className="flex items-start space-x-3 p-3 rounded-lg bg-slate-900/60 border border-slate-800/50 hover:border-slate-700/50 transition-colors">

@@ -67,7 +67,7 @@ export function FileCardUpload({
         }
 
         setIsUploading(true);
-        
+
         // Optimistic preview
         const objectUrl = URL.createObjectURL(file);
         setLocalPreview(objectUrl);
@@ -78,10 +78,10 @@ export function FileCardUpload({
             const attachmentId = await attachmentsService.uploadFile(file, type);
             onUploadSuccess(attachmentId);
             toast.success(`${label} uploaded and ready to save`);
-        } catch (err: any) {
+        } catch (err: unknown) {
             console.error('Upload error:', err);
-            toast.error(err?.message || `Failed to upload ${label.toLowerCase()}`);
-            
+            toast.error((err as { message?: string }).message || `Failed to upload ${label.toLowerCase()}`);
+
             // Revert on failure
             setLocalPreview(null);
             URL.revokeObjectURL(objectUrl);
@@ -106,41 +106,35 @@ export function FileCardUpload({
     };
 
     return (
-        <div className={cn("space-y-4 shrink-0 mx-auto lg:mx-0", className)}>
+        <div className={cn('space-y-4 shrink-0 mx-auto lg:mx-0', className)}>
             <Label className="text-slate-300 block text-center lg:text-left">{label}</Label>
             <div className="relative group">
-                <div className={cn(
-                    size,
-                    "relative border-2 border-dashed border-slate-700 flex items-center justify-center overflow-hidden transition-all duration-300 bg-slate-900/80 shadow-inner rounded-none",
-                    !effectivePreview && "hover:border-cyan-500/50 hover:bg-slate-900",
-                    effectivePreview && "border-solid border-slate-600 shadow-xl shadow-cyan-500/5"
-                )}>
+                <div
+                    className={cn(
+                        size,
+                        'relative border-2 border-dashed border-slate-700 flex items-center justify-center overflow-hidden transition-all duration-300 bg-slate-900/80 shadow-inner rounded-none',
+                        !effectivePreview && 'hover:border-cyan-500/50 hover:bg-slate-900',
+                        effectivePreview && 'border-solid border-slate-600 shadow-xl shadow-cyan-500/5',
+                    )}>
                     {isUploading ? (
                         <div className="flex flex-col items-center gap-2 text-center p-2">
                             <Loader2 className="h-8 w-8 animate-spin text-cyan-400" />
                             <span className="text-[8px] text-slate-500 uppercase tracking-widest">Optimizing</span>
                         </div>
                     ) : effectivePreview ? (
-                        <img 
-                            src={effectivePreview} 
-                            alt={label} 
-                            className="w-full h-full object-contain rounded-none bg-slate-900/40" 
-                        />
+                        <img src={effectivePreview} alt={label} className="w-full h-full object-contain rounded-none bg-slate-900/40" />
                     ) : (
                         <div className="flex flex-col items-center gap-2 text-slate-600">
-                            <div className="transition-colors group-hover:text-slate-400">
-                                {placeholderIcon}
-                            </div>
+                            <div className="transition-colors group-hover:text-slate-400">{placeholderIcon}</div>
                             <span className="text-[10px] uppercase font-bold tracking-tighter">No {label.split(' ').pop()}</span>
                         </div>
                     )}
-                    
+
                     {/* Hover Overlay */}
                     {!isUploading && (
-                        <div 
-                            className="absolute inset-0 bg-cyan-500/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-all duration-300 cursor-pointer backdrop-blur-sm rounded-none" 
-                            onClick={() => fileInputRef.current?.click()}
-                        >
+                        <div
+                            className="absolute inset-0 bg-cyan-500/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-all duration-300 cursor-pointer backdrop-blur-sm rounded-none"
+                            onClick={() => fileInputRef.current?.click()}>
                             <div className="flex flex-col items-center gap-2">
                                 <Camera className="h-8 w-8 text-white" />
                                 <span className="text-[10px] font-bold text-white uppercase tracking-wider">Replace</span>
@@ -148,14 +142,8 @@ export function FileCardUpload({
                         </div>
                     )}
                 </div>
-                
-                <input 
-                    type="file" 
-                    ref={fileInputRef} 
-                    className="hidden" 
-                    accept="image/*" 
-                    onChange={handleUpload}
-                />
+
+                <input type="file" ref={fileInputRef} className="hidden" accept="image/*" onChange={handleUpload} />
 
                 {/* Remove Button */}
                 {effectivePreview && !isUploading && (
@@ -165,15 +153,12 @@ export function FileCardUpload({
                         size="icon"
                         onClick={handleRemove}
                         className="absolute -top-2 -right-2 h-7 w-7 rounded-full shadow-lg border border-red-400/50"
-                        title={`Remove ${label.toLowerCase()}`}
-                    >
+                        title={`Remove ${label.toLowerCase()}`}>
                         <Trash2 className="h-3.5 w-3.5" />
                     </Button>
                 )}
             </div>
-            {description && (
-                <p className="text-[10px] text-slate-500 text-center lg:text-left">{description}</p>
-            )}
+            {description && <p className="text-[10px] text-slate-500 text-center lg:text-left">{description}</p>}
         </div>
     );
 }

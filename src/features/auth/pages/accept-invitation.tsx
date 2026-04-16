@@ -65,7 +65,7 @@ export function AcceptInvitationPage() {
             setTimeout(() => {
                 navigate('/dashboard');
             }, 2000);
-        } catch (err: any) {
+        } catch (err: unknown) {
             handleApiError(err);
         }
     };

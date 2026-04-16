@@ -23,6 +23,7 @@ import { NODE_STATUS_CHANGE_REASONS, NODE_TYPES, type NodeType, type NodeStatusC
 import { getNodeType } from '@/shared/lib/node-utils';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogClose } from '@/shared/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/components/ui/select';
+import { Skeleton } from '@/shared/components/ui/skeleton';
 
 export function FacilitiesPage() {
     const { nodes, isLoading, selectedNodeId, selectedNode, fetchNodes, setSelectedNodeId, createFacility, updateFacility, moveFacility, deleteFacility, changeStatus } =
@@ -224,10 +225,15 @@ export function FacilitiesPage() {
                                 </Button>
                             </div>
                         </CardHeader>
-                        <CardContent className="p-2 overflow-y-auto flex-1">
+                        <CardContent className="p-2 overflow-y-auto flex-1 h-full">
                             {isLoading ? (
-                                <div className="flex justify-center p-8">
-                                    <Loader2 className="animate-spin text-slate-500" />
+                                <div className="space-y-2 p-2">
+                                    {Array.from({ length: 12 }).map((_, i) => (
+                                        <div key={i} className="flex items-center gap-3 p-2">
+                                            <Skeleton className="h-4 w-4 rounded-sm" />
+                                            <Skeleton className="h-4 flex-1" />
+                                        </div>
+                                    ))}
                                 </div>
                             ) : treeData.length === 0 ? (
                                 <div className="text-center p-8 text-slate-500 text-sm">{t('dashboard.facilities.tree.no_nodes')}</div>
@@ -321,7 +327,9 @@ export function FacilitiesPage() {
                                     </DialogHeader>
                                     <div className="py-6 space-y-4">
                                         <div className="space-y-2">
-                                            <Label className="text-slate-400 text-xs font-semibold uppercase tracking-wider">{t('dashboard.facilities.dialogs.move.new_parent')}</Label>
+                                            <Label className="text-slate-400 text-xs font-semibold uppercase tracking-wider">
+                                                {t('dashboard.facilities.dialogs.move.new_parent')}
+                                            </Label>
                                             <TableView
                                                 value={newParentId || ''}
                                                 initialLabel={nodes.find((n) => n.id === newParentId)?.name}
@@ -357,10 +365,9 @@ export function FacilitiesPage() {
                                             <Button variant="ghost" className="text-slate-400 hover:text-white" onClick={() => setIsMoveDialogOpen(false)}>
                                                 {t('dashboard.facilities.buttons.cancel')}
                                             </Button>
-                                            <Button 
+                                            <Button
                                                 onClick={() => handleMove()}
-                                                className="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 border-0 shadow-lg shadow-cyan-500/20"
-                                            >
+                                                className="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 border-0 shadow-lg shadow-cyan-500/20">
                                                 {t('dashboard.facilities.buttons.move_node')}
                                             </Button>
                                         </div>
@@ -382,12 +389,20 @@ export function FacilitiesPage() {
                                     </DialogHeader>
                                     <div className="space-y-5 py-6">
                                         <div className="space-y-2">
-                                            <Label className="text-slate-400 text-xs font-semibold uppercase tracking-wider">{t('dashboard.facilities.dialogs.update.node_name')}</Label>
-                                            <Input value={editName} onChange={(e) => setEditName(e.target.value)} className="bg-slate-900/50 border-slate-800 focus:border-indigo-500/50" />
+                                            <Label className="text-slate-400 text-xs font-semibold uppercase tracking-wider">
+                                                {t('dashboard.facilities.dialogs.update.node_name')}
+                                            </Label>
+                                            <Input
+                                                value={editName}
+                                                onChange={(e) => setEditName(e.target.value)}
+                                                className="bg-slate-900/50 border-slate-800 focus:border-indigo-500/50"
+                                            />
                                         </div>
                                         <div className="space-y-2">
-                                            <Label className="text-slate-400 text-xs font-semibold uppercase tracking-wider">{t('dashboard.facilities.dialogs.update.node_type')}</Label>
-                                            <Select value={editType} onValueChange={(val: any) => setEditType(val)}>
+                                            <Label className="text-slate-400 text-xs font-semibold uppercase tracking-wider">
+                                                {t('dashboard.facilities.dialogs.update.node_type')}
+                                            </Label>
+                                            <Select value={editType} onValueChange={(val: NodeType) => setEditType(val)}>
                                                 <SelectTrigger className="bg-slate-900/50 border-slate-800">
                                                     <SelectValue placeholder={t('dashboard.facilities.dialogs.update.select_type')} />
                                                 </SelectTrigger>
@@ -401,12 +416,20 @@ export function FacilitiesPage() {
                                             </Select>
                                         </div>
                                         <div className="space-y-2">
-                                            <Label className="text-slate-400 text-xs font-semibold uppercase tracking-wider">{t('dashboard.facilities.dialogs.update.status')}</Label>
-                                            <Input value={newStatus} onChange={(e) => setNewStatus(e.target.value.toUpperCase())} className="bg-slate-900/50 border-slate-800 focus:border-indigo-500/50" />
+                                            <Label className="text-slate-400 text-xs font-semibold uppercase tracking-wider">
+                                                {t('dashboard.facilities.dialogs.update.status')}
+                                            </Label>
+                                            <Input
+                                                value={newStatus}
+                                                onChange={(e) => setNewStatus(e.target.value.toUpperCase())}
+                                                className="bg-slate-900/50 border-slate-800 focus:border-indigo-500/50"
+                                            />
                                         </div>
                                         <div className="space-y-2">
-                                            <Label className="text-slate-400 text-xs font-semibold uppercase tracking-wider">{t('dashboard.facilities.dialogs.update.reason')}</Label>
-                                            <Select value={statusReason} onValueChange={(val: any) => setStatusReason(val)}>
+                                            <Label className="text-slate-400 text-xs font-semibold uppercase tracking-wider">
+                                                {t('dashboard.facilities.dialogs.update.reason')}
+                                            </Label>
+                                            <Select value={statusReason} onValueChange={(val: NodeStatusChangeReason) => setStatusReason(val)}>
                                                 <SelectTrigger className="bg-slate-900/50 border-slate-800">
                                                     <SelectValue placeholder={t('dashboard.facilities.dialogs.update.select_reason')} />
                                                 </SelectTrigger>
@@ -424,10 +447,9 @@ export function FacilitiesPage() {
                                         <Button variant="ghost" className="text-slate-400 hover:text-white" onClick={() => setIsStatusDialogOpen(false)}>
                                             {t('dashboard.facilities.buttons.cancel')}
                                         </Button>
-                                        <Button 
+                                        <Button
                                             onClick={handleUpdateNode}
-                                            className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 border-0 shadow-lg shadow-indigo-500/20"
-                                        >
+                                            className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 border-0 shadow-lg shadow-indigo-500/20">
                                             {t('dashboard.facilities.buttons.save_changes')}
                                         </Button>
                                     </DialogFooter>
@@ -454,12 +476,11 @@ export function FacilitiesPage() {
                                         <Button variant="ghost" className="text-slate-400 hover:text-white" onClick={() => setIsDeleteDialogOpen(false)}>
                                             {t('dashboard.facilities.buttons.cancel')}
                                         </Button>
-                                        <Button 
-                                            variant="destructive" 
-                                            onClick={handleDelete} 
+                                        <Button
+                                            variant="destructive"
+                                            onClick={handleDelete}
                                             disabled={isDeleting}
-                                            className="bg-red-600 hover:bg-red-500 text-white border-0 shadow-lg shadow-red-500/20 px-8"
-                                        >
+                                            className="bg-red-600 hover:bg-red-500 text-white border-0 shadow-lg shadow-red-500/20 px-8">
                                             {isDeleting ? (
                                                 <div className="flex items-center gap-2">
                                                     <Loader2 className="h-4 w-4 animate-spin" />

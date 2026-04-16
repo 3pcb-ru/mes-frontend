@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import type { ApiError } from '../lib/api-client';
 
 /**
  * A generic hook that manages API server-side validation errors for forms.
@@ -12,9 +13,10 @@ import { useState, useCallback } from 'react';
 export function useFormValidation() {
     const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
 
-    const handleApiError = useCallback((err: any): boolean => {
-        if (err?.statusCode === 422 && err?.validationErrors) {
-            setValidationErrors(err.validationErrors);
+    const handleApiError = useCallback((err: unknown): boolean => {
+        const apiError = err as ApiError;
+        if (apiError?.statusCode === 422 && apiError?.validationErrors) {
+            setValidationErrors(apiError.validationErrors);
             return true;
         }
         return false;

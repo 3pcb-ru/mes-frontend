@@ -53,12 +53,12 @@ export function LoginPage() {
 
         try {
             await login({ email: email.toLowerCase().trim(), password });
-            
+
             // Redirect to previous page (if user was redirected from a protected route)
             // or to dashboard if this is first login
-            const from = (location.state as any)?.from?.pathname || '/dashboard';
+            const from = (location.state as { from?: { pathname: string } })?.from?.pathname || '/dashboard';
             navigate(from);
-        } catch (err: any) {
+        } catch (err: unknown) {
             // Try to map server validation errors to fields, else let the store handle the display
             handleApiError(err);
         }
@@ -160,11 +160,7 @@ export function LoginPage() {
                         </div>
 
                         {/* Submit Button */}
-                        <Button
-                            type="submit"
-                            disabled={isLoading}
-                            className="w-full"
-                        >
+                        <Button type="submit" disabled={isLoading} className="w-full">
                             {isLoading ? (
                                 <>
                                     <Loader2 className="mr-2 h-5 w-5 animate-spin" />

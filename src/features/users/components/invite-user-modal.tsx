@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Mail, User, Shield, Loader2, AlertCircle } from 'lucide-react';
+import { Mail, User, Shield, Loader2 } from 'lucide-react';
 import { rolesService } from '../services/roles.service';
 import { usersService } from '../services/users.service';
 import { type RoleWithPermissions } from '../types/users.types';
@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useFormValidation } from '@/shared/hooks/use-form-validation';
 import { FormError } from '@/shared/components/ui/form-error';
 import { toast } from 'sonner';
+import { ApiError } from '@/shared/lib/api-client';
 
 interface InviteUserModalProps {
     isOpen: boolean;
@@ -83,15 +84,16 @@ export function InviteUserModal({ isOpen, onClose, onSuccess }: InviteUserModalP
                 email: email.toLowerCase().trim(),
                 firstName: firstName.trim(),
                 lastName: lastName.trim(),
-                roleId
+                roleId,
             });
             toast.success(t('dashboard.users.invite.success', 'Invitation sent successfully'));
             onSuccess();
             onClose();
-        } catch (err: any) {
-            handleApiError(err);
-            if (err.statusCode !== 422) {
-                toast.error(err.message || t('dashboard.users.invite.errors.failed', 'Failed to send invitation'));
+        } catch (err: unknown) {
+            const apiError = err as ApiError;
+            handleApiError(apiError);
+            if (apiError.statusCode !== 422) {
+                toast.error(apiError.message || t('dashboard.users.invite.errors.failed', 'Failed to send invitation'));
             }
         } finally {
             setIsSubmitting(false);
@@ -106,30 +108,38 @@ export function InviteUserModal({ isOpen, onClose, onSuccess }: InviteUserModalP
                         <User className="h-5 w-5 text-cyan-400" />
                         {t('dashboard.users.invite.title', 'Invite New User')}
                     </DialogTitle>
-                    <DialogDescription className="text-slate-400">
-                        {t('dashboard.users.invite.description', 'Send an email invitation to a new team member.')}
-                    </DialogDescription>
+                    <DialogDescription className="text-slate-400">{t('dashboard.users.invite.description', 'Send an email invitation to a new team member.')}</DialogDescription>
                 </DialogHeader>
 
                 <form onSubmit={handleSubmit} className="space-y-4 py-4">
                     <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-2">
-                            <Label htmlFor="firstName" className="text-slate-300">{t('dashboard.users.invite.first_name', 'First Name')}</Label>
+                            <Label htmlFor="firstName" className="text-slate-300">
+                                {t('dashboard.users.invite.first_name', 'First Name')}
+                            </Label>
                             <Input
                                 id="firstName"
                                 value={firstName}
-                                onChange={(e) => { setFirstName(e.target.value); clearError('firstName'); }}
+                                onChange={(e) => {
+                                    setFirstName(e.target.value);
+                                    clearError('firstName');
+                                }}
                                 placeholder="Jane"
                                 className="bg-slate-950 border-slate-800 text-white placeholder:text-slate-600 focus:border-cyan-500"
                             />
                             <FormError message={validationErrors.firstName} />
                         </div>
                         <div className="space-y-2">
-                            <Label htmlFor="lastName" className="text-slate-300">{t('dashboard.users.invite.last_name', 'Last Name')}</Label>
+                            <Label htmlFor="lastName" className="text-slate-300">
+                                {t('dashboard.users.invite.last_name', 'Last Name')}
+                            </Label>
                             <Input
                                 id="lastName"
                                 value={lastName}
-                                onChange={(e) => { setLastName(e.target.value); clearError('lastName'); }}
+                                onChange={(e) => {
+                                    setLastName(e.target.value);
+                                    clearError('lastName');
+                                }}
                                 placeholder="Doe"
                                 className="bg-slate-950 border-slate-800 text-white placeholder:text-slate-600 focus:border-cyan-500"
                             />
@@ -138,14 +148,19 @@ export function InviteUserModal({ isOpen, onClose, onSuccess }: InviteUserModalP
                     </div>
 
                     <div className="space-y-2">
-                        <Label htmlFor="email" className="text-slate-300">{t('dashboard.users.invite.email', 'Email Address')}</Label>
+                        <Label htmlFor="email" className="text-slate-300">
+                            {t('dashboard.users.invite.email', 'Email Address')}
+                        </Label>
                         <div className="relative">
                             <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500" />
                             <Input
                                 id="email"
                                 type="email"
                                 value={email}
-                                onChange={(e) => { setEmail(e.target.value); clearError('email'); }}
+                                onChange={(e) => {
+                                    setEmail(e.target.value);
+                                    clearError('email');
+                                }}
                                 placeholder="jane.doe@company.com"
                                 className="pl-10 bg-slate-950 border-slate-800 text-white placeholder:text-slate-600 focus:border-cyan-500"
                             />
@@ -154,8 +169,15 @@ export function InviteUserModal({ isOpen, onClose, onSuccess }: InviteUserModalP
                     </div>
 
                     <div className="space-y-2">
-                        <Label htmlFor="role" className="text-slate-300">{t('dashboard.users.invite.role', 'Assign Role')}</Label>
-                        <Select value={roleId} onValueChange={(value) => { setRoleId(value); clearError('roleId'); }}>
+                        <Label htmlFor="role" className="text-slate-300">
+                            {t('dashboard.users.invite.role', 'Assign Role')}
+                        </Label>
+                        <Select
+                            value={roleId}
+                            onValueChange={(value) => {
+                                setRoleId(value);
+                                clearError('roleId');
+                            }}>
                             <SelectTrigger className="bg-slate-950 border-slate-800 text-white focus:border-cyan-500">
                                 <SelectValue placeholder={t('dashboard.users.invite.role_placeholder', 'Select a role')} />
                             </SelectTrigger>
@@ -190,7 +212,10 @@ export function InviteUserModal({ isOpen, onClose, onSuccess }: InviteUserModalP
                         <Button type="button" variant="ghost" onClick={onClose} disabled={isSubmitting} className="text-slate-400 hover:text-white hover:bg-slate-800">
                             {t('common.cancel', 'Cancel')}
                         </Button>
-                        <Button type="submit" disabled={isSubmitting} className="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white border-0 shadow-lg shadow-cyan-500/20">
+                        <Button
+                            type="submit"
+                            disabled={isSubmitting}
+                            className="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white border-0 shadow-lg shadow-cyan-500/20">
                             {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
                             {t('dashboard.users.invite.submit', 'Send Invitation')}
                         </Button>

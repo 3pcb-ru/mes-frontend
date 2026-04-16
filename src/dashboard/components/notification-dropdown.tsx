@@ -1,14 +1,14 @@
-import { Bell, Check, Trash2, Info, AlertTriangle, CheckCircle2, XCircle, AlertCircle } from 'lucide-react';
+import { Bell, Trash2, Info, AlertTriangle, CheckCircle2, XCircle, AlertCircle, Check } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { useNotifications } from '@/features/notifications/store/notifications.store';
 import type { NotificationType } from '@/features/notifications/types/notifications.types';
 import { Button } from '@/shared/components/ui/button';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/shared/components/ui/dropdown-menu';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuTrigger } from '@/shared/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback } from '@/shared/components/ui/avatar';
 import { cn } from '@/shared/lib/utils';
 import { useTranslation } from 'react-i18next';
 
-const typeConfig: Record<NotificationType, { icon: any; color: string; bg: string }> = {
+const typeConfig: Record<NotificationType, { icon: React.ElementType; color: string; bg: string }> = {
     system: { icon: Info, color: 'text-blue-400', bg: 'bg-blue-400/10' },
     alert: { icon: AlertCircle, color: 'text-rose-400', bg: 'bg-rose-400/10' },
     info: { icon: Info, color: 'text-blue-400', bg: 'bg-blue-400/10' },
@@ -44,7 +44,9 @@ export function NotificationDropdown() {
                     <div className="flex items-center gap-2">
                         <span className="text-base font-semibold text-white">{t('common.notifications.title')}</span>
                         {unreadCount > 0 && (
-                            <span className="px-1.5 py-0.5 rounded-full bg-rose-500/10 text-rose-400 text-[10px] font-bold uppercase tracking-wider">{t('common.notifications.unread_count', { count: unreadCount })}</span>
+                            <span className="px-1.5 py-0.5 rounded-full bg-rose-500/10 text-rose-400 text-[10px] font-bold uppercase tracking-wider">
+                                {t('common.notifications.unread_count', { count: unreadCount })}
+                            </span>
                         )}
                     </div>
                     {notifications.length > 0 && (
@@ -143,7 +145,7 @@ export function NotificationDropdown() {
                             <h3 className="text-sm font-medium text-white mb-1">{t('common.notifications.empty_title')}</h3>
                             <p className="text-xs text-slate-500 max-w-[200px]">{t('common.notifications.empty_description')}</p>
                         </div>
-                    ) }
+                    )}
                 </div>
 
                 {notifications.length > 0 && (
