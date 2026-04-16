@@ -30,7 +30,7 @@ export const AiChatComponent = () => {
     const validatePrompt = (text: string): string | null => {
         if (text.length < 5) return 'Prompt is too short. Please provide a descriptive sentence.';
         if (!text.includes(' ')) return 'Please use a complete sentence, not just single words.';
-        
+
         // Basic entropy check for repeated characters
         const charCounts: Record<string, number> = {};
         for (const char of text.toLowerCase()) {
@@ -39,7 +39,7 @@ export const AiChatComponent = () => {
                 return 'Please provide meaningful text, not repetitive characters.';
             }
         }
-        
+
         return null;
     };
 
@@ -63,7 +63,7 @@ export const AiChatComponent = () => {
             setStep('preview');
         } catch (err: any) {
             const message = err.message || 'Architecting failed. Please check your configuration.';
-            
+
             // Handle Blocking
             if (message.includes('Restricted') || message.includes('failed attempts')) {
                 setIsBlocked(true);
@@ -123,9 +123,9 @@ export const AiChatComponent = () => {
                                     <div>
                                         <CardTitle className="text-sm font-bold text-white uppercase tracking-tight">Vibe Agent</CardTitle>
                                         <div className="flex items-center gap-1">
-                                            <div className={cn("h-1.5 w-1.5 rounded-full", isBlocked ? "bg-red-500" : "bg-emerald-500 animate-pulse")} />
+                                            <div className={cn('h-1.5 w-1.5 rounded-full', isBlocked ? 'bg-red-500' : 'bg-emerald-500 animate-pulse')} />
                                             <span className="text-[10px] text-slate-500 uppercase font-bold tracking-widest">
-                                                {isBlocked ? "System Locked" : "Protocol Active"}
+                                                {isBlocked ? 'System Locked' : 'Protocol Active'}
                                             </span>
                                         </div>
                                     </div>
@@ -144,7 +144,7 @@ export const AiChatComponent = () => {
                                         <div className="space-y-2">
                                             <h3 className="text-white font-bold uppercase tracking-wider">Access Restricted</h3>
                                             <p className="text-xs text-slate-400 leading-relaxed max-w-[250px]">
-                                                {error || "Your account access to the AI Agent has been restricted due to multiple invalid requests."}
+                                                {error || 'Your account access to the AI Agent has been restricted due to multiple invalid requests.'}
                                             </p>
                                         </div>
                                         <div className="p-3 bg-slate-900 rounded-xl border border-slate-800 w-full text-[10px] text-slate-500 italic">
@@ -166,9 +166,19 @@ export const AiChatComponent = () => {
                                         )}
 
                                         {error && (
-                                            <div className="bg-red-500/10 border border-red-500/20 p-3 rounded-2xl text-xs text-red-400 antialiased leading-relaxed">
-                                                <p className="font-bold mb-1 uppercase tracking-tighter">Architectural Breach</p>
-                                                {error}
+                                            <div className="bg-red-500/10 border border-red-500/20 p-3 rounded-2xl text-xs text-red-400 antialiased leading-relaxed transition-all duration-300 animate-in fade-in slide-in-from-top-2">
+                                                <div className="flex items-center gap-2 mb-1">
+                                                    <div className="h-1.5 w-1.5 rounded-full bg-red-500 animate-pulse" />
+                                                    <p className="font-bold uppercase tracking-tighter">
+                                                        {error.includes('demand') || error.includes('unavailable') ? 'System Overload' : 'Architectural Breach'}
+                                                    </p>
+                                                </div>
+                                                <p className="opacity-90">{error}</p>
+                                                {(error.includes('demand') || error.includes('unavailable')) && (
+                                                    <p className="mt-2 text-[10px] text-red-400/60 italic uppercase tracking-widest font-bold">
+                                                        Action: Wait 30s and re-submit protocol
+                                                    </p>
+                                                )}
                                             </div>
                                         )}
                                     </div>
