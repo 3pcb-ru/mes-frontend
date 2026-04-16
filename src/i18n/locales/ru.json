@@ -872,7 +872,65 @@
         "email_required": "Email обязателен",
         "email_invalid": "Пожалуйста, введите корректный адрес электронной почты",
         "password_required": "Пароль обязателен",
-        "password_requirements": "Пароль не соответствует требованиям"
+        "password_requirements": "Пароль не соответствует требованиям",
+        "confirm_password_required": "Please confirm your password",
+        "passwords_dont_match": "Passwords do not match"
+      }
+    },
+    "reset_password": {
+      "forgot_password_title": "Forgot password?",
+      "forgot_password_subtitle": "No worries, we'll send you a reset code via email",
+      "email_label": "Email",
+      "email_placeholder": "Enter your email",
+      "submit_send_code": "Send reset code",
+      "submitting_send_code": "Sending code...",
+      "back_to_login": "Back to sign in",
+      "success_title": "Check your email",
+      "success_description": "We've sent a 6-digit verification code to",
+      "success_button": "Enter verification code",
+      "resend_hint": "Didn't receive the email? Try again",
+      "enter_code_title": "Enter verification code",
+      "enter_code_subtitle": "Enter the 6-digit code we sent to your email",
+      "verification_code_label": "Verification Code",
+      "verify_button": "Verify code",
+      "verifying_button": "Verifying...",
+      "new_password_title": "Create new password",
+      "new_password_subtitle": "Your new password must be different from previous passwords",
+      "new_password_label": "New Password",
+      "new_password_placeholder": "Enter new password",
+      "confirm_password_label": "Confirm Password",
+      "confirm_password_placeholder": "Confirm new password",
+      "reset_button": "Reset password",
+      "resetting_button": "Resetting...",
+      "done_title": "Password reset successful!",
+      "done_description": "Your password has been reset. You can now sign in with your new password.",
+      "done_button": "Sign in",
+      "errors": {
+        "email_required": "Email is required",
+        "email_invalid": "Please enter a valid email address",
+        "send_failed": "Failed to send reset code",
+        "code_invalid": "Please enter a valid 6-digit code",
+        "validate_failed": "Invalid code",
+        "password_requirements": "Password does not meet requirements",
+        "passwords_dont_match": "Passwords do not match",
+        "reset_failed": "Failed to reset password"
+      }
+    },
+    "verify_email": {
+      "verifying": {
+        "title": "Verifying your email...",
+        "description": "Please wait while we verify your email address."
+      },
+      "success": {
+        "title": "Email verified!",
+        "description": "Your email has been successfully verified. You can now sign in to your account.",
+        "button": "Sign in"
+      },
+      "error": {
+        "title": "Verification failed",
+        "description": "This verification link is invalid or has expired.",
+        "button": "Go to sign in",
+        "new_link_hint": "Need a new verification link? Sign in and request a new one."
       }
     }
   },
@@ -899,7 +957,39 @@
       "s2_title": "2. Международные потоки данных",
       "s2_content": "Как часть глобальной сети Dannie (Литва, Турция, Китай), ваши промышленные данные могут обрабатываться в этих регионах для обеспечения непрерывной доступности и поддержки уровня 3.",
       "s3_title": "3. Назначение инструмента",
-      "s3_content": "Основная цель данного инструмента — обеспечить бесплатную производственную ценность и служить шлюзом в более широкую экосистему Dannie, включая нашу электронную коммерцию и услуги по сборке на dannie.cc."
+      "s3_content": "Основная цель данного инструмента — обеспечить бесплатную производственную ценность и служить шлюзом в более широкую экосистему Dannie, включая нашу электронную коммерцию и услуги по сборке на dannie.cc.",
+      "s4_title": "4. Data Security & Risk",
+      "s4_content": "We implement industry-standard technical and organizational measures. However, as an open-access free tool, you acknowledge that no cloud system is 100% impenetrable and you use the service at your own risk.",
+      "s5_title": "5. Data Retention",
+      "s5_content": "We retain your manufacturing configurations as long as your account is active. You may request data deletion or account closure at any time through our support channels."
+    }
+  },
+  "ui": {
+    "pagination": {
+      "label": "Pagination",
+      "prev": "Go to previous page",
+      "next": "Go to next page",
+      "more": "More pages",
+      "prev_text": "Previous",
+      "next_text": "Next"
+    },
+    "breadcrumb": {
+      "label": "Breadcrumb",
+      "more": "More"
+    },
+    "sidebar": {
+      "toggle": "Toggle Sidebar",
+      "mobile_title": "Sidebar",
+      "mobile_description": "Displays the mobile sidebar."
+    },
+    "sheet": {
+      "close": "Close"
+    },
+    "carousel": {
+      "label": "Carousel",
+      "slide_label": "Slide",
+      "prev": "Previous slide",
+      "next": "Next slide"
     }
   }
 }

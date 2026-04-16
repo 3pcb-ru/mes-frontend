@@ -1,79 +1,30 @@
-export interface Role {
-    id: string;
-    name: string;
-    description?: string;
-    isDefault: boolean;
-    isAdmin: boolean;
-    organizationId?: string | null;
-    permissions?: Permission[];
-}
+import type {
+    UserListItem as UserListItemType,
+    DetailedProfile as DetailedProfileType,
+    InviteUserDto as InviteUserDtoType,
+    UpdateUserStatusDto as UpdateUserStatusType,
+    AcceptInvitationDto as AcceptInvitationDtoType,
+    RoleWithPermissions as RoleWithPermissionsType,
+} from './users.schema';
+import type { Role as RoleSchemaType, Organization as OrganizationSchemaType } from '../../../shared/types/api.schema';
 
-export interface Permission {
-    id: string;
-    name: string;
-    description: string;
-}
+/**
+ * Users Types - Re-exported from Zod Schemas
+ */
 
-export interface Organization {
-    id: string;
-    name: string;
-    logoId?: string;
-    logoUrl?: string;
-    location?: string;
-}
+export type Role = RoleSchemaType;
+export type Organization = OrganizationSchemaType;
+export type DetailedProfile = DetailedProfileType;
+export type UserListItem = UserListItemType;
+export type InviteUserDto = InviteUserDtoType;
+export type UpdateUserStatusDto = UpdateUserStatusType;
+export type AcceptInvitationDto = AcceptInvitationDtoType;
+export type RoleWithPermissions = RoleWithPermissionsType;
 
-export interface DetailedProfile {
-    id: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-    isVerified: boolean;
-    role?: Role;
-    organization?: Organization;
-    organizationId?: string;
-    avatarId?: string;
-    avatarUrl?: string;
-    createdAt: string;
-    updatedAt: string;
-    deletedAt?: string | null;
-}
-
+// Backward compatibility or UI-only types can remain here if not in schema
 export interface UpdateUserProfileDto {
     firstName?: string;
     lastName?: string;
     email?: string;
     avatarId?: string;
-}
-
-export interface UserListItem {
-    id: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-    role: string;
-    isVerified: boolean;
-    createdAt: string;
-    deletedAt?: string | null;
-    avatarId?: string | null;
-    avatarUrl?: string | null;
-}
-
-export interface InviteUserDto {
-    email: string;
-    firstName: string;
-    lastName: string;
-    roleId: string;
-}
-
-export interface UpdateUserStatusDto {
-    status: 'active' | 'inactive';
-}
-
-export interface AcceptInvitationDto {
-    token: string;
-    password: string;
-}
-
-export interface RoleWithPermissions extends Role {
-    permissions: Permission[];
 }

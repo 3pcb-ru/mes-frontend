@@ -1,3 +1,4 @@
+import { z } from 'zod';
 import { config } from './config';
 import { apiSafetyNet } from './api-safety-net';
 
@@ -101,7 +102,7 @@ class ApiClient {
         }
     }
 
-    private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
+    private async request<T>(endpoint: string, options: RequestInit = {}, schema?: z.ZodType<T>): Promise<T> {
         const url = `${this.baseUrl}${endpoint}`;
 
         const isFormData = options.body instanceof FormData;
@@ -197,6 +198,30 @@ class ApiClient {
 
         if (response.ok) {
             apiSafetyNet.recordSuccess(endpoint);
+
+            // Strict Zod Validation
+            if (schema) {
+                const result = schema.safeParse(responseData);
+                if (!result.success) {
+                    const validationDetails = result.error.issues.map((err) => `${err.path.join('.')}: ${err.message}`).join(', ');
+
+                    const message = `[Zod Mismatch] ${endpoint}: ${validationDetails}`;
+                    console.error(message, {
+                        expected: schema._zod,
+                        received: responseData,
+                    });
+
+                    // Per protocol: throw error on any validation mismatch
+                    const zodError: ApiError = {
+                        message: `Data integrity error: The server response did not match the expected format. Details: ${validationDetails}`,
+                        statusCode: 422, // Unprocessable Entity
+                        error: 'Validation Error',
+                    };
+                    throw zodError;
+                }
+                return result.data;
+            }
+
             return responseData;
         }
 
@@ -234,36 +259,48 @@ class ApiClient {
         throw apiError;
     }
 
-    async get<T>(endpoint: string, options?: RequestInit): Promise<T> {
-        return this.request<T>(endpoint, { ...options, method: 'GET' });
+    async get<T>(endpoint: string, options?: RequestInit, schema?: z.ZodType<T>): Promise<T> {
+        return this.request<T>(endpoint, { ...options, method: 'GET' }, schema);
     }
 
-    async post<T>(endpoint: string, body?: unknown, options?: RequestInit): Promise<T> {
-        return this.request<T>(endpoint, {
-            ...options,
-            method: 'POST',
-            body: body instanceof FormData ? body : (body ? JSON.stringify(body) : undefined),
-        });
+    async post<T>(endpoint: string, body?: unknown, options?: RequestInit, schema?: z.ZodType<T>): Promise<T> {
+        return this.request<T>(
+            endpoint,
+            {
+                ...options,
+                method: 'POST',
+                body: body instanceof FormData ? body : body ? JSON.stringify(body) : undefined,
+            },
+            schema,
+        );
     }
 
-    async put<T>(endpoint: string, body?: unknown, options?: RequestInit): Promise<T> {
-        return this.request<T>(endpoint, {
-            ...options,
-            method: 'PUT',
-            body: body instanceof FormData ? body : (body ? JSON.stringify(body) : undefined),
-        });
+    async put<T>(endpoint: string, body?: unknown, options?: RequestInit, schema?: z.ZodType<T>): Promise<T> {
+        return this.request<T>(
+            endpoint,
+            {
+                ...options,
+                method: 'PUT',
+                body: body instanceof FormData ? body : body ? JSON.stringify(body) : undefined,
+            },
+            schema,
+        );
     }
 
-    async patch<T>(endpoint: string, body?: unknown, options?: RequestInit): Promise<T> {
-        return this.request<T>(endpoint, {
-            ...options,
-            method: 'PATCH',
-            body: body instanceof FormData ? body : (body ? JSON.stringify(body) : undefined),
-        });
+    async patch<T>(endpoint: string, body?: unknown, options?: RequestInit, schema?: z.ZodType<T>): Promise<T> {
+        return this.request<T>(
+            endpoint,
+            {
+                ...options,
+                method: 'PATCH',
+                body: body instanceof FormData ? body : body ? JSON.stringify(body) : undefined,
+            },
+            schema,
+        );
     }
 
-    async delete<T>(endpoint: string, options?: RequestInit): Promise<T> {
-        return this.request<T>(endpoint, { ...options, method: 'DELETE' });
+    async delete<T>(endpoint: string, options?: RequestInit, schema?: z.ZodType<T>): Promise<T> {
+        return this.request<T>(endpoint, { ...options, method: 'DELETE' }, schema);
     }
 }
 

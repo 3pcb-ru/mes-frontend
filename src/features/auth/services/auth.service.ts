@@ -1,33 +1,41 @@
 import { apiClient } from '@/shared/lib/api-client';
-import type {
-    SignupDto,
-    LoginDto,
-    ChangePasswordDto,
-    ForgotPasswordDto,
-    ValidateResetCodeDto,
-    ResetPasswordDto,
-    ResendVerificationDto,
-    LoginResponse,
-    SignupResponse,
-    MessageResponse,
-    VerificationStatusResponse,
-} from '../types/auth.types';
-import { type AcceptInvitationDto } from '@/features/users/types/users.types';
+import {
+    LoginResponseSchema,
+    RefreshResponseSchema,
+    ForgotPasswordSchema,
+    ResetPasswordSchema,
+    type SignupDto,
+    type LoginDto,
+    type ChangePasswordDto,
+    type ForgotPasswordDto,
+    type ResetPasswordDto,
+    type LoginResponse,
+    type MessageResponse,
+    type RefreshResponse,
+    MessageResponseSchema,
+} from '../types/auth.schema';
+import { type AcceptInvitationDto } from '@/features/users/types/users.schema';
+import { z } from 'zod';
 
 const AUTH_BASE = '/auth';
 
 export const authService = {
     /**
      * Register a new user
-     * POST /auth/signup
      */
-    async signup(data: SignupDto): Promise<SignupResponse> {
-        return apiClient.post<SignupResponse>(`${AUTH_BASE}/signup`, data);
+    async signup(data: SignupDto): Promise<{ accessToken: string; refreshToken: string; email: string; message: string }> {
+        // Signup response structure is slightly different (includes email)
+        const SignupResponseSchema = z.object({
+            accessToken: z.string(),
+            refreshToken: z.string(),
+            email: z.string(),
+            message: z.string(),
+        });
+        return apiClient.post(`${AUTH_BASE}/signup`, data, {}, SignupResponseSchema);
     },
 
     /**
      * Verify email with token
-     * GET /auth/verify/:token
      */
     async verifyEmail(token: string): Promise<MessageResponse> {
         return apiClient.get<MessageResponse>(`${AUTH_BASE}/verify/${token}`);
@@ -35,31 +43,27 @@ export const authService = {
 
     /**
      * Login with email and password
-     * POST /auth/login
      */
     async login(data: LoginDto): Promise<LoginResponse> {
-        return apiClient.post<LoginResponse>(`${AUTH_BASE}/login`, data);
+        return apiClient.post<LoginResponse>(`${AUTH_BASE}/login`, data, {}, LoginResponseSchema);
     },
 
     /**
      * Accept a user invitation and set password
-     * POST /auth/accept-invitation
      */
     async acceptInvitation(data: AcceptInvitationDto): Promise<LoginResponse> {
-        return apiClient.post<LoginResponse>(`${AUTH_BASE}/accept-invitation`, data);
+        return apiClient.post<LoginResponse>(`${AUTH_BASE}/accept-invitation`, data, {}, LoginResponseSchema);
     },
 
     /**
-     * Logout current user (invalidates both tokens)
-     * DELETE /auth/logout
+     * Logout current user
      */
-    async logout(): Promise<import('../types/auth.types').LogoutResponse> {
-        return apiClient.delete<import('../types/auth.types').LogoutResponse>(`${AUTH_BASE}/logout`);
+    async logout(): Promise<{ message: string }> {
+        return apiClient.delete<{ message: string }>(`${AUTH_BASE}/logout`);
     },
 
     /**
      * Change password for authenticated user
-     * POST /auth/change-password
      */
     async changePassword(data: ChangePasswordDto): Promise<MessageResponse> {
         return apiClient.post<MessageResponse>(`${AUTH_BASE}/change-password`, data);
@@ -67,49 +71,29 @@ export const authService = {
 
     /**
      * Request password reset link
-     * POST /auth/password/reset-link
      */
     async forgotPassword(data: ForgotPasswordDto): Promise<MessageResponse> {
-        return apiClient.post<MessageResponse>(`${AUTH_BASE}/password/reset-link`, data);
-    },
-
-    /**
-     * Validate reset code
-     * POST /auth/validate-reset-code
-     */
-    async validateResetCode(data: ValidateResetCodeDto): Promise<MessageResponse> {
-        return apiClient.post<MessageResponse>(`${AUTH_BASE}/validate-reset-code`, data);
+        return apiClient.post<MessageResponse>(`${AUTH_BASE}/password/reset-link`, data, {}, MessageResponseSchema);
     },
 
     /**
      * Reset password with code
-     * POST /auth/password/reset-password
      */
     async resetPassword(data: ResetPasswordDto): Promise<MessageResponse> {
-        return apiClient.post<MessageResponse>(`${AUTH_BASE}/password/reset-password`, data);
+        return apiClient.post<MessageResponse>(`${AUTH_BASE}/password/reset-password`, data, {}, MessageResponseSchema);
     },
 
     /**
      * Resend verification email
-     * POST /auth/resend-verification
      */
-    async resendVerification(data: ResendVerificationDto): Promise<MessageResponse> {
-        return apiClient.post<MessageResponse>(`${AUTH_BASE}/resend-verification`, data);
-    },
-
-    /**
-     * Get verification resend status
-     * GET /auth/resend-verification/status/:email
-     */
-    async getVerificationStatus(email: string): Promise<VerificationStatusResponse> {
-        return apiClient.get<VerificationStatusResponse>(`${AUTH_BASE}/resend-verification/status/${encodeURIComponent(email)}`);
+    async resendVerification(data: { email: string }): Promise<MessageResponse> {
+        return apiClient.post<MessageResponse>(`${AUTH_BASE}/resend-verification`, data, {}, MessageResponseSchema);
     },
 
     /**
      * Refresh access token using refresh token
-     * POST /auth/refresh
      */
-    async refreshToken(refreshToken: string): Promise<import('../types/auth.types').RefreshTokenResponse> {
-        return apiClient.post<import('../types/auth.types').RefreshTokenResponse>(`${AUTH_BASE}/refresh`, { refreshToken });
+    async refreshToken(refreshToken: string): Promise<RefreshResponse> {
+        return apiClient.post<RefreshResponse>(`${AUTH_BASE}/refresh`, { refreshToken }, {}, RefreshResponseSchema);
     },
 };

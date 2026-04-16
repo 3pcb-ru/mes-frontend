@@ -1,44 +1,42 @@
 import { apiClient } from '@/shared/lib/api-client';
-import { type DetailedProfile, type UserListItem, type Organization, type UpdateUserProfileDto, type InviteUserDto, type UpdateUserStatusDto } from '../types/users.types';
+import { OrganizationSchema, UserSchema } from '@/shared/types/api.schema';
+import { z } from 'zod';
+import { UserListItemSchema, type DetailedProfile, type UserListItem, type Organization, type InviteUserDto, type UpdateUserStatusDto } from '../types/users.schema';
 
 const USERS_BASE = '/users';
 
 export const usersService = {
     /**
      * Get current authenticated user profile
-     * GET /users/profile
      */
     async getCurrentProfile(): Promise<DetailedProfile> {
-        return apiClient.get<DetailedProfile>(`${USERS_BASE}/profile`);
+        return apiClient.get<DetailedProfile>(`${USERS_BASE}/profile`, {}, UserSchema);
     },
 
     /**
      * Get specific user info by ID
-     * GET /users/:userId
      */
     async getUserById(userId: string): Promise<DetailedProfile> {
-        return apiClient.get<DetailedProfile>(`${USERS_BASE}/${userId}`);
+        return apiClient.get<DetailedProfile>(`${USERS_BASE}/${userId}`, {}, UserSchema);
     },
 
     /**
      * Update user profile
-     * PUT /users/profile/:userId
      */
-    async updateProfile(userId: string, data: UpdateUserProfileDto): Promise<DetailedProfile> {
-        return apiClient.put<DetailedProfile>(`${USERS_BASE}/profile/${userId}`, data);
+    async updateProfile(userId: string, data: any): Promise<DetailedProfile> {
+        return apiClient.put<DetailedProfile>(`${USERS_BASE}/profile/${userId}`, data, {}, UserSchema);
     },
 
     /**
      * List all users (Admin only)
-     * GET /users
+     * Backend returns a list; we validate each if needed, but here we validate the array
      */
     async listUsers(): Promise<UserListItem[]> {
-        return apiClient.get<UserListItem[]>(USERS_BASE);
+        return apiClient.get<UserListItem[]>(USERS_BASE, {}, z.array(UserListItemSchema));
     },
 
     /**
      * Invite a new user
-     * POST /users/invite
      */
     async inviteUser(data: InviteUserDto): Promise<void> {
         return apiClient.post(`${USERS_BASE}/invite`, data);
@@ -46,15 +44,13 @@ export const usersService = {
 
     /**
      * Update user status (Active/Inactive)
-     * PATCH /users/:userId/status
      */
     async updateStatus(userId: string, data: UpdateUserStatusDto): Promise<DetailedProfile> {
-        return apiClient.patch<DetailedProfile>(`${USERS_BASE}/${userId}/status`, data);
+        return apiClient.patch<DetailedProfile>(`${USERS_BASE}/${userId}/status`, data, {}, UserSchema);
     },
 
     /**
-     * Soft delete user (Short-cut for deactivating)
-     * DELETE /users/:userId
+     * Soft delete user
      */
     async deleteUser(userId: string): Promise<void> {
         return apiClient.delete(`${USERS_BASE}/${userId}`);
@@ -62,25 +58,22 @@ export const usersService = {
 
     /**
      * Create a new organization and link it to the user
-     * POST /organization
      */
-    async createOrganization(data: { name: string }): Promise<any> {
-        return apiClient.post<any>('/organization', data);
+    async createOrganization(data: { name: string }): Promise<Organization> {
+        return apiClient.post<Organization>('/organization', data, {}, OrganizationSchema);
     },
 
     /**
      * Get organization branding/info
-     * GET /organization
      */
     async getOrganization(): Promise<Organization> {
-        return apiClient.get<Organization>('/organization');
+        return apiClient.get<Organization>('/organization', {}, OrganizationSchema);
     },
 
     /**
      * Update current organization branding/info
-     * PATCH /organization
      */
-    async updateOrganization(data: { name?: string; logoId?: string | null }): Promise<any> {
-        return apiClient.patch<any>('/organization', data);
+    async updateOrganization(data: { name?: string; logoId?: string | null }): Promise<Organization> {
+        return apiClient.patch<Organization>('/organization', data, {}, OrganizationSchema);
     },
 };

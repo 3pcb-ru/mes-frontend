@@ -16,86 +16,45 @@ export const VALIDATION_PATTERNS = {
     COUNTRY_CODE: /^[A-Z]{2}$/,
 } as const;
 
-// ============================================
-// User Types
-// ============================================
-
-export interface User {
-    id: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-    organizationName?: string;
-    phone?: string;
-    isVerified: boolean;
-    createdAt: string;
-    updatedAt: string;
-}
+import type {
+    User as UserType,
+    Role as RoleType,
+    Organization as OrganizationType,
+    LoginDto as LoginDtoType,
+    SignupDto as SignupDtoType,
+    LoginResponse as LoginResponseType,
+    RefreshResponse as RefreshResponseType,
+    ChangePasswordDto as ChangePasswordDtoType,
+    ForgotPasswordDto as ForgotPasswordDtoType,
+    ResetPasswordDto as ResetPasswordDtoType,
+    MessageResponse as MessageResponseType,
+} from './auth.schema';
 
 // ============================================
-// Authentication DTOs
+// Re-exported Types from Zod Schema
 // ============================================
 
-export interface SignupDto {
-    firstName: string; // NAME_PATTERN regex
-    lastName: string; // NAME_PATTERN regex
-    organizationName: string; // Min: 2, Max: 100 chars
-    password: string; // Min: 8, Max: 50, must contain: 1 uppercase, 1 lowercase, 1 number
-    email: string; // Valid email, trimmed & lowercased
-    sendMail?: boolean; // Optional
-}
-
-export interface LoginDto {
-    email: string; // Valid email, trimmed & lowercased
-    password: string; // Min: 1 char (required)
-}
-
-export interface ChangePasswordDto {
-    oldPassword: string; // Password pattern
-    newPassword: string; // Min: 8, Max: 50, password pattern
-}
-
-export interface ForgotPasswordDto {
-    email: string; // Valid email, trimmed & lowercased
-}
-
-export interface ValidateResetCodeDto {
-    email: string; // Valid email
-    code: string; // 6 numeric digits only
-}
-
-export interface ResetPasswordDto {
-    email: string; // Valid email
-    code: string; // 6 numeric digits
-    newPassword: string; // Min: 8, Max: 50, password pattern
-}
-
-export interface ResendVerificationDto {
-    email: string; // Valid email
-}
+export type User = UserType;
+export type Role = RoleType;
+export type Organization = OrganizationType;
+export type LoginDto = LoginDtoType;
+export type SignupDto = SignupDtoType;
+export type LoginResponse = LoginResponseType;
+export type RefreshTokenResponse = RefreshResponseType;
+export type ChangePasswordDto = ChangePasswordDtoType;
+export type ForgotPasswordDto = ForgotPasswordDtoType;
+export type ResetPasswordDto = ResetPasswordDtoType;
+export type MessageResponse = MessageResponseType;
 
 // ============================================
-// API Response Types
+// Auth DTOs & Support Types
 // ============================================
 
-// Login returns tokens, user, settings, isVerified, and message
-export interface LoginResponse {
-    accessToken: string;
-    refreshToken: string;
-    user: User;
-    settings?: Record<string, any>;
-    isVerified?: boolean;
-    message?: string;
+export interface VerificationStatusResponse {
+    canResend: boolean;
+    cooldownRemaining?: number; // seconds
 }
 
-// Refresh returns new tokens and message
-export interface RefreshTokenResponse {
-    accessToken: string;
-    refreshToken: string;
-    message?: string;
-}
-
-// Signup returns tokens, email, and message
 export interface SignupResponse {
     accessToken: string;
     refreshToken: string;
@@ -103,18 +62,8 @@ export interface SignupResponse {
     message: string;
 }
 
-// Logout returns a message
 export interface LogoutResponse {
     message: string;
-}
-
-export interface MessageResponse {
-    message: string;
-}
-
-export interface VerificationStatusResponse {
-    canResend: boolean;
-    cooldownRemaining?: number; // seconds
 }
 
 // ============================================

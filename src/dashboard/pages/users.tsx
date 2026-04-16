@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Users, Search, Filter, UserPlus, Mail, ShieldCheck, CheckCircle2, XCircle, Loader2, Plus, Copy, Edit, Trash2, Power, PowerOff, Eye, Shield, Inbox } from 'lucide-react';
-import { useUsersStore } from '@/features/users/store/users.store';
+import { useUsers } from '@/features/users/store/users.store';
 import type { UserListItem, RoleWithPermissions } from '@/features/users/types/users.types';
 import { Skeleton } from '@/shared/components/ui/skeleton';
 import { Card, CardContent, CardHeader } from '@/shared/components/ui/card';
@@ -27,7 +27,7 @@ export function UsersPage() {
         updateUserStatus,
         duplicateRole,
         deleteRole,
-    } = useUsersStore();
+    } = useUsers();
 
     const [activeTab, setActiveTab] = useState('users');
     const [userSearchQuery, setUserSearchQuery] = useState('');

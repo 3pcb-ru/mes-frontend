@@ -4,6 +4,14 @@ import { rolesService } from '../services/roles.service';
 import type { UserListItem, RoleWithPermissions, UpdateUserStatusDto } from '../types/users.types';
 import type { ApiError } from '@/shared/lib/api-client';
 
+/**
+ * Users Store - Managed via useUsers() accessor hook
+ * Protocols:
+ * - No direct store consumption (use useUsers)
+ * - Zero 'any' policy
+ * - Strict error propagation
+ */
+
 interface UsersState {
     // State
     users: UserListItem[];
@@ -21,7 +29,7 @@ interface UsersState {
     clearError: () => void;
 }
 
-export const useUsersStore = create<UsersState>((set, get) => ({
+const useUsersStore = create<UsersState>((set, get) => ({
     users: [],
     roles: [],
     isUsersLoading: false,
@@ -31,14 +39,8 @@ export const useUsersStore = create<UsersState>((set, get) => ({
     fetchUsers: async () => {
         set({ isUsersLoading: true, error: null });
         try {
-            const response = await usersService.listUsers();
-            // Handle various backend response structures as identified in audit
-            let userList: UserListItem[] = [];
-            if (Array.isArray(response)) {
-                userList = response;
-            } else if (response && typeof response === 'object') {
-                userList = (response as any).data || (response as any).users || (response as any).items || [];
-            }
+            // Refactored: usersService now uses Zod and returns strictly typed array
+            const userList = await usersService.listUsers();
             set({ users: userList });
         } catch (err) {
             const apiError = err as ApiError;
@@ -52,8 +54,7 @@ export const useUsersStore = create<UsersState>((set, get) => ({
     fetchRoles: async () => {
         set({ isRolesLoading: true, error: null });
         try {
-            const data = await rolesService.lookupRoles();
-            const roleList = Array.isArray(data) ? data : (data as any)?.roles || [];
+            const roleList = await rolesService.lookupRoles();
             set({ roles: roleList });
         } catch (err) {
             const apiError = err as ApiError;
@@ -99,3 +100,16 @@ export const useUsersStore = create<UsersState>((set, get) => ({
 
     clearError: () => set({ error: null }),
 }));
+
+/**
+ * useUsers() Accessor Hook
+ * Centralized way to consume users state and actions.
+ */
+export const useUsers = () => {
+    const store = useUsersStore();
+    return {
+        ...store,
+        // Computed values or filtered subsets can go here
+        activeUsers: store.users.filter((u) => !u.deletedAt),
+    };
+};

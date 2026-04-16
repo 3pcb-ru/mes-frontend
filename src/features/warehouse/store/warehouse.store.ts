@@ -5,6 +5,14 @@ import type { ContainerListItem, CreateContainerDto, MoveContainerDto } from '..
 import type { FacilityListItem } from '@/features/facilities/types/facilities.types';
 import type { ApiError } from '@/shared/lib/api-client';
 
+/**
+ * Warehouse Store - Managed via useWarehouse() accessor hook
+ * Protocols:
+ * - No direct store consumption (use useWarehouse)
+ * - Zero 'any' policy
+ * - Strict error propagation
+ */
+
 interface WarehouseState {
     allNodes: FacilityListItem[];
     allContainers: ContainerListItem[];
@@ -17,7 +25,7 @@ interface WarehouseState {
     clearError: () => void;
 }
 
-export const useWarehouseStore = create<WarehouseState>((set, get) => ({
+const useWarehouseStore = create<WarehouseState>((set, get) => ({
     allNodes: [],
     allContainers: [],
     isLoading: false,
@@ -26,17 +34,16 @@ export const useWarehouseStore = create<WarehouseState>((set, get) => ({
     fetchData: async () => {
         set({ isLoading: true, error: null });
         try {
+            // Using Promise.all for optimized fetching
             const [nodesResult, containersResult] = await Promise.all([
                 facilitiesService.listFacilities(),
                 warehouseService.listContainers()
             ]);
             
-            const nodes = Array.isArray(nodesResult) ? nodesResult : (nodesResult as any)?.data || [];
-            const containers = Array.isArray(containersResult) ? containersResult : (containersResult as any)?.data || [];
-
+            // Refactored: Services now use Zod and return strictly typed arrays
             set({ 
-                allNodes: Array.isArray(nodes) ? nodes : [], 
-                allContainers: Array.isArray(containers) ? containers : [] 
+                allNodes: Array.isArray(nodesResult) ? nodesResult : [], 
+                allContainers: Array.isArray(containersResult) ? containersResult : [] 
             });
         } catch (err) {
             const apiError = err as ApiError;
@@ -71,3 +78,16 @@ export const useWarehouseStore = create<WarehouseState>((set, get) => ({
 
     clearError: () => set({ error: null }),
 }));
+
+/**
+ * useWarehouse() Accessor Hook
+ * Centralized way to consume warehouse state and actions.
+ */
+export const useWarehouse = () => {
+    const store = useWarehouseStore();
+    return {
+        ...store,
+        // Computed values can go here
+        containersByNode: (nodeId: string) => store.allContainers.filter(c => c.locationNodeId === nodeId),
+    };
+};
