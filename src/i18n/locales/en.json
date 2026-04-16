@@ -1,1013 +1,1057 @@
 {
-  "seo": {
-    "default_title": "GRVT MES | Independent ISA-95 Level 3 Manufacturing Execution System",
-    "default_description": "GRVT is an open-source, ISA-95 compliant Level 3 MES built for SME electronics manufacturers. Perfect for SMT, PCB, and PCBA production control.",
-    "home_title": "Home | GRVT MES - The Independent Level 3 Layer",
-    "home_description": "Bridge the gap between your factory floor (L2) and ERP (L4) with GRVT's independent Level 3 MES. Lightweight, professional, and open-source.",
-    "about_title": "About Us | Designed by Manufacturing Experience",
-    "about_description": "Meet the Dannie team—factory owners and engineers who built GRVT to solve real-world PCB assembly and SMT production challenges.",
-    "privacy_title": "Privacy Policy | Industrial Data Security",
-    "privacy_description": "Learn how GRVT and the Dannie ecosystem manage your industrial data with professional standards and transparency.",
-    "terms_title": "Terms of Service | Industrial Usage Agreements",
-    "terms_description": "Read our terms for professional industrial use, including our production liability disclaimers and open-source license agreements."
-  },
-  "nav": {
-    "home": "Home",
-    "about": "About Us",
-    "features": "Features",
-    "pricing": "Pricing",
-    "contact": "Contact",
-    "why_grvt": "Why GRVT",
-    "solution": "Solution",
-    "reliability": "Reliability"
-  },
-  "hero": {
-    "badge": "The Next Generation of Manufacturing",
-    "title_1": "Ditch the Chaos.",
-    "title_2": "Pure Level 3 Control.",
-    "subtitle": "GRVT is an independent, ISA-95 compliant Level 3 MES designed to bridge the gap between your factory floor (L2) and any ERP (L4). Lightweight, open-source, and built for SMT precision.",
-    "trust_1": "Fully ISA-95 Compliant",
-    "trust_2": "100% ERP-Independent",
-    "trust_3": "Apache-2.0 Open Source",
-    "cta_primary": "Launch Your Free MES Core",
-    "cta_secondary": "Explore the Ecosystem",
-    "cta": "Get Started"
-  },
-  "about": {
-    "hero_badge": "Designed by Experience",
-    "hero_title_prefix": "We Are",
-    "hero_title": "The Dannie Team",
-    "hero_subtitle": "A team of factory owners, engineers, and production leads who spent a decade running high-mix SMT lines before writing a single line of code for GRVT.",
-    "what_we_do_badge": "The Dannie Ecosystem",
-    "what_we_do_title": "Bridging Design to Delivery.",
-    "what_we_do_desc_1": "GRVT MES is supported by Dannie's global manufacturing network. While the software provides the L3 control layer, our e-commerce platform at dannie.cc provides the sourcing, DFM checking, and Gerber-to-PCBA ordering infrastructure.",
-    "what_we_do_desc_2": "We don’t just sell software; we provide the blueprint for digital manufacturing. From prototype to mass production, we ensure your data flow is as seamless as your material flow.",
-    "goal_vision_badge": "Our Goal & Vision",
-    "goal_title": "Our Goal",
-    "goal_desc": "To become the world's most reliable and transparent manufacturing partner for hardware companies — removing uncertainty from the supply chain, one build at a time.",
-    "vision_title": "Our Vision",
-    "vision_desc": "A future where every hardware company — from a two-person startup to a global OEM — can build with Certainty.",
-    "team_badge": "Our Team",
-    "team_title": "The People Behind Every Build",
-    "cta_title": "Ready to Build with Certainty?",
-    "cta_start": "Start Your Project",
-    "cta_talk": "Talk to Our Team",
-    "loc_lithuania": "Lithuania",
-    "loc_turkey": "Turkey",
-    "loc_china": "China",
-    "services": {
-      "pcb": {
-        "title": "PCB Assembly",
-        "desc": "SMT & through-hole, high-mix production"
-      },
-      "integration": {
-        "title": "System Integration",
-        "desc": "Box builds, cabling, firmware flashing"
-      },
-      "sourcing": {
-        "title": "Component Sourcing",
-        "desc": "Global supply chain, lifecycle managed"
-      },
-      "quality": {
-        "title": "Quality Control",
-        "desc": "AOI, X-ray, ICT, and functional testing"
-      }
+    "seo": {
+        "default_title": "GRVT MES | Independent ISA-95 Level 3 Manufacturing Execution System",
+        "default_description": "GRVT is an open-source, ISA-95 compliant Level 3 MES built for SME electronics manufacturers. Perfect for SMT, PCB, and PCBA production control.",
+        "home_title": "Home | GRVT MES - The Independent Level 3 Layer",
+        "home_description": "Bridge the gap between your factory floor (L2) and ERP (L4) with GRVT's independent Level 3 MES. Lightweight, professional, and open-source.",
+        "about_title": "About Us | Designed by Manufacturing Experience",
+        "about_description": "Meet the Dannie team—factory owners and engineers who built GRVT to solve real-world PCB assembly and SMT production challenges.",
+        "privacy_title": "Privacy Policy | Industrial Data Security",
+        "privacy_description": "Learn how GRVT and the Dannie ecosystem manage your industrial data with professional standards and transparency.",
+        "terms_title": "Terms of Service | Industrial Usage Agreements",
+        "terms_description": "Read our terms for professional industrial use, including our production liability disclaimers and open-source license agreements."
     },
-    "drives_title": "What Drives Us Forward",
-    "values": {
-      "transparency": {
-        "title": "Transparency",
-        "desc": "We believe every stakeholder deserves full visibility into what happens on our floor."
-      },
-      "precision": {
-        "title": "Precision",
-        "desc": "We hold ourselves to zero-defect standards—not as a goal, but as a baseline expectation."
-      },
-      "partnership": {
-        "title": "Partnership",
-        "desc": "We treat our customers as co-builders. Your product roadmap is our roadmap."
-      },
-      "globalness": {
-        "title": "Globalness",
-        "desc": "Rooted in Europe, scaled globally. We bring the best of every region to every build."
-      }
+    "nav": {
+        "home": "Home",
+        "about": "About Us",
+        "features": "Features",
+        "pricing": "Pricing",
+        "contact": "Contact",
+        "why_grvt": "Why GRVT",
+        "solution": "Solution",
+        "reliability": "Reliability"
     },
-    "team_desc": "A cross-continental team of engineers, operators, and innovators — united by a single obsession: quality.",
-    "team": {
-      "ceo": {
-        "name": "Dannie CEO",
-        "role": "Chief Executive Officer",
-        "desc": "Visionary leader driving Dannie's mission to bring transparency and precision to global electronics manufacturing."
-      },
-      "ops": {
-        "name": "Operations Lead",
-        "role": "Head of Operations",
-        "desc": "Orchestrates our three-hub global manufacturing network, ensuring seamless production from prototype to mass delivery."
-      },
-      "eng": {
-        "name": "Engineering Director",
-        "role": "Director of Engineering",
-        "desc": "Leads our cross-functional engineering squads across Lithuania, Turkey, and China with a relentless focus on quality."
-      },
-      "innovation": {
-        "name": "Innovation Lead",
-        "role": "Head of Digital Innovation",
-        "desc": "Drives the digital transformation and technology partnerships that keep Dannie at the forefront of smart manufacturing."
-      }
+    "hero": {
+        "badge": "The Next Generation of Manufacturing",
+        "title_1": "Ditch the Chaos.",
+        "title_2": "Pure Level 3 Control.",
+        "subtitle": "GRVT is an independent, ISA-95 compliant Level 3 MES designed to bridge the gap between your factory floor (L2) and any ERP (L4). Lightweight, open-source, and built for SMT precision.",
+        "trust_1": "Fully ISA-95 Compliant",
+        "trust_2": "100% ERP-Independent",
+        "trust_3": "Apache-2.0 Open Source",
+        "cta_primary": "Launch Your Free MES Core",
+        "cta_secondary": "Explore the Ecosystem",
+        "cta": "Get Started"
     },
-    "cta_desc": "Let's talk about your project. Our team is ready to take it from schematic to shipment."
-  },
-  "solutions": {
-    "badge": "The ISA-95 Compliant Stack",
-    "title_prefix": "Dedicated",
-    "title_highlight": "Level 3 Control",
-    "title": "Dedicated Level 3 Control",
-    "subtitle": "Professional electronics manufacturing requires a distinct execution layer. GRVT bridges the 'Excel Gap' between machinery (L2) and office systems (L4), delivering rapid, modular solutions for your most critical SMT challenges.",
-    "problem_solved": "Problem Solved",
-    "mats": {
-      "title": "Material Intelligence",
-      "desc": "UID-based reels, MSL, and paste lifecycle tracking with label printing and smart storage integration.",
-      "solves": "Nobody trusts the numbers",
-      "prob_desc": "Phantom inventory and manual counts erode planning. We restore confidence with real-time stock updates.",
-      "h1": "UID/label printing",
-      "h2": "MSL timers & bake guidance",
-      "h3": "Reel genealogy"
-    },
-    "safety": {
-      "title": "Process Safety & Interlocks",
-      "desc": "Feeder setup verification, splice capture, and process interlocks to stop errors at the tool.",
-      "solves": "Human typing failures",
-      "prob_desc": "Manual data entry causes avoidable errors. We reduce mistakes at the source.",
-      "h1": "Feeder verification",
-      "h2": "Splice continuity",
-      "h3": "Thaw/bake interlocks"
-    },
-    "connectivity": {
-      "title": "Open Connectivity",
-      "desc": "IPC-CFX & Hermes-ready architecture to connect machines, counters, and analytics without costly drivers.",
-      "solves": "Too many disconnected systems",
-      "prob_desc": "Multiple spreadsheets and point tools create friction. We consolidate data and automate material flows.",
-      "h1": "CFX / Hermes",
-      "h2": "Edge-first design",
-      "h3": "Plug-and-play integration"
-    },
-    "trace": {
-      "title": "Trace & As-Built",
-      "desc": "As-built genealogy, digital work instructions, and audit-ready traceability for regulated sectors.",
-      "solves": "One click away from disaster",
-      "prob_desc": "Without traceability, recalls and audits are expensive. As-built genealogy puts you in control.",
-      "h1": "As-built trees",
-      "h2": "DWI step capture",
-      "h3": "ISO-ready exports"
-    }
-  },
-  "phases": {
-    "title": "Your Factory Keeps Running",
-    "subtitle": "Even When Office Systems Go Down",
-    "big_idea": "The Big Idea:",
-    "big_idea_desc": "If your ERP system goes offline (server crash, network outage, ransomware attack), your factory floor should keep producing for at least 24 hours. Here's how we make that happen:",
-    "what_we_do": "What We Do",
-    "awesome_because": "It's Awesome Because",
-    "c1": {
-      "title": "Keep Office and Factory Apart",
-      "std": "Office computers and factory machines should not live on the same network. We keep them safely separated.",
-      "ben": "If someone clicks a bad email, production keeps running. Machines stay safe."
-    },
-    "c2": {
-      "title": "A Safe Middle Stop",
-      "std": "Information doesn’t go straight from the office to the factory. It passes through a safe checkpoint first.",
-      "ben": "Only clean, approved data reaches your machines. Bad stuff gets blocked."
-    },
-    "c3": {
-      "title": "Vendor Access Only When Needed",
-      "std": "Vendors get temporary access, only during scheduled work. It turns off automatically.",
-      "ben": "No forgotten logins. No hidden back doors. Just controlled access."
-    },
-    "c4": {
-      "title": "Daily System Checkups",
-      "std": "Every day we compare office numbers with factory results and save backups.",
-      "ben": "Problems show up early. Fix them before they become expensive."
-    }
-  },
-  "cta_banner": {
-    "title": "Ready to Control Your Factory Floor?",
-    "subtitle": "Launch GRVT MES Core in minutes.",
-    "no_erp": "No contracts. No ERP required.",
-    "button": "Get Started Now"
-  },
-  "footer": {
-    "tagline": "Lightweight manufacturing execution system built for SMEs.",
-    "product": "Product",
-    "company": "Company",
-    "legal": "Legal",
-    "features": "Features",
-    "solution": "Solution",
-    "reliability": "Reliability",
-    "docs": "Documentation",
-    "about": "About",
-    "blog": "Blog",
-    "careers": "Careers",
-    "contact": "Contact",
-    "privacy": "Privacy Policy",
-    "terms": "Terms of Service",
-    "security": "Security",
-    "rights": "All rights reserved."
-  },
-  "why": {
-    "title": "Why MES Systems Get Messy",
-    "subtitle": "If this sounds familiar, you are not alone.",
-    "card_1": {
-      "title": "Too Many Systems, Nothing Talks",
-      "desc": "Every new tool creates more chaos. One change breaks three others.",
-      "h1": "Integrations grow out of control",
-      "h2": "Simple changes cause unexpected failures",
-      "h3": "No clear system ownership"
-    },
-    "card_2": {
-      "title": "Nobody Trusts the Numbers",
-      "desc": "Every system shows different data. Meetings turn into arguments.",
-      "h1": "Inventory never matches reality",
-      "h2": "Reports contradict each other",
-      "h3": "Decisions are based on guesses"
-    },
-    "card_3": {
-      "title": "Your Factory Is One Click Away From Disaster",
-      "desc": "Office IT and production machines share the same network.",
-      "h1": "One virus can stop production",
-      "h2": "No isolation between systems",
-      "h3": "Security is an afterthought"
-    },
-    "card_4": {
-      "title": "Humans Typing Data Always Fails",
-      "desc": "Manual input means errors, delays, and lost money.",
-      "h1": "Wrong units, wrong values",
-      "h2": "Typos reach production",
-      "h3": "Audits expose data gaps"
-    }
-  },
-  "common": {
-    "language": "Language",
-    "select_language": "Select Language",
-    "sign_in": "Sign In",
-    "actions": {
-      "cancel": "Cancel",
-      "save": "Save",
-      "create": "Create",
-      "edit": "Edit",
-      "delete": "Delete",
-      "update": "Update",
-      "search": "Search",
-      "filter": "Filter",
-      "close": "Close",
-      "back": "Back",
-      "loading": "Loading...",
-      "confirm_delete_title": "Delete {{item}}",
-      "confirm_delete_description": "This action cannot be undone. Are you sure you want to delete this {{item}}?",
-      "deleting": "Deleting..."
-    },
-    "notifications": {
-      "title": "Notifications",
-      "unread_count": "{{count}} New",
-      "mark_all_read": "Mark all as read",
-      "loading": "Loading notifications...",
-      "empty_title": "No notifications yet",
-      "empty_description": "When you receive notifications, they will appear here.",
-      "clear_all": "Clear all history"
-    },
-    "empty": {
-      "no_data": "No data found",
-      "adjust_search": "Adjust your search or filters to see more results"
-    },
-    "entities": {
-      "product": "Product",
-      "user": "User",
-      "container": "Container",
-      "work_order": "Work Order",
-      "organization": "Organization",
-      "facility": "Facility",
-      "node": "Node"
-    },
-    "components": {
-      "table_view": {
-        "search": "Search...",
-        "no_options": "No options found.",
-        "select_option": "Select an option..."
-      },
-      "node_diagram": {
-        "create_node": "Create Node",
-        "top_down": "Top Down",
-        "left_right": "Left Right"
-      },
-      "status": {
-        "IDLE": "Idle",
-        "READY": "Ready",
-        "IN_PROGRESS": "In Progress",
-        "COMPLETED": "Completed",
-        "PLANNED": "Planned",
-        "RELEASED": "Released",
-        "CLOSED": "Closed",
-        "DOWN": "Down",
-        "ERROR": "Error",
-        "SCRAP": "Scrap",
-        "ACTIVE": "Active",
-        "INACTIVE": "Inactive",
-        "MAINTENANCE": "Maintenance",
-        "OTHER": "Other",
-        "UNKNOWN": "Unknown"
-      }
-    }
-  },
-  "dashboard": {
-    "header": {
-      "search": "Search...",
-      "profile": "Profile",
-      "notifications": "Notifications",
-      "logout": "Log out",
-      "user": "User",
-      "avatar": "Avatar"
-    },
-    "sidebar": {
-      "nav": {
-        "main": "Main",
-        "dashboard": "Dashboard",
-        "operations": "Operations",
-        "production": "Production",
-        "execution": "Execution",
-        "warehouse": "Warehouse",
-        "analytics": "Analytics",
-        "reports": "Reports",
-        "configuration": "Configuration",
-        "products": "Bill of Materials",
-        "users": "Users & Roles",
-        "facilities": "Layout",
-        "settings": "Settings"
-      }
-    },
-    "home": {
-      "welcome": "Welcome back, {{name}}! 👋",
-      "user_fallback": "User",
-      "subtitle": "Here's what's happening with your manufacturing operations today.",
-      "stats": {
-        "active_work_orders": "Active Work Orders",
-        "nodes_down": "Nodes Down",
-        "nodes_error": "Nodes Error",
-        "recent_trace_activities": "Recent Trace Activities",
-        "from_last_shift": "{{change}} from last shift"
-      },
-      "recent_activity": {
-        "title": "Recent Traceability Activities",
-        "description": "Latest actions logged across your nodes and work orders.",
-        "node_state_changed": "Node State Changed - Line {{line}}",
-        "operator_changed_status": "Operator changed station {{station}} status to {{status}}",
-        "mins_ago": "{{count}} mins ago"
-      }
-    },
-    "coming_soon": {
-      "default_title": "Coming Soon",
-      "default_description": "We're working hard to bring you this feature. Stay tuned for updates!",
-      "development_in_progress": "Development in progress",
-      "back_to_dashboard": "Back to Dashboard",
-      "pages": {
-        "products": {
-          "title": "Products Management",
-          "description": "Advanced product catalog and inventory management features are currently under development."
+    "about": {
+        "hero_badge": "Designed by Experience",
+        "hero_title_prefix": "We Are",
+        "hero_title": "The Dannie Team",
+        "hero_subtitle": "A team of factory owners, engineers, and production leads who spent a decade running high-mix SMT lines before writing a single line of code for GRVT.",
+        "what_we_do_badge": "The Dannie Ecosystem",
+        "what_we_do_title": "Bridging Design to Delivery.",
+        "what_we_do_desc_1": "GRVT MES is supported by Dannie's global manufacturing network. While the software provides the L3 control layer, our e-commerce platform at dannie.cc provides the sourcing, DFM checking, and Gerber-to-PCBA ordering infrastructure.",
+        "what_we_do_desc_2": "We don’t just sell software; we provide the blueprint for digital manufacturing. From prototype to mass production, we ensure your data flow is as seamless as your material flow.",
+        "goal_vision_badge": "Our Goal & Vision",
+        "goal_title": "Our Goal",
+        "goal_desc": "To become the world's most reliable and transparent manufacturing partner for hardware companies — removing uncertainty from the supply chain, one build at a time.",
+        "vision_title": "Our Vision",
+        "vision_desc": "A future where every hardware company — from a two-person startup to a global OEM — can build with Certainty.",
+        "team_badge": "Our Team",
+        "team_title": "The People Behind Every Build",
+        "cta_title": "Ready to Build with Certainty?",
+        "cta_start": "Start Your Project",
+        "cta_talk": "Talk to Our Team",
+        "loc_lithuania": "Lithuania",
+        "loc_turkey": "Turkey",
+        "loc_china": "China",
+        "services": {
+            "pcb": {
+                "title": "PCB Assembly",
+                "desc": "SMT & through-hole, high-mix production"
+            },
+            "integration": {
+                "title": "System Integration",
+                "desc": "Box builds, cabling, firmware flashing"
+            },
+            "sourcing": {
+                "title": "Component Sourcing",
+                "desc": "Global supply chain, lifecycle managed"
+            },
+            "quality": {
+                "title": "Quality Control",
+                "desc": "AOI, X-ray, ICT, and functional testing"
+            }
         },
-        "settings": {
-          "title": "System Settings",
-          "description": "Comprehensive system configuration and preference management controls are in the works."
+        "drives_title": "What Drives Us Forward",
+        "values": {
+            "transparency": {
+                "title": "Transparency",
+                "desc": "We believe every stakeholder deserves full visibility into what happens on our floor."
+            },
+            "precision": {
+                "title": "Precision",
+                "desc": "We hold ourselves to zero-defect standards—not as a goal, but as a baseline expectation."
+            },
+            "partnership": {
+                "title": "Partnership",
+                "desc": "We treat our customers as co-builders. Your product roadmap is our roadmap."
+            },
+            "globalness": {
+                "title": "Globalness",
+                "desc": "Rooted in Europe, scaled globally. We bring the best of every region to every build."
+            }
+        },
+        "team_desc": "A cross-continental team of engineers, operators, and innovators — united by a single obsession: quality.",
+        "team": {
+            "ceo": {
+                "name": "Dannie CEO",
+                "role": "Chief Executive Officer",
+                "desc": "Visionary leader driving Dannie's mission to bring transparency and precision to global electronics manufacturing."
+            },
+            "ops": {
+                "name": "Operations Lead",
+                "role": "Head of Operations",
+                "desc": "Orchestrates our three-hub global manufacturing network, ensuring seamless production from prototype to mass delivery."
+            },
+            "eng": {
+                "name": "Engineering Director",
+                "role": "Director of Engineering",
+                "desc": "Leads our cross-functional engineering squads across Lithuania, Turkey, and China with a relentless focus on quality."
+            },
+            "innovation": {
+                "name": "Innovation Lead",
+                "role": "Head of Digital Innovation",
+                "desc": "Drives the digital transformation and technology partnerships that keep Dannie at the forefront of smart manufacturing."
+            }
+        },
+        "cta_desc": "Let's talk about your project. Our team is ready to take it from schematic to shipment."
+    },
+    "solutions": {
+        "badge": "The ISA-95 Compliant Stack",
+        "title_prefix": "Dedicated",
+        "title_highlight": "Level 3 Control",
+        "title": "Dedicated Level 3 Control",
+        "subtitle": "Professional electronics manufacturing requires a distinct execution layer. GRVT bridges the 'Excel Gap' between machinery (L2) and office systems (L4), delivering rapid, modular solutions for your most critical SMT challenges.",
+        "problem_solved": "Problem Solved",
+        "mats": {
+            "title": "Material Intelligence",
+            "desc": "UID-based reels, MSL, and paste lifecycle tracking with label printing and smart storage integration.",
+            "solves": "Nobody trusts the numbers",
+            "prob_desc": "Phantom inventory and manual counts erode planning. We restore confidence with real-time stock updates.",
+            "h1": "UID/label printing",
+            "h2": "MSL timers & bake guidance",
+            "h3": "Reel genealogy"
+        },
+        "safety": {
+            "title": "Process Safety & Interlocks",
+            "desc": "Feeder setup verification, splice capture, and process interlocks to stop errors at the tool.",
+            "solves": "Human typing failures",
+            "prob_desc": "Manual data entry causes avoidable errors. We reduce mistakes at the source.",
+            "h1": "Feeder verification",
+            "h2": "Splice continuity",
+            "h3": "Thaw/bake interlocks"
+        },
+        "connectivity": {
+            "title": "Open Connectivity",
+            "desc": "IPC-CFX & Hermes-ready architecture to connect machines, counters, and analytics without costly drivers.",
+            "solves": "Too many disconnected systems",
+            "prob_desc": "Multiple spreadsheets and point tools create friction. We consolidate data and automate material flows.",
+            "h1": "CFX / Hermes",
+            "h2": "Edge-first design",
+            "h3": "Plug-and-play integration"
+        },
+        "trace": {
+            "title": "Trace & As-Built",
+            "desc": "As-built genealogy, digital work instructions, and audit-ready traceability for regulated sectors.",
+            "solves": "One click away from disaster",
+            "prob_desc": "Without traceability, recalls and audits are expensive. As-built genealogy puts you in control.",
+            "h1": "As-built trees",
+            "h2": "DWI step capture",
+            "h3": "ISO-ready exports"
+        }
+    },
+    "phases": {
+        "title": "Your Factory Keeps Running",
+        "subtitle": "Even When Office Systems Go Down",
+        "big_idea": "The Big Idea:",
+        "big_idea_desc": "If your ERP system goes offline (server crash, network outage, ransomware attack), your factory floor should keep producing for at least 24 hours. Here's how we make that happen:",
+        "what_we_do": "What We Do",
+        "awesome_because": "It's Awesome Because",
+        "c1": {
+            "title": "Keep Office and Factory Apart",
+            "std": "Office computers and factory machines should not live on the same network. We keep them safely separated.",
+            "ben": "If someone clicks a bad email, production keeps running. Machines stay safe."
+        },
+        "c2": {
+            "title": "A Safe Middle Stop",
+            "std": "Information doesn’t go straight from the office to the factory. It passes through a safe checkpoint first.",
+            "ben": "Only clean, approved data reaches your machines. Bad stuff gets blocked."
+        },
+        "c3": {
+            "title": "Vendor Access Only When Needed",
+            "std": "Vendors get temporary access, only during scheduled work. It turns off automatically.",
+            "ben": "No forgotten logins. No hidden back doors. Just controlled access."
+        },
+        "c4": {
+            "title": "Daily System Checkups",
+            "std": "Every day we compare office numbers with factory results and save backups.",
+            "ben": "Problems show up early. Fix them before they become expensive."
+        }
+    },
+    "cta_banner": {
+        "title": "Ready to Control Your Factory Floor?",
+        "subtitle": "Launch GRVT MES Core in minutes.",
+        "no_erp": "No contracts. No ERP required.",
+        "button": "Get Started Now"
+    },
+    "footer": {
+        "tagline": "Lightweight manufacturing execution system built for SMEs.",
+        "product": "Product",
+        "company": "Company",
+        "legal": "Legal",
+        "features": "Features",
+        "solution": "Solution",
+        "reliability": "Reliability",
+        "docs": "Documentation",
+        "about": "About",
+        "blog": "Blog",
+        "careers": "Careers",
+        "contact": "Contact",
+        "privacy": "Privacy Policy",
+        "terms": "Terms of Service",
+        "security": "Security",
+        "rights": "All rights reserved."
+    },
+    "why": {
+        "title": "Why MES Systems Get Messy",
+        "subtitle": "If this sounds familiar, you are not alone.",
+        "card_1": {
+            "title": "Too Many Systems, Nothing Talks",
+            "desc": "Every new tool creates more chaos. One change breaks three others.",
+            "h1": "Integrations grow out of control",
+            "h2": "Simple changes cause unexpected failures",
+            "h3": "No clear system ownership"
+        },
+        "card_2": {
+            "title": "Nobody Trusts the Numbers",
+            "desc": "Every system shows different data. Meetings turn into arguments.",
+            "h1": "Inventory never matches reality",
+            "h2": "Reports contradict each other",
+            "h3": "Decisions are based on guesses"
+        },
+        "card_3": {
+            "title": "Your Factory Is One Click Away From Disaster",
+            "desc": "Office IT and production machines share the same network.",
+            "h1": "One virus can stop production",
+            "h2": "No isolation between systems",
+            "h3": "Security is an afterthought"
+        },
+        "card_4": {
+            "title": "Humans Typing Data Always Fails",
+            "desc": "Manual input means errors, delays, and lost money.",
+            "h1": "Wrong units, wrong values",
+            "h2": "Typos reach production",
+            "h3": "Audits expose data gaps"
+        }
+    },
+    "common": {
+        "language": "Language",
+        "select_language": "Select Language",
+        "sign_in": "Sign In",
+        "actions": {
+            "cancel": "Cancel",
+            "save": "Save",
+            "create": "Create",
+            "edit": "Edit",
+            "delete": "Delete",
+            "update": "Update",
+            "search": "Search",
+            "filter": "Filter",
+            "close": "Close",
+            "back": "Back",
+            "loading": "Loading...",
+            "confirm_delete_title": "Delete {{item}}",
+            "confirm_delete_description": "This action cannot be undone. Are you sure you want to delete this {{item}}?",
+            "deleting": "Deleting..."
+        },
+        "notifications": {
+            "title": "Notifications",
+            "unread_count": "{{count}} New",
+            "mark_all_read": "Mark all as read",
+            "loading": "Loading notifications...",
+            "empty_title": "No notifications yet",
+            "empty_description": "When you receive notifications, they will appear here.",
+            "clear_all": "Clear all history"
+        },
+        "empty": {
+            "no_data": "No data found",
+            "adjust_search": "Adjust your search or filters to see more results"
+        },
+        "entities": {
+            "product": "Product",
+            "user": "User",
+            "container": "Container",
+            "work_order": "Work Order",
+            "organization": "Organization",
+            "facility": "Facility",
+            "node": "Node"
+        },
+        "components": {
+            "table_view": {
+                "search": "Search...",
+                "no_options": "No options found.",
+                "select_option": "Select an option..."
+            },
+            "node_diagram": {
+                "create_node": "Create Node",
+                "top_down": "Top Down",
+                "left_right": "Left Right"
+            },
+            "status": {
+                "IDLE": "Idle",
+                "READY": "Ready",
+                "IN_PROGRESS": "In Progress",
+                "COMPLETED": "Completed",
+                "PLANNED": "Planned",
+                "RELEASED": "Released",
+                "CLOSED": "Closed",
+                "DOWN": "Down",
+                "ERROR": "Error",
+                "SCRAP": "Scrap",
+                "ACTIVE": "Active",
+                "INACTIVE": "Inactive",
+                "MAINTENANCE": "Maintenance",
+                "OTHER": "Other",
+                "UNKNOWN": "Unknown"
+            }
+        }
+    },
+    "dashboard": {
+        "header": {
+            "search": "Search...",
+            "profile": "Profile",
+            "notifications": "Notifications",
+            "logout": "Log out",
+            "user": "User",
+            "avatar": "Avatar"
+        },
+        "sidebar": {
+            "nav": {
+                "main": "Main",
+                "dashboard": "Dashboard",
+                "operations": "Operations",
+                "production": "Production",
+                "execution": "Execution",
+                "warehouse": "Warehouse",
+                "analytics": "Analytics",
+                "reports": "Reports",
+                "configuration": "Configuration",
+                "products": "Bill of Materials",
+                "users": "Users & Roles",
+                "facilities": "Layout",
+                "settings": "Settings"
+            },
+            "vibe": {
+                "agent": {
+                    "title": "Vibe Agent",
+                    "description": "Greetings! I am the **MES Vibe Agent**. Describe the dashboard or monitoring page you'd like to create, and I will architect it using our premium component library.",
+                    "status": {
+                        "active": "Protocol Active",
+                        "locked": "System Locked",
+                        "cooldown": "CoolDown Active"
+                    },
+                    "placeholders": {
+                        "prompt": "A page with production charts...",
+                        "page_name": "e.g. Production Overview"
+                    },
+                    "labels": {
+                        "page_name": "Page Name",
+                        "sidebar_category": "SideBar Category",
+                        "architecting": "Architecting layout...",
+                        "success": "Layout generated successfully!",
+                        "fail_title": "Architectural Breach",
+                        "fail_desc": "Architecting failed. Please check your configuration.",
+                        "resource_limit": "Resource Limit",
+                        "system_overload": "System Overload",
+                        "cooldown_hint": "Protocol limit reached (Free Tier). The agent is recalibrating sensors. Please wait."
+                    },
+                    "actions": {
+                        "save_page": "Save Page",
+                        "back": "Back",
+                        "contact_support": "Contact Support to Resume",
+                        "return_to_chat": "Return to Protocol Chat"
+                    },
+                    "guide": {
+                        "title": "Protocol Guide",
+                        "policy_title": "Security Policy (No-Code)",
+                        "policy_desc": "The agent is an **Architect**, not a coder. It generates layout configurations, not raw software logic.",
+                        "policy_list_1": "Avoid technical terms: `script`, `function`, `eval`.",
+                        "policy_list_2": "Do not request raw `.env`, `.sh`, or `.js` file contents.",
+                        "policy_list_3": "The agent will refuse to generate executable logic for safety.",
+                        "prompting_title": "Refined Prompting",
+                        "prompting_desc": "Focus on **intent** and **visuals**. Use descriptive sentences like:",
+                        "prompting_example": "\"Create a production monitor with a bar chart for yields and a table for active work orders.\"",
+                        "manifest_title": "Manifest Limitation",
+                        "manifest_desc": "The agent can only use components predefined in the system manifest. It cannot invent new React components on the fly."
+                    }
+                }
+            }
+        },
+        "home": {
+            "welcome": "Welcome back, {{name}}! 👋",
+            "user_fallback": "User",
+            "subtitle": "Here's what's happening with your manufacturing operations today.",
+            "stats": {
+                "active_work_orders": "Active Work Orders",
+                "nodes_down": "Nodes Down",
+                "nodes_error": "Nodes Error",
+                "recent_trace_activities": "Recent Trace Activities",
+                "from_last_shift": "{{change}} from last shift"
+            },
+            "recent_activity": {
+                "title": "Recent Traceability Activities",
+                "description": "Latest actions logged across your nodes and work orders.",
+                "node_state_changed": "Node State Changed - Line {{line}}",
+                "operator_changed_status": "Operator changed station {{station}} status to {{status}}",
+                "mins_ago": "{{count}} mins ago"
+            }
+        },
+        "coming_soon": {
+            "default_title": "Coming Soon",
+            "default_description": "We're working hard to bring you this feature. Stay tuned for updates!",
+            "development_in_progress": "Development in progress",
+            "back_to_dashboard": "Back to Dashboard",
+            "pages": {
+                "products": {
+                    "title": "Products Management",
+                    "description": "Advanced product catalog and inventory management features are currently under development."
+                },
+                "settings": {
+                    "title": "System Settings",
+                    "description": "Comprehensive system configuration and preference management controls are in the works."
+                },
+                "reports": {
+                    "title": "Reports Center",
+                    "description": "Generate detailed production, quality, and performance reports with our upcoming reporting engine."
+                },
+                "help": {
+                    "title": "Help & Support",
+                    "description": "A comprehensive knowledge base and support ticket system to assist you better."
+                },
+                "messages": {
+                    "title": "Messages",
+                    "description": "Real-time team collaboration and messaging features are being built."
+                },
+                "integration": {
+                    "title": "Integrations",
+                    "description": "Connect with third-party tools and services seamlessly. Integration hub is coming soon."
+                }
+            }
+        },
+        "facilities": {
+            "messages": {
+                "load_failed": "Failed to load nodes",
+                "delete_success": "Node deleted successfully",
+                "delete_failed": "Failed to delete node. Check for active children or Work Orders.",
+                "update_success": "Node updated successfully",
+                "update_failed": "Failed to update node",
+                "move_success": "Node moved successfully",
+                "move_failed": "Failed to move node",
+                "create_success": "Node created successfully",
+                "create_failed": "Failed to create node"
+            },
+            "header": {
+                "title": "Layout",
+                "description": "Map out your facility structure and manage production lines, from factory floors to individual workstations."
+            },
+            "buttons": {
+                "hierarchy": "Hierarchy",
+                "layout_mode": "Layout Mode",
+                "cancel": "Cancel",
+                "save_changes": "Save Changes",
+                "deleting": "Deleting...",
+                "delete_node": "Delete Node",
+                "update_node": "Update Node",
+                "move_node": "Move Node",
+                "create_node": "Create Node"
+            },
+            "dialogs": {
+                "move": {
+                    "title": "Move Node",
+                    "description": "Select a new parent for \"{{name}}\". This will recalculate the hierarchical path.",
+                    "new_parent": "New Parent Node",
+                    "placeholder": "Select new parent (or leave empty for Root)...",
+                    "make_independent": "Make Independent (Set as Root)"
+                },
+                "update": {
+                    "title": "Update Node",
+                    "description": "Modify identification and status for \"{{name}}\"",
+                    "node_name": "Node Name",
+                    "node_type": "Node Type",
+                    "status": "Status",
+                    "reason": "Reason for Update",
+                    "select_type": "Select type...",
+                    "select_reason": "Select reason..."
+                },
+                "delete": {
+                    "title": "Delete Node",
+                    "confirm": "Are you sure you want to delete \"{{name}}\"?",
+                    "warning1": "If the node has history, it will be archived. If it has no history, it will be permanently removed.",
+                    "warning2": "Deletion will fail if the node has active child nodes or is referenced in Work Orders."
+                },
+                "create": {
+                    "title": "Create Node",
+                    "desc_child": "Creating a child node under {{name}}",
+                    "desc_root": "Creating a root node.",
+                    "parent_locked": "Parent Node (Locked)",
+                    "node_name": "Node Name",
+                    "node_name_placeholder": "e.g. Assembly Station 1",
+                    "definition_id": "Definition ID (Optional)",
+                    "definition_placeholder": "Select definition..."
+                }
+            },
+            "tree": {
+                "search_placeholder": "Search nodes...",
+                "no_nodes": "No nodes found."
+            },
+            "tabs": {
+                "overview": "Overview",
+                "contents": "Contents",
+                "capabilities": "Capabilities",
+                "activity": "Activity Log",
+                "content": {
+                    "node_type": "Node Type",
+                    "path": "Path",
+                    "attributes": "Attributes",
+                    "unknown": "Unknown",
+                    "na": "N/A",
+                    "empty_contents": "Inventory items or sub-nodes will appear here.",
+                    "empty_capabilities": "No specific capabilities defined.",
+                    "empty_activity": "Traceability feed loads here..."
+                }
+            },
+            "empty_state": {
+                "title": "No Node Selected",
+                "description": "Select a node from the tree to view its details, hierarchy contents, and capabilities."
+            }
+        },
+        "production": {
+            "title": "Production Execution",
+            "description": "Manage manufacturing workflows via Work Orders.",
+            "create_button": "Create Work Order",
+            "columns": {
+                "planned": "Planned",
+                "ready": "Ready for Execution",
+                "in_progress": "In Progress",
+                "completed": "Completed"
+            },
+            "empty_state": "No work orders here",
+            "order_card": {
+                "target_qty": "Target Qty:",
+                "units": "units",
+                "start_date": "Start:",
+                "not_scheduled": "Not scheduled"
+            },
+            "drawer": {
+                "title": "Create Work Order",
+                "description": "Initialize a new production execution run.",
+                "bom_revision_id": "BOM Revision ID",
+                "target_quantity": "Target Quantity",
+                "planned_start_date": "Planned Start Date",
+                "bom_placeholder": "e.g. BOM-REV-A1",
+                "qty_placeholder": "e.g. 50"
+            },
+            "messages": {
+                "load_failed": "Failed to load work orders",
+                "create_success": "Work order created successfully",
+                "create_failed": "Failed to create work order"
+            }
+        },
+        "execution": {
+            "title": "Production Execution",
+            "subtitle": "Monitor and manage live production jobs across facilities.",
+            "stats": {
+                "total_jobs": "Total Jobs",
+                "in_progress": "In Progress",
+                "pending": "Pending"
+            },
+            "table": {
+                "job_id": "Job ID",
+                "work_order": "Work Order",
+                "status": "Status",
+                "station": "Station",
+                "actions": "Actions"
+            },
+            "actions": {
+                "start": "Start",
+                "complete": "Complete"
+            },
+            "messages": {
+                "load_failed": "Failed to load jobs",
+                "start_success": "Job started successfully",
+                "start_failed": "Failed to start job",
+                "complete_success": "Job completed successfully",
+                "complete_failed": "Failed to complete job"
+            }
+        },
+        "warehouse": {
+            "title": "Warehouse Management",
+            "description": "Manage storage areas, track container locations, and handle stock operations.",
+            "new_receipt": "New Receipt",
+            "new_shipment": "New Shipment",
+            "root_storage": "Root Storage",
+            "sub_locations": "Sub-locations",
+            "sub_areas": "Sub-areas",
+            "no_sub_areas": "No child locations found at this level.",
+            "storage_area": "Storage Area",
+            "stored_containers": "Stored Containers (LPNs)",
+            "search_placeholder": "Search LPN...",
+            "empty_location": "This location is currently empty.",
+            "table": {
+                "lpn": "LPN",
+                "type": "Type",
+                "created_at": "Created At",
+                "actions": "Actions"
+            },
+            "tooltips": {
+                "qc_check": "QC Check",
+                "move": "Move",
+                "remove": "Remove from storage"
+            },
+            "receipt_modal": {
+                "title": "Material Receipt",
+                "description": "Record the arrival of new items into the warehouse.",
+                "fields": {
+                    "lpn": "LPN / Tracking #",
+                    "lpn_hint": "Assign a barcode or tracking number",
+                    "item": "Item / Part #",
+                    "quantity": "Quantity",
+                    "source": "Source (Vendor/External)",
+                    "expected_date": "Expected Date",
+                    "expected_date_hint": "Optional planned arrival",
+                    "actual_date": "Actual Date",
+                    "actual_date_hint": "Optional arrival timestamp",
+                    "type": "Container Type",
+                    "type_hint": "e.g. PALLET, BOX, REEL"
+                }
+            },
+            "shipment_modal": {
+                "title": "Outbound Shipment",
+                "description": "Record items leaving the warehouse.",
+                "fields": {
+                    "lpn": "LPN / Tracking #",
+                    "quantity": "Quantity to Ship",
+                    "destination": "Destination",
+                    "destination_hint": "Production or Customer",
+                    "expected_date": "Expected Ship Date",
+                    "actual_date": "Actual Ship Date"
+                }
+            },
+            "messages": {
+                "load_failed": "Failed to load warehouse data",
+                "receipt_success": "Receipt record created successfully",
+                "receipt_failed": "Failed to create receipt",
+                "shipment_success": "Shipment record created successfully",
+                "shipment_failed": "Failed to create shipment",
+                "move_success": "Container moved successfully",
+                "move_failed": "Failed to move container"
+            }
         },
         "reports": {
-          "title": "Reports Center",
-          "description": "Generate detailed production, quality, and performance reports with our upcoming reporting engine."
+            "title": "Analytics & Reports",
+            "description": "Read-only view for all logged system activities and event reports.",
+            "filters": {
+                "action_type": "Action Type",
+                "node_id": "Node ID",
+                "user_id": "User ID",
+                "job_id": "Job / Work Order ID",
+                "action_placeholder": "e.g. status_change",
+                "node_placeholder": "Filter by Node UUID...",
+                "user_placeholder": "Filter by User UUID...",
+                "job_placeholder": "Filter by Job UUID..."
+            },
+            "table": {
+                "action_type": "Action Type",
+                "date": "Date",
+                "user_id": "User ID",
+                "node_id": "Node ID",
+                "job_id": "Job ID",
+                "metadata": "Metadata",
+                "system": "System"
+            },
+            "messages": {
+                "load_failed": "Failed to load report activities"
+            },
+            "actions": {
+                "title": "Actions",
+                "view_details": "View Details"
+            },
+            "details_modal": {
+                "title": "Activity Details",
+                "close": "Close"
+            }
         },
-        "help": {
-          "title": "Help & Support",
-          "description": "A comprehensive knowledge base and support ticket system to assist you better."
+        "products": {
+            "title": "Bills of Materials",
+            "description": "Manage your central engineering product catalog and SKUs.",
+            "add_button": "Add Product",
+            "search_placeholder": "Search by SKU or Name...",
+            "table": {
+                "sku": "SKU",
+                "name": "Name",
+                "organization": "Organization",
+                "actions": "Actions"
+            },
+            "drawer": {
+                "title_create": "Create Product",
+                "title_edit": "Edit Product",
+                "description": "Manage specific product configurations and master data definition.",
+                "sku": "SKU",
+                "name": "Name",
+                "sku_placeholder": "e.g. PROD-001",
+                "name_placeholder": "e.g. Navigation GPS Module v2"
+            },
+            "messages": {
+                "load_failed": "Failed to load products",
+                "create_success": "Product created successfully",
+                "update_success": "Product updated successfully",
+                "save_failed": "Failed to save product",
+                "delete_success": "Product deleted successfully",
+                "delete_failed": "Failed to delete product"
+            }
         },
-        "messages": {
-          "title": "Messages",
-          "description": "Real-time team collaboration and messaging features are being built."
+        "roles": {
+            "table": {
+                "name": "Role Name",
+                "type": "Type",
+                "permissions": "Permissions",
+                "actions": "Actions"
+            },
+            "no_description": "No description",
+            "perms_count": "permissions",
+            "type": {
+                "custom": "Custom",
+                "system": "System"
+            }
         },
-        "integration": {
-          "title": "Integrations",
-          "description": "Connect with third-party tools and services seamlessly. Integration hub is coming soon."
+        "users": {
+            "title": "User Management",
+            "description": "View and manage all system users and their permissions.",
+            "add_user": "Add User",
+            "search_placeholder": "Search users by name or email...",
+            "filters": "Filters",
+            "loading": "Loading users...",
+            "table": {
+                "user": "User",
+                "role": "Role",
+                "status": "Status",
+                "joined": "Joined"
+            },
+            "status": {
+                "verified": "Verified",
+                "pending": "Pending"
+            },
+            "actions": {
+                "title": "Actions",
+                "view_profile": "View Profile",
+                "change_role": "Change Role",
+                "activate": "Activate Account",
+                "deactivate": "Deactivate Account",
+                "disable_account": "Disable Account"
+            },
+            "no_users_found": "No users found matching your search.",
+            "clear_filters": "Clear all filters"
+        },
+        "settings": {
+            "title": "Platform Settings",
+            "description": "Manage your organization's legal identity, branding, and global rules.",
+            "loading": "Loading profile...",
+            "status_active": "Organization Active",
+            "setup": {
+                "title": "Setup Your Organization",
+                "description": "To start managing your facility and production lines, you first need to create an organization profile.",
+                "features": {
+                    "identity": {
+                        "title": "Identity",
+                        "desc": "Define your company name and branding."
+                    },
+                    "global_layout": {
+                        "title": "Global Layout",
+                        "desc": "Map out floors and workstations."
+                    },
+                    "smart_tracking": {
+                        "title": "Smart Tracking",
+                        "desc": "Monitor production in real-time."
+                    }
+                },
+                "create_button": "Create My Organization",
+                "refresh_button": "Already have an organization? Refresh Profile",
+                "modal": {
+                    "title": "Initialize Identity",
+                    "description": "Enter your company or facility name. You can manage logos and branding in the next step.",
+                    "org_name_label": "Organization Name",
+                    "org_name_placeholder": "e.g. GRVT Manufacturing",
+                    "creating": "Creating...",
+                    "submit_button": "Create and Link Organization"
+                },
+                "messages": {
+                    "enter_name": "Please enter an organization name",
+                    "create_success": "Organization created successfully",
+                    "create_failed": "Failed to create organization"
+                }
+            },
+            "main": {
+                "title": "Platform Settings",
+                "description": "Manage your organization's legal identity, branding, and global rules.",
+                "status_active": "Organization Active",
+                "profile_card": {
+                    "title": "Profile & Branding",
+                    "description": "Identity settings visible across the platform.",
+                    "logo_label": "Corporate Logo",
+                    "logo_hint": "Recommended: 512x512px. SVG or PNG.",
+                    "required_chip": "Required",
+                    "setup_hint": "Finish setting up your identity to unlock all features.",
+                    "syncing": "Syncing Identity...",
+                    "save_button": "Save Platform Branding",
+                    "live_chip": "Live on Web"
+                },
+                "upcoming": {
+                    "work_hours": "Global Work Hours",
+                    "compliance": "Compliance & Security",
+                    "label": "Upcoming Feature"
+                },
+                "messages": {
+                    "update_success": "Organization settings updated successfully",
+                    "update_failed": "Failed to update organization"
+                }
+            }
+        },
+        "profile": {
+            "title": "Profile Settings",
+            "description": "Manage your personal information and account preferences.",
+            "verified": "Verified Account",
+            "personal_info": {
+                "title": "Personal Information",
+                "description": "Update your basic profile information.",
+                "avatar_label": "Profile Picture",
+                "avatar_hint": "Recommended: 256x256px. PNG or JPG.",
+                "first_name": "First Name",
+                "first_name_placeholder": "Enter your first name",
+                "last_name": "Last Name",
+                "last_name_placeholder": "Enter your last name",
+                "email": "Email Address",
+                "email_empty": "No email provided",
+                "email_hint": "Email is used for account identification and cannot be changed."
+            },
+            "account_details": {
+                "title": "Account Role & Organization",
+                "description": "View your assigned role and organization information.",
+                "permissions": "{{count}} active permissions",
+                "active_status": "Active",
+                "assigned_org": "Assigned Organization"
+            },
+            "messages": {
+                "update_success": "Profile updated successfully",
+                "update_failed": "Failed to update profile"
+            },
+            "saving": "Saving...",
+            "save_changes": "Save Changes"
         }
-      }
     },
-    "facilities": {
-      "messages": {
-        "load_failed": "Failed to load nodes",
-        "delete_success": "Node deleted successfully",
-        "delete_failed": "Failed to delete node. Check for active children or Work Orders.",
-        "update_success": "Node updated successfully",
-        "update_failed": "Failed to update node",
-        "move_success": "Node moved successfully",
-        "move_failed": "Failed to move node",
-        "create_success": "Node created successfully",
-        "create_failed": "Failed to create node"
-      },
-      "header": {
-        "title": "Layout",
-        "description": "Map out your facility structure and manage production lines, from factory floors to individual workstations."
-      },
-      "buttons": {
-        "hierarchy": "Hierarchy",
-        "layout_mode": "Layout Mode",
-        "cancel": "Cancel",
-        "save_changes": "Save Changes",
-        "deleting": "Deleting...",
-        "delete_node": "Delete Node",
-        "update_node": "Update Node",
-        "move_node": "Move Node",
-        "create_node": "Create Node"
-      },
-      "dialogs": {
-        "move": {
-          "title": "Move Node",
-          "description": "Select a new parent for \"{{name}}\". This will recalculate the hierarchical path.",
-          "new_parent": "New Parent Node",
-          "placeholder": "Select new parent (or leave empty for Root)...",
-          "make_independent": "Make Independent (Set as Root)"
+    "auth": {
+        "login": {
+            "title": "Welcome back",
+            "subtitle": "Sign in to your account to continue",
+            "email_label": "Email",
+            "email_placeholder": "Enter your email",
+            "password_label": "Password",
+            "password_placeholder": "Enter your password",
+            "forgot_password": "Forgot password?",
+            "submit": "Sign in",
+            "submitting": "Signing in...",
+            "no_account": "Don't have an account?",
+            "create_account": "Create account",
+            "footer_agree": "By signing in, you agree to our",
+            "footer_and": "and",
+            "divider": "or",
+            "errors": {
+                "email_required": "Email is required",
+                "email_invalid": "Please enter a valid email address",
+                "password_required": "Password is required"
+            }
         },
-        "update": {
-          "title": "Update Node",
-          "description": "Modify identification and status for \"{{name}}\"",
-          "node_name": "Node Name",
-          "node_type": "Node Type",
-          "status": "Status",
-          "reason": "Reason for Update",
-          "select_type": "Select type...",
-          "select_reason": "Select reason..."
+        "signup": {
+            "title": "Create your account",
+            "subtitle": "Get started with GRVT MES Platform",
+            "first_name_label": "First Name",
+            "first_name_placeholder": "John",
+            "last_name_label": "Last Name",
+            "last_name_placeholder": "Doe",
+            "org_name_label": "Organization / Company Name",
+            "org_name_placeholder": "Acme Manufacturing Inc.",
+            "email_label": "Email",
+            "email_placeholder": "john@company.com",
+            "password_label": "Password",
+            "password_placeholder": "Create a strong password",
+            "confirm_password_label": "Confirm Password",
+            "confirm_password_placeholder": "Confirm your password",
+            "password_requirements": {
+                "min_length": "At least 8 characters",
+                "uppercase": "One uppercase letter",
+                "lowercase": "One lowercase letter",
+                "number": "One number"
+            },
+            "submit": "Create account",
+            "submitting": "Creating account...",
+            "have_account": "Already have an account?",
+            "sign_in": "Sign in",
+            "footer_agree": "By creating an account, you agree to our",
+            "footer_and": "and",
+            "divider": "or",
+            "errors": {
+                "first_name_required": "First name is required",
+                "first_name_invalid": "Please enter a valid name",
+                "last_name_required": "Last name is required",
+                "last_name_invalid": "Please enter a valid name",
+                "org_name_required": "Organization/Company name is required",
+                "org_name_min": "Organization name must be at least 2 characters",
+                "org_name_max": "Organization name must be less than 100 characters",
+                "email_required": "Email is required",
+                "email_invalid": "Please enter a valid email address",
+                "password_required": "Password is required",
+                "password_requirements": "Password does not meet requirements",
+                "confirm_password_required": "Please confirm your password",
+                "passwords_dont_match": "Passwords do not match"
+            }
         },
-        "delete": {
-          "title": "Delete Node",
-          "confirm": "Are you sure you want to delete \"{{name}}\"?",
-          "warning1": "If the node has history, it will be archived. If it has no history, it will be permanently removed.",
-          "warning2": "Deletion will fail if the node has active child nodes or is referenced in Work Orders."
+        "reset_password": {
+            "forgot_password_title": "Forgot password?",
+            "forgot_password_subtitle": "No worries, we'll send you a reset code via email",
+            "email_label": "Email",
+            "email_placeholder": "Enter your email",
+            "submit_send_code": "Send reset code",
+            "submitting_send_code": "Sending code...",
+            "back_to_login": "Back to sign in",
+            "success_title": "Check your email",
+            "success_description": "We've sent a 6-digit verification code to",
+            "success_button": "Enter verification code",
+            "resend_hint": "Didn't receive the email? Try again",
+            "enter_code_title": "Enter verification code",
+            "enter_code_subtitle": "Enter the 6-digit code we sent to your email",
+            "verification_code_label": "Verification Code",
+            "verify_button": "Verify code",
+            "verifying_button": "Verifying...",
+            "new_password_title": "Create new password",
+            "new_password_subtitle": "Your new password must be different from previous passwords",
+            "new_password_label": "New Password",
+            "new_password_placeholder": "Enter new password",
+            "confirm_password_label": "Confirm Password",
+            "confirm_password_placeholder": "Confirm new password",
+            "reset_button": "Reset password",
+            "resetting_button": "Resetting...",
+            "done_title": "Password reset successful!",
+            "done_description": "Your password has been reset. You can now sign in with your new password.",
+            "done_button": "Sign in",
+            "errors": {
+                "email_required": "Email is required",
+                "email_invalid": "Please enter a valid email address",
+                "send_failed": "Failed to send reset code",
+                "code_invalid": "Please enter a valid 6-digit code",
+                "validate_failed": "Invalid code",
+                "password_requirements": "Password does not meet requirements",
+                "passwords_dont_match": "Passwords do not match",
+                "reset_failed": "Failed to reset password"
+            }
         },
-        "create": {
-          "title": "Create Node",
-          "desc_child": "Creating a child node under {{name}}",
-          "desc_root": "Creating a root node.",
-          "parent_locked": "Parent Node (Locked)",
-          "node_name": "Node Name",
-          "node_name_placeholder": "e.g. Assembly Station 1",
-          "definition_id": "Definition ID (Optional)",
-          "definition_placeholder": "Select definition..."
+        "verify_email": {
+            "verifying": {
+                "title": "Verifying your email...",
+                "description": "Please wait while we verify your email address."
+            },
+            "success": {
+                "title": "Email verified!",
+                "description": "Your email has been successfully verified. You can now sign in to your account.",
+                "button": "Sign in"
+            },
+            "error": {
+                "title": "Verification failed",
+                "description": "This verification link is invalid or has expired.",
+                "button": "Go to sign in",
+                "new_link_hint": "Need a new verification link? Sign in and request a new one."
+            }
         }
-      },
-      "tree": {
-        "search_placeholder": "Search nodes...",
-        "no_nodes": "No nodes found."
-      },
-      "tabs": {
-        "overview": "Overview",
-        "contents": "Contents",
-        "capabilities": "Capabilities",
-        "activity": "Activity Log",
-        "content": {
-          "node_type": "Node Type",
-          "path": "Path",
-          "attributes": "Attributes",
-          "unknown": "Unknown",
-          "na": "N/A",
-          "empty_contents": "Inventory items or sub-nodes will appear here.",
-          "empty_capabilities": "No specific capabilities defined.",
-          "empty_activity": "Traceability feed loads here..."
-        }
-      },
-      "empty_state": {
-        "title": "No Node Selected",
-        "description": "Select a node from the tree to view its details, hierarchy contents, and capabilities."
-      }
     },
-    "production": {
-      "title": "Production Execution",
-      "description": "Manage manufacturing workflows via Work Orders.",
-      "create_button": "Create Work Order",
-      "columns": {
-        "planned": "Planned",
-        "ready": "Ready for Execution",
-        "in_progress": "In Progress",
-        "completed": "Completed"
-      },
-      "empty_state": "No work orders here",
-      "order_card": {
-        "target_qty": "Target Qty:",
-        "units": "units",
-        "start_date": "Start:",
-        "not_scheduled": "Not scheduled"
-      },
-      "drawer": {
-        "title": "Create Work Order",
-        "description": "Initialize a new production execution run.",
-        "bom_revision_id": "BOM Revision ID",
-        "target_quantity": "Target Quantity",
-        "planned_start_date": "Planned Start Date",
-        "bom_placeholder": "e.g. BOM-REV-A1",
-        "qty_placeholder": "e.g. 50"
-      },
-      "messages": {
-        "load_failed": "Failed to load work orders",
-        "create_success": "Work order created successfully",
-        "create_failed": "Failed to create work order"
-      }
-    },
-    "execution": {
-      "title": "Production Execution",
-      "subtitle": "Monitor and manage live production jobs across facilities.",
-      "stats": {
-        "total_jobs": "Total Jobs",
-        "in_progress": "In Progress",
-        "pending": "Pending"
-      },
-      "table": {
-        "job_id": "Job ID",
-        "work_order": "Work Order",
-        "status": "Status",
-        "station": "Station",
-        "actions": "Actions"
-      },
-      "actions": {
-        "start": "Start",
-        "complete": "Complete"
-      },
-      "messages": {
-        "load_failed": "Failed to load jobs",
-        "start_success": "Job started successfully",
-        "start_failed": "Failed to start job",
-        "complete_success": "Job completed successfully",
-        "complete_failed": "Failed to complete job"
-      }
-    },
-    "warehouse": {
-      "title": "Warehouse Management",
-      "description": "Manage storage areas, track container locations, and handle stock operations.",
-      "new_receipt": "New Receipt",
-      "new_shipment": "New Shipment",
-      "root_storage": "Root Storage",
-      "sub_locations": "Sub-locations",
-      "sub_areas": "Sub-areas",
-      "no_sub_areas": "No child locations found at this level.",
-      "storage_area": "Storage Area",
-      "stored_containers": "Stored Containers (LPNs)",
-      "search_placeholder": "Search LPN...",
-      "empty_location": "This location is currently empty.",
-      "table": {
-        "lpn": "LPN",
-        "type": "Type",
-        "created_at": "Created At",
-        "actions": "Actions"
-      },
-      "tooltips": {
-        "qc_check": "QC Check",
-        "move": "Move",
-        "remove": "Remove from storage"
-      },
-      "receipt_modal": {
-        "title": "Material Receipt",
-        "description": "Record the arrival of new items into the warehouse.",
-        "fields": {
-          "lpn": "LPN / Tracking #",
-          "lpn_hint": "Assign a barcode or tracking number",
-          "item": "Item / Part #",
-          "quantity": "Quantity",
-          "source": "Source (Vendor/External)",
-          "expected_date": "Expected Date",
-          "expected_date_hint": "Optional planned arrival",
-          "actual_date": "Actual Date",
-          "actual_date_hint": "Optional arrival timestamp",
-          "type": "Container Type",
-          "type_hint": "e.g. PALLET, BOX, REEL"
-        }
-      },
-      "shipment_modal": {
-        "title": "Outbound Shipment",
-        "description": "Record items leaving the warehouse.",
-        "fields": {
-          "lpn": "LPN / Tracking #",
-          "quantity": "Quantity to Ship",
-          "destination": "Destination",
-          "destination_hint": "Production or Customer",
-          "expected_date": "Expected Ship Date",
-          "actual_date": "Actual Ship Date"
-        }
-      },
-      "messages": {
-        "load_failed": "Failed to load warehouse data",
-        "receipt_success": "Receipt record created successfully",
-        "receipt_failed": "Failed to create receipt",
-        "shipment_success": "Shipment record created successfully",
-        "shipment_failed": "Failed to create shipment",
-        "move_success": "Container moved successfully",
-        "move_failed": "Failed to move container"
-      }
-    },
-    "reports": {
-      "title": "Analytics & Reports",
-      "description": "Read-only view for all logged system activities and event reports.",
-      "filters": {
-        "action_type": "Action Type",
-        "node_id": "Node ID",
-        "user_id": "User ID",
-        "job_id": "Job / Work Order ID",
-        "action_placeholder": "e.g. status_change",
-        "node_placeholder": "Filter by Node UUID...",
-        "user_placeholder": "Filter by User UUID...",
-        "job_placeholder": "Filter by Job UUID..."
-      },
-      "table": {
-        "action_type": "Action Type",
-        "date": "Date",
-        "user_id": "User ID",
-        "node_id": "Node ID",
-        "job_id": "Job ID",
-        "metadata": "Metadata",
-        "system": "System"
-      },
-      "messages": {
-        "load_failed": "Failed to load report activities"
-      },
-      "actions": {
-        "title": "Actions",
-        "view_details": "View Details"
-      },
-      "details_modal": {
-        "title": "Activity Details",
-        "close": "Close"
-      }
-    },
-    "products": {
-      "title": "Bills of Materials",
-      "description": "Manage your central engineering product catalog and SKUs.",
-      "add_button": "Add Product",
-      "search_placeholder": "Search by SKU or Name...",
-      "table": {
-        "sku": "SKU",
-        "name": "Name",
-        "organization": "Organization",
-        "actions": "Actions"
-      },
-      "drawer": {
-        "title_create": "Create Product",
-        "title_edit": "Edit Product",
-        "description": "Manage specific product configurations and master data definition.",
-        "sku": "SKU",
-        "name": "Name",
-        "sku_placeholder": "e.g. PROD-001",
-        "name_placeholder": "e.g. Navigation GPS Module v2"
-      },
-      "messages": {
-        "load_failed": "Failed to load products",
-        "create_success": "Product created successfully",
-        "update_success": "Product updated successfully",
-        "save_failed": "Failed to save product",
-        "delete_success": "Product deleted successfully",
-        "delete_failed": "Failed to delete product"
-      }
-    },
-    "roles": {
-      "table": {
-        "name": "Role Name",
-        "type": "Type",
-        "permissions": "Permissions",
-        "actions": "Actions"
-      },
-      "no_description": "No description",
-      "perms_count": "permissions",
-      "type": {
-        "custom": "Custom",
-        "system": "System"
-      }
-    },
-    "users": {
-      "title": "User Management",
-      "description": "View and manage all system users and their permissions.",
-      "add_user": "Add User",
-      "search_placeholder": "Search users by name or email...",
-      "filters": "Filters",
-      "loading": "Loading users...",
-      "table": {
-        "user": "User",
-        "role": "Role",
-        "status": "Status",
-        "joined": "Joined"
-      },
-      "status": {
-        "verified": "Verified",
-        "pending": "Pending"
-      },
-      "actions": {
-        "title": "Actions",
-        "view_profile": "View Profile",
-        "change_role": "Change Role",
-        "activate": "Activate Account",
-        "deactivate": "Deactivate Account",
-        "disable_account": "Disable Account"
-      },
-      "no_users_found": "No users found matching your search.",
-      "clear_filters": "Clear all filters"
-    },
-    "settings": {
-      "title": "Platform Settings",
-      "description": "Manage your organization's legal identity, branding, and global rules.",
-      "loading": "Loading profile...",
-      "status_active": "Organization Active",
-      "setup": {
-        "title": "Setup Your Organization",
-        "description": "To start managing your facility and production lines, you first need to create an organization profile.",
-        "features": {
-          "identity": {
-            "title": "Identity",
-            "desc": "Define your company name and branding."
-          },
-          "global_layout": {
-            "title": "Global Layout",
-            "desc": "Map out floors and workstations."
-          },
-          "smart_tracking": {
-            "title": "Smart Tracking",
-            "desc": "Monitor production in real-time."
-          }
+    "ui": {
+        "pagination": {
+            "label": "Pagination",
+            "prev": "Go to previous page",
+            "next": "Go to next page",
+            "more": "More pages",
+            "prev_text": "Previous",
+            "next_text": "Next"
         },
-        "create_button": "Create My Organization",
-        "refresh_button": "Already have an organization? Refresh Profile",
-        "modal": {
-          "title": "Initialize Identity",
-          "description": "Enter your company or facility name. You can manage logos and branding in the next step.",
-          "org_name_label": "Organization Name",
-          "org_name_placeholder": "e.g. GRVT Manufacturing",
-          "creating": "Creating...",
-          "submit_button": "Create and Link Organization"
+        "breadcrumb": {
+            "label": "Breadcrumb",
+            "more": "More"
         },
-        "messages": {
-          "enter_name": "Please enter an organization name",
-          "create_success": "Organization created successfully",
-          "create_failed": "Failed to create organization"
+        "sidebar": {
+            "toggle": "Toggle Sidebar",
+            "mobile_title": "Sidebar",
+            "mobile_description": "Displays the mobile sidebar."
+        },
+        "sheet": {
+            "close": "Close"
+        },
+        "carousel": {
+            "label": "Carousel",
+            "slide_label": "Slide",
+            "prev": "Previous slide",
+            "next": "Next slide"
         }
-      },
-      "main": {
-        "title": "Platform Settings",
-        "description": "Manage your organization's legal identity, branding, and global rules.",
-        "status_active": "Organization Active",
-        "profile_card": {
-          "title": "Profile & Branding",
-          "description": "Identity settings visible across the platform.",
-          "logo_label": "Corporate Logo",
-          "logo_hint": "Recommended: 512x512px. SVG or PNG.",
-          "required_chip": "Required",
-          "setup_hint": "Finish setting up your identity to unlock all features.",
-          "syncing": "Syncing Identity...",
-          "save_button": "Save Platform Branding",
-          "live_chip": "Live on Web"
-        },
-        "upcoming": {
-          "work_hours": "Global Work Hours",
-          "compliance": "Compliance & Security",
-          "label": "Upcoming Feature"
-        },
-        "messages": {
-          "update_success": "Organization settings updated successfully",
-          "update_failed": "Failed to update organization"
-        }
-      }
     },
-    "profile": {
-      "title": "Profile Settings",
-      "description": "Manage your personal information and account preferences.",
-      "verified": "Verified Account",
-      "personal_info": {
-        "title": "Personal Information",
-        "description": "Update your basic profile information.",
-        "avatar_label": "Profile Picture",
-        "avatar_hint": "Recommended: 256x256px. PNG or JPG.",
-        "first_name": "First Name",
-        "first_name_placeholder": "Enter your first name",
-        "last_name": "Last Name",
-        "last_name_placeholder": "Enter your last name",
-        "email": "Email Address",
-        "email_empty": "No email provided",
-        "email_hint": "Email is used for account identification and cannot be changed."
-      },
-      "account_details": {
-        "title": "Account Role & Organization",
-        "description": "View your assigned role and organization information.",
-        "permissions": "{{count}} active permissions",
-        "active_status": "Active",
-        "assigned_org": "Assigned Organization"
-      },
-      "messages": {
-        "update_success": "Profile updated successfully",
-        "update_failed": "Failed to update profile"
-      },
-      "saving": "Saving...",
-      "save_changes": "Save Changes"
+    "seo": {
+        "home_title": "GRVT MES | Independent ISA-95 Level 3 Manufacturing Execution System",
+        "home_description": "GRVT is an open-source, ISA-95 compliant Level 3 MES built for SME electronics manufacturers. Scale your factory with pure L3 control.",
+        "about_title": "About Us | Dannie Global EMS & Manufacturing Expertise",
+        "about_description": "Learn about the team behind GRVT MES. Dannie is a global EMS partner providing PCB/PCBA manufacturing and full system integration across Europe and Asia.",
+        "privacy_title": "Privacy Policy | Industrial Data Protection",
+        "privacy_description": "Read how we handle your professional manufacturing data and maintain Level 3 security standards.",
+        "terms_title": "Terms of Service | Production Liability & Licensing",
+        "terms_description": "Understand the Apache 2.0 licensing and the professional production liability terms for using the GRVT MES platform."
+    },
+    "dannie_widget": {
+        "badge": "The Dannie Ecosystem",
+        "title_1": "From MES Control to",
+        "title_highlight": "Instant PCB Ordering",
+        "subtitle": "Our MES platform connects seamlessly with the Dannie e-commerce engine. Securely upload your designs for instant DFM analysis and competitive pricing.",
+        "feature_1": "Free Online Gerber Viewer",
+        "feature_2": "Real-time DFM Analysis",
+        "feature_3": "Global Sourcing Network",
+        "feature_4": "Prototype to Production",
+        "cta_badge": "Launch Ecosystem",
+        "cta_title": "Dannie.cc Portal",
+        "cta_button": "Visit Storefront",
+        "footer": "No login required for Gerber view"
+    },
+    "legal": {
+        "terms": {
+            "title": "Terms of Service",
+            "last_updated": "Last updated",
+            "s1_title": "1. Industrial Use & Acceptance",
+            "s1_content": "By accessing GRVT MES, you agree to these terms for professional industrial use. This platform is provided by Dannie as a free Level 3 MES tool to support the PCB/PCBA manufacturing community. Usage is 'as is' and subject to professional oversight.",
+            "s2_title": "2. Production Liability Disclaimer",
+            "s2_content": "CRITICAL: GRVT MES is a free tool. In no event shall Dannie or the developers be liable for any production errors, manufacturing scrap, financial losses, or physical damages resulting from the use of this software. You are solely responsible for final quality control (QC) and production outcomes.",
+            "s3_title": "3. Open Source & Licensing",
+            "s3_content": "GRVT MES is licensed under the Apache License, Version 2.0. You are free to use, modify, and distribute the code, provided you adhere to the license terms. The software is provided WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND.",
+            "s4_title": "4. Ecosystem Integration",
+            "s4_content": "This service may integrate with other Dannie platforms (e.g., dannie.cc). While we strive for seamless connectivity between MES and E-commerce ordering, each service operates under its own specific functional and legal agreements.",
+            "s5_title": "5. Account Responsibility",
+            "s5_content": "You are responsible for the data integrity of your organization, facility layouts, and work orders. We provide the infrastructure; you provide the professional manufacturing logic."
+        },
+        "privacy": {
+            "title": "Privacy Policy",
+            "last_updated": "Last updated",
+            "s1_title": "1. Industrial Data Collection",
+            "s1_content": "We collect professional information (name, work email, company name) and manufacturing metadata (facility nodes, BOM structures) required to operate your Level 3 MES. We do not currently store highly sensitive personal financial data on this platform.",
+            "s2_title": "2. International Data Flow",
+            "s2_content": "Dannie is a global entity. Your data may be processed in the EU (Lithuania) or other regional hubs. We adhere to high standards of data protection (GDPR-aligned) regardless of where the processing occurs.",
+            "s3_title": "3. Purpose of Processing",
+            "s3_content": "The primary purpose of this tool is to provide free production value and act as a gateway to the broader Dannie ecosystem, including our e-commerce and assembly services at dannie.cc.",
+            "s4_title": "4. Data Security & Risk",
+            "s4_content": "We implement industry-standard technical and organizational measures. However, as an open-access free tool, you acknowledge that no cloud system is 100% impenetrable and you use the service at your own risk.",
+            "s5_title": "5. Data Retention",
+            "s5_content": "We retain your manufacturing configurations as long as your account is active. You may request data deletion or account closure at any time through our support channels."
+        }
     }
-  },
-  "auth": {
-    "login": {
-      "title": "Welcome back",
-      "subtitle": "Sign in to your account to continue",
-      "email_label": "Email",
-      "email_placeholder": "Enter your email",
-      "password_label": "Password",
-      "password_placeholder": "Enter your password",
-      "forgot_password": "Forgot password?",
-      "submit": "Sign in",
-      "submitting": "Signing in...",
-      "no_account": "Don't have an account?",
-      "create_account": "Create account",
-      "footer_agree": "By signing in, you agree to our",
-      "footer_and": "and",
-      "divider": "or",
-      "errors": {
-        "email_required": "Email is required",
-        "email_invalid": "Please enter a valid email address",
-        "password_required": "Password is required"
-      }
-    },
-    "signup": {
-      "title": "Create your account",
-      "subtitle": "Get started with GRVT MES Platform",
-      "first_name_label": "First Name",
-      "first_name_placeholder": "John",
-      "last_name_label": "Last Name",
-      "last_name_placeholder": "Doe",
-      "org_name_label": "Organization / Company Name",
-      "org_name_placeholder": "Acme Manufacturing Inc.",
-      "email_label": "Email",
-      "email_placeholder": "john@company.com",
-      "password_label": "Password",
-      "password_placeholder": "Create a strong password",
-      "confirm_password_label": "Confirm Password",
-      "confirm_password_placeholder": "Confirm your password",
-      "password_requirements": {
-        "min_length": "At least 8 characters",
-        "uppercase": "One uppercase letter",
-        "lowercase": "One lowercase letter",
-        "number": "One number"
-      },
-      "submit": "Create account",
-      "submitting": "Creating account...",
-      "have_account": "Already have an account?",
-      "sign_in": "Sign in",
-      "footer_agree": "By creating an account, you agree to our",
-      "footer_and": "and",
-      "divider": "or",
-      "errors": {
-        "first_name_required": "First name is required",
-        "first_name_invalid": "Please enter a valid name",
-        "last_name_required": "Last name is required",
-        "last_name_invalid": "Please enter a valid name",
-        "org_name_required": "Organization/Company name is required",
-        "org_name_min": "Organization name must be at least 2 characters",
-        "org_name_max": "Organization name must be less than 100 characters",
-        "email_required": "Email is required",
-        "email_invalid": "Please enter a valid email address",
-        "password_required": "Password is required",
-        "password_requirements": "Password does not meet requirements",
-        "confirm_password_required": "Please confirm your password",
-        "passwords_dont_match": "Passwords do not match"
-      }
-    },
-    "reset_password": {
-      "forgot_password_title": "Forgot password?",
-      "forgot_password_subtitle": "No worries, we'll send you a reset code via email",
-      "email_label": "Email",
-      "email_placeholder": "Enter your email",
-      "submit_send_code": "Send reset code",
-      "submitting_send_code": "Sending code...",
-      "back_to_login": "Back to sign in",
-      "success_title": "Check your email",
-      "success_description": "We've sent a 6-digit verification code to",
-      "success_button": "Enter verification code",
-      "resend_hint": "Didn't receive the email? Try again",
-      "enter_code_title": "Enter verification code",
-      "enter_code_subtitle": "Enter the 6-digit code we sent to your email",
-      "verification_code_label": "Verification Code",
-      "verify_button": "Verify code",
-      "verifying_button": "Verifying...",
-      "new_password_title": "Create new password",
-      "new_password_subtitle": "Your new password must be different from previous passwords",
-      "new_password_label": "New Password",
-      "new_password_placeholder": "Enter new password",
-      "confirm_password_label": "Confirm Password",
-      "confirm_password_placeholder": "Confirm new password",
-      "reset_button": "Reset password",
-      "resetting_button": "Resetting...",
-      "done_title": "Password reset successful!",
-      "done_description": "Your password has been reset. You can now sign in with your new password.",
-      "done_button": "Sign in",
-      "errors": {
-        "email_required": "Email is required",
-        "email_invalid": "Please enter a valid email address",
-        "send_failed": "Failed to send reset code",
-        "code_invalid": "Please enter a valid 6-digit code",
-        "validate_failed": "Invalid code",
-        "password_requirements": "Password does not meet requirements",
-        "passwords_dont_match": "Passwords do not match",
-        "reset_failed": "Failed to reset password"
-      }
-    },
-    "verify_email": {
-      "verifying": {
-        "title": "Verifying your email...",
-        "description": "Please wait while we verify your email address."
-      },
-      "success": {
-        "title": "Email verified!",
-        "description": "Your email has been successfully verified. You can now sign in to your account.",
-        "button": "Sign in"
-      },
-      "error": {
-        "title": "Verification failed",
-        "description": "This verification link is invalid or has expired.",
-        "button": "Go to sign in",
-        "new_link_hint": "Need a new verification link? Sign in and request a new one."
-      }
-    }
-  },
-  "ui": {
-    "pagination": {
-      "label": "Pagination",
-      "prev": "Go to previous page",
-      "next": "Go to next page",
-      "more": "More pages",
-      "prev_text": "Previous",
-      "next_text": "Next"
-    },
-    "breadcrumb": {
-      "label": "Breadcrumb",
-      "more": "More"
-    },
-    "sidebar": {
-      "toggle": "Toggle Sidebar",
-      "mobile_title": "Sidebar",
-      "mobile_description": "Displays the mobile sidebar."
-    },
-    "sheet": {
-      "close": "Close"
-    },
-    "carousel": {
-      "label": "Carousel",
-      "slide_label": "Slide",
-      "prev": "Previous slide",
-      "next": "Next slide"
-    }
-  },
-  "seo": {
-    "home_title": "GRVT MES | Independent ISA-95 Level 3 Manufacturing Execution System",
-    "home_description": "GRVT is an open-source, ISA-95 compliant Level 3 MES built for SME electronics manufacturers. Scale your factory with pure L3 control.",
-    "about_title": "About Us | Dannie Global EMS & Manufacturing Expertise",
-    "about_description": "Learn about the team behind GRVT MES. Dannie is a global EMS partner providing PCB/PCBA manufacturing and full system integration across Europe and Asia.",
-    "privacy_title": "Privacy Policy | Industrial Data Protection",
-    "privacy_description": "Read how we handle your professional manufacturing data and maintain Level 3 security standards.",
-    "terms_title": "Terms of Service | Production Liability & Licensing",
-    "terms_description": "Understand the Apache 2.0 licensing and the professional production liability terms for using the GRVT MES platform."
-  },
-  "dannie_widget": {
-    "badge": "The Dannie Ecosystem",
-    "title_1": "From MES Control to",
-    "title_highlight": "Instant PCB Ordering",
-    "subtitle": "Our MES platform connects seamlessly with the Dannie e-commerce engine. Securely upload your designs for instant DFM analysis and competitive pricing.",
-    "feature_1": "Free Online Gerber Viewer",
-    "feature_2": "Real-time DFM Analysis",
-    "feature_3": "Global Sourcing Network",
-    "feature_4": "Prototype to Production",
-    "cta_badge": "Launch Ecosystem",
-    "cta_title": "Dannie.cc Portal",
-    "cta_button": "Visit Storefront",
-    "footer": "No login required for Gerber view"
-  },
-  "legal": {
-    "terms": {
-      "title": "Terms of Service",
-      "last_updated": "Last updated",
-      "s1_title": "1. Industrial Use & Acceptance",
-      "s1_content": "By accessing GRVT MES, you agree to these terms for professional industrial use. This platform is provided by Dannie as a free Level 3 MES tool to support the PCB/PCBA manufacturing community. Usage is 'as is' and subject to professional oversight.",
-      "s2_title": "2. Production Liability Disclaimer",
-      "s2_content": "CRITICAL: GRVT MES is a free tool. In no event shall Dannie or the developers be liable for any production errors, manufacturing scrap, financial losses, or physical damages resulting from the use of this software. You are solely responsible for final quality control (QC) and production outcomes.",
-      "s3_title": "3. Open Source & Licensing",
-      "s3_content": "GRVT MES is licensed under the Apache License, Version 2.0. You are free to use, modify, and distribute the code, provided you adhere to the license terms. The software is provided WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND.",
-      "s4_title": "4. Ecosystem Integration",
-      "s4_content": "This service may integrate with other Dannie platforms (e.g., dannie.cc). While we strive for seamless connectivity between MES and E-commerce ordering, each service operates under its own specific functional and legal agreements.",
-      "s5_title": "5. Account Responsibility",
-      "s5_content": "You are responsible for the data integrity of your organization, facility layouts, and work orders. We provide the infrastructure; you provide the professional manufacturing logic."
-    },
-    "privacy": {
-      "title": "Privacy Policy",
-      "last_updated": "Last updated",
-      "s1_title": "1. Industrial Data Collection",
-      "s1_content": "We collect professional information (name, work email, company name) and manufacturing metadata (facility nodes, BOM structures) required to operate your Level 3 MES. We do not currently store highly sensitive personal financial data on this platform.",
-      "s2_title": "2. International Data Flow",
-      "s2_content": "Dannie is a global entity. Your data may be processed in the EU (Lithuania) or other regional hubs. We adhere to high standards of data protection (GDPR-aligned) regardless of where the processing occurs.",
-      "s3_title": "3. Purpose of Processing",
-      "s3_content": "The primary purpose of this tool is to provide free production value and act as a gateway to the broader Dannie ecosystem, including our e-commerce and assembly services at dannie.cc.",
-      "s4_title": "4. Data Security & Risk",
-      "s4_content": "We implement industry-standard technical and organizational measures. However, as an open-access free tool, you acknowledge that no cloud system is 100% impenetrable and you use the service at your own risk.",
-      "s5_title": "5. Data Retention",
-      "s5_content": "We retain your manufacturing configurations as long as your account is active. You may request data deletion or account closure at any time through our support channels."
-    }
-  }
 }
-

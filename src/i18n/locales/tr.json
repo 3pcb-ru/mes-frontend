@@ -1,1023 +1,1068 @@
 {
-  "nav": {
-    "home": "Ana Sayfa",
-    "about": "Hakkımızda",
-    "features": "Özellikler",
-    "pricing": "Fiyatlandırma",
-    "contact": "İletişim",
-    "why_grvt": "Neden GRVT",
-    "solution": "Çözüm",
-    "reliability": "Güvenilirlik"
-  },
-  "hero": {
-    "badge": "Yeni Nesil Üretim",
-    "title_1": "Yükten Kurtulun.",
-    "title_2": "Kontrolü Ele Alın.",
-    "subtitle": "GRVT MES, ERP karmaşıklığı olmadan gerçek üretim kontrolü isteyen KOBİ'ler için tasarlanmış, hafif ve bulut tabanlı bir Üretim Yürütme Sistemidir.",
-    "trust_1": "Tam ISA-95 Uyumlu",
-    "trust_2": "%100 ERP-Bağımsız",
-    "trust_3": "Aylar Değil, Günler İçinde Canlıya Geçin",
-    "cta_primary": "Ücretsiz MES'inizi Başlatın",
-    "cta_secondary": "Mimariyi İnceleyin",
-    "cta": "Şimdi Başlayın"
-  },
-  "about": {
-    "hero_badge": "Biz Kimiz",
-    "hero_title_prefix": "Biz",
-    "hero_title": "Biz Dannie'yiz",
-    "hero_subtitle": "Avrupa kökenli ve üç kıtada varlığı olan küresel bir Elektronik Üretim Hizmetleri (EMS) şirketiyiz.",
-    "what_we_do_badge": "Ne Yapıyoruz",
-    "what_we_do_title": "Tasarım Dosyasından Bitmiş Ürüne.",
-    "what_we_do_desc_1": "GRVT MES, Dannie'nin küresel üretim ağı tarafından desteklenmektedir. Yazılım L3 kontrol katmanını sağlarken, dannie.cc adresindeki e-ticaret platformumuz tedarik, DFM kontrolü ve Gerber-PCBA sipariş altyapısını sunar.",
-    "what_we_do_desc_2": "İster ilk prototipinizi başlatın, ister on binlerce birime ölçeklendirin, aynı standartla teslimat yapıyoruz: tam izlenebilirlik, sıfır sürpriz.",
-    "goal_vision_badge": "Hedefimiz ve Vizyonumuz",
-    "goal_title": "Hedefimiz",
-    "goal_desc": "Donanım şirketleri için dünyanın en güvenilir ve şeffaf üretim ortağı olmak — tedarik zincirindeki belirsizliği her seferinde bir üretim yaparak ortadan kaldırmak.",
-    "vision_title": "Vizyonumuz",
-    "vision_desc": "İki kişilik bir girişimden küresel bir OEM'e kadar her donanım şirketinin Kesinlikle inşa edebileceği bir gelecek.",
-    "team_badge": "Ekibimiz",
-    "team_title": "Her Üretimin Arkasındaki İnsanlar",
-    "cta_title": "Kesinlikle İnşa Etmeye Hazır mısınız?",
-    "cta_start": "Projenizi Başlatın",
-    "cta_talk": "Ekibimizle Konuşun",
-    "loc_lithuania": "Litvanya",
-    "loc_turkey": "Türkiye",
-    "loc_china": "Çin",
-    "services": {
-      "pcb": {
-        "title": "PCB Montajı",
-        "desc": "SMT ve delikten montaj, yüksek karışımlı üretim"
-      },
-      "integration": {
-        "title": "Sistem Entegrasyonu",
-        "desc": "Kutu yapımı, kablolama, bellenim yükleme"
-      },
-      "sourcing": {
-        "title": "Bileşen Tedariği",
-        "desc": "Küresel tedarik zinciri, yaşam döngüsü yönetimi"
-      },
-      "quality": {
-        "title": "Kalite Kontrol",
-        "desc": "AOI, X-ray, ICT ve fonksiyonel testler"
-      }
+    "nav": {
+        "home": "Ana Sayfa",
+        "about": "Hakkımızda",
+        "features": "Özellikler",
+        "pricing": "Fiyatlandırma",
+        "contact": "İletişim",
+        "why_grvt": "Neden GRVT",
+        "solution": "Çözüm",
+        "reliability": "Güvenilirlik"
     },
-    "drives_title": "Bizi İleriye Taşıyan Değerler",
-    "values": {
-      "transparency": {
-        "title": "Şeffaflık",
-        "desc": "Her paydaşın üretim alanımızda olup bitenlere dair tam görüş hakkı olduğuna inanıyoruz."
-      },
-      "precision": {
-        "title": "Hassasiyet",
-        "desc": "Kendimizi sıfır hata standartlarına göre tutuyoruz — bu bir hedef değil, temel bir beklentidir."
-      },
-      "partnership": {
-        "title": "Ortaklık",
-        "desc": "Müşterilerimize iş ortağı olarak yaklaşıyoruz. Sizin ürün yol haritanız bizim yol haritamızdır."
-      },
-      "globalness": {
-        "title": "Küresellik",
-        "desc": "Avrupa kökenli, küresel ölçekli. Her bölgenin en iyisini her üretime taşıyoruz."
-      }
+    "hero": {
+        "badge": "Yeni Nesil Üretim",
+        "title_1": "Yükten Kurtulun.",
+        "title_2": "Kontrolü Ele Alın.",
+        "subtitle": "GRVT MES, ERP karmaşıklığı olmadan gerçek üretim kontrolü isteyen KOBİ'ler için tasarlanmış, hafif ve bulut tabanlı bir Üretim Yürütme Sistemidir.",
+        "trust_1": "Tam ISA-95 Uyumlu",
+        "trust_2": "%100 ERP-Bağımsız",
+        "trust_3": "Aylar Değil, Günler İçinde Canlıya Geçin",
+        "cta_primary": "Ücretsiz MES'inizi Başlatın",
+        "cta_secondary": "Mimariyi İnceleyin",
+        "cta": "Şimdi Başlayın"
     },
-    "team_desc": "Mühendisler, operatörler ve yenilikçilerden oluşan kıtalararası bir ekip — tek bir tutkuyla birleşmiş: kalite.",
-    "team": {
-      "ceo": {
-        "name": "Dannie CEO'su",
-        "role": "İcra Kurulu Başkanı",
-        "desc": "Küresel elektronik üretimine şeffaflık ve hassasiyet getirme misyonunu yürüten vizyoner lider."
-      },
-      "ops": {
-        "name": "Operasyon Sorumlusu",
-        "role": "Operasyon Başkanı",
-        "desc": "Prototipten kitlesel teslimata kadar sorunsuz üretim sağlayan üç merkezli küresel üretim ağımızı yönetir."
-      },
-      "eng": {
-        "name": "Mühendislik Direktörü",
-        "role": "Mühendislik Direktörü",
-        "desc": "Litvanya, Türkiye ve Çin'deki çapraz fonksiyonlu mühendislik ekiplerimize kaliteye odaklanarak liderlik eder."
-      },
-      "innovation": {
-        "name": "İnovasyon Lideri",
-        "role": "Dijital İnovasyon Başkanı",
-        "desc": "Dannie'yi akıllı üretimin ön saflarında tutan dijital dönüşüm ve teknoloji ortaklıklarını yönetir."
-      }
-    },
-    "cta_desc": "Projeniz hakkında konuşalım. Ekibimiz şemadan sevkiyata kadar devralmaya hazır."
-  },
-  "solutions": {
-    "badge": "\"Hafif MES\" Yaklaşımı",
-    "title_prefix": "Çözüm İçin",
-    "title_highlight": "İnşa Edildi",
-    "title": "Çözüm İçin İnşa Edildi",
-    "subtitle": "KOBİ elektronik üreticilerine monolitik MES veya Excel tabloları iyi hizmet vermez. En büyük kaotik sorunlarınızı doğrudan ortadan kaldıran hızlı, role özgü çözümler sunarak \"Excel Boşluğu\"nu hedefliyoruz.",
-    "problem_solved": "Sorun Çözüldü",
-    "mats": {
-      "title": "Malzeme Zekası",
-      "desc": "Etiket yazdırma ve akıllı depolama entegrasyonu ile UID tabanlı makaralar, MSL ve pasta yaşam döngüsü takibi.",
-      "solves": "Kimse sayılara güvenmiyor",
-      "prob_desc": "Hayalet envanter ve manuel sayımlar planlamayı bozar. Gerçek zamanlı stok güncellemeleriyle güveni yeniden tesis ediyoruz.",
-      "h1": "UID/etiket yazdırma",
-      "h2": "MSL zamanlayıcıları ve fırınlama rehberliği",
-      "h3": "Makara jeneolojisi"
-    },
-    "safety": {
-      "title": "Süreç Güvenliği ve Kilitler",
-      "desc": "Besleyici kurulum doğrulaması, ekleme yakalama ve hatayı araçta durdurmak için süreç kilitleri.",
-      "solves": "İnsan yazım hataları",
-      "prob_desc": "Manuel veri girişi önlenebilir hatalara neden olur. Hataları kaynağında azaltıyoruz.",
-      "h1": "Besleyici doğrulaması",
-      "h2": "Ekleme sürekliliği",
-      "h3": "Çözülme/fırınlama kilitleri"
-    },
-    "connectivity": {
-      "title": "Açık Bağlantı",
-      "desc": "Makineleri, sayaçları ve analizleri maliyetli sürücüler olmadan bağlamak için IPC-CFX ve Hermes uyumlu mimari.",
-      "solves": "Çok fazla kopuk sistem",
-      "prob_desc": "Çok sayıda tablo ve nokta araç sürtünme yaratır. Verileri birleştiriyor ve malzeme akışlarını otomatikleştiriyoruz.",
-      "h1": "CFX / Hermes",
-      "h2": "Kenar (Edge) öncelikli tasarım",
-      "h3": "Tak-çalıştır entegrasyonu"
-    },
-    "trace": {
-      "title": "İzlenebilirlik ve As-Built",
-      "desc": "Regüle sektörler için as-built jeneolojisi, dijital çalışma talimatları ve denetime hazır izlenebilirlik.",
-      "solves": "Felaketten bir tık uzakta",
-      "prob_desc": "İzlenebilirlik olmadan geri çağırmalar ve denetimler pahalıdır. As-built jeneolojisi sizi kontrol altına alır.",
-      "h1": "As-built ağaçları",
-      "h2": "DWI adım yakalama",
-      "h3": "ISO uyumlu dışa aktarmalar"
-    }
-  },
-  "phases": {
-    "title": "Fabrikanız Çalışmaya Devam Eder",
-    "subtitle": "Ofis Sistemleri Çökse Bile",
-    "big_idea": "Ana Fikir:",
-    "big_idea_desc": "ERP sisteminiz çevrimdışı olsa bile (sunucu çökmesi, ağ kesintisi, fidye yazılımı saldırısı), fabrika zeminindeki üretiminiz en az 24 saat devam etmelidir. Bunu nasıl başardığımız aşağıdadır:",
-    "what_we_do": "Ne Yapıyoruz",
-    "awesome_because": "Harika Çünkü",
-    "c1": {
-      "title": "Ofis ve Fabrikayı Ayrı Tutun",
-      "std": "Ofis bilgisayarları ve fabrika makineleri aynı ağda bulunmamalıdır. Onları güvenli bir şekilde ayrı tutuyoruz.",
-      "ben": "Eğer biri kötü bir e-postayı tıklarsa, üretim devam eder. Makineler güvende kalır."
-    },
-    "c2": {
-      "title": "Güvenli Bir Orta Durak",
-      "std": "Bilgi doğrudan ofisten fabrikaya gitmez. Önce güvenli bir kontrol noktasından geçer.",
-      "ben": "Makinelerinize yalnızca temiz ve onaylanmış veriler ulaşır. Kötü içerikler engellenir."
-    },
-    "c3": {
-      "title": "Yalnızca Gerektiğinde Tedarikçi Erişimi",
-      "std": "Tedarikçilere yalnızca planlanmış çalışma sırasında geçici erişim verilir. Otomatik olarak kapanır.",
-      "ben": "Unutulmuş girişler yok. Gizli arka kapılar yok. Sadece kontrollü erişim."
-    },
-    "c4": {
-      "title": "Günlük Sistem Kontrolleri",
-      "std": "Her gün ofis rakamlarını fabrika sonuçlarıyla karşılaştırıyor ve yedekler alıyoruz.",
-      "ben": "Sorunlar erkenden ortaya çıkar. Onları pahalı hale gelmeden çözün."
-    }
-  },
-  "cta_banner": {
-    "title": "Fabrika Zemininizi Kontrol Etmeye Hazır mısınız?",
-    "subtitle": "GRVT MES Core'u dakikalar içinde başlatın.",
-    "no_erp": "Sözleşme yok. ERP gerekmez.",
-    "button": "Şimdi Başlayın"
-  },
-  "seo": {
-    "home_title": "GRVT MES | Bağımsız ISA-95 Seviye 3 Üretim Yürütme Sistemi",
-    "home_description": "GRVT, KOBİ elektronik üreticileri için tasarlanmış, ISA-95 uyumlu açık kaynaklı Seviye 3 MES platformudur. Fabrikanızı gerçek L3 kontrolü ile ölçeklendirin.",
-    "about_title": "Hakkımızda | Dannie Global EMS ve Üretim Uzmanlığı",
-    "about_description": "GRVT MES arkasındaki ekibi tanıyın. Dannie, Avrupa ve Asya'da PCB/PCBA üretimi ve tam sistem entegrasyonu sunan küresel bir EMS ortağıdır.",
-    "privacy_title": "Gizlilik Politikası | Endüstriyel Veri Koruma",
-    "privacy_description": "Profesyonel üretim verilerinizi nasıl işlediğimizi ve Seviye 3 güvenlik standartlarını nasıl koruduğumuzu okuyun.",
-    "terms_title": "Kullanım Koşulları | Üretim Sorumluluğu ve Lisanslama",
-    "terms_description": "GRVT MES platformunu kullanmak için Apache 2.0 lisanslamasını ve profesyonel üretim sorumluluğu şartlarını inceleyin."
-  },
-  "dannie_widget": {
-    "badge": "Dannie Ekosistemi",
-    "title_1": "MES Kontrolünden",
-    "title_highlight": "Anlık PCB Siparişine",
-    "subtitle": "MES platformumuz, Dannie e-ticaret motoruyla sorunsuz bir şekilde bağlanır. Anlık DFM analizi ve rekabetçi fiyatlandırma için tasarımlarınızı güvenle yükleyin.",
-    "feature_1": "Ücretsiz Online Gerber Görüntüleyici",
-    "feature_2": "Gerçek Zamanlı DFM Analizi",
-    "feature_3": "Küresel Tedarik Ağı",
-    "feature_4": "Prototipten Serime",
-    "cta_badge": "Ekosistemi Başlat",
-    "cta_title": "Dannie.cc Portalı",
-    "cta_button": "Mağazayı Ziyaret Et",
-    "footer": "Gerber görünümü için giriş yapılması gerekmez"
-  },
-  "footer": {
-    "tagline": "KOBİ'ler için tasarlanmış hafif üretim yürütme sistemi.",
-    "product": "Ürün",
-    "company": "Şirket",
-    "legal": "Yasal",
-    "features": "Özellikler",
-    "solution": "Çözüm",
-    "reliability": "Güvenilirlik",
-    "docs": "Dokümantasyon",
-    "about": "Hakkımızda",
-    "blog": "Blog",
-    "careers": "Kariyer",
-    "contact": "İletişim",
-    "privacy": "Gizlilik Politikası",
-    "terms": "Kullanım Koşulları",
-    "security": "Güvenlik",
-    "rights": "Tüm hakları saklıdır."
-  },
-  "why": {
-    "title": "MES Sistemleri Neden Karmaşıklaşır?",
-    "subtitle": "Bu size tanıdık geliyorsa, yalnız değilsiniz.",
-    "card_1": {
-      "title": "Çok Fazla Sistem, Hiçbiri Konuşmuyor",
-      "desc": "Her yeni araç daha fazla kaos yaratır. Bir değişiklik üç diğerini bozar.",
-      "h1": "Entegrasyonlar kontrolden çıkar",
-      "h2": "Basit değişiklikler beklenmedik arızalara neden olur",
-      "h3": "Net bir sistem sahipliği yok"
-    },
-    "card_2": {
-      "title": "Kimse Sayılara Güvenmiyor",
-      "desc": "Her sistem farklı veriler gösterir. Toplantılar tartışmaya dönüşür.",
-      "h1": "Envanter asla gerçekle eşleşmez",
-      "h2": "Raporlar birbiriyle çelişir",
-      "h3": "Kararlar tahminlere dayanır"
-    },
-    "card_3": {
-      "title": "Fabrikanız Felaketten Bir Tık Uzakta",
-      "desc": "Ofis BT'si ve üretim makineleri aynı ağı paylaşıyor.",
-      "h1": "Bir virüs üretimi durdurabilir",
-      "h2": "Sistemler arasında izolasyon yok",
-      "h3": "Güvenlik sonradan akla gelen bir düşünce"
-    },
-    "card_4": {
-      "title": "İnsan Yazımı Veri Girişi Daima Hatalıdır",
-      "desc": "Manuel giriş; hata, gecikme ve para kaybı demektir.",
-      "h1": "Yanlış birimler, yanlış değerler",
-      "h2": "Yazım hataları üretime ulaşır",
-      "h3": "Denetimler veri açıklarını ortaya çıkarır"
-    }
-  },
-  "common": {
-    "language": "Dil",
-    "select_language": "Dil Seçin",
-    "sign_in": "Giriş Yap",
-    "actions": {
-      "cancel": "İptal",
-      "save": "Kaydet",
-      "create": "Oluştur",
-      "edit": "Düzenle",
-      "delete": "Sil",
-      "update": "Güncelle",
-      "search": "Ara",
-      "filter": "Filtrele",
-      "close": "Kapat",
-      "back": "Geri",
-      "loading": "Yükleniyor...",
-      "confirm_delete_title": "{{item}}'i Sil",
-      "confirm_delete_description": "Bu işlem geri alınamaz. Bu {{item}}'i silmek istediğinizden emin misiniz?",
-      "deleting": "Siliniyor..."
-    },
-    "notifications": {
-      "title": "Bildirimler",
-      "unread_count": "{{count}} Yeni",
-      "mark_all_read": "Tümünü okundu olarak işaretle",
-      "loading": "Bildirimler yükleniyor...",
-      "empty_title": "Henüz bildirim yok",
-      "empty_description": "Bildirim aldığınızda burada görünecektir.",
-      "clear_all": "Tüm geçmişi temizle"
-    },
-    "empty": {
-      "no_data": "Veri bulunamadı",
-      "adjust_search": "Daha fazla sonuç görmek için aramanızı veya filtrelerinizi düzenleyin"
-    },
-    "entities": {
-      "product": "Ürün",
-      "user": "Kullanıcı",
-      "container": "Konteyner",
-      "work_order": "İş Emri",
-      "organization": "Organizasyon",
-      "facility": "Tesis",
-      "node": "Düğüm"
-    },
-    "components": {
-      "table_view": {
-        "search": "Ara...",
-        "no_options": "Seçenek bulunamadı.",
-        "select_option": "Bir seçenek belirleyin..."
-      },
-      "node_diagram": {
-        "create_node": "Düğüm Oluştur",
-        "top_down": "Yukarıdan Aşağıya",
-        "left_right": "Soldan Sağa"
-      },
-      "status": {
-        "IDLE": "Boşta",
-        "READY": "Hazır",
-        "IN_PROGRESS": "Devam Ediyor",
-        "COMPLETED": "Tamamlandı",
-        "PLANNED": "Planlandı",
-        "RELEASED": "Yayınlandı",
-        "CLOSED": "Kapalı",
-        "DOWN": "Çalışmıyor",
-        "ERROR": "Hata",
-        "SCRAP": "Hurda",
-        "ACTIVE": "Aktif",
-        "INACTIVE": "Pasif",
-        "MAINTENANCE": "Bakım",
-        "OTHER": "Diğer",
-        "UNKNOWN": "Bilinmeyen"
-      },
-      "pagination": {
-        "label": "Sayfalama",
-        "prev_text": "Önceki",
-        "next_text": "Sonraki"
-      },
-      "breadcrumb": {
-        "label": "Gezinti Çubuğu",
-        "more": "Daha Fazla"
-      },
-      "sidebar": {
-        "toggle": "Kenar Çubuğunu Kapat/Aç",
-        "mobile_title": "Menü",
-        "mobile_description": "Mobil menüyü görüntüler."
-      },
-      "sheet": {
-        "close": "Kapat"
-      },
-      "carousel": {
-        "label": "Atlıkarınca",
-        "slide_label": "Slayt",
-        "prev": "Önceki slayt",
-        "next": "Sonraki slayt"
-      }
-    }
-  },
-  "dashboard": {
-    "header": {
-      "search": "Ara...",
-      "profile": "Profil",
-      "notifications": "Bildirimler",
-      "logout": "Çıkış Yap",
-      "user": "Kullanıcı",
-      "avatar": "Avatar"
-    },
-    "sidebar": {
-      "nav": {
-        "main": "Ana",
-        "dashboard": "Gösterge Paneli",
-        "operations": "Operasyonlar",
-        "production": "Üretim",
-        "execution": "Yürütme",
-        "warehouse": "Depo",
-        "analytics": "Analitik",
-        "reports": "Raporlar",
-        "configuration": "Yapılandırma",
-        "products": "Ürün Ağacı",
-        "users": "Kullanıcılar ve Roller",
-        "facilities": "Tesis Düzeni",
-        "settings": "Ayarlar"
-      }
-    },
-    "home": {
-      "welcome": "Tekrar hoş geldiniz, {{name}}! 👋",
-      "user_fallback": "Kullanıcı",
-      "subtitle": "İşte bugün üretim operasyonlarınızda olup bitenler.",
-      "stats": {
-        "active_work_orders": "Aktif İş Emirleri",
-        "nodes_down": "Devre Dışı Düğümler",
-        "nodes_error": "Hatalı Düğümler",
-        "recent_trace_activities": "Son İzlenebilirlik Aktiviteleri",
-        "from_last_shift": "son vardiyadan {{change}}"
-      },
-      "recent_activity": {
-        "title": "Son İzlenebilirlik Aktiviteleri",
-        "description": "Düğümlerinizde ve iş emirlerinizde kaydedilen en son eylemler.",
-        "node_state_changed": "Düğüm Durumu Değişti - Hat {{line}}",
-        "operator_changed_status": "Operatör, {{station}} istasyonu durumunu {{status}} olarak değiştirdi",
-        "mins_ago": "{{count}} dk önce"
-      }
-    },
-    "coming_soon": {
-      "default_title": "Çok Yakında",
-      "default_description": "Size bu özelliği sunmak için çok çalışıyoruz. Güncellemeler için takipte kalın!",
-      "development_in_progress": "Geliştirme aşamasında",
-      "back_to_dashboard": "Gösterge Paneline Dön",
-      "pages": {
-        "products": {
-          "title": "Ürün Yönetimi",
-          "description": "Gelişmiş ürün kataloğu ve envanter yönetimi özellikleri şu anda geliştirilme aşamasındadır."
+    "about": {
+        "hero_badge": "Biz Kimiz",
+        "hero_title_prefix": "Biz",
+        "hero_title": "Biz Dannie'yiz",
+        "hero_subtitle": "Avrupa kökenli ve üç kıtada varlığı olan küresel bir Elektronik Üretim Hizmetleri (EMS) şirketiyiz.",
+        "what_we_do_badge": "Ne Yapıyoruz",
+        "what_we_do_title": "Tasarım Dosyasından Bitmiş Ürüne.",
+        "what_we_do_desc_1": "GRVT MES, Dannie'nin küresel üretim ağı tarafından desteklenmektedir. Yazılım L3 kontrol katmanını sağlarken, dannie.cc adresindeki e-ticaret platformumuz tedarik, DFM kontrolü ve Gerber-PCBA sipariş altyapısını sunar.",
+        "what_we_do_desc_2": "İster ilk prototipinizi başlatın, ister on binlerce birime ölçeklendirin, aynı standartla teslimat yapıyoruz: tam izlenebilirlik, sıfır sürpriz.",
+        "goal_vision_badge": "Hedefimiz ve Vizyonumuz",
+        "goal_title": "Hedefimiz",
+        "goal_desc": "Donanım şirketleri için dünyanın en güvenilir ve şeffaf üretim ortağı olmak — tedarik zincirindeki belirsizliği her seferinde bir üretim yaparak ortadan kaldırmak.",
+        "vision_title": "Vizyonumuz",
+        "vision_desc": "İki kişilik bir girişimden küresel bir OEM'e kadar her donanım şirketinin Kesinlikle inşa edebileceği bir gelecek.",
+        "team_badge": "Ekibimiz",
+        "team_title": "Her Üretimin Arkasındaki İnsanlar",
+        "cta_title": "Kesinlikle İnşa Etmeye Hazır mısınız?",
+        "cta_start": "Projenizi Başlatın",
+        "cta_talk": "Ekibimizle Konuşun",
+        "loc_lithuania": "Litvanya",
+        "loc_turkey": "Türkiye",
+        "loc_china": "Çin",
+        "services": {
+            "pcb": {
+                "title": "PCB Montajı",
+                "desc": "SMT ve delikten montaj, yüksek karışımlı üretim"
+            },
+            "integration": {
+                "title": "Sistem Entegrasyonu",
+                "desc": "Kutu yapımı, kablolama, bellenim yükleme"
+            },
+            "sourcing": {
+                "title": "Bileşen Tedariği",
+                "desc": "Küresel tedarik zinciri, yaşam döngüsü yönetimi"
+            },
+            "quality": {
+                "title": "Kalite Kontrol",
+                "desc": "AOI, X-ray, ICT ve fonksiyonel testler"
+            }
         },
-        "settings": {
-          "title": "Sistem Ayarları",
-          "description": "Kapsamlı sistem yapılandırması ve tercih yönetimi kontrolleri üzerinde çalışılıyor."
+        "drives_title": "Bizi İleriye Taşıyan Değerler",
+        "values": {
+            "transparency": {
+                "title": "Şeffaflık",
+                "desc": "Her paydaşın üretim alanımızda olup bitenlere dair tam görüş hakkı olduğuna inanıyoruz."
+            },
+            "precision": {
+                "title": "Hassasiyet",
+                "desc": "Kendimizi sıfır hata standartlarına göre tutuyoruz — bu bir hedef değil, temel bir beklentidir."
+            },
+            "partnership": {
+                "title": "Ortaklık",
+                "desc": "Müşterilerimize iş ortağı olarak yaklaşıyoruz. Sizin ürün yol haritanız bizim yol haritamızdır."
+            },
+            "globalness": {
+                "title": "Küresellik",
+                "desc": "Avrupa kökenli, küresel ölçekli. Her bölgenin en iyisini her üretime taşıyoruz."
+            }
+        },
+        "team_desc": "Mühendisler, operatörler ve yenilikçilerden oluşan kıtalararası bir ekip — tek bir tutkuyla birleşmiş: kalite.",
+        "team": {
+            "ceo": {
+                "name": "Dannie CEO'su",
+                "role": "İcra Kurulu Başkanı",
+                "desc": "Küresel elektronik üretimine şeffaflık ve hassasiyet getirme misyonunu yürüten vizyoner lider."
+            },
+            "ops": {
+                "name": "Operasyon Sorumlusu",
+                "role": "Operasyon Başkanı",
+                "desc": "Prototipten kitlesel teslimata kadar sorunsuz üretim sağlayan üç merkezli küresel üretim ağımızı yönetir."
+            },
+            "eng": {
+                "name": "Mühendislik Direktörü",
+                "role": "Mühendislik Direktörü",
+                "desc": "Litvanya, Türkiye ve Çin'deki çapraz fonksiyonlu mühendislik ekiplerimize kaliteye odaklanarak liderlik eder."
+            },
+            "innovation": {
+                "name": "İnovasyon Lideri",
+                "role": "Dijital İnovasyon Başkanı",
+                "desc": "Dannie'yi akıllı üretimin ön saflarında tutan dijital dönüşüm ve teknoloji ortaklıklarını yönetir."
+            }
+        },
+        "cta_desc": "Projeniz hakkında konuşalım. Ekibimiz şemadan sevkiyata kadar devralmaya hazır."
+    },
+    "solutions": {
+        "badge": "\"Hafif MES\" Yaklaşımı",
+        "title_prefix": "Çözüm İçin",
+        "title_highlight": "İnşa Edildi",
+        "title": "Çözüm İçin İnşa Edildi",
+        "subtitle": "KOBİ elektronik üreticilerine monolitik MES veya Excel tabloları iyi hizmet vermez. En büyük kaotik sorunlarınızı doğrudan ortadan kaldıran hızlı, role özgü çözümler sunarak \"Excel Boşluğu\"nu hedefliyoruz.",
+        "problem_solved": "Sorun Çözüldü",
+        "mats": {
+            "title": "Malzeme Zekası",
+            "desc": "Etiket yazdırma ve akıllı depolama entegrasyonu ile UID tabanlı makaralar, MSL ve pasta yaşam döngüsü takibi.",
+            "solves": "Kimse sayılara güvenmiyor",
+            "prob_desc": "Hayalet envanter ve manuel sayımlar planlamayı bozar. Gerçek zamanlı stok güncellemeleriyle güveni yeniden tesis ediyoruz.",
+            "h1": "UID/etiket yazdırma",
+            "h2": "MSL zamanlayıcıları ve fırınlama rehberliği",
+            "h3": "Makara jeneolojisi"
+        },
+        "safety": {
+            "title": "Süreç Güvenliği ve Kilitler",
+            "desc": "Besleyici kurulum doğrulaması, ekleme yakalama ve hatayı araçta durdurmak için süreç kilitleri.",
+            "solves": "İnsan yazım hataları",
+            "prob_desc": "Manuel veri girişi önlenebilir hatalara neden olur. Hataları kaynağında azaltıyoruz.",
+            "h1": "Besleyici doğrulaması",
+            "h2": "Ekleme sürekliliği",
+            "h3": "Çözülme/fırınlama kilitleri"
+        },
+        "connectivity": {
+            "title": "Açık Bağlantı",
+            "desc": "Makineleri, sayaçları ve analizleri maliyetli sürücüler olmadan bağlamak için IPC-CFX ve Hermes uyumlu mimari.",
+            "solves": "Çok fazla kopuk sistem",
+            "prob_desc": "Çok sayıda tablo ve nokta araç sürtünme yaratır. Verileri birleştiriyor ve malzeme akışlarını otomatikleştiriyoruz.",
+            "h1": "CFX / Hermes",
+            "h2": "Kenar (Edge) öncelikli tasarım",
+            "h3": "Tak-çalıştır entegrasyonu"
+        },
+        "trace": {
+            "title": "İzlenebilirlik ve As-Built",
+            "desc": "Regüle sektörler için as-built jeneolojisi, dijital çalışma talimatları ve denetime hazır izlenebilirlik.",
+            "solves": "Felaketten bir tık uzakta",
+            "prob_desc": "İzlenebilirlik olmadan geri çağırmalar ve denetimler pahalıdır. As-built jeneolojisi sizi kontrol altına alır.",
+            "h1": "As-built ağaçları",
+            "h2": "DWI adım yakalama",
+            "h3": "ISO uyumlu dışa aktarmalar"
+        }
+    },
+    "phases": {
+        "title": "Fabrikanız Çalışmaya Devam Eder",
+        "subtitle": "Ofis Sistemleri Çökse Bile",
+        "big_idea": "Ana Fikir:",
+        "big_idea_desc": "ERP sisteminiz çevrimdışı olsa bile (sunucu çökmesi, ağ kesintisi, fidye yazılımı saldırısı), fabrika zeminindeki üretiminiz en az 24 saat devam etmelidir. Bunu nasıl başardığımız aşağıdadır:",
+        "what_we_do": "Ne Yapıyoruz",
+        "awesome_because": "Harika Çünkü",
+        "c1": {
+            "title": "Ofis ve Fabrikayı Ayrı Tutun",
+            "std": "Ofis bilgisayarları ve fabrika makineleri aynı ağda bulunmamalıdır. Onları güvenli bir şekilde ayrı tutuyoruz.",
+            "ben": "Eğer biri kötü bir e-postayı tıklarsa, üretim devam eder. Makineler güvende kalır."
+        },
+        "c2": {
+            "title": "Güvenli Bir Orta Durak",
+            "std": "Bilgi doğrudan ofisten fabrikaya gitmez. Önce güvenli bir kontrol noktasından geçer.",
+            "ben": "Makinelerinize yalnızca temiz ve onaylanmış veriler ulaşır. Kötü içerikler engellenir."
+        },
+        "c3": {
+            "title": "Yalnızca Gerektiğinde Tedarikçi Erişimi",
+            "std": "Tedarikçilere yalnızca planlanmış çalışma sırasında geçici erişim verilir. Otomatik olarak kapanır.",
+            "ben": "Unutulmuş girişler yok. Gizli arka kapılar yok. Sadece kontrollü erişim."
+        },
+        "c4": {
+            "title": "Günlük Sistem Kontrolleri",
+            "std": "Her gün ofis rakamlarını fabrika sonuçlarıyla karşılaştırıyor ve yedekler alıyoruz.",
+            "ben": "Sorunlar erkenden ortaya çıkar. Onları pahalı hale gelmeden çözün."
+        }
+    },
+    "cta_banner": {
+        "title": "Fabrika Zemininizi Kontrol Etmeye Hazır mısınız?",
+        "subtitle": "GRVT MES Core'u dakikalar içinde başlatın.",
+        "no_erp": "Sözleşme yok. ERP gerekmez.",
+        "button": "Şimdi Başlayın"
+    },
+    "seo": {
+        "home_title": "GRVT MES | Bağımsız ISA-95 Seviye 3 Üretim Yürütme Sistemi",
+        "home_description": "GRVT, KOBİ elektronik üreticileri için tasarlanmış, ISA-95 uyumlu açık kaynaklı Seviye 3 MES platformudur. Fabrikanızı gerçek L3 kontrolü ile ölçeklendirin.",
+        "about_title": "Hakkımızda | Dannie Global EMS ve Üretim Uzmanlığı",
+        "about_description": "GRVT MES arkasındaki ekibi tanıyın. Dannie, Avrupa ve Asya'da PCB/PCBA üretimi ve tam sistem entegrasyonu sunan küresel bir EMS ortağıdır.",
+        "privacy_title": "Gizlilik Politikası | Endüstriyel Veri Koruma",
+        "privacy_description": "Profesyonel üretim verilerinizi nasıl işlediğimizi ve Seviye 3 güvenlik standartlarını nasıl koruduğumuzu okuyun.",
+        "terms_title": "Kullanım Koşulları | Üretim Sorumluluğu ve Lisanslama",
+        "terms_description": "GRVT MES platformunu kullanmak için Apache 2.0 lisanslamasını ve profesyonel üretim sorumluluğu şartlarını inceleyin."
+    },
+    "dannie_widget": {
+        "badge": "Dannie Ekosistemi",
+        "title_1": "MES Kontrolünden",
+        "title_highlight": "Anlık PCB Siparişine",
+        "subtitle": "MES platformumuz, Dannie e-ticaret motoruyla sorunsuz bir şekilde bağlanır. Anlık DFM analizi ve rekabetçi fiyatlandırma için tasarımlarınızı güvenle yükleyin.",
+        "feature_1": "Ücretsiz Online Gerber Görüntüleyici",
+        "feature_2": "Gerçek Zamanlı DFM Analizi",
+        "feature_3": "Küresel Tedarik Ağı",
+        "feature_4": "Prototipten Serime",
+        "cta_badge": "Ekosistemi Başlat",
+        "cta_title": "Dannie.cc Portalı",
+        "cta_button": "Mağazayı Ziyaret Et",
+        "footer": "Gerber görünümü için giriş yapılması gerekmez"
+    },
+    "footer": {
+        "tagline": "KOBİ'ler için tasarlanmış hafif üretim yürütme sistemi.",
+        "product": "Ürün",
+        "company": "Şirket",
+        "legal": "Yasal",
+        "features": "Özellikler",
+        "solution": "Çözüm",
+        "reliability": "Güvenilirlik",
+        "docs": "Dokümantasyon",
+        "about": "Hakkımızda",
+        "blog": "Blog",
+        "careers": "Kariyer",
+        "contact": "İletişim",
+        "privacy": "Gizlilik Politikası",
+        "terms": "Kullanım Koşulları",
+        "security": "Güvenlik",
+        "rights": "Tüm hakları saklıdır."
+    },
+    "why": {
+        "title": "MES Sistemleri Neden Karmaşıklaşır?",
+        "subtitle": "Bu size tanıdık geliyorsa, yalnız değilsiniz.",
+        "card_1": {
+            "title": "Çok Fazla Sistem, Hiçbiri Konuşmuyor",
+            "desc": "Her yeni araç daha fazla kaos yaratır. Bir değişiklik üç diğerini bozar.",
+            "h1": "Entegrasyonlar kontrolden çıkar",
+            "h2": "Basit değişiklikler beklenmedik arızalara neden olur",
+            "h3": "Net bir sistem sahipliği yok"
+        },
+        "card_2": {
+            "title": "Kimse Sayılara Güvenmiyor",
+            "desc": "Her sistem farklı veriler gösterir. Toplantılar tartışmaya dönüşür.",
+            "h1": "Envanter asla gerçekle eşleşmez",
+            "h2": "Raporlar birbiriyle çelişir",
+            "h3": "Kararlar tahminlere dayanır"
+        },
+        "card_3": {
+            "title": "Fabrikanız Felaketten Bir Tık Uzakta",
+            "desc": "Ofis BT'si ve üretim makineleri aynı ağı paylaşıyor.",
+            "h1": "Bir virüs üretimi durdurabilir",
+            "h2": "Sistemler arasında izolasyon yok",
+            "h3": "Güvenlik sonradan akla gelen bir düşünce"
+        },
+        "card_4": {
+            "title": "İnsan Yazımı Veri Girişi Daima Hatalıdır",
+            "desc": "Manuel giriş; hata, gecikme ve para kaybı demektir.",
+            "h1": "Yanlış birimler, yanlış değerler",
+            "h2": "Yazım hataları üretime ulaşır",
+            "h3": "Denetimler veri açıklarını ortaya çıkarır"
+        }
+    },
+    "common": {
+        "language": "Dil",
+        "select_language": "Dil Seçin",
+        "sign_in": "Giriş Yap",
+        "actions": {
+            "cancel": "İptal",
+            "save": "Kaydet",
+            "create": "Oluştur",
+            "edit": "Düzenle",
+            "delete": "Sil",
+            "update": "Güncelle",
+            "search": "Ara",
+            "filter": "Filtrele",
+            "close": "Kapat",
+            "back": "Geri",
+            "loading": "Yükleniyor...",
+            "confirm_delete_title": "{{item}}'i Sil",
+            "confirm_delete_description": "Bu işlem geri alınamaz. Bu {{item}}'i silmek istediğinizden emin misiniz?",
+            "deleting": "Siliniyor..."
+        },
+        "notifications": {
+            "title": "Bildirimler",
+            "unread_count": "{{count}} Yeni",
+            "mark_all_read": "Tümünü okundu olarak işaretle",
+            "loading": "Bildirimler yükleniyor...",
+            "empty_title": "Henüz bildirim yok",
+            "empty_description": "Bildirim aldığınızda burada görünecektir.",
+            "clear_all": "Tüm geçmişi temizle"
+        },
+        "empty": {
+            "no_data": "Veri bulunamadı",
+            "adjust_search": "Daha fazla sonuç görmek için aramanızı veya filtrelerinizi düzenleyin"
+        },
+        "entities": {
+            "product": "Ürün",
+            "user": "Kullanıcı",
+            "container": "Konteyner",
+            "work_order": "İş Emri",
+            "organization": "Organizasyon",
+            "facility": "Tesis",
+            "node": "Düğüm"
+        },
+        "components": {
+            "table_view": {
+                "search": "Ara...",
+                "no_options": "Seçenek bulunamadı.",
+                "select_option": "Bir seçenek belirleyin..."
+            },
+            "node_diagram": {
+                "create_node": "Düğüm Oluştur",
+                "top_down": "Yukarıdan Aşağıya",
+                "left_right": "Soldan Sağa"
+            },
+            "status": {
+                "IDLE": "Boşta",
+                "READY": "Hazır",
+                "IN_PROGRESS": "Devam Ediyor",
+                "COMPLETED": "Tamamlandı",
+                "PLANNED": "Planlandı",
+                "RELEASED": "Yayınlandı",
+                "CLOSED": "Kapalı",
+                "DOWN": "Çalışmıyor",
+                "ERROR": "Hata",
+                "SCRAP": "Hurda",
+                "ACTIVE": "Aktif",
+                "INACTIVE": "Pasif",
+                "MAINTENANCE": "Bakım",
+                "OTHER": "Diğer",
+                "UNKNOWN": "Bilinmeyen"
+            },
+            "pagination": {
+                "label": "Sayfalama",
+                "prev_text": "Önceki",
+                "next_text": "Sonraki"
+            },
+            "breadcrumb": {
+                "label": "Gezinti Çubuğu",
+                "more": "Daha Fazla"
+            },
+            "sidebar": {
+                "toggle": "Kenar Çubuğunu Kapat/Aç",
+                "mobile_title": "Menü",
+                "mobile_description": "Mobil menüyü görüntüler."
+            },
+            "sheet": {
+                "close": "Kapat"
+            },
+            "carousel": {
+                "label": "Atlıkarınca",
+                "slide_label": "Slayt",
+                "prev": "Önceki slayt",
+                "next": "Sonraki slayt"
+            }
+        }
+    },
+    "dashboard": {
+        "header": {
+            "search": "Ara...",
+            "profile": "Profil",
+            "notifications": "Bildirimler",
+            "logout": "Çıkış Yap",
+            "user": "Kullanıcı",
+            "avatar": "Avatar"
+        },
+        "sidebar": {
+            "nav": {
+                "main": "Ana",
+                "dashboard": "Gösterge Paneli",
+                "operations": "Operasyonlar",
+                "production": "Üretim",
+                "execution": "Yürütme",
+                "warehouse": "Depo",
+                "analytics": "Analitik",
+                "reports": "Raporlar",
+                "configuration": "Yapılandırma",
+                "products": "Ürün Ağacı",
+                "users": "Kullanıcılar ve Roller",
+                "facilities": "Tesis Düzeni",
+                "settings": "Ayarlar"
+            },
+            "vibe": {
+                "agent": {
+                    "title": "Vibe Ajanı",
+                    "description": "Selamlar! Ben **MES Vibe Ajanı**. Oluşturmak istediğiniz gösterge panosunu veya izleme sayfasını açıklayın, ben de premium bileşen kitaplığımızı kullanarak mimarisini oluşturayım.",
+                    "status": {
+                        "active": "Protokol Aktif",
+                        "locked": "Sistem Kilitli",
+                        "cooldown": "Bekleme Süresi Aktif"
+                    },
+                    "placeholders": {
+                        "prompt": "Üretim grafiklerini içeren bir sayfa...",
+                        "page_name": "örn. Üretim Genel Bakış"
+                    },
+                    "labels": {
+                        "page_name": "Sayfa Adı",
+                        "sidebar_category": "Kenar Çubuğu Kategorisi",
+                        "architecting": "Mimari oluşturuluyor...",
+                        "success": "Düzen başarıyla oluşturuldu!",
+                        "fail_title": "Mimari İhlal",
+                        "fail_desc": "Mimari oluşturma başarısız oldu. Lütfen yapılandırmanızı kontrol edin.",
+                        "resource_limit": "Kaynak Sınırı",
+                        "system_overload": "Sistem Aşırı Yükü",
+                        "cooldown_hint": "Protokol sınırına ulaşıldı (Ücretsiz Plan). Ajan sensörleri yeniden kalibre ediyor. Lütfen bekleyin."
+                    },
+                    "actions": {
+                        "save_page": "Sayfayı Kaydet",
+                        "back": "Geri",
+                        "contact_support": "Devam Etmek İçin Destekle İletişime Geçin",
+                        "return_to_chat": "Protokol Sohbetine Dön"
+                    },
+                    "guide": {
+                        "title": "Protokol Rehberi",
+                        "policy_title": "Güvenlik Politikası (Kodsuz)",
+                        "policy_desc": "Ajan bir **Mimar**dır, yazılımcı değil. Düzen yapılandırmaları oluşturur, yazılım mantığı değil.",
+                        "policy_list_1": "Teknik terimlerden kaçının: `script`, `function`, `eval`.",
+                        "policy_list_2": "Ham `.env`, `.sh` veya `.js` dosyası içeriği istemeyin.",
+                        "policy_list_3": "Ajan güvenlik nedeniyle mantık oluşturmayı reddedecektir.",
+                        "prompting_title": "İyileştirilmiş İstemler",
+                        "prompting_desc": "Amaca ve **görsellere** odaklanın. Aşağıdaki gibi açıklayıcı cümleler kullanın:",
+                        "prompting_example": "\"Verimlilik için bir çubuk grafik ve aktif iş emirleri için bir tablo içeren bir üretim monitörü oluştur.\"",
+                        "manifest_title": "Manifest Sınırlaması",
+                        "manifest_desc": "Ajan yalnızca sistem manifestosunda tanımlanmış bileşenleri kullanabilir. Çalışma anında yeni React bileşenleri icat edemez."
+                    }
+                }
+            }
+        },
+        "home": {
+            "welcome": "Tekrar hoş geldiniz, {{name}}! 👋",
+            "user_fallback": "Kullanıcı",
+            "subtitle": "İşte bugün üretim operasyonlarınızda olup bitenler.",
+            "stats": {
+                "active_work_orders": "Aktif İş Emirleri",
+                "nodes_down": "Devre Dışı Düğümler",
+                "nodes_error": "Hatalı Düğümler",
+                "recent_trace_activities": "Son İzlenebilirlik Aktiviteleri",
+                "from_last_shift": "son vardiyadan {{change}}"
+            },
+            "recent_activity": {
+                "title": "Son İzlenebilirlik Aktiviteleri",
+                "description": "Düğümlerinizde ve iş emirlerinizde kaydedilen en son eylemler.",
+                "node_state_changed": "Düğüm Durumu Değişti - Hat {{line}}",
+                "operator_changed_status": "Operatör, {{station}} istasyonu durumunu {{status}} olarak değiştirdi",
+                "mins_ago": "{{count}} dk önce"
+            }
+        },
+        "coming_soon": {
+            "default_title": "Çok Yakında",
+            "default_description": "Size bu özelliği sunmak için çok çalışıyoruz. Güncellemeler için takipte kalın!",
+            "development_in_progress": "Geliştirme aşamasında",
+            "back_to_dashboard": "Gösterge Paneline Dön",
+            "pages": {
+                "products": {
+                    "title": "Ürün Yönetimi",
+                    "description": "Gelişmiş ürün kataloğu ve envanter yönetimi özellikleri şu anda geliştirilme aşamasındadır."
+                },
+                "settings": {
+                    "title": "Sistem Ayarları",
+                    "description": "Kapsamlı sistem yapılandırması ve tercih yönetimi kontrolleri üzerinde çalışılıyor."
+                },
+                "reports": {
+                    "title": "Raporlar Merkezi",
+                    "description": "Yaklaşan raporlama motorumuzla ayrıntılı üretim, kalite ve performans raporları oluşturun."
+                },
+                "help": {
+                    "title": "Yardım ve Destek",
+                    "description": "Size daha iyi yardımcı olmak için kapsamlı bir bilgi tabanı ve destek bilet sistemi."
+                },
+                "messages": {
+                    "title": "Mesajlar",
+                    "description": "Gerçek zamanlı ekip işbirliği ve mesajlaşma özellikleri oluşturuluyor."
+                },
+                "integration": {
+                    "title": "Entegrasyonlar",
+                    "description": "Üçüncü taraf araçlara ve hizmetlere sorunsuz bir şekilde bağlanın. Entegrasyon merkezi çok yakında."
+                }
+            }
+        },
+        "facilities": {
+            "messages": {
+                "load_failed": "Düğümler yüklenemedi",
+                "delete_success": "Düğüm başarıyla silindi",
+                "delete_failed": "Düğüm silinemedi. Aktif alt düğümleri veya İş Emirlerini kontrol edin.",
+                "update_success": "Düğüm başarıyla güncellendi",
+                "update_failed": "Düğüm güncellenemedi",
+                "move_success": "Düğüm başarıyla taşındı",
+                "move_failed": "Düğüm taşınamadı",
+                "create_success": "Düğüm başarıyla oluşturuldu",
+                "create_failed": "Düğüm oluşturulamadı"
+            },
+            "header": {
+                "title": "Tesis Düzeni",
+                "description": "Fabrika katlarından bireysel iş istasyonlarına kadar tesis yapınızın haritasını çıkarın ve üretim hatlarını yönetin."
+            },
+            "buttons": {
+                "hierarchy": "Hiyerarşi",
+                "layout_mode": "Düzen Modu",
+                "cancel": "İptal",
+                "save_changes": "Değişiklikleri Kaydet",
+                "deleting": "Siliniyor...",
+                "delete_node": "Düğümü Sil",
+                "update_node": "Düğümü Güncelle",
+                "move_node": "Düğümü Taşı",
+                "create_node": "Düğüm Oluştur"
+            },
+            "dialogs": {
+                "move": {
+                    "title": "Düğümü Taşı",
+                    "description": "\"{{name}}\" için yeni bir ana düğüm seçin. Bu işlem hiyerarşik yolu yeniden hesaplayacaktır.",
+                    "new_parent": "Yeni Ana Düğüm",
+                    "placeholder": "Yeni ana düğüm seçin (veya Kök için boş bırakın)...",
+                    "make_independent": "Bağımsız Yap (Kök Olarak Ayarla)"
+                },
+                "update": {
+                    "title": "Düğümü Güncelle",
+                    "description": "\"{{name}}\" için kimlik ve durumu değiştirin",
+                    "node_name": "Düğüm Adı",
+                    "node_type": "Düğüm Türü",
+                    "status": "Durum",
+                    "reason": "Güncelleme Nedeni",
+                    "select_type": "Tür seçin...",
+                    "select_reason": "Neden seçin..."
+                },
+                "delete": {
+                    "title": "Düğümü Sil",
+                    "confirm": "\"{{name}}\" düğümünü silmek istediğinizden emin misiniz?",
+                    "warning1": "Düğümün geçmişi varsa arşivlenecektir. Geçmişi yoksa kalıcı olarak silinecektir.",
+                    "warning2": "Düğümün aktif alt düğümleri varsa veya İş Emirlerinde referans gösteriliyorsa silme işlemi başarısız olur."
+                },
+                "create": {
+                    "title": "Düğüm Oluştur",
+                    "desc_child": "{{name}} altında bir alt düğüm oluşturuluyor",
+                    "desc_root": "Bir kök düğüm oluşturuluyor.",
+                    "parent_locked": "Ana Düğüm (Kilitli)",
+                    "node_name": "Düğüm Adı",
+                    "node_name_placeholder": "örn. Montaj İstasyonu 1",
+                    "definition_id": "Tanım ID (İsteğe Bağlı)",
+                    "definition_placeholder": "Tanım seçin..."
+                }
+            },
+            "tree": {
+                "search_placeholder": "Düğümleri ara...",
+                "no_nodes": "Düğüm bulunamadı."
+            },
+            "tabs": {
+                "overview": "Genel Bakış",
+                "contents": "İçerikler",
+                "capabilities": "Yetenekler",
+                "activity": "Aktivite Günlüğü",
+                "content": {
+                    "node_type": "Düğüm Türü",
+                    "path": "Yol",
+                    "attributes": "Nitelikler",
+                    "unknown": "Bilinmeyen",
+                    "na": "B/Y",
+                    "empty_contents": "Envanter öğeleri veya alt düğümler burada görünecektir.",
+                    "empty_capabilities": "Belirli bir yetenek tanımlanmadı.",
+                    "empty_activity": "İzlenebilirlik akışı burada yükleniyor..."
+                }
+            },
+            "empty_state": {
+                "title": "Düğüm Seçilmedi",
+                "description": "Detaylarını, hiyerarşi içeriklerini ve yeteneklerini görüntülemek için ağaçtan bir düğüm seçin."
+            }
+        },
+        "production": {
+            "title": "Üretim Yürütme",
+            "description": "İş Emirleri (Work Orders) aracılığıyla üretim iş akışlarını yönetin.",
+            "create_button": "İş Emri Oluştur",
+            "columns": {
+                "planned": "Planlandı",
+                "ready": "Yürütmeye Hazır",
+                "in_progress": "Devam Ediyor",
+                "completed": "Tamamlandı"
+            },
+            "empty_state": "Burada iş emri bulunmuyor",
+            "order_card": {
+                "target_qty": "Hedef Mik:",
+                "units": "birim",
+                "start_date": "Başlangıç:",
+                "not_scheduled": "Planlanmadı"
+            },
+            "drawer": {
+                "title": "İş Emri Oluştur",
+                "description": "Yeni bir üretim yürütme oturumu başlatın.",
+                "bom_revision_id": "Malzeme Listesi (BOM) Revizyon ID",
+                "target_quantity": "Hedef Miktar",
+                "planned_start_date": "Planlanan Başlangıç Tarihi",
+                "bom_placeholder": "örn. BOM-REV-A1",
+                "qty_placeholder": "örn. 50"
+            },
+            "messages": {
+                "load_failed": "İş emirleri yüklenemedi",
+                "create_success": "İş emri başarıyla oluşturuldu",
+                "create_failed": "İş emri oluşturulamadı"
+            }
+        },
+        "execution": {
+            "title": "Üretim Yürütme",
+            "subtitle": "Tesislerdeki canlı üretim işlerini izleyin ve yönetin.",
+            "stats": {
+                "total_jobs": "Toplam İşler",
+                "in_progress": "Devam Edenler",
+                "pending": "Bekleyenler"
+            },
+            "table": {
+                "job_id": "İş ID",
+                "work_order": "İş Emri",
+                "status": "Durum",
+                "station": "İstasyon",
+                "actions": "İşlemler"
+            },
+            "actions": {
+                "start": "Başlat",
+                "complete": "Tamamla"
+            },
+            "messages": {
+                "load_failed": "İşler yüklenemedi",
+                "start_success": "İş başarıyla başlatıldı",
+                "start_failed": "İş başlatılamadı",
+                "complete_success": "İş başarıyla tamamlandı",
+                "complete_failed": "İş tamamlanamadı"
+            }
+        },
+        "warehouse": {
+            "title": "Depo Yönetimi",
+            "description": "Depolama alanlarını yönetin, konteyner konumlarını izleyin ve stok operasyonlarını yürütün.",
+            "new_receipt": "Yeni Mal Kabul",
+            "new_shipment": "Yeni Sevkiyat",
+            "root_storage": "Kök Depolama",
+            "sub_locations": "Alt Konumlar",
+            "sub_areas": "Alt Alanlar",
+            "no_sub_areas": "bu seviyede alt konum bulunamadı.",
+            "storage_area": "Depolama Alanı",
+            "stored_containers": "Depolanan Konteynerler (LPN)",
+            "search_placeholder": "LPN Ara...",
+            "empty_location": "Bu konum şu anda boş.",
+            "table": {
+                "lpn": "Taşıma Birimi Kodu (LPN)",
+                "type": "Tür",
+                "created_at": "Oluşturulma",
+                "actions": "İşlemler"
+            },
+            "tooltips": {
+                "qc_check": "Kalite Kontrol (QC) Kontrolü",
+                "move": "Taşı",
+                "remove": "Depodan kaldır"
+            },
+            "receipt_modal": {
+                "title": "Malzeme Kabulü",
+                "description": "Depoya yeni öğelerin gelişini kaydedin.",
+                "fields": {
+                    "lpn": "Taşıma Birimi Kodu (LPN) / Takip No",
+                    "lpn_hint": "Bir barkod veya takip numarası atayın",
+                    "item": "Öğe / Parça No",
+                    "quantity": "Miktar",
+                    "source": "Kaynak (Tedarikçi/Harici)",
+                    "expected_date": "Beklenen Tarih",
+                    "expected_date_hint": "İsteğe bağlı planlanan varış",
+                    "actual_date": "Fiili Tarih",
+                    "actual_date_hint": "İsteğe bağlı varış zaman damgası",
+                    "type": "Konteyner Türü",
+                    "type_hint": "örn. PALLET, KUTU, MAKARA (REEL)"
+                }
+            },
+            "shipment_modal": {
+                "title": "Giden Sevkiyat",
+                "description": "Depodan ayrılan öğeleri kaydedin.",
+                "fields": {
+                    "lpn": "Taşıma Birimi Kodu (LPN) / Takip No",
+                    "quantity": "Gönderilecek Miktar",
+                    "destination": "Varış Noktası",
+                    "destination_hint": "Üretim veya Müşteri",
+                    "expected_date": "Beklenen Sevkiyat Tarihi",
+                    "actual_date": "Fiili Sevkiyat Tarihi"
+                }
+            },
+            "messages": {
+                "load_failed": "Depo verileri yüklenemedi",
+                "receipt_success": "Kabul kaydı başarıyla oluşturuldu",
+                "receipt_failed": "Kabul oluşturulamadı",
+                "shipment_success": "Sevkiyat kaydı başarıyla oluşturuldu",
+                "shipment_failed": "Sevkiyat oluşturulamadı",
+                "move_success": "Konteyner başarıyla taşındı",
+                "move_failed": "Konteyner taşınamadı"
+            }
         },
         "reports": {
-          "title": "Raporlar Merkezi",
-          "description": "Yaklaşan raporlama motorumuzla ayrıntılı üretim, kalite ve performans raporları oluşturun."
+            "title": "Analitik ve Raporlar",
+            "description": "Tüm kayıtlı sistem aktiviteleri ve olay raporları için salt okunur görünüm.",
+            "filters": {
+                "action_type": "İşlem Türü",
+                "node_id": "Düğüm ID",
+                "user_id": "Kullanıcı ID",
+                "job_id": "İş / İş Emri ID",
+                "action_placeholder": "örn. status_change",
+                "node_placeholder": "Düğüm UUID'sine göre filtrele...",
+                "user_placeholder": "Kullanıcı UUID'sine göre filtrele...",
+                "job_placeholder": "İş UUID'sine göre filtrele..."
+            },
+            "table": {
+                "action_type": "İşlem Türü",
+                "date": "Tarih",
+                "user_id": "Kullanıcı ID",
+                "node_id": "Düğüm ID",
+                "job_id": "İş ID",
+                "metadata": "Meta Veri",
+                "system": "Sistem"
+            },
+            "messages": {
+                "load_failed": "Rapor aktiviteleri yüklenemedi"
+            },
+            "actions": {
+                "title": "İşlemler",
+                "view_details": "Detaylar"
+            },
+            "details_modal": {
+                "title": "Aktivite Detayları",
+                "close": "Kapat"
+            }
         },
-        "help": {
-          "title": "Yardım ve Destek",
-          "description": "Size daha iyi yardımcı olmak için kapsamlı bir bilgi tabanı ve destek bilet sistemi."
+        "products": {
+            "title": "Malzeme Listeleri (BOM)",
+            "description": "Merkezi mühendislik ürün kataloğunuzu ve stok kodlarınızı (SKU) yönetin.",
+            "add_button": "Ürün Ekle",
+            "search_placeholder": "Stok Kodu (SKU) veya Adına göre ara...",
+            "table": {
+                "sku": "Stok Kodu (SKU)",
+                "name": "Ad",
+                "organization": "Organizasyon",
+                "actions": "İşlemler"
+            },
+            "drawer": {
+                "title_create": "Ürün Oluştur",
+                "title_edit": "Ürünü Düzenle",
+                "description": "Belirli ürün yapılandırmalarını ve ana veri tanımlarını yönetin.",
+                "sku": "Stok Kodu (SKU)",
+                "name": "Ad",
+                "sku_placeholder": "örn. PROD-001",
+                "name_placeholder": "örn. Navigasyon GPS Modülü v2"
+            },
+            "messages": {
+                "load_failed": "Ürünler yüklenemedi",
+                "create_success": "Ürün başarıyla oluşturuldu",
+                "update_success": "Ürün başarıyla güncellendi",
+                "save_failed": "Ürün kaydedilemedi",
+                "delete_success": "Ürün başarıyla silindi",
+                "delete_failed": "Ürün silinemedi"
+            }
         },
-        "messages": {
-          "title": "Mesajlar",
-          "description": "Gerçek zamanlı ekip işbirliği ve mesajlaşma özellikleri oluşturuluyor."
+        "roles": {
+            "table": {
+                "name": "Rol Adı",
+                "type": "Tür",
+                "permissions": "İzinler",
+                "actions": "İşlemler"
+            },
+            "no_description": "Açıklama yok",
+            "perms_count": "izin",
+            "type": {
+                "custom": "Özel",
+                "system": "Sistem"
+            }
         },
-        "integration": {
-          "title": "Entegrasyonlar",
-          "description": "Üçüncü taraf araçlara ve hizmetlere sorunsuz bir şekilde bağlanın. Entegrasyon merkezi çok yakında."
+        "users": {
+            "title": "Kullanıcı Yönetimi",
+            "description": "Tüm sistem kullanıcılarını ve izinlerini görüntüleyin ve yönetin.",
+            "add_user": "Kullanıcı Ekle",
+            "search_placeholder": "Kullanıcıları ad veya e-postaya göre ara...",
+            "filters": "Filtreler",
+            "loading": "Kullanıcılar yükleniyor...",
+            "table": {
+                "user": "Kullanıcı",
+                "role": "Rol",
+                "status": "Durum",
+                "joined": "Katılım"
+            },
+            "status": {
+                "verified": "Doğrulanmış",
+                "pending": "Beklemede"
+            },
+            "actions": {
+                "title": "İşlemler",
+                "view_profile": "Profili Görüntüle",
+                "change_role": "Rolü Değiştir",
+                "activate": "Hesabı Etkinleştir",
+                "deactivate": "Hesabı Devre Dışı Bırak",
+                "disable_account": "Hesabı Devre Dışı Bırak"
+            },
+            "no_users_found": "Aramanızla eşleşen kullanıcı bulunamadı.",
+            "clear_filters": "Tüm filtreleri temizle"
+        },
+        "settings": {
+            "title": "Platform Ayarları",
+            "description": "Organizasyonunuzun yasal kimliğini, markasını ve küresel kurallarını yönetin.",
+            "loading": "Profil yükleniyor...",
+            "status_active": "Organizasyon Aktif",
+            "setup": {
+                "title": "Organizasyonunuzu Kurun",
+                "description": "Tesisinizi ve üretim hatlarınızı yönetmeye başlamak için önce bir organizasyon profili oluşturmanız gerekir.",
+                "features": {
+                    "identity": {
+                        "title": "Kimlik",
+                        "desc": "Şirket adınızı ve markanızı tanımlayın."
+                    },
+                    "global_layout": {
+                        "title": "Küresel Düzen",
+                        "desc": "Katların ve iş istasyonlarının haritasını çıkarın."
+                    },
+                    "smart_tracking": {
+                        "title": "Akıllı Takip",
+                        "desc": "Üretimi gerçek zamanlı olarak izleyin."
+                    }
+                },
+                "create_button": "Organizasyonumu Oluştur",
+                "refresh_button": "Zaten bir organizasyonunuz var mı? Profili Yenile",
+                "modal": {
+                    "title": "Kimliği Başlat",
+                    "description": "Şirket veya tesis adınızı girin. Logoları ve markalamayı bir sonraki adımda yönetebilirsiniz.",
+                    "org_name_label": "Organizasyon Adı",
+                    "org_name_placeholder": "örn. GRVT Manufacturing",
+                    "creating": "Oluşturuluyor...",
+                    "submit_button": "Organizasyonu Oluştur ve Bağla"
+                },
+                "messages": {
+                    "enter_name": "Lütfen bir organizasyon adı girin",
+                    "create_success": "Organizasyon başarıyla oluşturuldu",
+                    "create_failed": "Organizasyon oluşturulamadı"
+                }
+            },
+            "main": {
+                "title": "Platform Ayarları",
+                "description": "Organizasyonunuzun yasal kimliğini, markasını ve küresel kurallarını yönetin.",
+                "status_active": "Organizasyon Aktif",
+                "profile_card": {
+                    "title": "Profil ve Markalama",
+                    "description": "Platform genelinde görünen kimlik ayarları.",
+                    "logo_label": "Kurumsal Logo",
+                    "logo_hint": "Önerilen: 512x512px. SVG or PNG.",
+                    "required_chip": "Gerekli",
+                    "setup_hint": "Tüm özelliklerin kilidini açmak için kimlik kurulumunuzu tamamlayın.",
+                    "syncing": "Kimlik Senkronize Ediliyor...",
+                    "save_button": "Platform Markalamasını Kaydet",
+                    "live_chip": "Web'de Canlı"
+                },
+                "upcoming": {
+                    "work_hours": "Küresel Çalışma Saatleri",
+                    "compliance": "Uyum ve Güvenlik",
+                    "label": "Gelecek Özellik"
+                },
+                "messages": {
+                    "update_success": "Organizasyon ayarları başarıyla güncellendi",
+                    "update_failed": "Organizasyon güncellenemedi"
+                }
+            }
+        },
+        "profile": {
+            "title": "Profil Ayarları",
+            "description": "Kişisel bilgilerinizi ve hesap tercihlerinizi yönetin.",
+            "verified": "Doğrulanmış Hesap",
+            "personal_info": {
+                "title": "Kişisel Bilgiler",
+                "description": "Temel profil bilgilerinizi güncelleyin.",
+                "avatar_label": "Profil Resmi",
+                "avatar_hint": "Önerilen: 256x256px. PNG veya JPG.",
+                "first_name": "Ad",
+                "first_name_placeholder": "Adınızı girin",
+                "last_name": "Soyad",
+                "last_name_placeholder": "Soyadınızı girin",
+                "email": "E-posta Adresi",
+                "email_empty": "E-posta adresi belirtilmedi",
+                "email_hint": "E-posta adresi hesap kimliği için kullanılır ve değiştirilemez."
+            },
+            "account_details": {
+                "title": "Hesap Rolü ve Organizasyon",
+                "description": "Atanan rolünüzü ve organizasyon bilgilerinizi görüntüleyin.",
+                "permissions": "{{count}} aktif izin",
+                "active_status": "Aktif",
+                "assigned_org": "Atanan Organizasyon"
+            },
+            "messages": {
+                "update_success": "Profil başarıyla güncellendi",
+                "update_failed": "Profil güncellenemedi"
+            },
+            "saving": "Kaydediliyor...",
+            "save_changes": "Değişiklikleri Kaydet"
         }
-      }
     },
-    "facilities": {
-      "messages": {
-        "load_failed": "Düğümler yüklenemedi",
-        "delete_success": "Düğüm başarıyla silindi",
-        "delete_failed": "Düğüm silinemedi. Aktif alt düğümleri veya İş Emirlerini kontrol edin.",
-        "update_success": "Düğüm başarıyla güncellendi",
-        "update_failed": "Düğüm güncellenemedi",
-        "move_success": "Düğüm başarıyla taşındı",
-        "move_failed": "Düğüm taşınamadı",
-        "create_success": "Düğüm başarıyla oluşturuldu",
-        "create_failed": "Düğüm oluşturulamadı"
-      },
-      "header": {
-        "title": "Tesis Düzeni",
-        "description": "Fabrika katlarından bireysel iş istasyonlarına kadar tesis yapınızın haritasını çıkarın ve üretim hatlarını yönetin."
-      },
-      "buttons": {
-        "hierarchy": "Hiyerarşi",
-        "layout_mode": "Düzen Modu",
-        "cancel": "İptal",
-        "save_changes": "Değişiklikleri Kaydet",
-        "deleting": "Siliniyor...",
-        "delete_node": "Düğümü Sil",
-        "update_node": "Düğümü Güncelle",
-        "move_node": "Düğümü Taşı",
-        "create_node": "Düğüm Oluştur"
-      },
-      "dialogs": {
-        "move": {
-          "title": "Düğümü Taşı",
-          "description": "\"{{name}}\" için yeni bir ana düğüm seçin. Bu işlem hiyerarşik yolu yeniden hesaplayacaktır.",
-          "new_parent": "Yeni Ana Düğüm",
-          "placeholder": "Yeni ana düğüm seçin (veya Kök için boş bırakın)...",
-          "make_independent": "Bağımsız Yap (Kök Olarak Ayarla)"
+    "auth": {
+        "login": {
+            "title": "Teşekkürler, Tekrar Hoş Geldiniz",
+            "subtitle": "Devam etmek için hesabınıza giriş yapın",
+            "email_label": "E-posta",
+            "email_placeholder": "E-posta adresinizi girin",
+            "password_label": "Şifre",
+            "password_placeholder": "Şifrenizi girin",
+            "forgot_password": "Şifrenizi mi unuttunuz?",
+            "submit": "Giriş yap",
+            "submitting": "Giriş yapılıyor...",
+            "no_account": "Hesabınız yok mu?",
+            "create_account": "Hesap oluştur",
+            "footer_agree": "Giriş yaparak şunları kabul etmiş olursunuz:",
+            "footer_and": "ve",
+            "divider": "veya",
+            "errors": {
+                "email_required": "E-posta gereklidir",
+                "email_invalid": "Lütfen geçerli bir e-posta adresi girin",
+                "password_required": "Şifre gereklidir"
+            }
         },
-        "update": {
-          "title": "Düğümü Güncelle",
-          "description": "\"{{name}}\" için kimlik ve durumu değiştirin",
-          "node_name": "Düğüm Adı",
-          "node_type": "Düğüm Türü",
-          "status": "Durum",
-          "reason": "Güncelleme Nedeni",
-          "select_type": "Tür seçin...",
-          "select_reason": "Neden seçin..."
+        "signup": {
+            "title": "Hesabınızı oluşturun",
+            "subtitle": "GRVT MES Platformu ile hemen başlayın",
+            "first_name_label": "Ad",
+            "first_name_placeholder": "Adınız",
+            "last_name_label": "Soyad",
+            "last_name_placeholder": "Soyadınız",
+            "org_name_label": "Organizasyon / Şirket Adı",
+            "org_name_placeholder": "Acme Üretim Ltd. Şti.",
+            "email_label": "E-posta",
+            "email_placeholder": "ad@sirket.com",
+            "password_label": "Şifre",
+            "password_placeholder": "Güçlü bir şifre oluşturun",
+            "confirm_password_label": "Şifreyi Onayla",
+            "confirm_password_placeholder": "Şifrenizi tekrar girin",
+            "password_requirements": {
+                "min_length": "En az 8 karakter",
+                "uppercase": "Bir büyük harf",
+                "lowercase": "Bir küçük harf",
+                "number": "Bir rakam"
+            },
+            "submit": "Hesap oluştur",
+            "submitting": "Hesap oluşturuluyor...",
+            "have_account": "Zaten bir hesabınız var mı?",
+            "sign_in": "Giriş yap",
+            "footer_agree": "Hesap oluşturarak şunları kabul etmiş olursunuz:",
+            "footer_and": "ve",
+            "divider": "veya",
+            "errors": {
+                "first_name_required": "Ad gereklidir",
+                "first_name_invalid": "Lütfen geçerli bir ad girin",
+                "last_name_required": "Soyad gereklidir",
+                "last_name_invalid": "Lütfen geçerli bir soyad girin",
+                "org_name_required": "Organizasyon/Şirket adı gereklidir",
+                "org_name_min": "Organizasyon adı en az 2 karakter olmalıdır",
+                "org_name_max": "Organizasyon adı 100 karakterden az olmalıdır",
+                "email_required": "E-posta gereklidir",
+                "email_invalid": "Lütfen geçerli bir e-posta adresi girin",
+                "password_required": "Şifre gereklidir",
+                "password_requirements": "Şifre gereksinimleri karşılamıyor",
+                "confirm_password_required": "Please confirm your password",
+                "passwords_dont_match": "Passwords do not match"
+            }
         },
-        "delete": {
-          "title": "Düğümü Sil",
-          "confirm": "\"{{name}}\" düğümünü silmek istediğinizden emin misiniz?",
-          "warning1": "Düğümün geçmişi varsa arşivlenecektir. Geçmişi yoksa kalıcı olarak silinecektir.",
-          "warning2": "Düğümün aktif alt düğümleri varsa veya İş Emirlerinde referans gösteriliyorsa silme işlemi başarısız olur."
+        "reset_password": {
+            "forgot_password_title": "Forgot password?",
+            "forgot_password_subtitle": "No worries, we'll send you a reset code via email",
+            "email_label": "Email",
+            "email_placeholder": "Enter your email",
+            "submit_send_code": "Send reset code",
+            "submitting_send_code": "Sending code...",
+            "back_to_login": "Back to sign in",
+            "success_title": "Check your email",
+            "success_description": "We've sent a 6-digit verification code to",
+            "success_button": "Enter verification code",
+            "resend_hint": "Didn't receive the email? Try again",
+            "enter_code_title": "Enter verification code",
+            "enter_code_subtitle": "Enter the 6-digit code we sent to your email",
+            "verification_code_label": "Verification Code",
+            "verify_button": "Verify code",
+            "verifying_button": "Verifying...",
+            "new_password_title": "Create new password",
+            "new_password_subtitle": "Your new password must be different from previous passwords",
+            "new_password_label": "New Password",
+            "new_password_placeholder": "Enter new password",
+            "confirm_password_label": "Confirm Password",
+            "confirm_password_placeholder": "Confirm new password",
+            "reset_button": "Reset password",
+            "resetting_button": "Resetting...",
+            "done_title": "Password reset successful!",
+            "done_description": "Your password has been reset. You can now sign in with your new password.",
+            "done_button": "Sign in",
+            "errors": {
+                "email_required": "Email is required",
+                "email_invalid": "Please enter a valid email address",
+                "send_failed": "Failed to send reset code",
+                "code_invalid": "Please enter a valid 6-digit code",
+                "validate_failed": "Invalid code",
+                "password_requirements": "Password does not meet requirements",
+                "passwords_dont_match": "Passwords do not match",
+                "reset_failed": "Failed to reset password"
+            }
         },
-        "create": {
-          "title": "Düğüm Oluştur",
-          "desc_child": "{{name}} altında bir alt düğüm oluşturuluyor",
-          "desc_root": "Bir kök düğüm oluşturuluyor.",
-          "parent_locked": "Ana Düğüm (Kilitli)",
-          "node_name": "Düğüm Adı",
-          "node_name_placeholder": "örn. Montaj İstasyonu 1",
-          "definition_id": "Tanım ID (İsteğe Bağlı)",
-          "definition_placeholder": "Tanım seçin..."
+        "verify_email": {
+            "verifying": {
+                "title": "Verifying your email...",
+                "description": "Please wait while we verify your email address."
+            },
+            "success": {
+                "title": "Email verified!",
+                "description": "Your email has been successfully verified. You can now sign in to your account.",
+                "button": "Sign in"
+            },
+            "error": {
+                "title": "Verification failed",
+                "description": "This verification link is invalid or has expired.",
+                "button": "Go to sign in",
+                "new_link_hint": "Need a new verification link? Sign in and request a new one."
+            }
         }
-      },
-      "tree": {
-        "search_placeholder": "Düğümleri ara...",
-        "no_nodes": "Düğüm bulunamadı."
-      },
-      "tabs": {
-        "overview": "Genel Bakış",
-        "contents": "İçerikler",
-        "capabilities": "Yetenekler",
-        "activity": "Aktivite Günlüğü",
-        "content": {
-          "node_type": "Düğüm Türü",
-          "path": "Yol",
-          "attributes": "Nitelikler",
-          "unknown": "Bilinmeyen",
-          "na": "B/Y",
-          "empty_contents": "Envanter öğeleri veya alt düğümler burada görünecektir.",
-          "empty_capabilities": "Belirli bir yetenek tanımlanmadı.",
-          "empty_activity": "İzlenebilirlik akışı burada yükleniyor..."
-        }
-      },
-      "empty_state": {
-        "title": "Düğüm Seçilmedi",
-        "description": "Detaylarını, hiyerarşi içeriklerini ve yeteneklerini görüntülemek için ağaçtan bir düğüm seçin."
-      }
     },
-    "production": {
-      "title": "Üretim Yürütme",
-      "description": "İş Emirleri (Work Orders) aracılığıyla üretim iş akışlarını yönetin.",
-      "create_button": "İş Emri Oluştur",
-      "columns": {
-        "planned": "Planlandı",
-        "ready": "Yürütmeye Hazır",
-        "in_progress": "Devam Ediyor",
-        "completed": "Tamamlandı"
-      },
-      "empty_state": "Burada iş emri bulunmuyor",
-      "order_card": {
-        "target_qty": "Hedef Mik:",
-        "units": "birim",
-        "start_date": "Başlangıç:",
-        "not_scheduled": "Planlanmadı"
-      },
-      "drawer": {
-        "title": "İş Emri Oluştur",
-        "description": "Yeni bir üretim yürütme oturumu başlatın.",
-        "bom_revision_id": "Malzeme Listesi (BOM) Revizyon ID",
-        "target_quantity": "Hedef Miktar",
-        "planned_start_date": "Planlanan Başlangıç Tarihi",
-        "bom_placeholder": "örn. BOM-REV-A1",
-        "qty_placeholder": "örn. 50"
-      },
-      "messages": {
-        "load_failed": "İş emirleri yüklenemedi",
-        "create_success": "İş emri başarıyla oluşturuldu",
-        "create_failed": "İş emri oluşturulamadı"
-      }
-    },
-    "execution": {
-      "title": "Üretim Yürütme",
-      "subtitle": "Tesislerdeki canlı üretim işlerini izleyin ve yönetin.",
-      "stats": {
-        "total_jobs": "Toplam İşler",
-        "in_progress": "Devam Edenler",
-        "pending": "Bekleyenler"
-      },
-      "table": {
-        "job_id": "İş ID",
-        "work_order": "İş Emri",
-        "status": "Durum",
-        "station": "İstasyon",
-        "actions": "İşlemler"
-      },
-      "actions": {
-        "start": "Başlat",
-        "complete": "Tamamla"
-      },
-      "messages": {
-        "load_failed": "İşler yüklenemedi",
-        "start_success": "İş başarıyla başlatıldı",
-        "start_failed": "İş başlatılamadı",
-        "complete_success": "İş başarıyla tamamlandı",
-        "complete_failed": "İş tamamlanamadı"
-      }
-    },
-    "warehouse": {
-      "title": "Depo Yönetimi",
-      "description": "Depolama alanlarını yönetin, konteyner konumlarını izleyin ve stok operasyonlarını yürütün.",
-      "new_receipt": "Yeni Mal Kabul",
-      "new_shipment": "Yeni Sevkiyat",
-      "root_storage": "Kök Depolama",
-      "sub_locations": "Alt Konumlar",
-      "sub_areas": "Alt Alanlar",
-      "no_sub_areas": "bu seviyede alt konum bulunamadı.",
-      "storage_area": "Depolama Alanı",
-      "stored_containers": "Depolanan Konteynerler (LPN)",
-      "search_placeholder": "LPN Ara...",
-      "empty_location": "Bu konum şu anda boş.",
-      "table": {
-        "lpn": "Taşıma Birimi Kodu (LPN)",
-        "type": "Tür",
-        "created_at": "Oluşturulma",
-        "actions": "İşlemler"
-      },
-      "tooltips": {
-        "qc_check": "Kalite Kontrol (QC) Kontrolü",
-        "move": "Taşı",
-        "remove": "Depodan kaldır"
-      },
-      "receipt_modal": {
-        "title": "Malzeme Kabulü",
-        "description": "Depoya yeni öğelerin gelişini kaydedin.",
-        "fields": {
-          "lpn": "Taşıma Birimi Kodu (LPN) / Takip No",
-          "lpn_hint": "Bir barkod veya takip numarası atayın",
-          "item": "Öğe / Parça No",
-          "quantity": "Miktar",
-          "source": "Kaynak (Tedarikçi/Harici)",
-          "expected_date": "Beklenen Tarih",
-          "expected_date_hint": "İsteğe bağlı planlanan varış",
-          "actual_date": "Fiili Tarih",
-          "actual_date_hint": "İsteğe bağlı varış zaman damgası",
-          "type": "Konteyner Türü",
-          "type_hint": "örn. PALLET, KUTU, MAKARA (REEL)"
-        }
-      },
-      "shipment_modal": {
-        "title": "Giden Sevkiyat",
-        "description": "Depodan ayrılan öğeleri kaydedin.",
-        "fields": {
-          "lpn": "Taşıma Birimi Kodu (LPN) / Takip No",
-          "quantity": "Gönderilecek Miktar",
-          "destination": "Varış Noktası",
-          "destination_hint": "Üretim veya Müşteri",
-          "expected_date": "Beklenen Sevkiyat Tarihi",
-          "actual_date": "Fiili Sevkiyat Tarihi"
-        }
-      },
-      "messages": {
-        "load_failed": "Depo verileri yüklenemedi",
-        "receipt_success": "Kabul kaydı başarıyla oluşturuldu",
-        "receipt_failed": "Kabul oluşturulamadı",
-        "shipment_success": "Sevkiyat kaydı başarıyla oluşturuldu",
-        "shipment_failed": "Sevkiyat oluşturulamadı",
-        "move_success": "Konteyner başarıyla taşındı",
-        "move_failed": "Konteyner taşınamadı"
-      }
-    },
-    "reports": {
-      "title": "Analitik ve Raporlar",
-      "description": "Tüm kayıtlı sistem aktiviteleri ve olay raporları için salt okunur görünüm.",
-      "filters": {
-        "action_type": "İşlem Türü",
-        "node_id": "Düğüm ID",
-        "user_id": "Kullanıcı ID",
-        "job_id": "İş / İş Emri ID",
-        "action_placeholder": "örn. status_change",
-        "node_placeholder": "Düğüm UUID'sine göre filtrele...",
-        "user_placeholder": "Kullanıcı UUID'sine göre filtrele...",
-        "job_placeholder": "İş UUID'sine göre filtrele..."
-      },
-      "table": {
-        "action_type": "İşlem Türü",
-        "date": "Tarih",
-        "user_id": "Kullanıcı ID",
-        "node_id": "Düğüm ID",
-        "job_id": "İş ID",
-        "metadata": "Meta Veri",
-        "system": "Sistem"
-      },
-      "messages": {
-        "load_failed": "Rapor aktiviteleri yüklenemedi"
-      },
-      "actions": {
-        "title": "İşlemler",
-        "view_details": "Detaylar"
-      },
-      "details_modal": {
-        "title": "Aktivite Detayları",
-        "close": "Kapat"
-      }
-    },
-    "products": {
-      "title": "Malzeme Listeleri (BOM)",
-      "description": "Merkezi mühendislik ürün kataloğunuzu ve stok kodlarınızı (SKU) yönetin.",
-      "add_button": "Ürün Ekle",
-      "search_placeholder": "Stok Kodu (SKU) veya Adına göre ara...",
-      "table": {
-        "sku": "Stok Kodu (SKU)",
-        "name": "Ad",
-        "organization": "Organizasyon",
-        "actions": "İşlemler"
-      },
-      "drawer": {
-        "title_create": "Ürün Oluştur",
-        "title_edit": "Ürünü Düzenle",
-        "description": "Belirli ürün yapılandırmalarını ve ana veri tanımlarını yönetin.",
-        "sku": "Stok Kodu (SKU)",
-        "name": "Ad",
-        "sku_placeholder": "örn. PROD-001",
-        "name_placeholder": "örn. Navigasyon GPS Modülü v2"
-      },
-      "messages": {
-        "load_failed": "Ürünler yüklenemedi",
-        "create_success": "Ürün başarıyla oluşturuldu",
-        "update_success": "Ürün başarıyla güncellendi",
-        "save_failed": "Ürün kaydedilemedi",
-        "delete_success": "Ürün başarıyla silindi",
-        "delete_failed": "Ürün silinemedi"
-      }
-    },
-    "roles": {
-      "table": {
-        "name": "Rol Adı",
-        "type": "Tür",
-        "permissions": "İzinler",
-        "actions": "İşlemler"
-      },
-      "no_description": "Açıklama yok",
-      "perms_count": "izin",
-      "type": {
-        "custom": "Özel",
-        "system": "Sistem"
-      }
-    },
-    "users": {
-      "title": "Kullanıcı Yönetimi",
-      "description": "Tüm sistem kullanıcılarını ve izinlerini görüntüleyin ve yönetin.",
-      "add_user": "Kullanıcı Ekle",
-      "search_placeholder": "Kullanıcıları ad veya e-postaya göre ara...",
-      "filters": "Filtreler",
-      "loading": "Kullanıcılar yükleniyor...",
-      "table": {
-        "user": "Kullanıcı",
-        "role": "Rol",
-        "status": "Durum",
-        "joined": "Katılım"
-      },
-      "status": {
-        "verified": "Doğrulanmış",
-        "pending": "Beklemede"
-      },
-      "actions": {
-        "title": "İşlemler",
-        "view_profile": "Profili Görüntüle",
-        "change_role": "Rolü Değiştir",
-        "activate": "Hesabı Etkinleştir",
-        "deactivate": "Hesabı Devre Dışı Bırak",
-        "disable_account": "Hesabı Devre Dışı Bırak"
-      },
-      "no_users_found": "Aramanızla eşleşen kullanıcı bulunamadı.",
-      "clear_filters": "Tüm filtreleri temizle"
-    },
-    "settings": {
-      "title": "Platform Ayarları",
-      "description": "Organizasyonunuzun yasal kimliğini, markasını ve küresel kurallarını yönetin.",
-      "loading": "Profil yükleniyor...",
-      "status_active": "Organizasyon Aktif",
-      "setup": {
-        "title": "Organizasyonunuzu Kurun",
-        "description": "Tesisinizi ve üretim hatlarınızı yönetmeye başlamak için önce bir organizasyon profili oluşturmanız gerekir.",
-        "features": {
-          "identity": {
-            "title": "Kimlik",
-            "desc": "Şirket adınızı ve markanızı tanımlayın."
-          },
-          "global_layout": {
-            "title": "Küresel Düzen",
-            "desc": "Katların ve iş istasyonlarının haritasını çıkarın."
-          },
-          "smart_tracking": {
-            "title": "Akıllı Takip",
-            "desc": "Üretimi gerçek zamanlı olarak izleyin."
-          }
+    "legal": {
+        "terms": {
+            "title": "Kullanım Koşulları",
+            "last_updated": "Son güncelleme",
+            "s1_title": "1. Endüstriyel Kullanım ve Kabul",
+            "s1_content": "GRVT MES'e erişerek, bu koşulları profesyonel endüstriyel kullanım için kabul etmiş sayılırsınız. Bu platform, PCB/PCBA üretim topluluğunu desteklemek amacıyla Dannie tarafından ücretsiz bir Seviye 3 MES aracı olarak sunulmaktadır. Kullanım 'olduğu gibi'dir ve profesyonel denetime tabidir.",
+            "s2_title": "2. Üretim Sorumluluk Reddi",
+            "s2_content": "KRİTİK: GRVT MES ücretsiz bir araçtır. Dannie veya geliştiriciler, bu yazılımın kullanımından kaynaklanan herhangi bir üretim hatası, hurda, finansal kayıp veya fiziksel hasardan hiçbir durumda sorumlu tutulamaz. Nihai kalite kontrol (QC) ve üretim sonuçlarından tamamen siz sorumlusunuz.",
+            "s3_title": "3. Açık Kaynak ve Lisanslama",
+            "s3_content": "GRVT MES, Apache Lisansı Sürüm 2.0 altında lisanslanmıştır. Lisans koşullarına bağlı kalmak kaydıyla kodu kullanmakta, değiştirmekte ve dağıtmakta özgürsünüz. Yazılım, HERHANGİ BİR GARANTİ VEYA KOŞUL OLMAKSIZIN sağlanmaktadır.",
+            "s4_title": "4. Ekosistem Entegrasyonu",
+            "s4_content": "Bu hizmet diğer Dannie platformlarıyla (örn. dannie.cc) entegre olabilir. MES ve E-ticaret siparişi arasında sorunsuz bağlantı için çabalasak da, her hizmet kendi özel fonksiyonel ve yasal anlaşmaları altında çalışır.",
+            "s5_title": "5. Hesap Sorumluluğu",
+            "s5_content": "Organizasyonunuzun veri bütünlüğünden, tesis düzenlerinden ve iş emirlerinden siz sorumlusunuz. Biz altyapıyı sağlıyoruz; siz ise profesyonel üretim mantığını sağlıyorsunuz."
         },
-        "create_button": "Organizasyonumu Oluştur",
-        "refresh_button": "Zaten bir organizasyonunuz var mı? Profili Yenile",
-        "modal": {
-          "title": "Kimliği Başlat",
-          "description": "Şirket veya tesis adınızı girin. Logoları ve markalamayı bir sonraki adımda yönetebilirsiniz.",
-          "org_name_label": "Organizasyon Adı",
-          "org_name_placeholder": "örn. GRVT Manufacturing",
-          "creating": "Oluşturuluyor...",
-          "submit_button": "Organizasyonu Oluştur ve Bağla"
-        },
-        "messages": {
-          "enter_name": "Lütfen bir organizasyon adı girin",
-          "create_success": "Organizasyon başarıyla oluşturuldu",
-          "create_failed": "Organizasyon oluşturulamadı"
+        "privacy": {
+            "title": "Gizlilik Politikası",
+            "last_updated": "Son güncelleme",
+            "s1_title": "1. Endüstriyel Veri Toplama",
+            "s1_content": "Seviye 3 MES'inizi çalıştırmak için gerekli olan profesyonel bilgileri (ad, iş e-postası, şirket adı) ve üretim meta verilerini (tesis düğümleri, BOM yapıları) topluyoruz. Şu anda bu platformda hassas kişisel finansal veriler saklamıyoruz.",
+            "s2_title": "2. Uluslararası Veri Akışı",
+            "s2_content": "Dannie küresel ağının (Litvanya, Türkiye, Çin) bir parçası olarak, endüstriyel verileriniz kesintisiz Seviye 3 kullanılabilirliği ve desteği sağlamak amacıyla bu bölgeler arasında işlenebilir.",
+            "s3_title": "3. Lead Magnet Amacı",
+            "s3_content": "Bu aracın birincil amacı, ücretsiz üretim değeri sağlamak ve dannie.cc adresindeki e-ticaret ve montaj hizmetlerimiz dahil olmak üzere daha geniş Dannie ekosistemine bir giriş kapısı görevi görmektir.",
+            "s4_title": "4. Data Security & Risk",
+            "s4_content": "We implement industry-standard technical and organizational measures. However, as an open-access free tool, you acknowledge that no cloud system is 100% impenetrable and you use the service at your own risk.",
+            "s5_title": "5. Data Retention",
+            "s5_content": "We retain your manufacturing configurations as long as your account is active. You may request data deletion or account closure at any time through our support channels."
         }
-      },
-      "main": {
-        "title": "Platform Ayarları",
-        "description": "Organizasyonunuzun yasal kimliğini, markasını ve küresel kurallarını yönetin.",
-        "status_active": "Organizasyon Aktif",
-        "profile_card": {
-          "title": "Profil ve Markalama",
-          "description": "Platform genelinde görünen kimlik ayarları.",
-          "logo_label": "Kurumsal Logo",
-          "logo_hint": "Önerilen: 512x512px. SVG or PNG.",
-          "required_chip": "Gerekli",
-          "setup_hint": "Tüm özelliklerin kilidini açmak için kimlik kurulumunuzu tamamlayın.",
-          "syncing": "Kimlik Senkronize Ediliyor...",
-          "save_button": "Platform Markalamasını Kaydet",
-          "live_chip": "Web'de Canlı"
-        },
-        "upcoming": {
-          "work_hours": "Küresel Çalışma Saatleri",
-          "compliance": "Uyum ve Güvenlik",
-          "label": "Gelecek Özellik"
-        },
-        "messages": {
-          "update_success": "Organizasyon ayarları başarıyla güncellendi",
-          "update_failed": "Organizasyon güncellenemedi"
-        }
-      }
     },
-    "profile": {
-      "title": "Profil Ayarları",
-      "description": "Kişisel bilgilerinizi ve hesap tercihlerinizi yönetin.",
-      "verified": "Doğrulanmış Hesap",
-      "personal_info": {
-        "title": "Kişisel Bilgiler",
-        "description": "Temel profil bilgilerinizi güncelleyin.",
-        "avatar_label": "Profil Resmi",
-        "avatar_hint": "Önerilen: 256x256px. PNG veya JPG.",
-        "first_name": "Ad",
-        "first_name_placeholder": "Adınızı girin",
-        "last_name": "Soyad",
-        "last_name_placeholder": "Soyadınızı girin",
-        "email": "E-posta Adresi",
-        "email_empty": "E-posta adresi belirtilmedi",
-        "email_hint": "E-posta adresi hesap kimliği için kullanılır ve değiştirilemez."
-      },
-      "account_details": {
-        "title": "Hesap Rolü ve Organizasyon",
-        "description": "Atanan rolünüzü ve organizasyon bilgilerinizi görüntüleyin.",
-        "permissions": "{{count}} aktif izin",
-        "active_status": "Aktif",
-        "assigned_org": "Atanan Organizasyon"
-      },
-      "messages": {
-        "update_success": "Profil başarıyla güncellendi",
-        "update_failed": "Profil güncellenemedi"
-      },
-      "saving": "Kaydediliyor...",
-      "save_changes": "Değişiklikleri Kaydet"
+    "ui": {
+        "pagination": {
+            "label": "Pagination",
+            "prev": "Go to previous page",
+            "next": "Go to next page",
+            "more": "More pages",
+            "prev_text": "Previous",
+            "next_text": "Next"
+        },
+        "breadcrumb": {
+            "label": "Breadcrumb",
+            "more": "More"
+        },
+        "sidebar": {
+            "toggle": "Toggle Sidebar",
+            "mobile_title": "Sidebar",
+            "mobile_description": "Displays the mobile sidebar."
+        },
+        "sheet": {
+            "close": "Close"
+        },
+        "carousel": {
+            "label": "Carousel",
+            "slide_label": "Slide",
+            "prev": "Previous slide",
+            "next": "Next slide"
+        }
     }
-  },
-  "auth": {
-    "login": {
-      "title": "Teşekkürler, Tekrar Hoş Geldiniz",
-      "subtitle": "Devam etmek için hesabınıza giriş yapın",
-      "email_label": "E-posta",
-      "email_placeholder": "E-posta adresinizi girin",
-      "password_label": "Şifre",
-      "password_placeholder": "Şifrenizi girin",
-      "forgot_password": "Şifrenizi mi unuttunuz?",
-      "submit": "Giriş yap",
-      "submitting": "Giriş yapılıyor...",
-      "no_account": "Hesabınız yok mu?",
-      "create_account": "Hesap oluştur",
-      "footer_agree": "Giriş yaparak şunları kabul etmiş olursunuz:",
-      "footer_and": "ve",
-      "divider": "veya",
-      "errors": {
-        "email_required": "E-posta gereklidir",
-        "email_invalid": "Lütfen geçerli bir e-posta adresi girin",
-        "password_required": "Şifre gereklidir"
-      }
-    },
-    "signup": {
-      "title": "Hesabınızı oluşturun",
-      "subtitle": "GRVT MES Platformu ile hemen başlayın",
-      "first_name_label": "Ad",
-      "first_name_placeholder": "Adınız",
-      "last_name_label": "Soyad",
-      "last_name_placeholder": "Soyadınız",
-      "org_name_label": "Organizasyon / Şirket Adı",
-      "org_name_placeholder": "Acme Üretim Ltd. Şti.",
-      "email_label": "E-posta",
-      "email_placeholder": "ad@sirket.com",
-      "password_label": "Şifre",
-      "password_placeholder": "Güçlü bir şifre oluşturun",
-      "confirm_password_label": "Şifreyi Onayla",
-      "confirm_password_placeholder": "Şifrenizi tekrar girin",
-      "password_requirements": {
-        "min_length": "En az 8 karakter",
-        "uppercase": "Bir büyük harf",
-        "lowercase": "Bir küçük harf",
-        "number": "Bir rakam"
-      },
-      "submit": "Hesap oluştur",
-      "submitting": "Hesap oluşturuluyor...",
-      "have_account": "Zaten bir hesabınız var mı?",
-      "sign_in": "Giriş yap",
-      "footer_agree": "Hesap oluşturarak şunları kabul etmiş olursunuz:",
-      "footer_and": "ve",
-      "divider": "veya",
-      "errors": {
-        "first_name_required": "Ad gereklidir",
-        "first_name_invalid": "Lütfen geçerli bir ad girin",
-        "last_name_required": "Soyad gereklidir",
-        "last_name_invalid": "Lütfen geçerli bir soyad girin",
-        "org_name_required": "Organizasyon/Şirket adı gereklidir",
-        "org_name_min": "Organizasyon adı en az 2 karakter olmalıdır",
-        "org_name_max": "Organizasyon adı 100 karakterden az olmalıdır",
-        "email_required": "E-posta gereklidir",
-        "email_invalid": "Lütfen geçerli bir e-posta adresi girin",
-        "password_required": "Şifre gereklidir",
-        "password_requirements": "Şifre gereksinimleri karşılamıyor",
-        "confirm_password_required": "Please confirm your password",
-        "passwords_dont_match": "Passwords do not match"
-      }
-    },
-    "reset_password": {
-      "forgot_password_title": "Forgot password?",
-      "forgot_password_subtitle": "No worries, we'll send you a reset code via email",
-      "email_label": "Email",
-      "email_placeholder": "Enter your email",
-      "submit_send_code": "Send reset code",
-      "submitting_send_code": "Sending code...",
-      "back_to_login": "Back to sign in",
-      "success_title": "Check your email",
-      "success_description": "We've sent a 6-digit verification code to",
-      "success_button": "Enter verification code",
-      "resend_hint": "Didn't receive the email? Try again",
-      "enter_code_title": "Enter verification code",
-      "enter_code_subtitle": "Enter the 6-digit code we sent to your email",
-      "verification_code_label": "Verification Code",
-      "verify_button": "Verify code",
-      "verifying_button": "Verifying...",
-      "new_password_title": "Create new password",
-      "new_password_subtitle": "Your new password must be different from previous passwords",
-      "new_password_label": "New Password",
-      "new_password_placeholder": "Enter new password",
-      "confirm_password_label": "Confirm Password",
-      "confirm_password_placeholder": "Confirm new password",
-      "reset_button": "Reset password",
-      "resetting_button": "Resetting...",
-      "done_title": "Password reset successful!",
-      "done_description": "Your password has been reset. You can now sign in with your new password.",
-      "done_button": "Sign in",
-      "errors": {
-        "email_required": "Email is required",
-        "email_invalid": "Please enter a valid email address",
-        "send_failed": "Failed to send reset code",
-        "code_invalid": "Please enter a valid 6-digit code",
-        "validate_failed": "Invalid code",
-        "password_requirements": "Password does not meet requirements",
-        "passwords_dont_match": "Passwords do not match",
-        "reset_failed": "Failed to reset password"
-      }
-    },
-    "verify_email": {
-      "verifying": {
-        "title": "Verifying your email...",
-        "description": "Please wait while we verify your email address."
-      },
-      "success": {
-        "title": "Email verified!",
-        "description": "Your email has been successfully verified. You can now sign in to your account.",
-        "button": "Sign in"
-      },
-      "error": {
-        "title": "Verification failed",
-        "description": "This verification link is invalid or has expired.",
-        "button": "Go to sign in",
-        "new_link_hint": "Need a new verification link? Sign in and request a new one."
-      }
-    }
-  },
-  "legal": {
-    "terms": {
-      "title": "Kullanım Koşulları",
-      "last_updated": "Son güncelleme",
-      "s1_title": "1. Endüstriyel Kullanım ve Kabul",
-      "s1_content": "GRVT MES'e erişerek, bu koşulları profesyonel endüstriyel kullanım için kabul etmiş sayılırsınız. Bu platform, PCB/PCBA üretim topluluğunu desteklemek amacıyla Dannie tarafından ücretsiz bir Seviye 3 MES aracı olarak sunulmaktadır. Kullanım 'olduğu gibi'dir ve profesyonel denetime tabidir.",
-      "s2_title": "2. Üretim Sorumluluk Reddi",
-      "s2_content": "KRİTİK: GRVT MES ücretsiz bir araçtır. Dannie veya geliştiriciler, bu yazılımın kullanımından kaynaklanan herhangi bir üretim hatası, hurda, finansal kayıp veya fiziksel hasardan hiçbir durumda sorumlu tutulamaz. Nihai kalite kontrol (QC) ve üretim sonuçlarından tamamen siz sorumlusunuz.",
-      "s3_title": "3. Açık Kaynak ve Lisanslama",
-      "s3_content": "GRVT MES, Apache Lisansı Sürüm 2.0 altında lisanslanmıştır. Lisans koşullarına bağlı kalmak kaydıyla kodu kullanmakta, değiştirmekte ve dağıtmakta özgürsünüz. Yazılım, HERHANGİ BİR GARANTİ VEYA KOŞUL OLMAKSIZIN sağlanmaktadır.",
-      "s4_title": "4. Ekosistem Entegrasyonu",
-      "s4_content": "Bu hizmet diğer Dannie platformlarıyla (örn. dannie.cc) entegre olabilir. MES ve E-ticaret siparişi arasında sorunsuz bağlantı için çabalasak da, her hizmet kendi özel fonksiyonel ve yasal anlaşmaları altında çalışır.",
-      "s5_title": "5. Hesap Sorumluluğu",
-      "s5_content": "Organizasyonunuzun veri bütünlüğünden, tesis düzenlerinden ve iş emirlerinden siz sorumlusunuz. Biz altyapıyı sağlıyoruz; siz ise profesyonel üretim mantığını sağlıyorsunuz."
-    },
-    "privacy": {
-      "title": "Gizlilik Politikası",
-      "last_updated": "Son güncelleme",
-      "s1_title": "1. Endüstriyel Veri Toplama",
-      "s1_content": "Seviye 3 MES'inizi çalıştırmak için gerekli olan profesyonel bilgileri (ad, iş e-postası, şirket adı) ve üretim meta verilerini (tesis düğümleri, BOM yapıları) topluyoruz. Şu anda bu platformda hassas kişisel finansal veriler saklamıyoruz.",
-      "s2_title": "2. Uluslararası Veri Akışı",
-      "s2_content": "Dannie küresel ağının (Litvanya, Türkiye, Çin) bir parçası olarak, endüstriyel verileriniz kesintisiz Seviye 3 kullanılabilirliği ve desteği sağlamak amacıyla bu bölgeler arasında işlenebilir.",
-      "s3_title": "3. Lead Magnet Amacı",
-      "s3_content": "Bu aracın birincil amacı, ücretsiz üretim değeri sağlamak ve dannie.cc adresindeki e-ticaret ve montaj hizmetlerimiz dahil olmak üzere daha geniş Dannie ekosistemine bir giriş kapısı görevi görmektir.",
-      "s4_title": "4. Data Security & Risk",
-      "s4_content": "We implement industry-standard technical and organizational measures. However, as an open-access free tool, you acknowledge that no cloud system is 100% impenetrable and you use the service at your own risk.",
-      "s5_title": "5. Data Retention",
-      "s5_content": "We retain your manufacturing configurations as long as your account is active. You may request data deletion or account closure at any time through our support channels."
-    }
-  },
-  "ui": {
-    "pagination": {
-      "label": "Pagination",
-      "prev": "Go to previous page",
-      "next": "Go to next page",
-      "more": "More pages",
-      "prev_text": "Previous",
-      "next_text": "Next"
-    },
-    "breadcrumb": {
-      "label": "Breadcrumb",
-      "more": "More"
-    },
-    "sidebar": {
-      "toggle": "Toggle Sidebar",
-      "mobile_title": "Sidebar",
-      "mobile_description": "Displays the mobile sidebar."
-    },
-    "sheet": {
-      "close": "Close"
-    },
-    "carousel": {
-      "label": "Carousel",
-      "slide_label": "Slide",
-      "prev": "Previous slide",
-      "next": "Next slide"
-    }
-  }
 }

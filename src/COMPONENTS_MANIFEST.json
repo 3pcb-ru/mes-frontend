@@ -70,6 +70,11 @@
       "name": "TableActions",
       "path": "src/shared/components/table-actions.tsx",
       "description": "Action menu for edit/delete operations."
+    },
+    {
+      "name": "AiChatComponent",
+      "path": "src/features/vibe/components/ai-chat.tsx",
+      "description": "Floating AI assistant for generating and architecting custom dashboard pages."
     }
   ]
 }
