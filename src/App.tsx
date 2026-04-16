@@ -44,6 +44,7 @@ const WorkOrdersPage = lazy(() => import('./dashboard/pages/work-orders').then((
 const ExecutionPage = lazy(() => import('./dashboard/pages/execution')); // Default export handled automatically
 const SettingsPage = lazy(() => import('./dashboard/pages/settings').then((m) => ({ default: m.SettingsPage })));
 const ComingSoonPage = lazy(() => import('./dashboard/pages/coming-soon').then((m) => ({ default: m.ComingSoonPage })));
+const VibePage = lazy(() => import('./dashboard/pages/vibe-page').then((m) => ({ default: m.VibePage })));
 
 function SessionExpiredRedirector() {
     const navigate = useNavigate();
@@ -114,6 +115,7 @@ export default function App() {
                         <Route path="/dashboard/work-orders" element={<WorkOrdersPage />} />
                         <Route path="/dashboard/execution" element={<ExecutionPage />} />
                         <Route path="/dashboard/settings" element={<SettingsPage />} />
+                        <Route path="/dashboard/vibe/:id" element={<VibePage />} />
                         <Route path="/dashboard/help" element={<ComingSoonPage />} />
                         <Route path="/dashboard/messages" element={<ComingSoonPage />} />
                         <Route path="/dashboard/integration" element={<ComingSoonPage />} />

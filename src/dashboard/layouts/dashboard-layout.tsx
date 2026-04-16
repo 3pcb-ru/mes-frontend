@@ -4,6 +4,7 @@ import { DashboardHeader } from '../components/header';
 import { DashboardSidebar } from '../components/sidebar';
 
 import { useAuth } from '@/features/auth/store/auth.store';
+import { AiChatComponent } from '@/features/vibe/components/ai-chat';
 
 export function DashboardLayout() {
     const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -28,6 +29,9 @@ export function DashboardLayout() {
                     <Outlet />
                 </main>
             </div>
+
+            {/* AI Vibe Assistant */}
+            <AiChatComponent />
         </div>
     );
 }

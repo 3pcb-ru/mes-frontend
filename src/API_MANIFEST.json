@@ -52,6 +52,16 @@
         { "method": "POST", "path": "/containers", "description": "Register new storage container." },
         { "method": "POST", "path": "/containers/:id/move", "description": "Update container location nodeId." }
       ]
+    },
+    {
+      "domain": "Vibe",
+      "path": "/vibe",
+      "endpoints": [
+        { "method": "POST", "path": "/generate", "description": "AI layout generation from natural language." },
+        { "method": "GET", "path": "/pages", "description": "List all custom pages (scoped to tenant)." },
+        { "method": "POST", "path": "/pages", "description": "Persist a new custom page." },
+        { "method": "DELETE", "path": "/pages/:id", "description": "Remove a custom page." }
+      ]
     }
   ]
 }

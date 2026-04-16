@@ -1,26 +1,11 @@
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import {
-    LayoutDashboard,
-    Package,
-    Users,
-    Settings,
-    FileBarChart,
-    ChevronLeft,
-    ChevronRight,
-    FileText,
-    HelpCircle,
-    MessageSquare,
-    Blocks,
-    Factory,
-    Activity,
-    Warehouse,
-    Network,
-} from 'lucide-react';
+import { LayoutDashboard, Package, Users, Settings, FileBarChart, ChevronLeft, ChevronRight, Factory, Activity, Warehouse, Network, Blocks, Layout } from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
 import { useAuth } from '@/features/auth/store/auth.store';
-import { Logo } from '@/shared/components/logo';
 import { Button } from '@/shared/components/ui/button';
 import { useTranslation } from 'react-i18next';
+import { useVibeStore } from '@/features/vibe/store/vibe.store';
 
 interface DashboardSidebarProps {
     isOpen: boolean;
@@ -31,11 +16,23 @@ export function DashboardSidebar({ isOpen, onToggle }: DashboardSidebarProps) {
     const location = useLocation();
     const { user, detailedProfile } = useAuth();
     const { t } = useTranslation();
+    const { pages, fetchPages } = useVibeStore();
+
+    useEffect(() => {
+        fetchPages();
+    }, [fetchPages]);
+
+    const customItems = pages.map((page) => ({
+        name: page.name,
+        icon: Layout,
+        href: `/dashboard/vibe/${page.id}`,
+        category: page.category,
+    }));
 
     const navSections = [
         {
             title: t('dashboard.sidebar.nav.main'),
-            items: [{ name: t('dashboard.sidebar.nav.dashboard'), icon: LayoutDashboard, href: '/dashboard' }],
+            items: [{ name: t('dashboard.sidebar.nav.dashboard'), icon: LayoutDashboard, href: '/dashboard' }, ...customItems.filter((i) => i.category === 'Main')],
         },
         {
             title: t('dashboard.sidebar.nav.operations'),
@@ -43,11 +40,12 @@ export function DashboardSidebar({ isOpen, onToggle }: DashboardSidebarProps) {
                 { name: t('dashboard.sidebar.nav.production'), icon: Activity, href: '/dashboard/work-orders' },
                 { name: t('dashboard.sidebar.nav.execution'), icon: Blocks, href: '/dashboard/execution' },
                 { name: t('dashboard.sidebar.nav.warehouse'), icon: Warehouse, href: '/dashboard/warehouse' },
+                ...customItems.filter((i) => i.category === 'Operations'),
             ],
         },
         {
             title: t('dashboard.sidebar.nav.analytics'),
-            items: [{ name: t('dashboard.sidebar.nav.reports'), icon: FileBarChart, href: '/dashboard/reports' }],
+            items: [{ name: t('dashboard.sidebar.nav.reports'), icon: FileBarChart, href: '/dashboard/reports' }, ...customItems.filter((i) => i.category === 'Analytics')],
         },
         {
             title: t('dashboard.sidebar.nav.configuration'),
@@ -56,9 +54,19 @@ export function DashboardSidebar({ isOpen, onToggle }: DashboardSidebarProps) {
                 { name: t('dashboard.sidebar.nav.users'), icon: Users, href: '/dashboard/users' },
                 { name: t('dashboard.sidebar.nav.facilities'), icon: Network, href: '/dashboard/facilities' },
                 { name: t('dashboard.sidebar.nav.settings'), icon: Settings, href: '/dashboard/settings' },
+                ...customItems.filter((i) => i.category === 'Configuration'),
             ],
         },
     ];
+
+    const customCategoryItems = customItems.filter((i) => i.category === 'Custom');
+    if (customCategoryItems.length > 0) {
+        navSections.push({
+            title: t('dashboard.sidebar.nav.custom', 'Custom'),
+            items: customCategoryItems,
+        });
+    }
+
     const organization = detailedProfile?.organization;
     const orgName = organization?.name || user?.organization?.name || 'GRVT MES';
     const orgLogo = organization?.logoUrl;
@@ -98,12 +106,12 @@ export function DashboardSidebar({ isOpen, onToggle }: DashboardSidebarProps) {
                                     const isActive = location.pathname === item.href;
                                     return (
                                         <Link
-                                            key={item.name}
+                                            key={item.href}
                                             to={item.href}
                                             className={cn(
                                                 'flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200',
                                                 isActive
-                                                    ? 'bg-gradient-to-r from-brand-primary-start/20 to-brand-primary-end/20 text-cyan-400 border border-brand-primary-start/30 shadow-lg shadow-brand-primary-start/5'
+                                                    ? 'bg-gradient-to-r from-cyan-500/20 to-brand-primary-end/20 text-cyan-400 border border-cyan-500/30 shadow-lg shadow-cyan-500/5'
                                                     : 'text-slate-400 hover:text-white hover:bg-slate-800/50',
                                                 !isOpen && 'justify-center',
                                             )}>
@@ -149,13 +157,13 @@ export function DashboardSidebar({ isOpen, onToggle }: DashboardSidebarProps) {
                                     const isActive = location.pathname === item.href;
                                     return (
                                         <Link
-                                            key={item.name}
+                                            key={item.href}
                                             to={item.href}
                                             onClick={onToggle}
                                             className={cn(
                                                 'flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200',
                                                 isActive
-                                                    ? 'bg-gradient-to-r from-brand-primary-start/20 to-brand-primary-end/20 text-cyan-400 border border-brand-primary-start/30'
+                                                    ? 'bg-gradient-to-r from-cyan-500/20 to-brand-primary-end/20 text-cyan-400 border border-cyan-500/30'
                                                     : 'text-slate-400 hover:text-white hover:bg-slate-800/50',
                                             )}>
                                             <item.icon className={cn('h-5 w-5', isActive && 'text-cyan-400')} />
