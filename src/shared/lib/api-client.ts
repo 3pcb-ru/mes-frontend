@@ -14,6 +14,40 @@ export interface ApiResponse<T> {
     message?: string;
 }
 
+const METADATA_KEYS = [
+    'success',
+    'message',
+    'data',
+    'items',
+    'results',
+    'nodes',
+    'users',
+    'products',
+    'error',
+    'errors',
+    'limit',
+    'page',
+    'total',
+    'totalPages',
+    'total_pages',
+    'count',
+    'pagination',
+    'totalCount',
+    'total_count',
+    'pageSize',
+    'page_size',
+    'current_page',
+    'per_page',
+    'statusCode',
+    'timestamp',
+    'meta',
+];
+
+const DATA_KEYS = ['data', 'items', 'results', 'nodes', 'users', 'products'] as const;
+
+// Helper to safely check if a value is a record
+const isRecord = (val: unknown): val is Record<string, unknown> => !!val && typeof val === 'object' && !Array.isArray(val);
+
 class ApiClient {
     private baseUrl: string;
     private isRefreshing: boolean = false;
@@ -102,6 +136,57 @@ class ApiClient {
         }
     }
 
+    /**
+     * Unified response parsing and "smart unwrap" logic.
+     * Extracts inner data from standard backend response wrappers.
+     */
+    private async parseResponseData(response: Response): Promise<{ data: unknown; responseData: unknown }> {
+        let data: unknown;
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+            try {
+                data = await response.json();
+            } catch {
+                data = null;
+            }
+        } else {
+            // Handle non-JSON responses (e.g. 204 No Content or error pages)
+            try {
+                const text = await response.text();
+                try {
+                    data = JSON.parse(text);
+                } catch {
+                    data = text;
+                }
+            } catch {
+                data = null;
+            }
+        }
+
+        let responseData = data;
+
+        // Perform smart unwrapping
+        while (isRecord(responseData)) {
+            const currentResponse = responseData;
+            const keys = Object.keys(currentResponse);
+
+            // Only unwrap if the object exclusively contains metadata or data keys
+            if (keys.length > 0 && keys.every((key) => METADATA_KEYS.includes(key))) {
+                const dataKey = DATA_KEYS.find((key) => key in currentResponse);
+                if (dataKey) {
+                    const innerData = currentResponse[dataKey];
+                    if (innerData !== currentResponse) {
+                        responseData = innerData;
+                        continue;
+                    }
+                }
+            }
+            break;
+        }
+
+        return { data, responseData };
+    }
+
     private async request<T>(endpoint: string, options: RequestInit = {}, schema?: z.ZodType<T>): Promise<T> {
         const url = `${this.baseUrl}${endpoint}`;
 
@@ -139,53 +224,18 @@ class ApiClient {
             throw error;
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         /**
-         * NOTE: The response data type is dynamic and can be either JSON or text,
-         * and we need to handle both cases.
+         * NOTE: The response data type is dynamic and can be either JSON or text.
+         * We use unknown to maintain strict type safety per protocol.
          */
-        let data: any;
-        const contentType = response.headers.get('content-type');
-        if (contentType && contentType.includes('application/json')) {
-            try {
-                data = await response.json();
-            } catch {
-                data = null;
-            }
-        } else {
-            // Handle non-JSON responses (e.g. 204 No Content or error pages)
-            try {
-                data = await response.text();
-                try {
-                    data = JSON.parse(data);
-                } catch {
-                    // Keep as text if not JSON
-                }
-            } catch {
-                data = null;
-            }
-        }
-
-        // Handle multiple levels of backend wrapping (data property)
-        // Only unwrap if 'data' exists and there are no other significant properties (like pagination)
-        let responseData = data;
-        const METADATA_KEYS = ['success', 'message', 'data', 'error', 'limit', 'page', 'total', 'totalPages', 'count', 'pagination'];
-        while (
-            responseData &&
-            typeof responseData === 'object' &&
-            'data' in responseData &&
-            responseData !== responseData.data &&
-            Object.keys(responseData).every((key) => METADATA_KEYS.includes(key))
-        ) {
-            responseData = responseData.data;
-        }
+        let { data, responseData } = await this.parseResponseData(response);
 
         // If 401, try to refresh token and retry
         if (response.status === 401) {
             const refreshed = await this.refreshAccessToken();
 
             if (refreshed) {
-                // Retry requested logic remains same but needs safety check
+                // Retry requested logic
                 const newToken = this.getAuthToken();
                 const retryHeaders: HeadersInit = {
                     ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
@@ -197,7 +247,11 @@ class ApiClient {
                 }
 
                 response = await fetch(url, { ...options, headers: retryHeaders });
-                // (Reparse data simplified for succinctness - in production reuse parsing logic)
+                
+                // Reparse the new response after retry
+                const updated = await this.parseResponseData(response);
+                data = updated.data;
+                responseData = updated.responseData;
             }
         }
 
@@ -227,26 +281,37 @@ class ApiClient {
                 return result.data;
             }
 
-            return responseData;
+            return responseData as T;
         }
 
         // Error handling
-        let extractedMessage = (data && typeof data === 'object' && data.message) || 'An error occurred';
+        const dataRecord = isRecord(data) ? data : {};
+        const responseDataRecord = isRecord(responseData) ? responseData : {};
+        
+        let extractedMessage = String(dataRecord.message || 'An error occurred');
         let validationErrors: Record<string, string> | undefined;
 
         // Clean architecture: Centralize validation error parsing for all API requests
-        const errorsArray = data?.errors || responseData?.errors;
-        if (errorsArray && Array.isArray(errorsArray) && errorsArray.length > 0) {
+        const rawErrors = dataRecord.errors || responseDataRecord.errors;
+        const errorsArray = Array.isArray(rawErrors) ? (rawErrors as unknown[]) : [];
+        
+        if (errorsArray.length > 0) {
             validationErrors = {};
-            // Extract first error for the main message
+            
+            // Helper to safely check error shape without 'any'
+            const isErrorObj = (err: unknown): err is { path: string[]; message?: string } => 
+                !!err && typeof err === 'object' && 'path' in err && Array.isArray((err as Record<string, unknown>).path);
+
             const firstError = errorsArray[0];
-            const fieldName = firstError.path?.join('.') || 'Field';
-            extractedMessage = `${fieldName}: ${firstError.message}`;
+            if (isErrorObj(firstError)) {
+                const fieldName = firstError.path.join('.');
+                extractedMessage = `${fieldName}: ${firstError.message || 'Invalid value'}`;
+            }
 
             // Build a map of all errors for inline form display
-            errorsArray.forEach((err: any) => {
-                if (err.path && err.path.length > 0) {
-                    validationErrors![err.path.join('.')] = err.message;
+            errorsArray.forEach((err) => {
+                if (isErrorObj(err) && err.path.length > 0) {
+                    validationErrors![err.path.join('.')] = err.message || 'Invalid value';
                 }
             });
         }
@@ -254,7 +319,7 @@ class ApiClient {
         const apiError: ApiError & { body?: unknown } = {
             message: extractedMessage,
             statusCode: response.status,
-            error: data && typeof data === 'object' && (data as any).error,
+            error: dataRecord.error as string | undefined,
             body: responseData ?? data,
             validationErrors,
         };

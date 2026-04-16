@@ -6,45 +6,45 @@ import { z } from 'zod';
  */
 
 export const OrganizationSchema = z.object({
-    id: z.uuidv4(),
+    id: z.uuid(),
     name: z.string().min(2).max(100),
     timezone: z.string().optional().default('UTC'),
-    logoId: z.uuidv4().nullable().optional(),
+    logoId: z.uuid().nullable().optional(),
     logoUrl: z.string().url().nullable().optional(),
     createdAt: z.string(),
     updatedAt: z.string(),
 });
 
 export const PermissionSchema = z.object({
-    id: z.uuidv4(),
+    id: z.uuid(),
     name: z.string(),
     description: z.string(),
 });
 
 export const RoleSchema = z.object({
-    id: z.uuidv4(),
+    id: z.uuid(),
     name: z.string(),
     description: z.string().nullable().optional(),
     isDefault: z.boolean(),
     isAdmin: z.boolean(),
-    organizationId: z.uuidv4().nullable().optional(),
+    organizationId: z.uuid().nullable().optional(),
     permissions: z.array(PermissionSchema).optional(),
     createdAt: z.string(),
     updatedAt: z.string(),
 });
 
 export const UserSchema = z.object({
-    id: z.uuidv4(),
+    id: z.uuid(),
     email: z.string().email(),
     firstName: z.string(),
     lastName: z.string(),
     phone: z.string().nullable().optional(),
-    avatarId: z.uuidv4().nullable().optional(),
+    avatarId: z.uuid().nullable().optional(),
     avatarUrl: z.string().url().nullable().optional(),
     isVerified: z.boolean().nullable().optional(),
-    roleId: z.uuidv4(),
+    roleId: z.uuid(),
     role: RoleSchema,
-    organizationId: z.uuidv4().nullable().optional(),
+    organizationId: z.uuid().nullable().optional(),
     organization: OrganizationSchema.nullable().optional(),
     createdAt: z.string(),
     updatedAt: z.string(),

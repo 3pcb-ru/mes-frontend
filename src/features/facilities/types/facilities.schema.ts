@@ -19,8 +19,8 @@ export const NodeStatusChangeReasonEnum = z.enum([
 ]);
 
 export const NodeDefinitionSchema = z.object({
-    id: z.uuidv4(),
-    organizationId: z.uuidv4(),
+    id: z.uuid(),
+    organizationId: z.uuid(),
     name: z.string().min(2),
     type: NodeTypeEnum,
     attributeSchema: z.record(z.string(), z.any()).optional().nullable(),
@@ -38,17 +38,17 @@ export const NodeDefinitionSchema = z.object({
 });
 
 export const FacilityListItemSchema = z.object({
-    id: z.uuidv4(),
-    organizationId: z.uuidv4(),
-    parentId: z.uuidv4().nullable().optional(),
+    id: z.uuid(),
+    organizationId: z.uuid(),
+    parentId: z.uuid().nullable().optional(),
     path: z.string(), // LTree representation
-    definitionId: z.uuidv4().nullable().optional(),
+    definitionId: z.uuid().nullable().optional(),
     name: z.string(),
     type: NodeTypeEnum.optional().nullable(),
     capabilities: z.array(z.string()).optional().nullable(),
     status: z.string().default('IDLE'),
     attributes: z.record(z.string(), z.any()).optional().nullable(),
-    userId: z.uuidv4().nullable().optional(),
+    userId: z.uuid().nullable().optional(),
     createdAt: z.string(),
     updatedAt: z.string(),
     deletedAt: z.string().nullable().optional(),
@@ -58,8 +58,8 @@ export const FacilityListItemSchema = z.object({
 
 export const CreateFacilityDtoSchema = z.object({
     name: z.string().min(2),
-    parentId: z.uuidv4().nullable().optional(),
-    definitionId: z.uuidv4(),
+    parentId: z.uuid().nullable().optional(),
+    definitionId: z.uuid(),
     type: NodeTypeEnum.optional(),
     capabilities: z.array(z.string()).optional(),
 });

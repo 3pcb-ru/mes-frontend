@@ -6,8 +6,8 @@ import { z } from 'zod';
  */
 
 export const ProductSchema = z.object({
-    id: z.uuidv4(),
-    organizationId: z.uuidv4(),
+    id: z.uuid(),
+    organizationId: z.uuid(),
     name: z.string().min(2),
     sku: z.string().min(2),
     createdAt: z.string(),
@@ -18,7 +18,7 @@ export const ProductSchema = z.object({
 export const CreateProductDtoSchema = z.object({
     name: z.string().min(2),
     sku: z.string().min(2),
-    organizationId: z.uuidv4().optional(),
+    organizationId: z.uuid().optional(),
 });
 
 export const UpdateProductDtoSchema = CreateProductDtoSchema.partial();

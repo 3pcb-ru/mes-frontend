@@ -5,7 +5,7 @@ import { cn } from './utils';
 export interface TreeNode {
     id: string;
     label: string;
-    type?: 'factory' | 'area' | 'line' | 'station' | 'container' | 'other';
+    type?: string;
     children?: TreeNode[];
     isExpanded?: boolean;
 }

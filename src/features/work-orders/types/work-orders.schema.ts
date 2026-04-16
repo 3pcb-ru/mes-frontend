@@ -4,10 +4,10 @@ import { OrganizationSchema } from '@/shared/types/api.schema';
 export const WorkOrderStatusEnum = z.enum(['PLANNED', 'RELEASED', 'IN_PROGRESS', 'CLOSED', 'CANCELLED']);
 
 export const WorkOrderSchema = z.object({
-    id: z.uuidv4(),
-    bomRevisionId: z.uuidv4(),
+    id: z.uuid(),
+    bomRevisionId: z.uuid(),
     targetQuantity: z.number().positive(),
-    organizationId: z.uuidv4().optional(),
+    organizationId: z.uuid().optional(),
     status: WorkOrderStatusEnum.default('PLANNED'),
     plannedStartDate: z.string().optional().nullable(),
     plannedEndDate: z.string().optional().nullable(),
@@ -20,7 +20,7 @@ export const WorkOrderSchema = z.object({
 });
 
 export const CreateWorkOrderSchema = z.object({
-    bomRevisionId: z.uuidv4('Please select a valid BOM revision'),
+    bomRevisionId: z.uuid('Please select a valid BOM revision'),
     targetQuantity: z.number().positive('Quantity must be greater than zero'),
     plannedStartDate: z.string().optional(),
 });

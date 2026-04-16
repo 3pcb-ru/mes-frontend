@@ -3,11 +3,11 @@ import { z } from 'zod';
 export const ExecutionStatusEnum = z.enum(['PENDING', 'IN_PROGRESS', 'COMPLETED', 'FAILED', 'CANCELLED']);
 
 export const ExecutionJobSchema = z.object({
-    id: z.uuidv4(),
-    workOrderId: z.uuidv4(),
-    nodeId: z.uuidv4(),
+    id: z.uuid(),
+    workOrderId: z.uuid(),
+    nodeId: z.uuid(),
     status: ExecutionStatusEnum.default('PENDING'),
-    operatorId: z.uuidv4().optional().nullable(),
+    operatorId: z.uuid().optional().nullable(),
     startedAt: z.string().optional().nullable(),
     completedAt: z.string().optional().nullable(),
     errorMessage: z.string().optional().nullable(),
@@ -17,8 +17,8 @@ export const ExecutionJobSchema = z.object({
 });
 
 export const CreateExecutionJobSchema = z.object({
-    workOrderId: z.uuidv4('Please select a valid Work Order'),
-    nodeId: z.uuidv4('Please select a valid Node/Station'),
+    workOrderId: z.uuid('Please select a valid Work Order'),
+    nodeId: z.uuid('Please select a valid Node/Station'),
 });
 
 export const UpdateExecutionStatusSchema = z.object({

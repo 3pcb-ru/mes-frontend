@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from 'react';
-import { Loader2, Plus, Box, Warehouse, ChevronRight, PackageCheck, Send, Move, ClipboardList, Search, LogOut, Trash2 } from 'lucide-react';
+import { Plus, Box, Warehouse, ChevronRight, PackageCheck, Send, Move, ClipboardList, Search, LogOut } from 'lucide-react';
 import { toast } from 'sonner';
-import { useWarehouseStore } from '@/features/warehouse/store/warehouse.store';
+import { useWarehouse } from '@/features/warehouse/store/warehouse.store';
 import type { ContainerListItem } from '@/features/warehouse/types/warehouse.types';
 import type { FacilityListItem } from '@/features/facilities/types/facilities.types';
 import type { ApiError } from '@/shared/lib/api-client';
@@ -17,10 +17,10 @@ import { useTranslation } from 'react-i18next';
 
 export function WarehousePage() {
     const { t } = useTranslation();
-    const { allNodes, allContainers, isLoading, fetchData, createContainer, moveContainer } = useWarehouseStore();
+    const { allNodes, allContainers, isLoading, fetchData, createContainer, moveContainer } = useWarehouse();
     const [currentNodeId, setCurrentNodeId] = useState<string | null>(null);
     const [search, setSearch] = useState('');
-    
+
     // Receipt/Shipment Form State
     const [isReceiptOpen, setIsReceiptOpen] = useState(false);
     const [isShipmentOpen, setIsShipmentOpen] = useState(false);
@@ -32,29 +32,29 @@ export function WarehousePage() {
     // Breadcrumb logic
     const breadcrumbs = useMemo(() => {
         const path: FacilityListItem[] = [];
-        let current = allNodes.find(n => n.id === currentNodeId);
+        let current = allNodes.find((n) => n.id === currentNodeId);
         while (current) {
             path.unshift(current);
             const parentId = current.parentId;
-            current = allNodes.find(n => n.id === parentId);
+            current = allNodes.find((n) => n.id === parentId);
         }
         return path;
     }, [currentNodeId, allNodes]);
 
     // Current Selection logic
     const currentSubNodes = useMemo(() => {
-        return allNodes.filter(n => n.parentId === currentNodeId);
+        return allNodes.filter((n) => n.parentId === currentNodeId);
     }, [currentNodeId, allNodes]);
 
     const currentContainers = useMemo(() => {
-        return allContainers.filter(c => c.locationNodeId === currentNodeId);
+        return allContainers.filter((c) => c.locationNodeId === currentNodeId);
     }, [currentNodeId, allContainers]);
 
     const handleReceipt = async (values: any) => {
         try {
-            await createContainer({ 
-                ...values, 
-                locationNodeId: currentNodeId || undefined 
+            await createContainer({
+                ...values,
+                locationNodeId: currentNodeId || undefined,
             });
             toast.success(t('dashboard.warehouse.messages.receipt_success'));
             setIsReceiptOpen(false);
@@ -84,46 +84,62 @@ export function WarehousePage() {
         }
     };
 
-    const columns: ColumnDef<ContainerListItem>[] = useMemo(() => [
-        { 
-            header: t('dashboard.warehouse.table.lpn'), 
-            accessorKey: 'lpn',
-            cell: (item) => <span className="font-medium text-white group-hover:text-cyan-400 transition-colors">{item.lpn}</span>
-        },
-        { 
-            header: t('dashboard.warehouse.table.type'),
-            cell: (item) => (
-                <Badge variant="outline" className="bg-slate-800 border-slate-700 text-slate-400 font-mono text-[10px]">
-                    {item.type || t('common.status.UNKNOWN')}
-                </Badge>
-            )
-        },
-        { 
-            header: t('dashboard.warehouse.table.created_at'),
-            cell: (item) => <span className="text-xs text-slate-400">{new Date(item.createdAt || Date.now()).toLocaleDateString()}</span>
-        },
-        {
-            header: t('dashboard.warehouse.table.actions'),
-            headerClassName: 'text-right',
-            className: 'text-right',
-            cell: (item) => (
-                <div className="flex items-center justify-end gap-2 pr-0">
-                    <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-white hover:bg-slate-700/50" title={t('dashboard.warehouse.tooltips.qc_check')}>
-                        <PackageCheck className="h-4 w-4" />
-                    </Button>
-                    <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-white hover:bg-slate-700/50" title={t('dashboard.warehouse.tooltips.move')}>
-                        <Move className="h-4 w-4" />
-                    </Button>
-                    <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-red-400 hover:bg-red-500/10" title={t('dashboard.warehouse.tooltips.remove')} id={`delete-container-${item.id}`}>
-                        <LogOut className="h-4 w-4" />
-                    </Button>
-                </div>
-            )
-        }
-    ], [t]);
+    const columns: ColumnDef<ContainerListItem>[] = useMemo(
+        () => [
+            {
+                header: t('dashboard.warehouse.table.lpn'),
+                accessorKey: 'lpn',
+                cell: (item) => <span className="font-medium text-white group-hover:text-cyan-400 transition-colors">{item.lpn}</span>,
+            },
+            {
+                header: t('dashboard.warehouse.table.type'),
+                cell: (item) => (
+                    <Badge variant="outline" className="bg-slate-800 border-slate-700 text-slate-400 font-mono text-[10px]">
+                        {item.type || t('common.status.UNKNOWN')}
+                    </Badge>
+                ),
+            },
+            {
+                header: t('dashboard.warehouse.table.created_at'),
+                cell: (item) => <span className="text-xs text-slate-400">{new Date(item.createdAt || Date.now()).toLocaleDateString()}</span>,
+            },
+            {
+                header: t('dashboard.warehouse.table.actions'),
+                headerClassName: 'text-right',
+                className: 'text-right',
+                cell: (item) => (
+                    <div className="flex items-center justify-end gap-2 pr-0">
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8 text-slate-400 hover:text-white hover:bg-slate-700/50"
+                            title={t('dashboard.warehouse.tooltips.qc_check')}>
+                            <PackageCheck className="h-4 w-4" />
+                        </Button>
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8 text-slate-400 hover:text-white hover:bg-slate-700/50"
+                            title={t('dashboard.warehouse.tooltips.move')}>
+                            <Move className="h-4 w-4" />
+                        </Button>
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8 text-slate-400 hover:text-red-400 hover:bg-red-500/10"
+                            title={t('dashboard.warehouse.tooltips.remove')}
+                            id={`delete-container-${item.id}`}>
+                            <LogOut className="h-4 w-4" />
+                        </Button>
+                    </div>
+                ),
+            },
+        ],
+        [t],
+    );
 
     const filteredContainers = useMemo(() => {
-        return currentContainers.filter(c => c.lpn.toLowerCase().includes(search.toLowerCase()));
+        return currentContainers.filter((c) => c.lpn.toLowerCase().includes(search.toLowerCase()));
     }, [currentContainers, search]);
 
     return (
@@ -136,17 +152,18 @@ export function WarehousePage() {
                         {t('dashboard.warehouse.title')}
                     </h1>
                     <p className="text-slate-400">{t('dashboard.warehouse.description')}</p>
+                </div>
+                <div className="flex items-center gap-3 shrink-0">
                     <Button
                         id="new-receipt-button"
-                        className="gap-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 border-0 shadow-lg shadow-emerald-500/20"
+                        className="gap-2 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 border-0 shadow-lg shadow-cyan-500/20"
                         onClick={() => setIsReceiptOpen(true)}>
                         <Plus className="h-4 w-4" />
                         <span>{t('dashboard.warehouse.new_receipt')}</span>
                     </Button>
                     <Button
                         id="new-shipment-button"
-                        variant="outline"
-                        className="gap-2 bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800"
+                        className="gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 border-0 shadow-lg shadow-indigo-500/20"
                         onClick={() => setIsShipmentOpen(true)}>
                         <Send className="h-4 w-4" />
                         <span>{t('dashboard.warehouse.new_shipment')}</span>
@@ -156,19 +173,17 @@ export function WarehousePage() {
 
             {/* Breadcrumbs */}
             <nav className="flex items-center gap-2 text-sm bg-slate-900/40 p-3 rounded-lg border border-slate-800/50">
-                <button 
+                <button
                     onClick={() => setCurrentNodeId(null)}
-                    className={cn("hover:text-cyan-400 transition-colors", !currentNodeId ? "text-cyan-400 font-bold" : "text-slate-400")}
-                >
+                    className={cn('hover:text-cyan-400 transition-colors', !currentNodeId ? 'text-cyan-400 font-bold' : 'text-slate-400')}>
                     {t('dashboard.warehouse.root_storage')}
                 </button>
                 {breadcrumbs.map((node) => (
                     <div key={node.id} className="flex items-center gap-2">
                         <ChevronRight className="h-4 w-4 text-slate-600" />
-                        <button 
+                        <button
                             onClick={() => setCurrentNodeId(node.id)}
-                            className={cn("hover:text-cyan-400 transition-colors", currentNodeId === node.id ? "text-cyan-400 font-bold" : "text-slate-400")}
-                        >
+                            className={cn('hover:text-cyan-400 transition-colors', currentNodeId === node.id ? 'text-cyan-400 font-bold' : 'text-slate-400')}>
                             {node.name}
                         </button>
                     </div>
@@ -212,12 +227,11 @@ export function WarehousePage() {
                             </div>
                         ) : (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4">
-                                {currentSubNodes.map(node => (
+                                {currentSubNodes.map((node) => (
                                     <button
                                         key={node.id}
                                         onClick={() => setCurrentNodeId(node.id)}
-                                        className="flex items-center justify-between p-4 rounded-xl bg-slate-800/40 border border-slate-700/50 hover:border-cyan-500/50 hover:bg-slate-800/80 transition-all group group"
-                                    >
+                                        className="flex items-center justify-between p-4 rounded-xl bg-slate-800/40 border border-slate-700/50 hover:border-cyan-500/50 hover:bg-slate-800/80 transition-all group group">
                                         <div className="flex items-center gap-3">
                                             <div className="p-2 rounded-lg bg-slate-900 border border-slate-700 group-hover:bg-cyan-500/10 group-hover:border-cyan-500/20 transition-all">
                                                 <Box className="h-5 w-5 text-slate-400 group-hover:text-cyan-400" />
@@ -244,10 +258,10 @@ export function WarehousePage() {
                         </CardTitle>
                         <div className="relative w-full sm:w-64">
                             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500" />
-                            <Input 
+                            <Input
                                 placeholder={t('dashboard.warehouse.search_placeholder')}
-                                value={search} 
-                                onChange={(e) => setSearch(e.target.value)} 
+                                value={search}
+                                onChange={(e) => setSearch(e.target.value)}
                                 className="pl-9 h-9 bg-slate-950/50 border-slate-700"
                             />
                         </div>
@@ -270,8 +284,18 @@ export function WarehousePage() {
                     { name: 'item', label: t('dashboard.warehouse.receipt_modal.fields.item'), required: true },
                     { name: 'quantity', label: t('dashboard.warehouse.receipt_modal.fields.quantity'), required: true, type: 'number' },
                     { name: 'source', label: t('dashboard.warehouse.receipt_modal.fields.source'), required: true },
-                    { name: 'expectedDate', label: t('dashboard.warehouse.receipt_modal.fields.expected_date'), type: 'date', hint: t('dashboard.warehouse.receipt_modal.fields.expected_date_hint') },
-                    { name: 'actualDate', label: t('dashboard.warehouse.receipt_modal.fields.actual_date'), type: 'date', hint: t('dashboard.warehouse.receipt_modal.fields.actual_date_hint') },
+                    {
+                        name: 'expectedDate',
+                        label: t('dashboard.warehouse.receipt_modal.fields.expected_date'),
+                        type: 'date',
+                        hint: t('dashboard.warehouse.receipt_modal.fields.expected_date_hint'),
+                    },
+                    {
+                        name: 'actualDate',
+                        label: t('dashboard.warehouse.receipt_modal.fields.actual_date'),
+                        type: 'date',
+                        hint: t('dashboard.warehouse.receipt_modal.fields.actual_date_hint'),
+                    },
                     { name: 'type', label: t('dashboard.warehouse.receipt_modal.fields.type'), hint: t('dashboard.warehouse.receipt_modal.fields.type_hint') },
                 ]}
                 onSubmit={handleReceipt}
@@ -288,7 +312,12 @@ export function WarehousePage() {
                 fields={[
                     { name: 'lpn', label: t('dashboard.warehouse.shipment_modal.fields.lpn'), required: true },
                     { name: 'quantity', label: t('dashboard.warehouse.shipment_modal.fields.quantity'), required: true, type: 'number' },
-                    { name: 'destination', label: t('dashboard.warehouse.shipment_modal.fields.destination'), required: true, hint: t('dashboard.warehouse.shipment_modal.fields.destination_hint') },
+                    {
+                        name: 'destination',
+                        label: t('dashboard.warehouse.shipment_modal.fields.destination'),
+                        required: true,
+                        hint: t('dashboard.warehouse.shipment_modal.fields.destination_hint'),
+                    },
                     { name: 'expectedDate', label: t('dashboard.warehouse.shipment_modal.fields.expected_date'), type: 'date' },
                     { name: 'actualDate', label: t('dashboard.warehouse.shipment_modal.fields.actual_date'), type: 'date' },
                 ]}

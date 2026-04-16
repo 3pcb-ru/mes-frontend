@@ -51,9 +51,15 @@ export function WorkOrdersPage() {
     const handleCreate = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
+            if (!formData.bomRevisionId) {
+                toast.error(t('dashboard.production.messages.select_bom_required'));
+                return;
+            }
+
             await workOrdersService.createWorkOrder({
-                ...formData,
+                bomRevisionId: formData.bomRevisionId,
                 targetQuantity: Number(formData.targetQuantity),
+                plannedStartDate: formData.plannedStartDate || undefined,
             });
             toast.success(t('dashboard.production.messages.create_success'));
             setIsDrawerOpen(false);
