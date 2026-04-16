@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { X, Send, Sparkles, Loader2, Save, Check, Layers } from 'lucide-react';
+import { X, Send, Sparkles, Loader2, Save, Check, Layers, HelpCircle, Info, ShieldAlert, BookOpen } from 'lucide-react';
 import { Button } from '@/shared/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/shared/components/ui/card';
 import { Input } from '@/shared/components/ui/input';
@@ -16,6 +16,7 @@ export const AiChatComponent = () => {
     const [step, setStep] = useState<'chat' | 'preview'>('chat');
     const [error, setError] = useState<string | null>(null);
     const [isBlocked, setIsBlocked] = useState(false);
+    const [showHelp, setShowHelp] = useState(false);
 
     const { isGenerating, currentLayout, generateLayout, savePage, coolDownUntil } = useVibeStore();
     const scrollRef = useRef<HTMLDivElement>(null);
@@ -161,13 +162,86 @@ export const AiChatComponent = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)} className="text-slate-500 hover:text-white hover:bg-slate-800/50">
-                                    <X className="h-4 w-4" />
-                                </Button>
+                                <div className="flex items-center gap-1">
+                                    <Button 
+                                        variant="ghost" 
+                                        size="icon" 
+                                        onClick={() => setShowHelp(!showHelp)} 
+                                        className={cn("h-8 w-8 text-slate-500 hover:text-cyan-400 hover:bg-cyan-500/10", showHelp && "text-cyan-400 bg-cyan-500/10")}
+                                    >
+                                        <HelpCircle className="h-4 w-4" />
+                                    </Button>
+                                    <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)} className="text-slate-500 hover:text-white hover:bg-slate-800/50">
+                                        <X className="h-4 w-4" />
+                                    </Button>
+                                </div>
                             </CardHeader>
 
                             <CardContent className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-slate-800 relative z-10" ref={scrollRef}>
-                                {isBlocked ? (
+                                <AnimatePresence mode="wait">
+                                    {showHelp ? (
+                                        <motion.div 
+                                            key="help"
+                                            initial={{ opacity: 0, x: 20 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                            exit={{ opacity: 0, x: -20 }}
+                                            className="space-y-6 pt-2"
+                                        >
+                                            <div className="flex items-center gap-2 text-cyan-400 border-b border-slate-800 pb-3">
+                                                <BookOpen className="h-4 w-4" />
+                                                <h3 className="text-xs font-bold uppercase tracking-widest">Protocol Guide</h3>
+                                            </div>
+
+                                            <div className="space-y-4">
+                                                <section className="space-y-2">
+                                                    <div className="flex items-center gap-2 text-[10px] font-bold text-slate-300 uppercase tracking-tighter">
+                                                        <ShieldAlert className="h-3 w-3 text-red-500" />
+                                                        Security Policy (No-Code)
+                                                    </div>
+                                                    <p className="text-[10px] text-slate-500 leading-relaxed italic">
+                                                        The agent is an **Architect**, not a coder. It generates layout configurations, not raw software logic.
+                                                    </p>
+                                                    <ul className="text-[10px] text-slate-400 space-y-1 list-disc pl-4">
+                                                        <li>Avoid technical terms: `script`, `function`, `eval`.</li>
+                                                        <li>Do not request raw `.env`, `.sh`, or `.js` file contents.</li>
+                                                        <li>The agent will refuse to generate executable logic for safety.</li>
+                                                    </ul>
+                                                </section>
+
+                                                <section className="space-y-2">
+                                                    <div className="flex items-center gap-2 text-[10px] font-bold text-slate-300 uppercase tracking-tighter">
+                                                        <Sparkles className="h-3 w-3 text-cyan-500" />
+                                                        Refined Prompting
+                                                    </div>
+                                                    <p className="text-[10px] text-slate-400 leading-relaxed">
+                                                        Focus on **intent** and **visuals**. Use descriptive sentences like:
+                                                    </p>
+                                                    <div className="bg-slate-900 p-2 rounded-lg text-[9px] font-mono text-cyan-400/80 border border-slate-800 italic">
+                                                        "Create a production monitor with a bar chart for yields and a table for active work orders."
+                                                    </div>
+                                                </section>
+
+                                                <section className="space-y-2">
+                                                    <div className="flex items-center gap-2 text-[10px] font-bold text-slate-300 uppercase tracking-tighter">
+                                                        <Layers className="h-3 w-3 text-emerald-500" />
+                                                        Manifest Limitation
+                                                    </div>
+                                                    <p className="text-[10px] text-slate-400 leading-relaxed">
+                                                        The agent can only use components predefined in the system manifest. It cannot invent new React components on the fly.
+                                                    </p>
+                                                </section>
+                                            </div>
+
+                                            <Button 
+                                                variant="outline" 
+                                                size="sm" 
+                                                onClick={() => setShowHelp(false)}
+                                                className="w-full h-8 text-[10px] uppercase font-bold border-slate-800 hover:bg-slate-900 text-slate-500 hover:text-white"
+                                            >
+                                                Return to Protocol Chat
+                                            </Button>
+                                        </motion.div>
+                                    ) : isBlocked ? (
                                     <div className="h-full flex flex-col items-center justify-center text-center space-y-6 pt-10">
                                         <div className="h-16 w-16 rounded-full bg-red-500/10 flex items-center justify-center border border-red-500/20">
                                             <X className="h-8 w-8 text-red-500" />
@@ -277,6 +351,7 @@ export const AiChatComponent = () => {
                                         </div>
                                     </div>
                                 )}
+                                </AnimatePresence>
                             </CardContent>
 
                             <CardFooter className="p-4 border-t border-slate-800/50 relative z-10 flex flex-col gap-3">
