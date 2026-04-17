@@ -1,6 +1,7 @@
 import { apiClient } from '@/shared/lib/api-client';
 import { z } from 'zod';
 import { ProductSchema, type Product, type CreateProductDto, type UpdateProductDto } from '../types/products.schema';
+import { BomRevisionSchema, BomMaterialSchema, type BomRevision, type BomMaterial } from '../types/bom.schema';
 
 const PRODUCTS_BASE = '/products';
 
@@ -38,5 +39,19 @@ export const productsService = {
      */
     deleteProduct: async (id: string): Promise<void> => {
         return apiClient.delete(`${PRODUCTS_BASE}/${id}`);
+    },
+
+    /**
+     * List revisions for a product
+     */
+    listRevisions: async (productId: string): Promise<BomRevision[]> => {
+        return apiClient.get<BomRevision[]>(`${PRODUCTS_BASE}/${productId}/revisions`, {}, z.array(BomRevisionSchema));
+    },
+
+    /**
+     * List materials for a revision
+     */
+    listMaterials: async (productId: string, revisionId: string): Promise<BomMaterial[]> => {
+        return apiClient.get<BomMaterial[]>(`${PRODUCTS_BASE}/${productId}/revisions/${revisionId}/materials`, {}, z.array(BomMaterialSchema));
     },
 };

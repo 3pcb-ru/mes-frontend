@@ -716,8 +716,23 @@
             "table": {
                 "sku": "SKU",
                 "name": "Name",
+                "active_revision": "Active Revision",
+                "revisions_count": "Total Revisions",
+                "status": "Status",
+                "version": "Version",
+                "mpn": "MPN",
+                "manufacturer": "Manufacturer",
+                "alternatives": "Alternatives",
+                "designators": "Designators",
+                "quantity": "Quantity",
+                "materials": "Materials",
                 "organization": "Organization",
                 "actions": "Actions"
+            },
+            "breadcrumbs": {
+                "products": "Products",
+                "revisions": "Revisions of {{name}}",
+                "materials": "Materials of {{version}}"
             },
             "drawer": {
                 "title_create": "Create Product",

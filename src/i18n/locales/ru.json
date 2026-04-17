@@ -751,8 +751,23 @@
             "table": {
                 "sku": "Артикул (SKU)",
                 "name": "Название",
+                "active_revision": "Активная ревизия",
+                "revisions_count": "Всего ревизий",
+                "status": "Статус",
+                "version": "Версия",
+                "mpn": "MPN",
+                "manufacturer": "Производитель",
+                "alternatives": "Альтернативы",
+                "designators": "Десигнаторы",
+                "quantity": "Количество",
+                "materials": "Материалы",
                 "organization": "Организация",
                 "actions": "Действия"
+            },
+            "breadcrumbs": {
+                "products": "Продукты",
+                "revisions": "Ревизии {{name}}",
+                "materials": "Материалы {{version}}"
             },
             "drawer": {
                 "title_create": "Создать продукт",

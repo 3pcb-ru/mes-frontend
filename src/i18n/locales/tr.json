@@ -751,8 +751,23 @@
             "table": {
                 "sku": "Stok Kodu (SKU)",
                 "name": "Ad",
+                "active_revision": "Aktif Revizyon",
+                "revisions_count": "Toplam Revizyon",
+                "status": "Durum",
+                "version": "Versiyon",
+                "mpn": "MPN",
+                "manufacturer": "Üretici",
+                "alternatives": "Alternatifler",
+                "designators": "Dizgiciler",
+                "quantity": "Miktar",
+                "materials": "Malzemeler",
                 "organization": "Organizasyon",
                 "actions": "İşlemler"
+            },
+            "breadcrumbs": {
+                "products": "Ürünler",
+                "revisions": "{{name}} Revizyonları",
+                "materials": "{{version}} Malzemeleri"
             },
             "drawer": {
                 "title_create": "Ürün Oluştur",
