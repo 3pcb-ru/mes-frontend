@@ -45,7 +45,10 @@ export const useVibeStore = create<VibeState>()(
             generateLayout: async (prompt, apiManifest, componentsManifest) => {
                 const { coolDownUntil } = get();
                 if (coolDownUntil && coolDownUntil > Date.now()) {
-                    throw new Error(`AI is cooling down. Please wait ${Math.ceil((coolDownUntil - Date.now()) / 1000)}s.`);
+                    const seconds = Math.ceil((coolDownUntil - Date.now()) / 1000);
+                    const error = new Error('VIBE_COOLDOWN_ACTIVE');
+                    (error as any).seconds = seconds;
+                    throw error;
                 }
 
                 set({ isGenerating: true });

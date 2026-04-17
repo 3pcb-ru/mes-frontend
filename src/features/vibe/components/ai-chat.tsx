@@ -82,7 +82,11 @@ export const AiChatComponent = () => {
             await generateLayout(prompt, apiManifest, componentsManifest);
             setStep('preview');
         } catch (err: any) {
-            const message = err.message || t('dashboard.vibe.agent.labels.fail_desc', 'Architecting failed. Please check your configuration.');
+            let message = err.message || t('dashboard.vibe.agent.labels.fail_desc', 'Architecting failed. Please check your configuration.');
+
+            if (err.message === 'VIBE_COOLDOWN_ACTIVE') {
+                message = t('dashboard.vibe.general.errors.cooldown', { seconds: err.seconds || secondsLeft });
+            }
 
             // Handle Blocking
             if (message.includes('Restricted') || message.includes('failed attempts')) {
@@ -277,7 +281,7 @@ export const AiChatComponent = () => {
                                                 </p>
                                             </div>
                                             <div className="p-3 bg-slate-900 rounded-xl border border-slate-800 w-full text-[10px] text-slate-500 italic">
-                                                Security Incident ID: AI-G-{Math.random().toString(36).substr(2, 9).toUpperCase()}
+                                                {t('dashboard.vibe.general.security.incident_id', 'Security Incident ID')}: AI-G-{Math.random().toString(36).substr(2, 9).toUpperCase()}
                                             </div>
                                         </div>
                                     ) : step === 'chat' ? (
@@ -369,7 +373,7 @@ export const AiChatComponent = () => {
                                                                     ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500/40 shadow-lg shadow-cyan-500/5'
                                                                     : 'bg-slate-900/50 text-slate-500 border-slate-800 hover:text-slate-300',
                                                             )}>
-                                                            {cat}
+                                                            {t(`dashboard.sidebar.nav.${cat.toLowerCase()}`, cat)}
                                                         </button>
                                                     ))}
                                                 </div>

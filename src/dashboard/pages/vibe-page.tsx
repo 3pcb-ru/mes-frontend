@@ -1,5 +1,6 @@
 import { useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useVibeStore } from '@/features/vibe/store/vibe.store';
 import { VibeRenderer } from '@/features/vibe/components/vibe-renderer';
 import { Skeleton } from '@/shared/components/ui/skeleton';
@@ -7,6 +8,7 @@ import { Button } from '@/shared/components/ui/button';
 import { Trash2, Share2, Info } from 'lucide-react';
 
 export const VibePage = () => {
+    const { t } = useTranslation();
     const { id } = useParams<{ id: string }>();
     const { pages, fetchPages, deletePage } = useVibeStore();
 
@@ -39,10 +41,10 @@ export const VibePage = () => {
                     <div>
                         <h1 className="text-2xl font-bold text-white tracking-tight">{page.name}</h1>
                         <p className="text-sm text-slate-400">
-                            Category: <span className="text-cyan-400 font-medium">{page.category}</span>
+                            {t('dashboard.vibe.general.labels.category', 'Category:')} <span className="text-cyan-400 font-medium">{page.category}</span>
                             {page.isOwnerCreated && (
                                 <span className="ml-3 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400 text-[10px] font-bold uppercase border border-purple-500/20">
-                                    <Share2 className="h-3 w-3" /> Shared by Owner
+                                    <Share2 className="h-3 w-3" /> {t('dashboard.vibe.general.labels.shared_by_owner', 'Shared by Owner')}
                                 </span>
                             )}
                         </p>
@@ -50,20 +52,20 @@ export const VibePage = () => {
                 </div>
 
                 <div className="flex items-center gap-2">
-                    <Button variant="outline" size="sm" className="bg-slate-900/50 border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800" title="Page info">
+                    <Button variant="outline" size="sm" className="bg-slate-900/50 border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800" title={t('dashboard.vibe.general.actions.page_info', 'Page info')}>
                         <Info className="h-4 w-4" />
                     </Button>
                     <Button
                         variant="destructive"
                         size="sm"
                         onClick={() => {
-                            if (confirm('Are you sure you want to delete this custom page?')) {
+                            if (confirm(t('common.actions.confirm_delete_description', { item: t('dashboard.vibe.general.labels.custom_page', 'custom page') }))) {
                                 deletePage(page.id);
                                 window.location.href = '/dashboard';
                             }
                         }}
                         className="bg-red-500/10 text-red-400 border border-red-500/20 hover:bg-red-500 hover:text-white transition-all duration-300">
-                        <Trash2 className="h-4 w-4 mr-2" /> Delete
+                        <Trash2 className="h-4 w-4 mr-2" /> {t('common.actions.delete', 'Delete')}
                     </Button>
                 </div>
             </div>
@@ -71,7 +73,9 @@ export const VibePage = () => {
             {/* Renderer */}
             <VibeRenderer config={page.config} />
 
-            <div className="text-center text-[10px] text-slate-600 uppercase tracking-widest py-4">Rendered via MES Vibe Agent Protocol v1.0</div>
+            <div className="text-center text-[10px] text-slate-600 uppercase tracking-widest py-4">
+                {t('dashboard.vibe.general.labels.protocol_version', 'Rendered via MES Vibe Agent Protocol v1.0')}
+            </div>
         </div>
     );
 };

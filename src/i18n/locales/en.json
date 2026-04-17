@@ -340,7 +340,8 @@
                 "products": "Bill of Materials",
                 "users": "Users & Roles",
                 "facilities": "Layout",
-                "settings": "Settings"
+                "settings": "Settings",
+                "custom": "Custom"
             },
             "vibe": {
                 "agent": {
@@ -364,7 +365,8 @@
                         "fail_desc": "Architecting failed. Please check your configuration.",
                         "resource_limit": "Resource Limit",
                         "system_overload": "System Overload",
-                        "cooldown_hint": "Protocol limit reached (Free Tier). The agent is recalibrating sensors. Please wait."
+                        "cooldown_hint": "Protocol limit reached (Free Tier). The agent is recalibrating sensors. Please wait.",
+                        "retry_hint": "Action: Wait 30s and re-submit protocol"
                     },
                     "actions": {
                         "save_page": "Save Page",
@@ -384,6 +386,28 @@
                         "prompting_example": "\"Create a production monitor with a bar chart for yields and a table for active work orders.\"",
                         "manifest_title": "Manifest Limitation",
                         "manifest_desc": "The agent can only use components predefined in the system manifest. It cannot invent new React components on the fly."
+                    }
+                },
+                "general": {
+                    "labels": {
+                        "category": "Category",
+                        "shared_by_owner": "Shared by Owner",
+                        "protocol_version": "Rendered via MES Vibe Agent Protocol v1.0",
+                        "from_last_month": "{{trend}}% from last month",
+                        "custom_page": "custom page"
+                    },
+                    "actions": {
+                        "page_info": "Page info"
+                    },
+                    "messages": {
+                        "confirm_delete_page": "Are you sure you want to delete this custom page?"
+                    },
+                    "errors": {
+                        "unknown_component": "Unknown Component: {{name}}",
+                        "cooldown": "AI is cooling down. Please wait {{seconds}}s."
+                    },
+                    "security": {
+                        "incident_id": "Security Incident ID"
                     }
                 }
             }

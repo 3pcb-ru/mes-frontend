@@ -375,7 +375,8 @@
                 "products": "Ürün Ağacı",
                 "users": "Kullanıcılar ve Roller",
                 "facilities": "Tesis Düzeni",
-                "settings": "Ayarlar"
+                "settings": "Ayarlar",
+                "custom": "Özel"
             },
             "vibe": {
                 "agent": {
@@ -399,7 +400,8 @@
                         "fail_desc": "Mimari oluşturma başarısız oldu. Lütfen yapılandırmanızı kontrol edin.",
                         "resource_limit": "Kaynak Sınırı",
                         "system_overload": "Sistem Aşırı Yükü",
-                        "cooldown_hint": "Protokol sınırına ulaşıldı (Ücretsiz Plan). Ajan sensörleri yeniden kalibre ediyor. Lütfen bekleyin."
+                        "cooldown_hint": "Protokol sınırına ulaşıldı (Ücretsiz Plan). Ajan sensörleri yeniden kalibre ediyor. Lütfen bekleyin.",
+                        "retry_hint": "Eylem: 30 sn bekleyin ve protokolü yeniden gönderin"
                     },
                     "actions": {
                         "save_page": "Sayfayı Kaydet",
@@ -419,6 +421,28 @@
                         "prompting_example": "\"Verimlilik için bir çubuk grafik ve aktif iş emirleri için bir tablo içeren bir üretim monitörü oluştur.\"",
                         "manifest_title": "Manifest Sınırlaması",
                         "manifest_desc": "Ajan yalnızca sistem manifestosunda tanımlanmış bileşenleri kullanabilir. Çalışma anında yeni React bileşenleri icat edemez."
+                    }
+                },
+                "general": {
+                    "labels": {
+                        "category": "Kategori",
+                        "shared_by_owner": "Sahip Tarafından Paylaşıldı",
+                        "protocol_version": "MES Vibe Ajan Protokolü v1.0 ile oluşturuldu",
+                        "from_last_month": "geçen aydan bu yana %{{trend}}",
+                        "custom_page": "özel sayfa"
+                    },
+                    "actions": {
+                        "page_info": "Sayfa bilgisi"
+                    },
+                    "messages": {
+                        "confirm_delete_page": "Bu özel sayfayı silmek istediğinizden emin misiniz?"
+                    },
+                    "errors": {
+                        "unknown_component": "Bilinmeyen Bileşen: {{name}}",
+                        "cooldown": "Yapay zeka soğuyor. Lütfen {{seconds}} sn bekleyin."
+                    },
+                    "security": {
+                        "incident_id": "Güvenlik Olay Kimliği"
                     }
                 }
             }

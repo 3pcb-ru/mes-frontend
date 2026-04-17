@@ -1,28 +1,31 @@
 import React, { useEffect } from 'react';
 import Frame from 'react-frame-component';
+import { useTranslation } from 'react-i18next';
 import { Card, CardHeader, CardTitle, CardContent } from '@/shared/components/ui/card';
 import { Badge } from '@/shared/components/ui/badge';
 import { useNavigate } from 'react-router-dom';
 
 // Component Registry Mapping
 const COMPONENT_REGISTRY: Record<string, React.FC<any>> = {
-    StatCard: ({ title, value, trend, icon }: any) => (
-        <Card className="bg-slate-900/50 border-slate-800 backdrop-blur-sm">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium text-slate-400">{title}</CardTitle>
-                <div className="h-4 w-4 text-cyan-400">{icon}</div>
-            </CardHeader>
-            <CardContent>
-                <div className="text-2xl font-bold text-white">{value}</div>
-                {trend && (
-                    <p className={`text-xs ${trend > 0 ? 'text-emerald-400' : 'text-red-400'}`}>
-                        {trend > 0 ? '+' : ''}
-                        {trend}% from last month
-                    </p>
-                )}
-            </CardContent>
-        </Card>
-    ),
+    StatCard: ({ title, value, trend, icon }: any) => {
+        const { t } = useTranslation();
+        return (
+            <Card className="bg-slate-900/50 border-slate-800 backdrop-blur-sm">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium text-slate-400">{title}</CardTitle>
+                    <div className="h-4 w-4 text-cyan-400">{icon}</div>
+                </CardHeader>
+                <CardContent>
+                    <div className="text-2xl font-bold text-white">{value}</div>
+                    {trend && (
+                        <p className={`text-xs ${trend > 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+                            {t('dashboard.vibe.general.labels.from_last_month', { trend: trend > 0 ? `+${trend}` : trend })}
+                        </p>
+                    )}
+                </CardContent>
+            </Card>
+        );
+    },
     Sectionv1: ({ title, children }: any) => (
         <section className="space-y-4 p-4">
             {title && <h2 className="text-xl font-bold text-white mb-4">{title}</h2>}
@@ -54,6 +57,7 @@ interface VibeRendererProps {
 }
 
 export const VibeRenderer: React.FC<VibeRendererProps> = ({ config }) => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
 
     // Event Bridge: Listen for messages from the iframe
@@ -76,7 +80,11 @@ export const VibeRenderer: React.FC<VibeRendererProps> = ({ config }) => {
     const renderComponent = (item: any) => {
         const Component = COMPONENT_REGISTRY[item.component];
         if (!Component) {
-            return <div className="p-4 border border-dashed border-red-500 text-red-500">Unknown Component: {item.component}</div>;
+            return (
+                <div className="p-4 border border-dashed border-red-500 text-red-500">
+                    {t('dashboard.vibe.general.errors.unknown_component', { name: item.component })}
+                </div>
+            );
         }
 
         // Recursive rendering for children if any
