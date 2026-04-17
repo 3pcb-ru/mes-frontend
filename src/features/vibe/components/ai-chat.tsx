@@ -48,16 +48,44 @@ export const AiChatComponent = () => {
     }, [isGenerating, currentLayout, error]);
 
     const validatePrompt = (text: string): string | null => {
-        if (text.length < 5) return t('dashboard.vibe.agent.labels.validation_too_short', 'Prompt is too short. Please provide a descriptive sentence.');
+        const lowerText = text.toLowerCase();
+        
+        // 1. Minimum Length
+        if (text.trim().length < 5) return t('dashboard.vibe.agent.labels.validation_too_short', 'Prompt is too short. Please provide a descriptive sentence.');
         if (!text.includes(' ')) return t('dashboard.vibe.agent.labels.validation_no_spaces', 'Please use a complete sentence, not just single words.');
 
-        // Basic entropy check for repeated characters
+        // 2. Gibberish & Random Characters (Entropy & Repetition)
         const charCounts: Record<string, number> = {};
-        for (const char of text.toLowerCase()) {
+        for (const char of lowerText) {
             charCounts[char] = (charCounts[char] || 0) + 1;
             if (charCounts[char] > text.length * 0.7 && text.length > 5) {
                 return t('dashboard.vibe.agent.labels.validation_repetitive', 'Please provide meaningful text, not repetitive characters.');
             }
+        }
+        
+        // Consecutive consonants check (naive gibberish check)
+        if (/[bcdfghjklmnpqrstvwxyz]{6,}/.test(lowerText)) {
+            return t('dashboard.vibe.agent.labels.validation_gibberish', 'The request contains sequence of random characters.');
+        }
+
+        // 3. System Probing & Harmful Terms
+        const forbiddenTerms = ['eval', 'script', 'token', 'password', 'api_key', 'process.env', 'inject', 'drop table', '<script>', '.vault'];
+        for (const term of forbiddenTerms) {
+            if (lowerText.includes(term)) {
+                return t('dashboard.vibe.agent.labels.validation_security', 'The request contains forbidden technical keywords or system probing terms.');
+            }
+        }
+
+        // 4. Manufacturing/Dashboard Relevance
+        const relevantKeywords = [
+            'production', 'factory', 'inventory', 'warehouse', 'chart', 'monitor', 'table', 'dashboard', 'report', 
+            'yield', 'work order', 'product', 'facility', 'machine', 'line', 'cell', 'site', 'analytics', 'history',
+            'status', 'execution', 'container', 'ship', 'receive', 'traceability', 'node', 'dashboard', 'monitor'
+        ];
+        
+        const hasKeyword = relevantKeywords.some(keyword => lowerText.includes(keyword));
+        if (!hasKeyword) {
+            return t('dashboard.vibe.agent.labels.validation_relevance', 'Please provide a request related to manufacturing, dashboards, or data visualization.');
         }
 
         return null;
