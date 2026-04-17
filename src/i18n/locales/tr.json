@@ -275,7 +275,14 @@
             "loading": "Yükleniyor...",
             "confirm_delete_title": "{{item}}'i Sil",
             "confirm_delete_description": "Bu işlem geri alınamaz. Bu {{item}}'i silmek istediğinizden emin misiniz?",
-            "deleting": "Siliniyor..."
+            "deleting": "Siliniyor...",
+            "submit": "Gönder",
+            "approve": "Onayla",
+            "activate": "Aktif Et"
+        },
+        "table": {
+            "created_at": "Oluşturulma Tarihi",
+            "actions": "İşlemler"
         },
         "notifications": {
             "title": "Bildirimler",

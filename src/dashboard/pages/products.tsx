@@ -14,14 +14,7 @@ import { Input } from '@/shared/components/ui/input';
 import { TableActions } from '@/shared/components/table-actions';
 import { getModuleActions } from '@/shared/lib/module-actions-config';
 import { useTranslation } from 'react-i18next';
-import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbList,
-    BreadcrumbPage,
-    BreadcrumbSeparator,
-} from '@/shared/components/ui/breadcrumb';
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/shared/components/ui/breadcrumb';
 import { StatusBadge } from '@/shared/components/ui/status-badge';
 
 type ViewMode = 'products' | 'revisions' | 'materials';
@@ -29,7 +22,7 @@ type ViewMode = 'products' | 'revisions' | 'materials';
 export function ProductsPage() {
     const { t } = useTranslation();
     const { items, isLoading, fetchProducts, createProduct, updateProduct, deleteProduct } = useProducts();
-    
+
     // Drill-down state
     const [viewMode, setViewMode] = useState<ViewMode>('products');
     const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -147,6 +140,63 @@ export function ProductsPage() {
         setFormData({});
     };
 
+    // --- REVISION ACTIONS ---
+
+    const handleCreateRevision = async () => {
+        if (!selectedProduct) return;
+        try {
+            await productsService.createRevision(selectedProduct.id, {});
+            toast.success('Revision created');
+            const data = await productsService.listRevisions(selectedProduct.id);
+            setRevisions(data);
+        } catch (err) {
+            const apiError = err as ApiError;
+            toast.error(apiError.message || 'Failed to create revision');
+        }
+    };
+
+    const handleDuplicateRevision = async (revisionId: string) => {
+        if (!selectedProduct) return;
+        try {
+            await productsService.duplicateRevision(selectedProduct.id, revisionId);
+            toast.success('Revision duplicated');
+            const data = await productsService.listRevisions(selectedProduct.id);
+            setRevisions(data);
+        } catch (err) {
+            const apiError = err as ApiError;
+            toast.error(apiError.message || 'Failed to duplicate revision');
+        }
+    };
+
+    const handleDeleteRevision = async (revisionId: string) => {
+        if (!selectedProduct) return;
+        try {
+            await productsService.deleteRevision(selectedProduct.id, revisionId);
+            toast.success('Revision deleted');
+            const data = await productsService.listRevisions(selectedProduct.id);
+            setRevisions(data);
+        } catch (err) {
+            const apiError = err as ApiError;
+            toast.error(apiError.message || 'Failed to delete revision');
+        }
+    };
+
+    const handleStatusTransition = async (revisionId: string, action: 'submit' | 'approve' | 'activate') => {
+        if (!selectedProduct) return;
+        try {
+            if (action === 'submit') await productsService.submitRevision(selectedProduct.id, revisionId);
+            if (action === 'approve') await productsService.approveRevision(selectedProduct.id, revisionId);
+            if (action === 'activate') await productsService.activateRevision(selectedProduct.id, revisionId);
+
+            toast.success(`Revision ${action}ed`);
+            const data = await productsService.listRevisions(selectedProduct.id);
+            setRevisions(data);
+        } catch (err) {
+            const apiError = err as ApiError;
+            toast.error(apiError.message || `Failed to ${action} revision`);
+        }
+    };
+
     const productColumns: ColumnDef<Product>[] = useMemo(
         () => [
             {
@@ -154,35 +204,31 @@ export function ProductsPage() {
                 accessorKey: 'sku',
                 className: 'font-mono text-xs text-slate-400',
             },
-            { 
-                header: t('dashboard.products.table.name'), 
+            {
+                header: t('dashboard.products.table.name'),
                 accessorKey: 'name',
-                className: 'font-medium text-white'
+                className: 'font-medium text-white',
             },
             {
                 header: t('dashboard.products.table.status'),
                 accessorKey: 'status',
-                cell: (item) => <StatusBadge status={item.status || 'draft'} />
+                cell: (item) => <StatusBadge status={item.status || 'draft'} />,
             },
             {
                 header: t('dashboard.products.table.active_revision'),
                 accessorKey: 'activeRevisionVersion',
-                cell: (item) => item.activeRevisionVersion ? <span className="text-cyan-400 font-medium">{item.activeRevisionVersion}</span> : <span className="text-slate-500">—</span>
+                cell: (item) =>
+                    item.activeRevisionVersion ? <span className="text-cyan-400 font-medium">{item.activeRevisionVersion}</span> : <span className="text-slate-500">—</span>,
             },
             {
                 header: t('dashboard.products.table.revisions_count'),
                 accessorKey: 'totalRevisions',
                 cell: (item) => (
-                    <Button 
-                        variant="ghost" 
-                        size="sm" 
-                        onClick={() => handleProductClick(item)}
-                        className="text-cyan-400 hover:text-cyan-300 hover:bg-cyan-500/10 h-8 gap-1.5 px-2"
-                    >
+                    <Button variant="ghost" size="sm" onClick={() => handleProductClick(item)} className="text-cyan-400 hover:text-cyan-300 hover:bg-cyan-500/10 h-8 gap-1.5 px-2">
                         {item.totalRevisions || 0}
                         <ChevronRight className="h-3.5 w-3.5" />
                     </Button>
-                )
+                ),
             },
             {
                 header: t('dashboard.products.table.actions'),
@@ -201,7 +247,7 @@ export function ProductsPage() {
                     ),
             },
         ],
-        [t, moduleActions]
+        [t, moduleActions],
     );
 
     const revisionColumns: ColumnDef<BomRevision>[] = useMemo(
@@ -210,25 +256,15 @@ export function ProductsPage() {
                 header: t('dashboard.products.table.version'),
                 accessorKey: 'version',
                 cell: (item) => (
-                    <Button 
-                        variant="link" 
-                        className="p-0 h-auto text-cyan-400 hover:text-cyan-300 font-bold"
-                        onClick={() => handleRevisionClick(item)}
-                    >
+                    <Button variant="link" className="p-0 h-auto text-cyan-400 hover:text-cyan-300 font-bold" onClick={() => handleRevisionClick(item)}>
                         {item.version}
                     </Button>
-                )
+                ),
             },
             {
                 header: t('dashboard.products.table.status'),
                 accessorKey: 'status',
-                cell: (item) => <StatusBadge status={item.status} />
-            },
-            {
-                header: 'ID',
-                accessorKey: 'id',
-                className: 'font-mono text-xs text-slate-500 hidden lg:table-cell',
-                headerClassName: 'hidden lg:table-cell',
+                cell: (item) => <StatusBadge status={item.status} />,
             },
             {
                 header: t('common.table.created_at'),
@@ -236,9 +272,54 @@ export function ProductsPage() {
                 cell: (item) => new Date(item.createdAt).toLocaleDateString(),
                 className: 'text-slate-400 text-sm hidden sm:table-cell',
                 headerClassName: 'hidden sm:table-cell',
-            }
+            },
+            {
+                header: t('common.table.actions'),
+                headerClassName: 'text-right pr-4',
+                className: 'text-right',
+                cell: (item) => (
+                    <div className="flex justify-end items-center gap-2">
+                        {item.status === 'draft' && (
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => handleStatusTransition(item.id, 'submit')}
+                                className="h-7 text-[10px] px-2 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10">
+                                {t('common.actions.submit') || 'Submit'}
+                            </Button>
+                        )}
+                        {item.status === 'submitted' && (
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => handleStatusTransition(item.id, 'approve')}
+                                className="h-7 text-[10px] px-2 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10">
+                                {t('common.actions.approve') || 'Approve'}
+                            </Button>
+                        )}
+                        {item.status === 'approved' && (
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => handleStatusTransition(item.id, 'activate')}
+                                className="h-7 text-[10px] px-2 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10">
+                                {t('common.actions.activate') || 'Activate'}
+                            </Button>
+                        )}
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => handleDuplicateRevision(item.id)}
+                            className="h-8 w-8 text-cyan-400 hover:bg-cyan-500/10"
+                            title="Duplicate">
+                            <Plus className="h-4 w-4" />
+                        </Button>
+                        {item.status === 'draft' && <TableActions id={item.id} onDelete={handleDeleteRevision} itemName="Revision" />}
+                    </div>
+                ),
+            },
         ],
-        [t]
+        [t, handleStatusTransition, handleDuplicateRevision, handleDeleteRevision],
     );
 
     const materialColumns: ColumnDef<BomMaterial>[] = useMemo(
@@ -272,9 +353,9 @@ export function ProductsPage() {
                 cell: () => <span className="text-slate-500">—</span>,
                 className: 'hidden lg:table-cell',
                 headerClassName: 'hidden lg:table-cell',
-            }
+            },
         ],
-        [t]
+        [t],
     );
 
     const currentTitle = useMemo(() => {
@@ -304,10 +385,7 @@ export function ProductsPage() {
                 <Breadcrumb>
                     <BreadcrumbList>
                         <BreadcrumbItem>
-                            <BreadcrumbLink 
-                                onClick={handleBackToProducts}
-                                className="cursor-pointer"
-                            >
+                            <BreadcrumbLink onClick={handleBackToProducts} className="cursor-pointer">
                                 {t('dashboard.products.breadcrumbs.products')}
                             </BreadcrumbLink>
                         </BreadcrumbItem>
@@ -318,10 +396,7 @@ export function ProductsPage() {
                                     {viewMode === 'revisions' ? (
                                         <BreadcrumbPage>{selectedProduct.name}</BreadcrumbPage>
                                     ) : (
-                                        <BreadcrumbLink 
-                                            onClick={handleBackToRevisions}
-                                            className="cursor-pointer"
-                                        >
+                                        <BreadcrumbLink onClick={handleBackToRevisions} className="cursor-pointer">
                                             {selectedProduct.name}
                                         </BreadcrumbLink>
                                     )}
@@ -342,27 +417,32 @@ export function ProductsPage() {
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mt-2">
                     <div className="flex items-center gap-4">
                         {viewMode !== 'products' && (
-                            <Button 
-                                variant="outline" 
-                                size="icon" 
+                            <Button
+                                variant="outline"
+                                size="icon"
                                 onClick={viewMode === 'materials' ? handleBackToRevisions : handleBackToProducts}
-                                className="h-10 w-10 border-slate-700 bg-slate-800/50 hover:bg-slate-700 hover:text-white shrink-0"
-                            >
+                                className="h-10 w-10 border-slate-700 bg-slate-800/50 hover:bg-slate-700 hover:text-white shrink-0">
                                 <ArrowLeft className="h-5 w-5" />
                             </Button>
                         )}
                         <div>
                             <h1 className="text-3xl font-bold text-white antialiased">{currentTitle}</h1>
-                            {viewMode === 'products' && (
-                                <p className="text-slate-400 mt-1">{t('dashboard.products.description')}</p>
-                            )}
+                            {viewMode === 'products' && <p className="text-slate-400 mt-1">{t('dashboard.products.description')}</p>}
                         </div>
                     </div>
-                    {viewMode === 'products' && (
+                    {(viewMode === 'products' || viewMode === 'revisions') && (
                         <div className="flex items-center gap-3 shrink min-w-0">
-                            <Button id="add-product-button" onClick={() => setIsDrawerOpen(true)} className="flex items-center gap-2 whitespace-nowrap shrink-0">
-                                <Plus className="h-4 w-4" /> {t('dashboard.products.add_button')}
-                            </Button>
+                            {viewMode === 'products' ? (
+                                <Button id="add-product-button" onClick={() => setIsDrawerOpen(true)} className="flex items-center gap-2 whitespace-nowrap shrink-0">
+                                    <Plus className="h-4 w-4" /> {t('dashboard.products.add_button')}
+                                </Button>
+                            ) : (
+                                <Button id="add-revision-button" onClick={handleCreateRevision} className="flex items-center gap-2 whitespace-nowrap shrink-0">
+                                    <Plus className="h-4 w-4" /> {t('common.actions.create') || 'Create'}{' '}
+                                    {t('dashboard.products.breadcrumbs.revisions', { name: '' }).replace(': ', '')}
+                                    {/* Small hack for label, I'll use a clearer one if possible */}
+                                </Button>
+                            )}
                         </div>
                     )}
                 </div>
@@ -371,7 +451,7 @@ export function ProductsPage() {
             <div className="flex-1 min-h-0 bg-slate-900/50 border border-slate-700/50 rounded-lg p-4 overflow-y-auto">
                 <DataTableGrid
                     data={filteredItems as any}
-                    columns={viewMode === 'products' ? productColumns : viewMode === 'revisions' ? revisionColumns : materialColumns as any}
+                    columns={viewMode === 'products' ? productColumns : viewMode === 'revisions' ? revisionColumns : (materialColumns as any)}
                     isLoading={isLoading || isLoadingSub}
                     onSearch={setSearchQuery}
                     searchPlaceholder={t('dashboard.products.search_placeholder')}

@@ -275,7 +275,14 @@
             "loading": "Загрузка...",
             "confirm_delete_title": "Удалить {{item}}",
             "confirm_delete_description": "Это действие нельзя отменить. Вы уверены, что хотите удалить этот {{item}}?",
-            "deleting": "Удаление..."
+            "deleting": "Удаление...",
+            "submit": "Отправить",
+            "approve": "Одобрить",
+            "activate": "Активировать"
+        },
+        "table": {
+            "created_at": "Дата создания",
+            "actions": "Действия"
         },
         "notifications": {
             "title": "Уведомления",

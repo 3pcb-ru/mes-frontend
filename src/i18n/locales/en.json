@@ -263,7 +263,14 @@
             "loading": "Loading...",
             "confirm_delete_title": "Delete {{item}}",
             "confirm_delete_description": "This action cannot be undone. Are you sure you want to delete this {{item}}?",
-            "deleting": "Deleting..."
+            "deleting": "Deleting...",
+            "submit": "Submit",
+            "approve": "Approve",
+            "activate": "Activate"
+        },
+        "table": {
+            "created_at": "Created At",
+            "actions": "Actions"
         },
         "notifications": {
             "title": "Notifications",
