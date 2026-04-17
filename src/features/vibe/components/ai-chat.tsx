@@ -351,7 +351,7 @@ export const AiChatComponent = () => {
                                             {error && (
                                                 <div className={cn(
                                                     "p-3 rounded-2xl text-xs antialiased leading-relaxed transition-all duration-300 animate-in fade-in slide-in-from-top-2",
-                                                    (error.includes('quota') || error.includes('limit')) 
+                                                    (error.includes('quota') || error.includes('limit') || error.includes('Not Found') || error.includes('404')) 
                                                         ? "bg-amber-500/10 border border-amber-500/20 text-amber-400"
                                                         : "bg-red-500/10 border border-red-500/20 text-red-400"
                                                 )}>
@@ -363,19 +363,21 @@ export const AiChatComponent = () => {
                                                         <p className="font-bold uppercase tracking-tighter">
                                                             {error.includes('quota') || error.includes('limit')
                                                                 ? t('dashboard.vibe.agent.labels.resource_limit', 'Resource Limit')
-                                                                : error.includes('demand') || error.includes('unavailable')
-                                                                  ? t('dashboard.vibe.agent.labels.system_overload', 'System Overload')
+                                                                : error.includes('demand') || error.includes('unavailable') || error.includes('Not Found') || error.includes('404')
+                                                                  ? t('dashboard.vibe.agent.labels.system_overload', 'System Maintenance')
                                                                   : t('dashboard.vibe.agent.labels.fail_title', 'Architectural Breach')}
                                                         </p>
                                                     </div>
                                                     <p className="opacity-90">{error}</p>
                                                     <p className={cn(
                                                         "mt-2 text-xs italic uppercase tracking-widest font-bold",
-                                                        (error.includes('quota') || error.includes('limit')) ? "text-amber-400/60" : "text-red-400/60"
+                                                        (error.includes('quota') || error.includes('limit') || error.includes('Not Found') || error.includes('404')) ? "text-amber-400/60" : "text-red-400/60"
                                                     )}>
                                                         {error.includes('quota') 
                                                             ? t('dashboard.vibe.agent.labels.cooldown_hint', 'Action: System coolDown required') 
-                                                            : t('dashboard.vibe.agent.labels.retry_hint', 'Action: Wait 30s and re-submit protocol')}
+                                                            : error.includes('Not Found') || error.includes('404')
+                                                              ? t('dashboard.vibe.agent.labels.system_hint', 'Action: System Maintenance in progress')
+                                                              : t('dashboard.vibe.agent.labels.retry_hint', 'Action: Wait 30s and re-submit protocol')}
                                                     </p>
                                                 </div>
                                             )}
