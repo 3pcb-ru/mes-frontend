@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { apiClient } from '@/shared/lib/api-client';
-import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
 
 /**
@@ -46,14 +45,10 @@ export function useVibeData<T>(endpoint: string | undefined) {
                     setDetectedFields(fields);
                 }
             } catch (err: any) {
+                // Professional logging instead of toast spam
                 console.error(`[Vibe Data] Failed to fetch from "${finalEndpoint}":`, err);
                 const msg = err.message || t('dashboard.vibe.general.errors.data_fetch_failed', 'Failed to fetch protocol data.');
                 setError(msg);
-
-                // Professional toast instead of "System Breach"
-                toast.error(t('dashboard.vibe.agent.labels.sync_issue_title', 'Data Sync Issue'), {
-                    description: t('dashboard.vibe.agent.labels.sync_issue_desc', 'Unable to retrieve live data for this component.'),
-                });
             } finally {
                 setIsLoading(false);
             }
