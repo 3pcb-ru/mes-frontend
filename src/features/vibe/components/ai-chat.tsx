@@ -145,7 +145,7 @@ export const AiChatComponent = () => {
                         initial={{ opacity: 0, scale: 0.9, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                        className="fixed bottom-6 right-6 z-50 w-[400px] h-[600px] flex flex-col">
+                        className="fixed bottom-6 right-6 z-50 w-[480px] h-[720px] flex flex-col">
                         <Card className="flex-1 bg-slate-950 border-slate-800 shadow-2xl flex flex-col overflow-hidden relative">
                             {/* Decorative background glow */}
                             <div className="absolute top-0 right-0 h-32 w-32 bg-cyan-500/10 blur-[60px] rounded-full -mr-16 -mt-16" />
@@ -156,7 +156,7 @@ export const AiChatComponent = () => {
                                         <Sparkles className="h-4 w-4 text-cyan-400" />
                                     </div>
                                     <div>
-                                        <CardTitle className="text-sm font-bold text-white uppercase tracking-tight">{t('dashboard.vibe.agent.title', 'Vibe Agent')}</CardTitle>
+                                        <CardTitle className="text-base font-bold text-white uppercase tracking-tight">{t('dashboard.vibe.agent.title', 'Vibe Agent')}</CardTitle>
                                         <div className="flex items-center gap-1">
                                             <div
                                                 className={cn(
@@ -164,7 +164,7 @@ export const AiChatComponent = () => {
                                                     isBlocked ? 'bg-red-500' : isCoolingDown ? 'bg-amber-500' : 'bg-emerald-500 animate-pulse',
                                                 )}
                                             />
-                                            <span className="text-[10px] text-slate-500 uppercase font-bold tracking-widest">
+                                            <span className="text-xs text-slate-500 uppercase font-bold tracking-widest">
                                                 {isBlocked
                                                     ? t('dashboard.vibe.agent.status.locked', 'System Locked')
                                                     : isCoolingDown
@@ -206,38 +206,38 @@ export const AiChatComponent = () => {
                                             exit={{ opacity: 0, x: -20 }}
                                             className="space-y-6 pt-2">
                                             <div className="flex items-center gap-2 text-cyan-400 border-b border-slate-800 pb-3">
-                                                <BookOpen className="h-4 w-4" />
-                                                <h3 className="text-xs font-bold uppercase tracking-widest">{t('dashboard.vibe.agent.guide.title', 'Protocol Guide')}</h3>
+                                                <BookOpen className="h-5 w-5" />
+                                                <h3 className="text-sm font-bold uppercase tracking-widest">{t('dashboard.vibe.agent.guide.title', 'Protocol Guide')}</h3>
                                             </div>
 
                                             <div className="space-y-4">
                                                 <section className="space-y-2">
-                                                    <div className="flex items-center gap-2 text-[10px] font-bold text-slate-300 uppercase tracking-tighter">
-                                                        <ShieldAlert className="h-3 w-3 text-red-500" />
+                                                    <div className="flex items-center gap-2 text-xs font-bold text-slate-300 uppercase tracking-tighter">
+                                                        <ShieldAlert className="h-4 w-4 text-red-500" />
                                                         {t('dashboard.vibe.agent.guide.policy_title', 'Security Policy (No-Code)')}
                                                     </div>
-                                                    <p className="text-[10px] text-slate-500 leading-relaxed italic">
+                                                    <p className="text-xs text-slate-500 leading-relaxed italic">
                                                         {t(
                                                             'dashboard.vibe.agent.guide.policy_desc',
                                                             'The agent is an **Architect**, not a coder. It generates layout configurations, not raw software logic.',
                                                         )}
                                                     </p>
-                                                    <ul className="text-[10px] text-slate-400 space-y-1 list-disc pl-4">
+                                                    <ul className="text-xs text-slate-400 space-y-1 list-disc pl-4">
                                                         <li>{t('dashboard.vibe.agent.guide.policy_list_1', 'Avoid technical terms: `script`, `function`, `eval`.')}</li>
                                                         <li>{t('dashboard.vibe.agent.guide.policy_list_2', 'Do not request raw `.env`, `.sh`, or `.js` file contents.')}</li>
                                                         <li>{t('dashboard.vibe.agent.guide.policy_list_3', 'The agent will refuse to generate executable logic for safety.')}</li>
                                                     </ul>
                                                 </section>
-
+ 
                                                 <section className="space-y-2">
-                                                    <div className="flex items-center gap-2 text-[10px] font-bold text-slate-300 uppercase tracking-tighter">
-                                                        <Sparkles className="h-3 w-3 text-cyan-500" />
+                                                    <div className="flex items-center gap-2 text-xs font-bold text-slate-300 uppercase tracking-tighter">
+                                                        <Sparkles className="h-4 w-4 text-cyan-500" />
                                                         {t('dashboard.vibe.agent.guide.prompting_title', 'Refined Prompting')}
                                                     </div>
-                                                    <p className="text-[10px] text-slate-400 leading-relaxed">
+                                                    <p className="text-xs text-slate-400 leading-relaxed">
                                                         {t('dashboard.vibe.agent.guide.prompting_desc', 'Focus on **intent** and **visuals**. Use descriptive sentences like:')}
                                                     </p>
-                                                    <div className="bg-slate-900 p-2 rounded-lg text-[9px] font-mono text-cyan-400/80 border border-slate-800 italic">
+                                                    <div className="bg-slate-900 p-3 rounded-lg text-xs font-mono text-cyan-400/80 border border-slate-800 italic">
                                                         {t(
                                                             'dashboard.vibe.agent.guide.prompting_example',
                                                             '"Create a production monitor with a bar chart for yields and a table for active work orders."',
@@ -246,11 +246,11 @@ export const AiChatComponent = () => {
                                                 </section>
 
                                                 <section className="space-y-2">
-                                                    <div className="flex items-center gap-2 text-[10px] font-bold text-slate-300 uppercase tracking-tighter">
-                                                        <Layers className="h-3 w-3 text-emerald-500" />
+                                                    <div className="flex items-center gap-2 text-xs font-bold text-slate-300 uppercase tracking-tighter">
+                                                        <Layers className="h-4 w-4 text-emerald-500" />
                                                         {t('dashboard.vibe.agent.guide.manifest_title', 'Manifest Limitation')}
                                                     </div>
-                                                    <p className="text-[10px] text-slate-400 leading-relaxed">
+                                                    <p className="text-xs text-slate-400 leading-relaxed">
                                                         {t(
                                                             'dashboard.vibe.agent.guide.manifest_desc',
                                                             'The agent can only use components predefined in the system manifest. It cannot invent new React components on the fly.',
@@ -265,7 +265,7 @@ export const AiChatComponent = () => {
                                                 variant="outline"
                                                 size="sm"
                                                 onClick={() => setShowHelp(false)}
-                                                className="w-full h-8 text-[10px] uppercase font-bold border-slate-800 hover:bg-slate-900 text-slate-500 hover:text-white">
+                                                className="w-full h-10 text-xs uppercase font-bold border-slate-800 hover:bg-slate-900 text-slate-500 hover:text-white">
                                                 {t('dashboard.vibe.agent.actions.return_to_chat', 'Return to Protocol Chat')}
                                             </Button>
                                         </motion.div>
@@ -280,8 +280,8 @@ export const AiChatComponent = () => {
                                                     {error || t('dashboard.vibe.agent.labels.fail_desc', 'Architecting failed. Please check your configuration.')}
                                                 </p>
                                             </div>
-                                            <div className="p-3 bg-slate-900 rounded-xl border border-slate-800 w-full text-[10px] text-slate-500 italic">
-                                                {t('dashboard.vibe.general.security.incident_id', 'Security Incident ID')}: AI-G-{Math.random().toString(36).substr(2, 9).toUpperCase()}
+                                            <div className="p-3 bg-slate-900 rounded-xl border border-slate-800 w-full text-xs text-slate-500 italic">
+                                                {t('dashboard.vibe.general.security.incident_id', 'Security Incident ID')}: AI-G-{Math.random().toString(36).substring(2, 9).toUpperCase()}
                                             </div>
                                         </div>
                                     ) : step === 'chat' ? (
@@ -293,11 +293,11 @@ export const AiChatComponent = () => {
                                             {isCoolingDown && (
                                                 <div className="bg-amber-500/10 border border-amber-500/20 p-4 rounded-2xl space-y-3 transition-all duration-500 animate-in fade-in zoom-in-95">
                                                     <div className="flex items-center justify-between">
-                                                        <div className="flex items-center gap-2 text-amber-500 font-bold text-[10px] uppercase tracking-wider">
-                                                            <Loader2 className="h-3 w-3 animate-spin" />
+                                                        <div className="flex items-center gap-2 text-amber-500 font-bold text-xs uppercase tracking-wider">
+                                                            <Loader2 className="h-4 w-4 animate-spin" />
                                                             {t('dashboard.vibe.agent.status.cooldown', 'CoolDown Active')}
                                                         </div>
-                                                        <span className="text-xs font-mono text-amber-400">{secondsLeft}s</span>
+                                                        <span className="text-sm font-mono text-amber-400">{secondsLeft}s</span>
                                                     </div>
                                                     <div className="h-1 w-full bg-slate-800 rounded-full overflow-hidden">
                                                         <motion.div
@@ -307,7 +307,7 @@ export const AiChatComponent = () => {
                                                             transition={{ duration: secondsLeft, ease: 'linear' }}
                                                         />
                                                     </div>
-                                                    <p className="text-[10px] text-slate-400 leading-tight">
+                                                    <p className="text-xs text-slate-400 leading-tight">
                                                         {t('dashboard.vibe.agent.labels.cooldown_hint', 'Protocol limit reached (Free Tier). The agent is recalibrating sensors. Please wait.')}
                                                     </p>
                                                 </div>
@@ -333,7 +333,7 @@ export const AiChatComponent = () => {
                                                         </p>
                                                     </div>
                                                     <p className="opacity-90">{error}</p>
-                                                    <p className="mt-2 text-[10px] text-red-400/60 italic uppercase tracking-widest font-bold">
+                                                    <p className="mt-2 text-xs text-red-400/60 italic uppercase tracking-widest font-bold">
                                                         {error.includes('quota') 
                                                             ? t('dashboard.vibe.agent.labels.cooldown_hint', 'Action: System coolDown required') 
                                                             : t('dashboard.vibe.agent.labels.retry_hint', 'Action: Wait 30s and re-submit protocol')}
@@ -349,7 +349,7 @@ export const AiChatComponent = () => {
                                             </div>
 
                                             <div className="space-y-3">
-                                                <label id="vibe-page-name-label" className="text-[10px] font-bold text-slate-500 uppercase tracking-widest px-1">{t('dashboard.vibe.agent.labels.page_name', 'Page Name')}</label>
+                                                <label id="vibe-page-name-label" className="text-xs font-bold text-slate-500 uppercase tracking-widest px-1">{t('dashboard.vibe.agent.labels.page_name', 'Page Name')}</label>
                                                 <Input
                                                     id="vibe-page-name-input"
                                                     title={t('dashboard.vibe.agent.placeholders.page_name', 'e.g. Production Overview')}
@@ -361,14 +361,14 @@ export const AiChatComponent = () => {
                                             </div>
 
                                             <div className="space-y-3">
-                                                <label id="vibe-sidebar-category-label" className="text-[10px] font-bold text-slate-500 uppercase tracking-widest px-1">{t('dashboard.vibe.agent.labels.sidebar_category', 'SideBar Category')}</label>
+                                                <label id="vibe-sidebar-category-label" className="text-xs font-bold text-slate-500 uppercase tracking-widest px-1">{t('dashboard.vibe.agent.labels.sidebar_category', 'SideBar Category')}</label>
                                                 <div className="flex flex-wrap gap-2">
                                                     {['Main', 'Operations', 'Analytics', 'Configuration', 'Custom'].map((cat) => (
                                                         <button
                                                             key={cat}
                                                             onClick={() => setCategory(cat as any)}
                                                             className={cn(
-                                                                'px-3 py-1.5 rounded-full text-[10px] font-bold uppercase transition-all duration-200 border',
+                                                                'px-4 py-2 rounded-full text-xs font-bold uppercase transition-all duration-200 border',
                                                                 category === cat
                                                                     ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500/40 shadow-lg shadow-cyan-500/5'
                                                                     : 'bg-slate-900/50 text-slate-500 border-slate-800 hover:text-slate-300',
@@ -424,8 +424,8 @@ export const AiChatComponent = () => {
                                          </Button>
                                      </div>
                                  )}
-                                <div className="text-[8px] text-slate-700 uppercase tracking-widest text-center flex items-center justify-center gap-2">
-                                    <Layers className="h-2 w-2" /> {t('dashboard.vibe.agent.labels.powered_by', 'Powered by Gemini')}
+                                <div className="text-[10px] text-slate-700 uppercase tracking-widest text-center flex items-center justify-center gap-2">
+                                    <Layers className="h-3 w-3" /> {t('dashboard.vibe.agent.labels.powered_by', 'Powered by Gemini')}
                                 </div>
                             </CardFooter>
                         </Card>
