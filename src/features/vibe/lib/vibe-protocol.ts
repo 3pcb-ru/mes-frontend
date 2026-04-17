@@ -64,6 +64,16 @@ export const enforceVibeProtocol = (config: any) => {
                     section.columns = section.columns.slice(0, 10);
                 }
             }
+            // 3. Prop Normalization
+            if (section.columns && Array.isArray(section.columns)) {
+                section.columns = section.columns.map((col: any) => {
+                    if (col.content && col.content.props) {
+                        const p = col.content.props;
+                        if (p.chartType && !p.type) p.type = p.chartType;
+                    }
+                    return col;
+                });
+            }
             return section;
         });
     }

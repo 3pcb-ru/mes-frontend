@@ -8,6 +8,7 @@ import { toast } from 'sonner';
 import { useVibeStore, VibePage } from '../store/vibe.store';
 import { cn } from '@/shared/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const AiChatComponent = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -20,9 +21,16 @@ export const AiChatComponent = () => {
     const [showHelp, setShowHelp] = useState(false);
 
     const { t } = useTranslation();
-    const { isGenerating, currentLayout, generateLayout, savePage, coolDownUntil } = useVibeStore();
+    const location = useLocation();
+    const navigate = useNavigate();
+    const { isGenerating, currentLayout, generateLayout, savePage, updatePage, pages, coolDownUntil } = useVibeStore();
     const scrollRef = useRef<HTMLDivElement>(null);
     const [secondsLeft, setSecondsLeft] = useState(0);
+
+    // Detect if we are on a Vibe page to enable "Revision" mode
+    const isVibePage = location.pathname.includes('/dashboard/vibe/');
+    const currentPageId = isVibePage ? location.pathname.split('/').pop() : null;
+    const currentPage = pages.find(p => p.id === currentPageId);
 
     // Cool-down Ticker
     useEffect(() => {
@@ -107,8 +115,14 @@ export const AiChatComponent = () => {
 
         try {
             setError(null);
-            await generateLayout(prompt, apiManifest, componentsManifest);
+            // Pass current config if we are in revision mode
+            await generateLayout(prompt, apiManifest, componentsManifest, currentPage?.config);
             setStep('preview');
+            // If it's a revision, auto-fill name
+            if (currentPage) {
+                setPageName(currentPage.name);
+                setCategory(currentPage.category);
+            }
         } catch (err: any) {
             let message = err.message || t('dashboard.vibe.agent.labels.fail_desc', 'Architecting failed. Please check your configuration.');
 
@@ -141,7 +155,19 @@ export const AiChatComponent = () => {
     const handleSave = async () => {
         if (!pageName.trim()) return;
         try {
-            await savePage(pageName, category);
+            if (currentPage) {
+                // Update existing page
+                await updatePage(currentPage.id, { 
+                    name: pageName, 
+                    category, 
+                    config: currentLayout 
+                });
+                toast.success(t('dashboard.vibe.agent.labels.updated', 'Page updated successfully!'));
+            } else {
+                // Save new page
+                await savePage(pageName, category);
+                toast.success(t('dashboard.vibe.agent.labels.saved', 'Page saved successfully!'));
+            }
             setIsOpen(false);
             setStep('chat');
             setPrompt('');
@@ -315,7 +341,10 @@ export const AiChatComponent = () => {
                                     ) : step === 'chat' ? (
                                         <div className="space-y-4">
                                             <div className="bg-slate-900/50 border border-slate-800 p-3 rounded-2xl text-xs text-slate-300 antialiased leading-relaxed">
-                                                {t('dashboard.vibe.agent.description', 'Greetings! I am the **MES Vibe Agent**. Describe the dashboard or monitoring page you\'d like to create, and I will architect it using our premium component library.')}
+                                                {currentPage 
+                                                    ? t('dashboard.vibe.agent.description_revision', 'Revising **{{name}}**. Tell me what you\'d like to add or change in this page.', { name: currentPage.name })
+                                                    : t('dashboard.vibe.agent.description', 'Greetings! I am the **MES Vibe Agent**. Describe the dashboard or monitoring page you\'d like to create, and I will architect it using our premium component library.')
+                                                }
                                             </div>
 
                                             {isCoolingDown && (
@@ -461,7 +490,7 @@ export const AiChatComponent = () => {
                                              onClick={handleSave}
                                              disabled={!pageName.trim()}
                                              className="flex-[2] bg-emerald-500 hover:bg-emerald-400 text-white gap-2 shadow-lg shadow-emerald-500/10">
-                                             <Save className="h-4 w-4" /> {t('dashboard.vibe.agent.actions.save_page', 'Save Page')}
+                                             <Save className="h-4 w-4" /> {currentPage ? t('common.actions.update', 'Update Page') : t('dashboard.vibe.agent.actions.save_page', 'Save Page')}
                                          </Button>
                                      </div>
                                  )}

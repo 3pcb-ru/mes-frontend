@@ -1,7 +1,8 @@
 # GRVT MES: The Lightweight MES for Agile Factories
 
 ![Status: Phase 1 Foundation](https://img.shields.io/badge/Status-Phase%201%20Foundation-blue)
-![Tech: React + Vite + Tailwind](https://img.shields.io/badge/Tech-React%20%2B%20Vite%20%2B%20Tailwind-cyan)
+![Tech: React 19 + Vite 8 + Tailwind 4](https://img.shields.io/badge/Tech-React%2019%20%2B%20Vite%208%20%2B%20Tailwind%204-cyan)
+![Package: pnpm](https://img.shields.io/badge/Package-pnpm-orange)
 
 **GRVT MES** is a cloud-native Manufacturing Execution System designed specifically for SMEs. It bridges the gap between manual shop floor management and bloated ERP systems, providing a lightweight, ISA-95 compliant solution for modern factories.
 
@@ -9,77 +10,79 @@
 
 ## 🚀 Key Features
 
-- **Standalone Mode**: Manage products, BOMs, and work orders directly without needing an ERP.
-- **BOM Management**: Import Excel BOMs, manage revisions, and validate data with ease.
-- **Real-time Execution**: Track WIP, start/stop jobs, and report scrap with transactional integrity.
-- **Machine Registry**: Register assets and monitor live status via WebSocket-driven updates.
-- **ISA-95 Compliant**: Designed to operate strictly at Level 3 (MOM), ensuring industry-standard compatibility.
-- **Modern UI/UX**: Built with a focus on speed, clarity, and accessibility.
+- **🤖 AI Vibe Engine**: Natural language UI generation with secure sandboxed rendering and real-time block interaction.
+- **📦 Warehouse & Inventory**: Multi-facility container tracking, warehouse modeling, and real-time inventory visibility.
+- **⚡ Production Execution**: Real-time WIP tracking, work order orchestration, and transactional job reporting.
+- **📋 Product & BOM Intelligence**: Automated quantity calculations, version-controlled BOMs, and seamless Excel imports.
+- **🔌 Connectivity Hub**: Live machine status and factory floor monitoring via MQTT and WebSocket-driven updates.
+- **🔐 Multi-tenant RBAC**: Secure organization-scoped data isolation with fine-grained role-based access control.
+- **🌍 Global Localization**: Trilingual interface out-of-the-box (English, Russian, Turkish).
 
 ## 🛠️ Technology Stack
 
-- **Frontend**: [React](https://reactjs.org/) (v18)
-- **Build Tool**: [Vite](https://vitejs.dev/)
+- **Frontend**: [React](https://reactjs.org/) (v19)
+- **Build Tool**: [Vite](https://vitejs.dev/) (v8)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/) (v4 optimized)
-- **UI Components**: [Radix UI](https://www.radix-ui.com/) (Shadcn UI inspired)
-- **Routing**: [React Router](https://reactrouter.com/) (v6)
-- **Motion**: [Motion](https://motion.dev/) (Framer Motion)
-- **Icons**: [Lucide React](https://lucide.dev/)
-
-## 📂 Project Structure
-
-```text
-src/
-├── app/
-│   ├── components/       # Functional sections (Hero, Architecture, etc.)
-│   │   └── ui/           # Reusable UI component library (Button, Card, etc.)
-│   ├── pages/            # Multi-page views (Home, About)
-│   └── App.tsx           # Main application shell & routing
-├── assets/               # Static assets & icons
-├── styles/               # Global CSS & Tailwind configuration
-└── main.tsx              # Entry point
-```
+- **State Management**: [Zustand](https://github.com/pmndrs/zustand)
+- **UI Components**: [Radix UI](https://www.radix-ui.com/) & [Motion](https://motion.dev/)
+- **Visuals**: [Recharts](https://recharts.org/) & [XYFlow](https://reactflow.dev/) (Diagrams)
+- **Localization**: [i18next](https://www.i18next.com/)
 
 ## 🏁 Getting Started
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) (v18 or higher)
-- [npm](https://www.npmjs.com/) or [pnpm](https://pnpm.io/)
+- [Node.js](https://nodejs.org/) (v20 or higher)
+- [pnpm](https://pnpm.io/) (v9 or higher)
 
-### Installation
+### Installation & Local Development
 
 1. **Clone the repository**:
-
     ```bash
     git clone [repository-url]
     cd mes-frontend
     ```
 
 2. **Install dependencies**:
-
     ```bash
-    npm install
+    pnpm install
     ```
 
-3. **Run the development server**:
+3. **Run development server**:
     ```bash
-    npm run dev
+    pnpm dev
     ```
 
-The application will be available at `http://localhost:3000`.
+The application will be available at `http://localhost:5173`.
 
-## 🗺️ Roadmap
+---
 
-- [x] **Phase 1: Foundation** - User & Factory Mgmt, BOM Import, Manual Execution, Dashboard.
-- [ ] **Phase 2: Connectivity** - MQTT Events, Traceability, Material Tracking.
-- [ ] **Phase 3: Quality** - Quality Gates, Pass/Fail Checks, Defect Codes.
-- [ ] **Phase 4: Scale** - Telemetry (ClickHouse), Deep Analytics, Performance KPIs.
+## 📐 Project Structure
+
+```text
+src/
+├── app/                  # App shell & routing
+├── assets/               # Static assets & icons
+├── features/             # Domain-driven modules (Vibe, Warehouse, BOM, etc.)
+│   └── <feature>/
+│       ├── components/   # Feature-specific UI
+│       ├── services/     # API interaction layer
+│       ├── store/        # Zustand state models
+│       └── types/        # Zod schemas & TS interfaces
+├── shared/               # Universal UI, hooks, and utilities
+└── styles/               # Global CSS & Tailwind configuration
+```
+
+## 📜 Engineering Protocol
+
+This repository follows the **MES Agent Protocol**. All contributors (including AI agents) must adhere to the `IMPLEMENTATION_CHECKLIST.md`.
+
+- **Vibe-Trace**: Every architectural shift is documented in the `.trace/` directory.
+- **Clean Code**: Zero `any` policy, Zod-first types, and strict localization hooks.
 
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
----
 
 Built with ❤️ for agile manufacturing.

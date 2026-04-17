@@ -280,3 +280,13 @@
 .dark .react-flow__attribution {
     display: none !important;
 }
+
+/* Vibe Protocol Shared Styles */
+.protocol-badge {
+    background: rgba(34, 211, 238, 0.1) !important;
+    border-color: rgba(34, 211, 238, 0.2) !important;
+    color: #22d3ee !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+}

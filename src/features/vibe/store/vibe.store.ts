@@ -19,7 +19,7 @@ interface VibeState {
 
     // Actions
     fetchPages: () => Promise<void>;
-    generateLayout: (prompt: string, apiManifest: any, componentsManifest: any) => Promise<void>;
+    generateLayout: (prompt: string, apiManifest: any, componentsManifest: any, currentConfig?: any) => Promise<void>;
     savePage: (name: string, category: VibePage['category']) => Promise<void>;
     updatePage: (id: string, data: Partial<VibePage>) => Promise<void>;
     deletePage: (id: string) => Promise<void>;
@@ -43,7 +43,7 @@ export const useVibeStore = create<VibeState>()(
                 }
             },
 
-            generateLayout: async (prompt, apiManifest, componentsManifest) => {
+            generateLayout: async (prompt, apiManifest, componentsManifest, currentConfig) => {
                 const { coolDownUntil } = get();
                 if (coolDownUntil && coolDownUntil > Date.now()) {
                     const seconds = Math.ceil((coolDownUntil - Date.now()) / 1000);
@@ -58,6 +58,7 @@ export const useVibeStore = create<VibeState>()(
                         prompt,
                         apiManifest,
                         componentsManifest,
+                        currentConfig,
                     });
                     set({ currentLayout: layout });
                 } catch (error: any) {

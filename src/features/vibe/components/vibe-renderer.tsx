@@ -61,10 +61,23 @@ const FrameStabilizer = () => {
 
 /**
  * BaseVibeMetric: Standardized KPI/Stat card for Vibe pages.
+ * Supports static value or dynamic dataSource.
  */
-const BaseVibeMetric = ({ title, value, trend, icon, className }: any) => {
+const BaseVibeMetric = ({ title, value: staticValue, dataSource, trend, icon, className }: any) => {
     const { t } = useTranslation();
     const Icon = getVibeIcon(icon);
+    const { data } = useVibeData(dataSource);
+
+    // Dynamic value discovery: Use static value or first numeric field from fetched data
+    const displayValue = useMemo(() => {
+        if (staticValue !== undefined) return staticValue;
+        if (data && data.length > 0) {
+            const firstItem = data[0] as Record<string, any>;
+            const numericKey = Object.keys(firstItem).find(k => typeof firstItem[k] === 'number');
+            return numericKey ? firstItem[numericKey] : (data as any).length;
+        }
+        return '...';
+    }, [staticValue, data]);
 
     return (
         <Card className={`${VIBE_STYLE_TOKENS.colors.card} ${VIBE_STYLE_TOKENS.colors.border} backdrop-blur-sm ${className}`}>
@@ -75,7 +88,7 @@ const BaseVibeMetric = ({ title, value, trend, icon, className }: any) => {
                 </div>
             </CardHeader>
             <CardContent>
-                <div className={`text-2xl font-bold ${VIBE_STYLE_TOKENS.colors.text.primary}`}>{value}</div>
+                <div className={`text-2xl font-bold ${VIBE_STYLE_TOKENS.colors.text.primary}`}>{displayValue}</div>
                 {trend !== undefined && (
                     <p className={`text-xs mt-1 ${trend > 0 ? 'text-emerald-400' : 'text-red-400'}`}>
                         {t('dashboard.vibe.general.labels.from_last_month', { trend: trend > 0 ? `+${trend}` : trend })}
@@ -157,8 +170,9 @@ const BaseVibeTable = ({ dataSource, columns: aiColumns, title, onError }: any) 
  * BaseVibeChart: Universal charting component supporting Bar, Area, and Line.
  * Features Auto-Discovery of data keys and dynamic styling.
  */
-const BaseVibeChart = ({ dataSource, type = 'bar', title, xAxis = 'name', chartColor, onError }: any) => {
+const BaseVibeChart = ({ dataSource, type = 'bar', chartType, title, xAxis = 'name', yAxis, chartColor, onError }: any) => {
     const { t } = useTranslation();
+    const finalType = chartType || type; // Normalize chartType variant
 
     const { data, isLoading, error } = useVibeData(dataSource);
     const [isReady, setIsReady] = useState(false);
@@ -193,10 +207,13 @@ const BaseVibeChart = ({ dataSource, type = 'bar', title, xAxis = 'name', chartC
         }
 
         const firstItem = data[0] as Record<string, any>;
-        const keys = Object.keys(firstItem).filter((k) => typeof firstItem[k] === 'number' && k !== 'id');
+        // Use yAxis if provided, otherwise auto-discover numbers
+        const keys = yAxis 
+            ? (Array.isArray(yAxis) ? yAxis : yAxis.split(',').map((s: string) => s.trim()))
+            : Object.keys(firstItem).filter((k) => typeof firstItem[k] === 'number' && k !== 'id');
 
         const config: any = {};
-        keys.forEach((key) => {
+        keys.forEach((key: string) => {
             config[key] = {
                 label: capitalize(key.replace(/_/g, ' ')),
                 color: primaryColor,
@@ -204,7 +221,7 @@ const BaseVibeChart = ({ dataSource, type = 'bar', title, xAxis = 'name', chartC
         });
 
         return { chartConfig: config, finalData: data, dataKeys: Object.keys(config) };
-    }, [data, primaryColor, xAxis, t]);
+    }, [data, primaryColor, xAxis, yAxis, t]);
 
     if (isLoading) return <Skeleton className="w-full h-[350px] bg-slate-900/50 rounded-xl" />;
 
@@ -221,10 +238,10 @@ const BaseVibeChart = ({ dataSource, type = 'bar', title, xAxis = 'name', chartC
                 </div>
             )}
 
-            <div className={cn('h-[300px] w-full min-w-0 min-h-0 mt-4 transition-all duration-700', error && 'opacity-20 grayscale pointer-events-none')}>
+            <div className={cn('h-[350px] w-full min-w-0 min-h-[300px] mt-4 transition-all duration-700', error && 'opacity-20 grayscale pointer-events-none')}>
                 {isReady && (
-                    <ChartContainer config={chartConfig} className="w-full h-full aspect-auto !aspect-auto">
-                        {type === 'area' ? (
+                    <ChartContainer config={chartConfig} className="w-full h-full aspect-auto !aspect-auto min-h-[300px]">
+                        {finalType === 'area' ? (
                             <AreaChart data={finalData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                                 <defs>
                                     {dataKeys.map((key) => (
