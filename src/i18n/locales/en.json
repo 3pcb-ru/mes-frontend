@@ -264,9 +264,11 @@
             "confirm_delete_title": "Delete {{item}}",
             "confirm_delete_description": "This action cannot be undone. Are you sure you want to delete this {{item}}?",
             "deleting": "Deleting...",
+            "searching": "Searching...",
             "submit": "Submit",
             "approve": "Approve",
-            "activate": "Activate"
+            "activate": "Activate",
+            "add": "Add"
         },
         "table": {
             "created_at": "Created At",
@@ -292,7 +294,8 @@
             "work_order": "Work Order",
             "organization": "Organization",
             "facility": "Facility",
-            "node": "Node"
+            "node": "Node",
+            "material": "Material"
         },
         "components": {
             "table_view": {
@@ -745,10 +748,19 @@
                 "title_create": "Create Product",
                 "title_edit": "Edit Product",
                 "description": "Manage specific product configurations and master data definition.",
+                "description_materials": "Manage the bill of materials for this specific revision. Search on Octopart for manufacturer data.",
                 "sku": "SKU",
                 "name": "Name",
                 "sku_placeholder": "e.g. PROD-001",
-                "name_placeholder": "e.g. Navigation GPS Module v2"
+                "name_placeholder": "e.g. Navigation GPS Module v2",
+                "title_add_material": "Add Material",
+                "title_edit_material": "Edit Material",
+                "part_mpn": "Part / MPN",
+                "unit": "Unit",
+                "search_mpn_placeholder": "Search MPN on Octopart...",
+                "search_mpn_hint": "Type MPN to search...",
+                "local_inventory": "Local Inventory",
+                "octopart_results": "Octopart Results"
             },
             "messages": {
                 "load_failed": "Failed to load products",

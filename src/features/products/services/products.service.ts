@@ -96,4 +96,32 @@ export const productsService = {
     listMaterials: async (productId: string, revisionId: string): Promise<BomMaterial[]> => {
         return apiClient.get<BomMaterial[]>(`${PRODUCTS_BASE}/${productId}/revisions/${revisionId}/materials`, {}, z.array(BomMaterialSchema));
     },
+
+    /**
+     * Add a material to a revision
+     */
+    addMaterial: async (productId: string, revisionId: string, payload: any): Promise<BomMaterial> => {
+        return apiClient.post<BomMaterial>(`${PRODUCTS_BASE}/${productId}/revisions/${revisionId}/materials`, payload, {}, BomMaterialSchema);
+    },
+
+    /**
+     * Update an existing material
+     */
+    updateMaterial: async (productId: string, revisionId: string, materialId: string, payload: any): Promise<BomMaterial> => {
+        return apiClient.put<BomMaterial>(`${PRODUCTS_BASE}/${productId}/revisions/${revisionId}/materials/${materialId}`, payload, {}, BomMaterialSchema);
+    },
+
+    /**
+     * Delete a material from a revision
+     */
+    deleteMaterial: async (productId: string, revisionId: string, materialId: string): Promise<void> => {
+        return apiClient.delete(`${PRODUCTS_BASE}/${productId}/revisions/${revisionId}/materials/${materialId}`);
+    },
+
+    /**
+     * Search for parts locally and on Octopart
+     */
+    searchParts: async (productId: string, revisionId: string, q: string): Promise<{ local: any[]; octopart: any[] }> => {
+        return apiClient.get(`${PRODUCTS_BASE}/${productId}/revisions/${revisionId}/materials/search-parts?q=${encodeURIComponent(q)}`, {}, z.any());
+    },
 };

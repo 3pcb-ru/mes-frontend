@@ -1,9 +1,9 @@
 import { useEffect, useState, useMemo } from 'react';
-import { Package, Plus, ChevronRight, ArrowLeft } from 'lucide-react';
+import { Plus, ChevronRight, ArrowLeft, Copy, Trash2, Edit2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useProducts } from '@/features/products/store/products.store';
 import { type Product, type CreateProductDto } from '@/features/products/types/products.schema';
-import { type BomRevision, type BomMaterial } from '@/features/products/types/bom.schema';
+import { type BomRevision, type BomMaterial, CreateMaterialDto } from '@/features/products/types/bom.schema';
 import { productsService } from '@/features/products/services/products.service';
 import type { ApiError } from '@/shared/lib/api-client';
 import { Button } from '@/shared/components/ui/button';
@@ -16,8 +16,15 @@ import { getModuleActions } from '@/shared/lib/module-actions-config';
 import { useTranslation } from 'react-i18next';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/shared/components/ui/breadcrumb';
 import { StatusBadge } from '@/shared/components/ui/status-badge';
+import { MpnSearchDropdown } from '@/features/products/components/MpnSearchDropdown';
+import React from 'react';
 
 type ViewMode = 'products' | 'revisions' | 'materials';
+
+interface MaterialFormState extends Partial<CreateMaterialDto> {
+    mpn?: string;
+    manufacturer?: string;
+}
 
 export function ProductsPage() {
     const { t } = useTranslation();
@@ -32,9 +39,24 @@ export function ProductsPage() {
     const [isLoadingSub, setIsLoadingSub] = useState(false);
 
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+    const [isMaterialDrawerOpen, setIsMaterialDrawerOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [editingItem, setEditingItem] = useState<Product | null>(null);
+    const [editingMaterial, setEditingMaterial] = useState<BomMaterial | null>(null);
     const [formData, setFormData] = useState<Partial<Product>>({});
+    const [materialFormData, setMaterialFormData] = React.useState<MaterialFormState>({
+        designators: [],
+        unit: 'pcs',
+        quantity: 0,
+    });
+
+    // Auto-update quantity when designators change
+    React.useEffect(() => {
+        const count = materialFormData.designators?.length || 0;
+        if (materialFormData.quantity !== count) {
+            setMaterialFormData((prev) => ({ ...prev, quantity: count }));
+        }
+    }, [materialFormData.designators]);
 
     const moduleActions = getModuleActions('products');
 
@@ -138,6 +160,41 @@ export function ProductsPage() {
         setIsDrawerOpen(false);
         setEditingItem(null);
         setFormData({});
+    };
+
+    // --- MATERIAL HANDLERS ---
+
+    const handleEditMaterial = (material: BomMaterial) => {
+        setEditingMaterial(material);
+        setMaterialFormData({
+            itemId: material.itemId,
+            mpn: material.mpn,
+            manufacturer: material.manufacturer || undefined,
+            quantity: material.quantity,
+            unit: 'pcs', // Defaulting since it might not be in the join yet
+            designators: material.designators || [],
+        });
+        setIsMaterialDrawerOpen(true);
+    };
+
+    const handleDeleteMaterial = async (materialId: string) => {
+        if (!selectedProduct || !selectedRevision) return;
+        if (!window.confirm('Are you sure you want to remove this material?')) return;
+
+        try {
+            await productsService.deleteMaterial(selectedProduct.id, selectedRevision.id, materialId);
+            toast.success('Material removed');
+            const data = await productsService.listMaterials(selectedProduct.id, selectedRevision.id);
+            setMaterials(data);
+        } catch (err: any) {
+            toast.error(err.message || 'Failed to remove material');
+        }
+    };
+
+    const handleCloseMaterialDrawer = () => {
+        setIsMaterialDrawerOpen(false);
+        setEditingMaterial(null);
+        setMaterialFormData({});
     };
 
     // --- REVISION ACTIONS ---
@@ -312,7 +369,7 @@ export function ProductsPage() {
                             onClick={() => handleDuplicateRevision(item.id)}
                             className="h-8 w-8 text-cyan-400 hover:bg-cyan-500/10"
                             title="Duplicate">
-                            <Plus className="h-4 w-4" />
+                            <Copy className="h-4 w-4" />
                         </Button>
                         {item.status === 'draft' && <TableActions id={item.id} onDelete={handleDeleteRevision} itemName="Revision" />}
                     </div>
@@ -354,8 +411,23 @@ export function ProductsPage() {
                 className: 'hidden lg:table-cell',
                 headerClassName: 'hidden lg:table-cell',
             },
+            {
+                header: t('dashboard.products.table.actions'),
+                headerClassName: 'text-right pr-4',
+                className: 'text-right',
+                cell: (item) => (
+                    <div className="flex justify-end items-center gap-1">
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-white hover:bg-slate-700/50" onClick={() => handleEditMaterial(item)}>
+                            <Edit2 className="h-3.5 w-3.5" />
+                        </Button>
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-red-400 hover:bg-red-500/10" onClick={() => handleDeleteMaterial(item.id)}>
+                            <Trash2 className="h-3.5 w-3.5" />
+                        </Button>
+                    </div>
+                ),
+            },
         ],
-        [t],
+        [t, handleEditMaterial, handleDeleteMaterial],
     );
 
     const currentTitle = useMemo(() => {
@@ -430,21 +502,26 @@ export function ProductsPage() {
                             {viewMode === 'products' && <p className="text-slate-400 mt-1">{t('dashboard.products.description')}</p>}
                         </div>
                     </div>
-                    {(viewMode === 'products' || viewMode === 'revisions') && (
-                        <div className="flex items-center gap-3 shrink min-w-0">
-                            {viewMode === 'products' ? (
-                                <Button id="add-product-button" onClick={() => setIsDrawerOpen(true)} className="flex items-center gap-2 whitespace-nowrap shrink-0">
-                                    <Plus className="h-4 w-4" /> {t('dashboard.products.add_button')}
-                                </Button>
-                            ) : (
-                                <Button id="add-revision-button" onClick={handleCreateRevision} className="flex items-center gap-2 whitespace-nowrap shrink-0">
-                                    <Plus className="h-4 w-4" /> {t('common.actions.create') || 'Create'}{' '}
-                                    {t('dashboard.products.breadcrumbs.revisions', { name: '' }).replace(': ', '')}
-                                    {/* Small hack for label, I'll use a clearer one if possible */}
-                                </Button>
-                            )}
-                        </div>
-                    )}
+                    <div className="flex items-center gap-3 shrink min-w-0">
+                        {viewMode === 'products' && (
+                            <Button id="add-product-button" onClick={() => setIsDrawerOpen(true)} className="flex items-center gap-2 whitespace-nowrap shrink-0">
+                                <Plus className="h-4 w-4" /> {t('dashboard.products.add_button')}
+                            </Button>
+                        )}
+                        {viewMode === 'revisions' && (
+                            <Button id="add-revision-button" onClick={handleCreateRevision} className="flex items-center gap-2 whitespace-nowrap shrink-0">
+                                <Plus className="h-4 w-4" /> {t('common.actions.create') || 'Create'}
+                            </Button>
+                        )}
+                        {viewMode === 'materials' && selectedRevision?.status === 'draft' && (
+                            <Button
+                                id="add-material-button"
+                                onClick={() => setIsMaterialDrawerOpen(true)}
+                                className="flex items-center gap-2 whitespace-nowrap shrink-0 px-4 bg-emerald-600 hover:bg-emerald-500">
+                                <Plus className="h-4 w-4" /> {t('common.actions.add')} {t('common.entities.material')}
+                            </Button>
+                        )}
+                    </div>
                 </div>
             </div>
 
@@ -494,6 +571,124 @@ export function ProductsPage() {
                             {t('common.actions.cancel')}
                         </Button>
                         <Button id="save-product-button" type="submit">
+                            {t('common.actions.save')}
+                        </Button>
+                    </div>
+                </form>
+            </SlideOutDrawer>
+
+            <SlideOutDrawer
+                open={isMaterialDrawerOpen}
+                onOpenChange={(open) => !open && handleCloseMaterialDrawer()}
+                title={editingMaterial ? t('dashboard.products.drawer.title_edit_material') : t('dashboard.products.drawer.title_add_material')}
+                description={t('dashboard.products.drawer.description_materials')}>
+                <form
+                    onSubmit={async (e) => {
+                        e.preventDefault();
+                        if (!selectedProduct || !selectedRevision) return;
+                        try {
+                            if (editingMaterial) {
+                                await productsService.updateMaterial(selectedProduct.id, selectedRevision.id, editingMaterial.id, materialFormData);
+                                toast.success('Material updated');
+                            } else {
+                                await productsService.addMaterial(selectedProduct.id, selectedRevision.id, materialFormData);
+                                toast.success('Material added');
+                            }
+                            handleCloseMaterialDrawer();
+                            const data = await productsService.listMaterials(selectedProduct.id, selectedRevision.id);
+                            setMaterials(data);
+                        } catch (err: any) {
+                            toast.error(err.message || 'Failed to save material');
+                        }
+                    }}
+                    className="space-y-6 pt-4">
+                    <div className="space-y-2">
+                        <Label>
+                            {t('dashboard.products.drawer.part_mpn')} <span className="text-destructive">*</span>
+                        </Label>
+                        <MpnSearchDropdown
+                            productId={selectedProduct?.id || ''}
+                            revisionId={selectedRevision?.id || ''}
+                            placeholder={materialFormData.mpn || t('dashboard.products.drawer.search_mpn_placeholder')}
+                            onSelect={(part) => {
+                                setMaterialFormData({
+                                    ...materialFormData,
+                                    // Only auto-fill itemId if it's a valid local UUID (starts with something else usually,
+                                    // but we check if it's from octopart by checking if 'image' or 'description' exists from octopart result)
+                                    // Actually, a better check is if part.id looks like a UUID
+                                    itemId: /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(part.id) ? part.id : materialFormData.itemId,
+                                    mpn: part.mpn || part.name,
+                                    manufacturer: part.manufacturer?.name || part.manufacturer,
+                                });
+                            }}
+                        />
+                        {materialFormData.mpn && (
+                            <div className="flex items-center gap-2 mt-2 px-3 py-2 rounded bg-slate-800/50 border border-slate-700">
+                                <div className="text-[10px] text-slate-500 font-mono uppercase">Selected:</div>
+                                <div className="text-sm font-bold text-white">{materialFormData.mpn}</div>
+                                <div className="text-[10px] text-cyan-400 font-medium bg-cyan-400/10 px-1.5 py-0.5 rounded ml-auto">{materialFormData.manufacturer}</div>
+                            </div>
+                        )}
+                    </div>
+
+                    <div className="space-y-2">
+                        <Label>
+                            Item ID (UUID) <span className="text-destructive">*</span>
+                        </Label>
+                        <Input
+                            required
+                            value={materialFormData.itemId || ''}
+                            onChange={(e) => setMaterialFormData({ ...materialFormData, itemId: e.target.value })}
+                            placeholder="00000000-0000-0000-0000-000000000000"
+                            className="font-mono text-xs"
+                        />
+                        <p className="text-[10px] text-slate-500 italic">Enter the unique identifier from your local items inventory</p>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                            <Label>{t('dashboard.products.table.quantity')}</Label>
+                            <div className="h-10 w-full rounded-md border border-slate-700/50 bg-slate-900/30 px-3 py-2 text-sm text-cyan-400 font-bold flex items-center">
+                                {materialFormData.quantity || 0}
+                            </div>
+                            <p className="text-[10px] text-slate-500 italic">Auto-calculated from designators</p>
+                        </div>
+                        <div className="space-y-2">
+                            <Label>
+                                {t('dashboard.products.drawer.unit')} <span className="text-destructive">*</span>
+                            </Label>
+                            <Input
+                                required
+                                value={materialFormData.unit || 'pcs'}
+                                onChange={(e) => setMaterialFormData({ ...materialFormData, unit: e.target.value })}
+                                placeholder="pcs"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="space-y-2">
+                        <Label>{t('dashboard.products.table.designators')}</Label>
+                        <Input
+                            value={materialFormData.designators?.join(', ') || ''}
+                            onChange={(e) =>
+                                setMaterialFormData({
+                                    ...materialFormData,
+                                    designators: e.target.value
+                                        .split(',')
+                                        .map((s) => s.trim())
+                                        .filter(Boolean),
+                                })
+                            }
+                            placeholder="C1, C2, R1..."
+                        />
+                        <p className="text-[10px] text-slate-500 italic">Comma separated list of designators</p>
+                    </div>
+
+                    <div className="pt-6 flex justify-end gap-3 border-t border-slate-800">
+                        <Button type="button" variant="outline" onClick={handleCloseMaterialDrawer}>
+                            {t('common.actions.cancel')}
+                        </Button>
+                        <Button type="submit" disabled={!materialFormData.itemId}>
                             {t('common.actions.save')}
                         </Button>
                     </div>

@@ -276,9 +276,11 @@
             "confirm_delete_title": "{{item}}'i Sil",
             "confirm_delete_description": "Bu işlem geri alınamaz. Bu {{item}}'i silmek istediğinizden emin misiniz?",
             "deleting": "Siliniyor...",
+            "searching": "Aranıyor...",
             "submit": "Gönder",
             "approve": "Onayla",
-            "activate": "Aktif Et"
+            "activate": "Aktif Et",
+            "add": "Ekle"
         },
         "table": {
             "created_at": "Oluşturulma Tarihi",
@@ -304,7 +306,8 @@
             "work_order": "İş Emri",
             "organization": "Organizasyon",
             "facility": "Tesis",
-            "node": "Düğüm"
+            "node": "Düğüm",
+            "material": "Malzeme"
         },
         "components": {
             "table_view": {
@@ -780,10 +783,19 @@
                 "title_create": "Ürün Oluştur",
                 "title_edit": "Ürünü Düzenle",
                 "description": "Belirli ürün yapılandırmalarını ve ana veri tanımlarını yönetin.",
+                "description_materials": "Bu revizyon için malzeme listesini yönetin. Üretici verileri için Octopart'ta arama yapın.",
                 "sku": "Stok Kodu (SKU)",
                 "name": "Ad",
                 "sku_placeholder": "örn. PROD-001",
-                "name_placeholder": "örn. Navigasyon GPS Modülü v2"
+                "name_placeholder": "örn. Navigasyon GPS Modülü v2",
+                "title_add_material": "Malzeme Ekle",
+                "title_edit_material": "Malzemeyi Düzenle",
+                "part_mpn": "Parça / MPN",
+                "unit": "Birim",
+                "search_mpn_placeholder": "Octopart'ta MPN ara...",
+                "search_mpn_hint": "Aramak için MPN yazın...",
+                "local_inventory": "Yerel Envanter",
+                "octopart_results": "Octopart Sonuçları"
             },
             "messages": {
                 "load_failed": "Ürünler yüklenemedi",

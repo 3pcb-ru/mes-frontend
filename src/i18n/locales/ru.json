@@ -276,9 +276,11 @@
             "confirm_delete_title": "Удалить {{item}}",
             "confirm_delete_description": "Это действие нельзя отменить. Вы уверены, что хотите удалить этот {{item}}?",
             "deleting": "Удаление...",
+            "searching": "Поиск...",
             "submit": "Отправить",
             "approve": "Одобрить",
-            "activate": "Активировать"
+            "activate": "Активировать",
+            "add": "Добавить"
         },
         "table": {
             "created_at": "Дата создания",
@@ -304,7 +306,8 @@
             "work_order": "Заказ на работу",
             "organization": "Организация",
             "facility": "Объект",
-            "node": "Узел"
+            "node": "Узел",
+            "material": "Материал"
         },
         "components": {
             "table_view": {
@@ -780,10 +783,19 @@
                 "title_create": "Создать продукт",
                 "title_edit": "Редактировать продукт",
                 "description": "Управление конфигурациями продуктов и основными данными.",
+                "description_materials": "Управление спецификацией материалов для этой ревизии. Поиск по Octopart для получения данных производителя.",
                 "sku": "Артикул (SKU)",
                 "name": "Название",
                 "sku_placeholder": "напр. PROD-001",
-                "name_placeholder": "напр. GPS Модуль навигации v2"
+                "name_placeholder": "напр. GPS Модуль навигации v2",
+                "title_add_material": "Добавить материал",
+                "title_edit_material": "Редактировать материал",
+                "part_mpn": "Деталь / MPN",
+                "unit": "Ед. изм.",
+                "search_mpn_placeholder": "Поиск MPN на Octopart...",
+                "search_mpn_hint": "Введите MPN для поиска...",
+                "local_inventory": "Местный склад",
+                "octopart_results": "Результаты Octopart"
             },
             "messages": {
                 "load_failed": "Не удалось загрузить продукты",

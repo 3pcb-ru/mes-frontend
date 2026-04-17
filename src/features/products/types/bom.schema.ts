@@ -31,3 +31,19 @@ export const BomMaterialSchema = z.object({
 
 export type BomRevision = z.infer<typeof BomRevisionSchema>;
 export type BomMaterial = z.infer<typeof BomMaterialSchema>;
+
+/**
+ * Material DTOs
+ */
+export const CreateMaterialDtoSchema = z.object({
+    itemId: z.uuid(),
+    quantity: z.number().positive(),
+    unit: z.string().min(1),
+    designators: z.array(z.string()).default([]),
+    alternatives: z.array(z.uuid()).default([]),
+});
+
+export const UpdateMaterialDtoSchema = CreateMaterialDtoSchema.partial();
+
+export type CreateMaterialDto = z.infer<typeof CreateMaterialDtoSchema>;
+export type UpdateMaterialDto = z.infer<typeof UpdateMaterialDtoSchema>;
