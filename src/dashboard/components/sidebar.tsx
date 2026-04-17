@@ -38,8 +38,8 @@ export function DashboardSidebar({ isOpen, onToggle }: DashboardSidebarProps) {
             title: t('dashboard.sidebar.nav.operations'),
             items: [
                 { name: t('dashboard.sidebar.nav.production'), icon: Activity, href: '/dashboard/work-orders' },
-                { name: t('dashboard.sidebar.nav.execution'), icon: Blocks, href: '/dashboard/execution' },
                 { name: t('dashboard.sidebar.nav.warehouse'), icon: Warehouse, href: '/dashboard/warehouse' },
+                { name: t('dashboard.sidebar.nav.execution'), icon: Blocks, href: '/dashboard/execution' },
                 ...customItems.filter((i) => i.category === 'Operations'),
             ],
         },

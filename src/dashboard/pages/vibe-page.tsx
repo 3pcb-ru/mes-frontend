@@ -1,16 +1,20 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useVibeStore } from '@/features/vibe/store/vibe.store';
 import { VibeRenderer } from '@/features/vibe/components/vibe-renderer';
 import { Skeleton } from '@/shared/components/ui/skeleton';
 import { Button } from '@/shared/components/ui/button';
-import { Trash2, Share2, Info } from 'lucide-react';
+import { Badge } from '@/shared/components/ui/badge';
+import { cn } from '@/shared/lib/utils';
+import { Trash2, Share2, Info, Pin, PinOff } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from '@/shared/components/ui/dialog';
 
 export const VibePage = () => {
     const { t } = useTranslation();
     const { id } = useParams<{ id: string }>();
-    const { pages, fetchPages, deletePage } = useVibeStore();
+    const { pages, fetchPages, deletePage, updatePage } = useVibeStore();
+    const [showInfo, setShowInfo] = useState(false);
 
     useEffect(() => {
         if (pages.length === 0) {
@@ -52,9 +56,61 @@ export const VibePage = () => {
                 </div>
 
                 <div className="flex items-center gap-2">
-                    <Button variant="outline" size="sm" className="bg-slate-900/50 border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800" title={t('dashboard.vibe.general.actions.page_info', 'Page info')}>
-                        <Info className="h-4 w-4" />
+                    {/* Pin/Share Button (Owner only) */}
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => updatePage(page.id, { isOwnerCreated: !page.isOwnerCreated })}
+                        className={cn(
+                            'transition-all duration-300',
+                            page.isOwnerCreated ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30' : 'bg-slate-900/50 border-slate-700 text-slate-400 hover:text-white',
+                        )}
+                        title={page.isOwnerCreated ? t('dashboard.vibe.general.actions.unpin', 'Unpin from Org') : t('dashboard.vibe.general.actions.pin', 'Pin to Org')}>
+                        {page.isOwnerCreated ? <Pin className="h-4 w-4 fill-current" /> : <PinOff className="h-4 w-4" />}
                     </Button>
+
+                    {/* Page Info Dialog */}
+                    <Dialog open={showInfo} onOpenChange={setShowInfo}>
+                        <DialogTrigger asChild>
+                            <Button variant="outline" size="sm" className="bg-slate-900/50 border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800" title={t('dashboard.vibe.general.actions.page_info', 'Page info')}>
+                                <Info className="h-4 w-4" />
+                            </Button>
+                        </DialogTrigger>
+                        <DialogContent className="bg-slate-950 border-slate-800 text-white max-w-2xl">
+                            <DialogHeader>
+                                <DialogTitle className="text-xl font-bold flex items-center gap-2">
+                                    <Info className="h-5 w-5 text-cyan-400" />
+                                    {t('dashboard.vibe.general.labels.page_details', 'Page Protocol Details')}
+                                </DialogTitle>
+                                <DialogDescription className="text-slate-400">
+                                    {t('dashboard.vibe.general.labels.page_details_desc', 'Technical specifications and AI generation context for this vibe page.')}
+                                </DialogDescription>
+                            </DialogHeader>
+
+                            <div className="space-y-6 py-4">
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="p-3 rounded-lg bg-slate-900/50 border border-slate-800">
+                                        <p className="text-[10px] uppercase tracking-wider text-slate-500 mb-1">Page ID</p>
+                                        <p className="font-mono text-xs text-slate-300 break-all">{page.id}</p>
+                                    </div>
+                                    <div className="p-3 rounded-lg bg-slate-900/50 border border-slate-800">
+                                        <p className="text-[10px] uppercase tracking-wider text-slate-500 mb-1">Creation Category</p>
+                                        <Badge variant="outline" className="protocol-badge">
+                                            {page.category}
+                                        </Badge>
+                                    </div>
+                                </div>
+
+                                <div className="p-4 rounded-lg bg-slate-900/50 border border-slate-800">
+                                    <p className="text-[10px] uppercase tracking-wider text-slate-500 mb-2">Internal Configuration (Protocol v1.0)</p>
+                                    <pre className="text-[10px] font-mono text-cyan-400/80 max-h-[200px] overflow-y-auto bg-black/30 p-3 rounded border border-slate-800/50">
+                                        {JSON.stringify(page.config, null, 2)}
+                                    </pre>
+                                </div>
+                            </div>
+                        </DialogContent>
+                    </Dialog>
+
                     <Button
                         variant="destructive"
                         size="sm"

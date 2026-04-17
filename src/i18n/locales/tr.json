@@ -439,7 +439,9 @@
                     },
                     "errors": {
                         "unknown_component": "Bilinmeyen Bileşen: {{name}}",
-                        "cooldown": "Yapay zeka soğuyor. Lütfen {{seconds}} sn bekleyin."
+                        "cooldown": "Yapay zeka soğuyor. Lütfen {{seconds}} sn bekleyin.",
+                        "property_not_found": "'{{name}}' özelliği istenen modelde bulunamadı.",
+                        "data_fetch_failed": "Protokol verileri alınamadı."
                     },
                     "security": {
                         "incident_id": "Güvenlik Olay Kimliği"

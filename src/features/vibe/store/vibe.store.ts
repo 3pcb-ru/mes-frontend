@@ -21,6 +21,7 @@ interface VibeState {
     fetchPages: () => Promise<void>;
     generateLayout: (prompt: string, apiManifest: any, componentsManifest: any) => Promise<void>;
     savePage: (name: string, category: VibePage['category']) => Promise<void>;
+    updatePage: (id: string, data: Partial<VibePage>) => Promise<void>;
     deletePage: (id: string) => Promise<void>;
     setCoolDown: (seconds: number) => void;
 }
@@ -87,6 +88,18 @@ export const useVibeStore = create<VibeState>()(
                     }));
                 } catch (error) {
                     console.error('Failed to save vibe page:', error);
+                    throw error;
+                }
+            },
+
+            updatePage: async (id, data) => {
+                try {
+                    const updatedPage = await apiClient.patch<VibePage>(`/vibe/pages/${id}`, data);
+                    set((state) => ({
+                        pages: state.pages.map((p) => (p.id === id ? updatedPage : p)),
+                    }));
+                } catch (error) {
+                    console.error('Failed to update vibe page:', error);
                     throw error;
                 }
             },

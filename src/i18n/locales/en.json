@@ -404,7 +404,9 @@
                     },
                     "errors": {
                         "unknown_component": "Unknown Component: {{name}}",
-                        "cooldown": "AI is cooling down. Please wait {{seconds}}s."
+                        "cooldown": "AI is cooling down. Please wait {{seconds}}s.",
+                        "property_not_found": "Property '{{name}}' not found in requested model.",
+                        "data_fetch_failed": "Failed to fetch protocol data."
                     },
                     "security": {
                         "incident_id": "Security Incident ID"
