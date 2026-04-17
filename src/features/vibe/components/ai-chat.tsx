@@ -96,7 +96,7 @@ export const AiChatComponent = () => {
             setError(message);
 
             // Special toast for coolDown
-            if (err?.response?.data?.retryAfter) {
+            if (err?.response?.data?.retryAfter || message.toLowerCase().includes('quota') || message.toLowerCase().includes('limit')) {
                 toast.warning(t('dashboard.vibe.agent.labels.resource_limit', 'Resource Limit'), {
                     description: t('dashboard.vibe.agent.labels.cooldown_hint', 'Protocol limit reached (Free Tier). The agent is recalibrating sensors. Please wait.'),
                     duration: 5000,
@@ -321,9 +321,17 @@ export const AiChatComponent = () => {
                                             )}
 
                                             {error && (
-                                                <div className="bg-red-500/10 border border-red-500/20 p-3 rounded-2xl text-xs text-red-400 antialiased leading-relaxed transition-all duration-300 animate-in fade-in slide-in-from-top-2">
+                                                <div className={cn(
+                                                    "p-3 rounded-2xl text-xs antialiased leading-relaxed transition-all duration-300 animate-in fade-in slide-in-from-top-2",
+                                                    (error.includes('quota') || error.includes('limit')) 
+                                                        ? "bg-amber-500/10 border border-amber-500/20 text-amber-400"
+                                                        : "bg-red-500/10 border border-red-500/20 text-red-400"
+                                                )}>
                                                     <div className="flex items-center gap-2 mb-1">
-                                                        <div className="h-1.5 w-1.5 rounded-full bg-red-500 animate-pulse" />
+                                                        <div className={cn(
+                                                            "h-1.5 w-1.5 rounded-full animate-pulse",
+                                                            (error.includes('quota') || error.includes('limit')) ? "bg-amber-500" : "bg-red-500"
+                                                        )} />
                                                         <p className="font-bold uppercase tracking-tighter">
                                                             {error.includes('quota') || error.includes('limit')
                                                                 ? t('dashboard.vibe.agent.labels.resource_limit', 'Resource Limit')
@@ -333,7 +341,10 @@ export const AiChatComponent = () => {
                                                         </p>
                                                     </div>
                                                     <p className="opacity-90">{error}</p>
-                                                    <p className="mt-2 text-xs text-red-400/60 italic uppercase tracking-widest font-bold">
+                                                    <p className={cn(
+                                                        "mt-2 text-xs italic uppercase tracking-widest font-bold",
+                                                        (error.includes('quota') || error.includes('limit')) ? "text-amber-400/60" : "text-red-400/60"
+                                                    )}>
                                                         {error.includes('quota') 
                                                             ? t('dashboard.vibe.agent.labels.cooldown_hint', 'Action: System coolDown required') 
                                                             : t('dashboard.vibe.agent.labels.retry_hint', 'Action: Wait 30s and re-submit protocol')}
